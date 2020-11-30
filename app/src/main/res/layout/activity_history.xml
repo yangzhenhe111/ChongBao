@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/history_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/nav">
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="浏览记录"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </androidx.appcompat.widget.Toolbar>
+    <ListView
+        android:id="@+id/lv_history_article"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

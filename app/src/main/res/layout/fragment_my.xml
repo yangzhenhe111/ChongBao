@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:background="#900B97FF"
+    android:id="@+id/tab3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:onClick="onClicked"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/info_photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/photo"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#00ffffff"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:text="昵称"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="个性签名"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="10dp"
+
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:onClick="onClicked"
+            android:id="@+id/info_article"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+            android:gravity="center"
+            android:text="我的帖子"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/info_order"
+            android:onClick="onClicked"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+            android:gravity="center"
+            android:text="我的订单"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/info_update"
+        android:onClick="onClicked"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:text="修改信息"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/info_history"
+        android:onClick="onClicked"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:text="浏览记录"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/info_pet"
+        android:onClick="onClicked"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:text="我的宠物"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/info_set"
+        android:onClick="onClicked"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:text="设置"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/info_about_us"
+        android:onClick="onClicked"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:text="关于我们"
+        android:textSize="15sp" />
+
+</LinearLayout>

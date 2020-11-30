@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/about_us_law_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/nav">
+
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="法律信息"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="软件版权法"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="第三条\n本法所称的作品，包括以下列形式创作的文学、艺术和自然科学、社会科学、工程技术等作品：计算机软件;"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="第十条\n著作权包括下列人身权和财产权：出租权，即有偿许可他人临时使用电影作品和以类似摄制电影的方法创作的作品、计算机软件的权利，计算机软件不是出租的主要标的的除外;"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="第十六条\n公民为完成法人或者其他组织工作任务所创作的作品是职务作品，除本条第二款的规定以外，著作权由作者享有，但法人或者其他组织有权在其业务范围内优先使用。作品完成两年内，未经单位同意，作者不得许可第三人以与单位使用的相同方式使用该作品。 有下列情形之一的职务作品，作者享有署名权，著作权的其他权利由法人或者其他组织享有，法人或者其他组织可以给予作者奖励：
+　　主要是利用法人或者其他组织的物质技术条件创作，并由法人或者其他组织承担责任的工程设计图、产品设计图、地图、计算机软件等职务作品;"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="第四十七条\n
+　　有下列侵权行为的，应当根据情况，承担停止侵害、消除影响、赔礼道歉、赔偿损失等民事责任：未经电影作品和以类似摄制电影的方法创作的作品、计算机软件、录音录像制品的著作权人或者与著作权有关的权利人许可，出租其作品或者录音录像制品的，本法另有规定的除外;"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_marginBottom="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="第五十九条\n计算机软件、信息网络传播权的保护办法由国务院另行规定。本法施行前发生的侵权或者违约行为，依照侵权或者违约行为发生时的有关规定和政策处理。"
+            android:textSize="16sp" />
+    </LinearLayout>
+</ScrollView>

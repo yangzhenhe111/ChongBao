@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/agreement_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/nav">
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="用户协议"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="  为了更好地为您提供服务，请您仔细阅读这份协议。您在注册过程中点击“同意”等按钮、及注册后登录和使用时，均表明您已完全充分理解、同意并接受本协议，愿意遵守本协议及公示的各项规则、规范的全部内容，若不同意则可停止注册、登录或使用。" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="一、定义\n
+1.1 您：指提交有效申请并注册后，在本平台登录、上传、发布、提供链接等以各种形式传播内容（包括文字、图片、音频、视频、图表、漫画等）的自然人、法人或其他组织。
+\n1.2 用户：指所有直接或间接使用笃信平台提供的相关服务的用户。"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="二、帐户注册和使用\n
+2.1 在注册、使用和管理平台帐户时，请您使用真实、准确、合法、有效的相关身份证明材料及必要信息（包括您的姓名及电子邮件地址、联系电话、联系地址等），以便本平台在必要时与您联系，并注意及时更新。为使您更好地使用的各项服务，请您按照相关法律规定及要求完成实名认证。您应当对您提供的帐号资料的真实性、合法性、准确性和有效性独立承担责任。
+您提交的材料或填写的信息不完整或不准确，则您可能无法使用本服务或在使用过程中受到限制。
+\n2.2 您所设置的帐户名不得违反国家法律法规关于帐户名的管理规定。
+\n2.3 您理解并承诺，您的帐户名称、头像和简介等注册信息中不得出现违法和不良信息，没有冒用、关联机构或社会名人，您在帐户注册过程中需遵守法律法规、社会主义制度、国家利益、公民合法权益、公共秩序、社会道德风尚和信息真实性等内容。
+\n2.4 您同意并授权，为了更好的为您提供服务以及确保您的帐户安全，可以根据您提供的手机号码、身份证号码等信息，向全国公民身份号码查询服务中心、电信运营商、金融服务机构等可靠单位发起用户身份真实性、用户征信记录、用户手机号码有效性状态等情况的查询。
+\n2.5 帐号的所有权归 本平台所有，您注册申请通过后，您将拥有帐号的使用权，可以登录并在上制作、复制、发布、传播内容。同时，禁止任何赠与、借用、租用、转让或售卖帐号等的行为
+。如您违反本协议内容，平台有权对该帐户进行暂停使用、注销或停止提供服务等处理，且不承担任何法律责任，由此导致的包括并不限于您通讯中断、资料和内容等清空等损失由您自行承担。
+"/>
+</LinearLayout>

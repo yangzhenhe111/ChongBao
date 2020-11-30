@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#DCDCDC"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".nursing.CancelActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0B97FF">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal|center"
+            android:singleLine="true"
+            android:text="取消订单"
+            android:textColor="#000000"
+            android:textSize="25dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="back"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/back1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="返回"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已接单"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:id="@+id/condition"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/zeren"
+        android:textColor="#000000"
+        android:text="现在取消订单，您将"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:textSize="17sp"/>
+    <Button
+        android:layout_marginTop="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="暂不取消"
+        android:background="@drawable/cancelz"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
+        android:onClick="back"
+        android:layout_gravity="center"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="确定取消"
+        android:background="@drawable/cancelq"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
+        android:onClick="cancel"
+        android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="120dp"
+        android:id="@+id/shuo"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginTop="3.5dp"
+            android:layout_width="21dp"
+            android:background="@drawable/tishi"
+            android:layout_height="21dp"/>
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="19sp"
+            android:textColor="#000000"
+            android:text="关于取消订单"/>
+    </LinearLayout>
+</LinearLayout>

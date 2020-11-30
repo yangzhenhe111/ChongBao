@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.pet">
+    <permission
+        android:name="${applicationId}.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".other.DebugApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.example.pet.my.order.MyOrderActivity"></activity>
+        <activity android:name="com.example.pet.my.OrderComplete"></activity>
+        <activity android:name="com.example.pet.my.EditInfo"></activity>
+        <activity android:name="com.example.pet.my.SetPassword" />
+        <activity android:name=".my.FunIntroduction"></activity>
+        <activity android:name=".my.AboutUsLaw" />
+        <activity android:name=".my.Agreement" />
+        <activity android:name="com.example.pet.my.Register" />
+        <activity android:name="com.example.pet.my.Update" />
+        <activity android:name="com.example.pet.my.Check" />
+        <activity android:name="com.example.pet.my.Login" />
+        <activity android:name="com.example.pet.my.Pet" />
+        <activity android:name="com.example.pet.my.History" />
+        <activity android:name="com.example.pet.my.AboutUs" />
+        <activity android:name="com.example.pet.my.Setting" />
+        <activity android:name="com.example.pet.my.Post" />
+        <activity android:name="com.example.pet.forum.LandlordActivity"></activity>
+        <activity android:name="com.example.pet.forum.TipsActivity" />
+        <activity android:name="com.example.pet.forum.ClassifiedForumActivity" />
+        <activity android:name="com.example.pet.forum.TopicActivity" />
+        <activity android:name="com.example.pet.forum.PublishActivity" />
+        <activity android:name=".nursing.CancelActivity"/>
+        <activity android:name=".nursing.JiedanActivity"/>
+        <activity android:name=".nursing.ChangehisActivity"/>
+        <activity android:name=".nursing.EndActivity"/>
+        <activity android:name=".nursing.StartActivity"/>
+        <activity android:name=".nursing.NeworderActivity"/>
+        <activity android:name=".nursing.CostActivity"/>
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="VMDsFsGHcXTcBBG72R39t9EGBaDsRxAp" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v5.0.0" />
+            </intent-filter>
+        </service>
+
+        <activity android:name="com.example.pet.MainActivity"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </activity> <!-- Required SDK 核心功能 -->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service> <!-- since 3.0.9 Required SDK 核心功能 -->
+        <provider
+            android:name="cn.jpush.android.service.DataProvider"
+            android:authorities="${applicationId}.DataProvider"
+            android:exported="false"
+            android:process=":pushcore" /> <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" /> <!-- Required  显示通知栏 -->
+                <category android:name="${applicationId}" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver> <!-- Required SDK核心功能 -->
+        <receiver
+            android:name="cn.jpush.android.service.AlarmReceiver"
+            android:exported="false" /> <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
+        <!-- since 3.3.0 接收JPush相关事件 -->
+        <receiver
+            android:name=".other.JpushReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+
+                <!--
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE RECEIVED"/>
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED"/>
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <action android:name="cn.jpush.android.intent.CONNECTION"/>
+                -->
+
+                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver> <!-- since 3.3.0 Required SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.service.JNotifyActivity"
+            android:exported="false"
+            android:taskAffinity="jpush.custom"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.JNotifyActivity" />
+
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </activity> <!-- since 3.3.0 Required SDK 核心功能 -->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
+        <!-- User defined.  For test only 继承自cn.jpush.android.service.JCommonService -->
+        <service
+            android:name=".other.JpushService"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jiguang.user.service.action" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="jpush_channel" />
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="7153b7916be94ab289793e76" />
+    </application>
+
+</manifest>

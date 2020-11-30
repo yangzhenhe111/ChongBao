@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">宠宝</string>
+    <string name="tabs_my">我的</string>
+    <string name="tabs_forum">论坛</string>
+    <string name="tabs_nursing">宠物护理</string>
+</resources>

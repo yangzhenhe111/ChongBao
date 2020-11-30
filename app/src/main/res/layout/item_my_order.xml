@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_my_order">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/bg_my_order1"
+            android:text="取送"
+            android:textColor="@color/change_tab"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_pet_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="小白鼠/2kg"
+            android:textSize="14sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/tab"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+        <ImageView
+            android:id="@+id/iv_start"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/start_img1"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="起点："
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+        <ImageView
+            android:id="@+id/iv_end"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/end_img1"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="终点："
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/tv_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_order_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:textSize="13sp"
+        android:text="下单时间"
+        android:layout_marginRight="5dp"/>
+    <TextView
+        android:id="@+id/tv_order_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="状态"
+        android:textColor="@color/change_tab"
+        android:gravity="right"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"/>
+
+
+
+</LinearLayout>
