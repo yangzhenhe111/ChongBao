@@ -45,6 +45,8 @@
         android:textSize="15sp" />
 
     <TextView
+        android:id="@+id/about_us_fun"
+        android:onClick="onClicked"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="10dp"
@@ -69,6 +71,8 @@
         android:textSize="15sp" />
 
     <TextView
+        android:id="@+id/about_us_connect"
+        android:onClick="onClicked"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="10dp"

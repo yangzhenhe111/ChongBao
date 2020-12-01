@@ -46,86 +46,65 @@ public class MyFragment extends Fragment {
     }
 
     private void setView() {
+        MyListener listener = new MyListener();
         infoArticle = view.findViewById(R.id.info_article);
-        infoArticle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent();
-                intent.setClass(getContext(), Post.class);
-                startActivity(intent);
-            }
-        });
+        infoArticle.setOnClickListener(listener);
         infoOrder = view.findViewById(R.id.info_order);
-        infoOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getContext(), MyOrderActivity.class);
-                Log.e("order","1");
-                startActivity(intent);
-            }
-        });
+        infoOrder.setOnClickListener(listener);
         infoUpdate = view.findViewById(R.id.info_update);
-        infoUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent();
-                intent.setClass(getContext(),EditInfo.class);
-                startActivity(intent);
-            }
-        });
+        infoUpdate.setOnClickListener(listener);
         infoHistory = view.findViewById(R.id.info_history);
-        infoHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent();
-                intent.setClass(getContext(),History.class);
-                startActivity(intent);
-            }
-        });
+        infoHistory.setOnClickListener(listener);
         infoPet = view.findViewById(R.id.info_pet);
-        infoPet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent();
-                intent.setClass(getContext(),Pet.class);
-                startActivity(intent);
-            }
-        });
+        infoPet.setOnClickListener(listener);
         infoSetting = view.findViewById(R.id.info_set);
-        infoSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent();
-                intent.setClass(getContext(),Setting.class);
-                startActivity(intent);
-            }
-        });
+        infoSetting.setOnClickListener(listener);
         infoAboutUs = view.findViewById(R.id.info_about_us);
-        infoAboutUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent();
-                intent.setClass(getContext(),AboutUs.class);
-                startActivity(intent);
-            }
-        });
+        infoAboutUs.setOnClickListener(listener);
         infoPhoto = view.findViewById(R.id.info_photo);
-        infoPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        infoPhoto.setOnClickListener(listener);
+    }
+    private class MyListener implements View.OnClickListener{
 
-                Intent intent = new Intent();
-                intent.setClass(getContext(),Login.class);
-                startActivity(intent);
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.info_article:
+                    Intent intent = new Intent(getContext(), Post.class);
+                    startActivity(intent);
+                    break;
+                case R.id.info_order:
+                    Intent intent1 = new Intent(getContext(), Order2.class);
+                    startActivity(intent1);
+                    break;
+                case R.id.info_update:
+                    Intent intent2 = new Intent(getContext(), EditInfo.class);
+                    startActivity(intent2);
+                    break;
+                case R.id.info_history:
+                    Intent intent3 = new Intent(getContext(), History.class);
+                    startActivity(intent3);
+                    break;
+                case R.id.info_pet:
+                    Intent intent4 = new Intent(getContext(), Pet.class);
+                    startActivity(intent4);
+                    break;
+                case R.id.info_set:
+                    Intent intent5 = new Intent(getContext(), Setting.class);
+                    startActivity(intent5);
+                    break;
+                case R.id.info_about_us:
+                    Intent intent6 = new Intent(getContext(), AboutUs.class);
+                    startActivity(intent6);
+                    break;
+
+                case R.id.info_photo:
+                    Intent intent7 = new Intent(getContext(),Login.class);
+                    startActivity(intent7);
+                    break;
+
             }
-        });
+        }
     }
 
 }
