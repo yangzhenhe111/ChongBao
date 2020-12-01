@@ -12,10 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.baidu.mapapi.map.Circle;
 import com.example.pet.R;
 import com.example.pet.my.order.MyOrderActivity;
-import com.example.pet.other.entity.Article;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
