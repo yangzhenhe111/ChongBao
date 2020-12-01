@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //添加第二条注释
+        //加一条注释
         initMainActivity();
     }
 
