@@ -1,6 +1,8 @@
 package com.example.pet.other.entity;
 
-public class Pet {
+import java.io.Serializable;
+
+public class Pet implements Serializable {
     private int petId;//宠物ID
     private String petName;//宠物名称
     private String petType;//宠物种类

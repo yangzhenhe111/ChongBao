@@ -3,6 +3,7 @@ package com.example.pet.my.order;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -93,6 +94,7 @@ public class MyOrderActivity extends AppCompatActivity {
                 if("待支付".equals(orders.get(position).getOrderState())){
                     Intent intent = new Intent();
                     intent.setClass(MyOrderActivity.this, Order2.class);
+                    Log.e("gfgfgfg",orders.get(position).toString());
                     intent.putExtra("order", orders.get(position));
                     Log.e("order","3");
                     //跳转到待支付页面

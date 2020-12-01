@@ -60,7 +60,6 @@ public class MyFragment extends Fragment {
         infoOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent();
                 intent.setClass(getContext(), MyOrderActivity.class);
                 Log.e("order","1");
