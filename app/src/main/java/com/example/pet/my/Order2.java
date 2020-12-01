@@ -3,7 +3,9 @@ package com.example.pet.my;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,8 +32,11 @@ public class Order2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order2);
         setView();
-        order = new Order();
-        order.setOrderState("待接单");
+        Intent intent = getIntent();
+        order = (Order) intent.getSerializableExtra("order");
+        Log.e("order","4");
+//        order = new Order();
+//        order.setOrderState("待接单");
         setStatus();
 
     }

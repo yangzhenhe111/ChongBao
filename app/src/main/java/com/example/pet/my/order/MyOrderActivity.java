@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.pet.R;
+import com.example.pet.my.Order2;
 import com.example.pet.other.entity.Order;
 import com.example.pet.other.entity.Pet;
 
@@ -25,6 +26,7 @@ public class MyOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order);
+        Log.e("order","2");
 
         initData();
         initMyOrderActivity();
@@ -40,7 +42,7 @@ public class MyOrderActivity extends AppCompatActivity {
             order.setOrderStart("河北师范大学软件学院" + (i/6) + "0" + (i%6) + "教室");
             order.setOrderEnd("河北师范大学国培大厦" + (i/8) + "0" + (i%8) + "房间");
             order.setOrderTime("2020-04-28 11:53");
-            switch (i%4){
+            switch (i%5){
                 case 0:
                     order.setOrderState("已完成");
                     break;
@@ -52,6 +54,9 @@ public class MyOrderActivity extends AppCompatActivity {
                     break;
                 case 3:
                     order.setOrderState("待支付");
+                    break;
+                case 4:
+                    order.setOrderState("已取消");
                     break;
             }
             Pet pet = new Pet();
@@ -87,6 +92,29 @@ public class MyOrderActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if("待支付".equals(orders.get(position).getOrderState())){
                     Intent intent = new Intent();
+                    intent.setClass(MyOrderActivity.this, Order2.class);
+                    intent.putExtra("order", orders.get(position));
+                    Log.e("order","3");
+                    //跳转到待支付页面
+                    startActivityForResult(intent,1);
+                }else if("已取消".equals(orders.get(position).getOrderState())){
+                    Intent intent = new Intent();
+                    intent.setClass(MyOrderActivity.this, Order2.class);
+                    //跳转到待支付页面
+                    startActivityForResult(intent,1);
+                }else if("待接单".equals(orders.get(position).getOrderState())){
+                    Intent intent = new Intent();
+                    intent.setClass(MyOrderActivity.this, Order2.class);
+                    //跳转到待支付页面
+                    startActivityForResult(intent,1);
+                }else if("已完成".equals(orders.get(position).getOrderState())){
+                    Intent intent = new Intent();
+                    intent.setClass(MyOrderActivity.this, Order2.class);
+                    //跳转到待支付页面
+                    startActivityForResult(intent,1);
+                }else if("已接单".equals(orders.get(position).getOrderState())){
+                    Intent intent = new Intent();
+                    intent.setClass(MyOrderActivity.this, Order2.class);
                     //跳转到待支付页面
                     startActivityForResult(intent,1);
                 }

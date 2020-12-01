@@ -2,6 +2,7 @@ package com.example.pet.my;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.baidu.mapapi.map.Circle;
 import com.example.pet.R;
+import com.example.pet.my.order.MyOrderActivity;
 import com.example.pet.other.entity.Article;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -60,7 +62,8 @@ public class MyFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent intent = new Intent();
-                intent.setClass(getContext(),Order2.class);
+                intent.setClass(getContext(), MyOrderActivity.class);
+                Log.e("order","1");
                 startActivity(intent);
             }
         });

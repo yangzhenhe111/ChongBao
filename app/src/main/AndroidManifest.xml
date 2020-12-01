@@ -35,6 +35,7 @@
         <activity android:name=".my.FunIntroduction"></activity>
         <activity android:name=".my.AboutUsLaw" />
         <activity android:name=".my.Agreement" />
+        <activity android:name=".my.Order2"/>
         <activity android:name="com.example.pet.my.Register" />
         <activity android:name="com.example.pet.my.Update" />
         <activity android:name="com.example.pet.my.Check" />
