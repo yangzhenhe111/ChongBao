@@ -210,12 +210,16 @@ public class ForumFragment extends Fragment {
 
         ArrayList<Integer> images = new ArrayList<>();
         ArrayList<String> title = new ArrayList<>();
-        title.add("律政先锋");
-        title.add("小妹妹");
-        title.add("我曾经的头像");
-        images.add(R.drawable.aaaaaa);
-        images.add(R.drawable.aaaaaa);
-        images.add(R.drawable.aaaaaa);
+        title.add("新手推荐文章1");
+        title.add("新手推荐文章2");
+        title.add("新手推荐文章3");
+        title.add("新手推荐文章4");
+        title.add("新手推荐文章5");
+        images.add(R.drawable.recommend1);
+        images.add(R.drawable.recommend2);
+        images.add(R.drawable.recommend3);
+        images.add(R.drawable.recommend4);
+        images.add(R.drawable.recommend5);
 
         banner = view.findViewById(R.id.banner);
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
