@@ -32,10 +32,10 @@
         <activity android:name="com.example.pet.my.OrderComplete"></activity>
         <activity android:name="com.example.pet.my.EditInfo"></activity>
         <activity android:name="com.example.pet.my.SetPassword" />
-        <activity android:name=".my.FunIntroduction"></activity>
-        <activity android:name=".my.AboutUsLaw" />
-        <activity android:name=".my.Agreement" />
-        <activity android:name=".my.Order2"/>
+        <activity android:name="com.example.pet.my.FunIntroduction"></activity>
+        <activity android:name="com.example.pet.my.AboutUsLaw" />
+        <activity android:name="com.example.pet.my.Agreement" />
+        <activity android:name="com.example.pet.my.Order2"/>
         <activity android:name="com.example.pet.my.Register" />
         <activity android:name="com.example.pet.my.Update" />
         <activity android:name="com.example.pet.my.Check" />

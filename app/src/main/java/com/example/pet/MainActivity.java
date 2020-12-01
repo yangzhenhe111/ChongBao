@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.pet.forum.ForumFragment;
 import com.example.pet.my.MyFragment;
 import com.example.pet.nursing.NursingFragment;
+import com.example.pet.other.DebugApp;
 
 public class MainActivity extends AppCompatActivity {
 
