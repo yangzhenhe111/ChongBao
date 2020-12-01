@@ -41,7 +41,7 @@
             android:id="@+id/btn_tips_topic"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:background="@drawable/shape"
+            android:background="@drawable/shape1"
             android:text="食品"
             android:textSize="20dp"
             android:textColor="@color/Blue"
