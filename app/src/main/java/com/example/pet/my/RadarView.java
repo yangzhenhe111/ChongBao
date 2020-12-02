@@ -1,5 +1,7 @@
 package com.example.pet.my;
 
+import android.animation.ValueAnimator;
+import android.util.Log;
 import android.view.View;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -18,6 +20,7 @@ import com.example.pet.R;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
 public class RadarView extends View {
     //默认的主题颜色
     private int DEFAULT_COLOR = Color.parseColor("#91D7F4");
@@ -37,14 +40,14 @@ public class RadarView extends View {
     //是否显示水滴
     private boolean isShowRaindrop = true;
     //扫描的转速，表示几秒转一圈
-    private float mSpeed = 3.0f;
+    private float mSpeed = 1.0f;
     //水滴显示和消失的速度
-    private float mFlicker = 3.0f;
+    private float mFlicker = 1.0f;
 
     private Paint mCirclePaint;// 圆的画笔
     private Paint mSweepPaint; //扫描效果的画笔
     private Paint mRaindropPaint;// 水滴的画笔
-
+    private Paint textPaint;//文字画笔
     private float mDegrees; //扫描时的扫描旋转角度。
     private boolean isScanning = false;//是否扫描
 
@@ -89,7 +92,7 @@ public class RadarView extends View {
             isShowRaindrop = mTypedArray.getBoolean(R.styleable.RadarView_showRaindrop, true);
             mSpeed = mTypedArray.getFloat(R.styleable.RadarView_speed, mSpeed);
             if (mSpeed <= 0) {
-                mSpeed = 3;
+                mSpeed = 1;
             }
             mFlicker = mTypedArray.getFloat(R.styleable.RadarView_flicker, mFlicker);
             if (mFlicker <= 0) {
@@ -106,7 +109,7 @@ public class RadarView extends View {
         // 初始化画笔
         mCirclePaint = new Paint();
         mCirclePaint.setColor(mCircleColor);
-        mCirclePaint.setStrokeWidth(1);
+        mCirclePaint.setStrokeWidth(4);
         mCirclePaint.setStyle(Paint.Style.STROKE);
         mCirclePaint.setAntiAlias(true);
 
@@ -116,6 +119,11 @@ public class RadarView extends View {
 
         mSweepPaint = new Paint();
         mSweepPaint.setAntiAlias(true);
+
+        textPaint = new Paint();
+        textPaint.setTextSize(280.0f);
+        textPaint.setColor(Color.GREEN);
+       textPaint.setStrokeWidth(2);
     }
 
     @Override
@@ -175,16 +183,33 @@ public class RadarView extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(final Canvas canvas) {
 
         //计算圆的半径
         int width = getWidth() - getPaddingLeft() - getPaddingRight();
         int height = getHeight() - getPaddingTop() - getPaddingBottom();
-        int radius = Math.min(width, height) / 2;
+        final int radius = Math.min(width, height) / 2;
 
         //计算圆的圆心
-        int cx = getPaddingLeft() + (getWidth() - getPaddingLeft() - getPaddingRight()) / 2;
-        int cy = getPaddingTop() + (getHeight() - getPaddingTop() - getPaddingBottom()) / 2;
+        final int cx = getPaddingLeft() + (getWidth() - getPaddingLeft() - getPaddingRight()) / 2;
+        final int cy = getPaddingTop() + (getHeight() - getPaddingTop() - getPaddingBottom()) / 2;
+
+
+        ValueAnimator animator = ValueAnimator.ofInt(0, 100);
+        animator.setDuration(5000);
+        animator.start();
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                //获取颜色值
+               int num= (int) animation.getAnimatedValue();
+               if(num==100) {
+                   stop();
+                   canvas.drawText( "100%", cx - radius, cy + radius / 3, textPaint);
+               }
+            }
+        });
+
 
         drawCircle(canvas, cx, cy, radius);
 
@@ -199,8 +224,7 @@ public class RadarView extends View {
             }
             drawSweep(canvas, cx, cy, radius);
             //计算雷达扫描的旋转角度
-            mDegrees = (mDegrees + (360 / mSpeed / 60)) % 360;
-
+            mDegrees = (mDegrees + (360 / 2 / 60)) % 360;
             //触发View重新绘制，通过不断的绘制View的扫描动画效果
             invalidate();
         }
@@ -362,7 +386,8 @@ public class RadarView extends View {
                 dpVal, context.getResources().getDisplayMetrics());
     }
 
-    /**a
+    /**
+     * a
      * 改变颜色的透明度
      *
      * @param color
