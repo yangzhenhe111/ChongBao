@@ -1,6 +1,7 @@
 package com.example.pet.my;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,13 +17,19 @@ import com.example.pet.R;
 import com.example.pet.my.order.MyOrderActivity;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Article;
+import com.example.pet.other.entity.User;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyFragment extends Fragment {
 
     private  View view;
-
+private  TextView infoName;
+private  TextView infoAutograph;
     private TextView infoArticle;
     private TextView infoOrder;
     private TextView infoUpdate;
@@ -45,7 +52,20 @@ public class MyFragment extends Fragment {
     }
 //设置控件内容
     private void setViewContent() {
-        //infoPhoto.setImageBitmap(Cache.user.);
+        Cache.user = new User();
+        Cache.user.setPicturePath("/imgs/1.png");
+        Cache.user.setUserName("洛洛");
+        Cache.user.setUserAutograph("我心向阳");
+        try {
+            InputStream photoStream = new URL(Cache.MY_URL+Cache.user.getPicturePath()).openStream();
+            infoPhoto.setImageBitmap(BitmapFactory.decodeStream(photoStream));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        infoName.setText(Cache.user.getUserName());
+        infoAutograph.setText(Cache.user.getUserAutograph());
+
     }
 
     //获得控件和监听器
@@ -67,6 +87,8 @@ public class MyFragment extends Fragment {
         infoAboutUs.setOnClickListener(listener);
         infoPhoto = view.findViewById(R.id.info_photo);
         infoPhoto.setOnClickListener(listener);
+        infoName = view.findViewById(R.id.info_name);
+        infoAutograph = view.findViewById(R.id.info_autograph);
     }
     private class MyListener implements View.OnClickListener{
 
