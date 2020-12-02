@@ -20,11 +20,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.pet.R;
+import com.example.pet.other.entity.BaseUrl;
 import com.example.pet.other.entity.Tips;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ForumFragment extends Fragment {
@@ -271,7 +283,32 @@ public class ForumFragment extends Fragment {
     }
 
     public void init(){
-
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(BaseUrl.url+"SearchAllPostServlet");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    InputStream input = connection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
+                    StringBuffer stringBuffer = new StringBuffer();
+                    String line;
+                    while ((line=bufferedReader.readLine())!=null){
+                        stringBuffer.append(line);
+                    }
+                    JSONArray jsonArray = new JSONArray(stringBuffer.toString());
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (ProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     public void search(){
