@@ -308,6 +308,7 @@ public class ForumFragment extends Fragment {
                         stringBuffer.append(line);
                     }
                     Log.e("4","4");
+                    Log.e("4","4");
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
                     Log.e("9",jsonArray+"");
                     Log.e("10","10");
