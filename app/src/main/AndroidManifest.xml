@@ -29,11 +29,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".my.AcountSecurity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name=".my.ConnectUs" />
@@ -82,7 +78,11 @@
 
         <activity android:name="com.example.pet.MainActivity"
             android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="cn.jpush.android.ui.PushActivity"

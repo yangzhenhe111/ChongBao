@@ -1,9 +1,11 @@
 package com.example.pet.my;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.pet.R;
 import com.suke.widget.SwitchButton;
@@ -12,10 +14,17 @@ import com.suke.widget.SwitchButton;
 public class AcountSecurity extends AppCompatActivity {
 private  ScanView view;
 private  RadarView radarView;
+private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acount_security);
+        setView();
+
+
+    }
+
+    private void setView() {
         SwitchButton switchButton = findViewById(R.id.switch_button);
         switchButton.setChecked(true);//设置为真，即默认为真
         switchButton.isChecked();//被选中
@@ -35,6 +44,12 @@ private  RadarView radarView;
 
         radarView = findViewById(R.id.acount_security_radar);
         radarView.start();
-
+        toolbar = findViewById(R.id.acount_security_toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AcountSecurity.this.finish();
+            }
+        });
     }
 }

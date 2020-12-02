@@ -3,6 +3,7 @@ package com.example.pet.my;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -21,5 +22,14 @@ public class Setting extends AppCompatActivity {
                 Setting.this.finish();
             }
         });
+    }
+
+    public void onClicked(View view) {
+        switch (view.getId()){
+            case R.id.setting_acount_security:
+                Intent intent = new Intent(this,AcountSecurity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }
