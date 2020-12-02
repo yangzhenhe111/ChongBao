@@ -29,7 +29,7 @@ public class MyFragment extends Fragment {
 
     private  View view;
 private  TextView infoName;
-private  TextView infoAutograph;
+
     private TextView infoArticle;
     private TextView infoOrder;
     private TextView infoUpdate;
@@ -56,15 +56,15 @@ private  TextView infoAutograph;
         Cache.user.setPicturePath("/imgs/1.png");
         Cache.user.setUserName("洛洛");
         Cache.user.setUserAutograph("我心向阳");
-        try {
-            InputStream photoStream = new URL(Cache.MY_URL+Cache.user.getPicturePath()).openStream();
-            infoPhoto.setImageBitmap(BitmapFactory.decodeStream(photoStream));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+           // InputStream photoStream = new URL(Cache.MY_URL+Cache.user.getPicturePath()).openStream();
+            //infoPhoto.setImageBitmap(BitmapFactory.decodeStream(photoStream));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         infoName.setText(Cache.user.getUserName());
-        infoAutograph.setText(Cache.user.getUserAutograph());
+
 
     }
 
@@ -88,7 +88,7 @@ private  TextView infoAutograph;
         infoPhoto = view.findViewById(R.id.info_photo);
         infoPhoto.setOnClickListener(listener);
         infoName = view.findViewById(R.id.info_name);
-        infoAutograph = view.findViewById(R.id.info_autograph);
+
     }
     private class MyListener implements View.OnClickListener{
 
@@ -100,7 +100,7 @@ private  TextView infoAutograph;
                     startActivity(intent);
                     break;
                 case R.id.info_order:
-                    Intent intent1 = new Intent(getContext(), Order2.class);
+                    Intent intent1 = new Intent(getContext(), MyOrderActivity.class);
                     startActivity(intent1);
                     break;
                 case R.id.info_update:
