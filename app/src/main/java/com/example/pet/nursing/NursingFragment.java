@@ -34,7 +34,7 @@ import com.example.pet.my.order.MyOrderActivity;
 
 public class NursingFragment extends Fragment {
 
-    private TextView ordertv;
+    private LinearLayout ordertv;
     private View root;
     private BaiduMap bm;
     private LocationClient lc;
@@ -42,7 +42,7 @@ public class NursingFragment extends Fragment {
     private Button pos;
     private LinearLayout slin;
     private LinearLayout elin;
-    private TextView neworder;
+    private LinearLayout neworder;
     private TextView starttv;
     private TextView endtv;
     @Override
@@ -184,7 +184,7 @@ public class NursingFragment extends Fragment {
     }
 
     private void Myorder() { //我的订单页面
-        Intent i = new Intent(getActivity(), MyOrderActivity.class);
+        Intent i = new Intent(getContext(), MyOrderActivity.class);
         startActivity(i);
     }
 
@@ -194,6 +194,7 @@ public class NursingFragment extends Fragment {
         slin.setOnClickListener(l);
         elin.setOnClickListener(l);
         neworder.setOnClickListener(l);
+        ordertv.setOnClickListener(l);
     }
     public void StartWhere(){ //设置起点页面
         Intent i = new Intent(getActivity(),StartActivity.class);

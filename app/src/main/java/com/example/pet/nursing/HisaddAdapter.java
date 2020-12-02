@@ -3,9 +3,6 @@ package com.example.pet.nursing;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -20,7 +17,6 @@ import androidx.appcompat.app.AlertDialog;
 import com.example.pet.R;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

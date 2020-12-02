@@ -1,6 +1,5 @@
 package com.example.pet;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import com.example.pet.forum.ForumFragment;
 import com.example.pet.my.MyFragment;
 import com.example.pet.nursing.NursingFragment;
-import com.example.pet.other.DebugApp;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //添加第二条注释
+        //加一条注释
         initMainActivity();
     }
 

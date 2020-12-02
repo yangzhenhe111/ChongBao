@@ -3,7 +3,6 @@ package com.example.pet.my.order;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.ListView;
 
 import com.example.pet.R;
 import com.example.pet.my.Order2;
+import com.example.pet.nursing.JiedanActivity;
 import com.example.pet.other.entity.Order;
 import com.example.pet.other.entity.Pet;
 
@@ -92,33 +92,36 @@ public class MyOrderActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if("待支付".equals(orders.get(position).getOrderState())){
+                    Log.e("gfgfgfg",orders.get(position).toString());
                     Intent intent = new Intent();
                     intent.setClass(MyOrderActivity.this, Order2.class);
-                    Log.e("gfgfgfg",orders.get(position).toString());
-                    intent.putExtra("order", orders.get(position));
                     Log.e("order","3");
+                    intent.putExtra("order", orders.get(position));
                     //跳转到待支付页面
                     startActivityForResult(intent,1);
                 }else if("已取消".equals(orders.get(position).getOrderState())){
                     Intent intent = new Intent();
                     intent.setClass(MyOrderActivity.this, Order2.class);
+                    intent.putExtra("order", orders.get(position));
                     //跳转到待支付页面
                     startActivityForResult(intent,1);
                 }else if("待接单".equals(orders.get(position).getOrderState())){
                     Intent intent = new Intent();
                     intent.setClass(MyOrderActivity.this, Order2.class);
+                    intent.putExtra("order", orders.get(position));
                     //跳转到待支付页面
                     startActivityForResult(intent,1);
                 }else if("已完成".equals(orders.get(position).getOrderState())){
                     Intent intent = new Intent();
                     intent.setClass(MyOrderActivity.this, Order2.class);
+                    intent.putExtra("order", orders.get(position));
                     //跳转到待支付页面
                     startActivityForResult(intent,1);
                 }else if("已接单".equals(orders.get(position).getOrderState())){
                     Intent intent = new Intent();
-                    intent.setClass(MyOrderActivity.this, Order2.class);
+                    intent.setClass(MyOrderActivity.this, JiedanActivity.class);
                     //跳转到待支付页面
-                    startActivityForResult(intent,1);
+                    startActivity(intent);
                 }
             }
         });

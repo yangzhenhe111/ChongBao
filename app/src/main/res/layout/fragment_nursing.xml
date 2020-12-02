@@ -28,6 +28,7 @@
         android:layout_above="@+id/orderlin">
 
         <LinearLayout
+            android:id="@+id/ordertv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/orderbutton"
@@ -39,7 +40,6 @@
                 android:background="@drawable/order" />
 
             <TextView
-                android:id="@+id/ordertv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -55,6 +55,7 @@
         android:layout_above="@+id/my"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/neworder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/neworder"
@@ -66,7 +67,6 @@
                 android:background="@drawable/newo" />
 
             <TextView
-                android:id="@+id/neworder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
