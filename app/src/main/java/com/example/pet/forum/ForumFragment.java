@@ -1,6 +1,8 @@
 package com.example.pet.forum;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -63,8 +66,6 @@ public class ForumFragment extends Fragment {
     private ListView lv_tips;
     private Banner banner;
     private ArrayList<Tips> arrayList = new ArrayList<>();
-    private PopupWindow popupWindow;
-
 
     @Nullable
     @Override
