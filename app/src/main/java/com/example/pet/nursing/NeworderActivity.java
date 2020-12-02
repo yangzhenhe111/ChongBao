@@ -3,6 +3,7 @@ package com.example.pet.nursing;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -59,21 +60,21 @@ public class NeworderActivity extends AppCompatActivity {
                 AddressInfo.BEIZHU = beizhu.getText().toString();
                 AddressInfo.ITEMINFO = item.getText().toString();
                 Intent intent = new Intent(NeworderActivity.this,CostActivity.class);
-                startActivityForResult(intent, 66);
+                startActivity(intent);
             }
         });
         stlin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(NeworderActivity.this,StartActivity.class);
-                startActivityForResult(intent, 99);
+                startActivity(intent);
             }
         });
         endlin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(NeworderActivity.this,EndActivity.class);
-                startActivityForResult(intent, 88);
+                startActivity(intent);
             }
         });
         feiyong.setOnClickListener(new View.OnClickListener() {
@@ -84,18 +85,13 @@ public class NeworderActivity extends AppCompatActivity {
         });
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 99 && resultCode == 999){
-            finish();
-            Intent intent = new Intent(this, NeworderActivity.class);
-            startActivity(intent);
-        }
-        else if(requestCode == 88 && resultCode == 888){
-            finish();
-            Intent intent = new Intent(this, NeworderActivity.class);
-            startActivity(intent);
-        }
+    protected void onRestart() {
+        super.onRestart();
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
     }
     private void pop(){
         LayoutInflater mLayoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);//自定义布局

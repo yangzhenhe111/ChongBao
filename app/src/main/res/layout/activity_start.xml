@@ -80,16 +80,30 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
-                        android:text="地址："
+                        android:text="地址"
                         android:textSize="17sp" />
 
-                    <EditText
-                        android:textColor="#000000"
-                        android:id="@+id/startadd"
+                    <RelativeLayout
+                        android:id="@+id/choice"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textSize="17sp" />
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="选择地址"
+                            android:textColor="#000000"
+                            android:id="@+id/newstart"/>
+                        <ImageView
+                            android:layout_marginTop="5dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/choice"/>
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
