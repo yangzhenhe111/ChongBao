@@ -61,7 +61,7 @@ public class MainForumTipsAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(tipslayout,null);
         }
         ImageView landlordhead = convertView.findViewById(R.id.iv_tips_landlordhead);
-        landlordhead.setImageBitmap(tipsArrayList.get(position).getHead());
+        landlordhead.setImageBitmap(tipsArrayList.get(position).getUserHead());
         landlordhead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +72,7 @@ public class MainForumTipsAdapter extends BaseAdapter {
             }
         });
         TextView landlordname = convertView.findViewById(R.id.tv_tips_landlordname);
-        landlordname.setText(tipsArrayList.get(position).getName());
+        landlordname.setText(tipsArrayList.get(position).getUserName());
         TextView tipstime = convertView.findViewById(R.id.tv_tips_tipstime);
         tipstime.setText(tipsArrayList.get(position).getTime());
         Button tipstopic = convertView.findViewById(R.id.btn_tips_topic);

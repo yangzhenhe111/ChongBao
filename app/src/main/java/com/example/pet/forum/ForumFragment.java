@@ -270,7 +270,7 @@ public class ForumFragment extends Fragment {
         for (int i = 0; i < 5; i++) {
             Tips tips = new Tips();
             tips.setId(1);
-            tips.setName("名字" + i);
+            tips.setUserName("名字" + i);
             tips.setTime("2020-11-28/16:36:0" + i);
             tips.setTopic("标签" + i);
             tips.setTitle("标题" + i);
@@ -298,6 +298,7 @@ public class ForumFragment extends Fragment {
                         stringBuffer.append(line);
                     }
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
+
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (ProtocolException e) {

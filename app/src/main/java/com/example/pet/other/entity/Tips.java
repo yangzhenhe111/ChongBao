@@ -17,20 +17,20 @@ public class Tips {
     private int forwards;
 
 
-    public Tips(int id, int userId, String userName, Bitmap userHead, String time, String topic, String title, String text, Bitmap thumbnail, int likes, int comments, int forwards) {
-        this.id = id;
-        this.userId = userId;
-        this.userName = userName;
-        this.userHead = userHead;
-        this.time = time;
-        this.topic = topic;
-        this.title = title;
-        this.text = text;
-        this.thumbnail = thumbnail;
-        this.likes = likes;
-        this.comments = comments;
-        this.forwards = forwards;
-    }
+//    public Tips(int id, int userId, String userName, Bitmap userHead, String time, String topic, String title, String text, Bitmap thumbnail, int likes, int comments, int forwards) {
+//        this.id = id;
+//        this.userId = userId;
+//        this.userName = userName;
+//        this.userHead = userHead;
+//        this.time = time;
+//        this.topic = topic;
+//        this.title = title;
+//        this.text = text;
+//        this.thumbnail = thumbnail;
+//        this.likes = likes;
+//        this.comments = comments;
+//        this.forwards = forwards;
+//    }
 
     public int getId() {
         return id;
