@@ -8,8 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +48,7 @@ public class ForumFragment extends Fragment {
     private ListView lv_tips;
     private Banner banner;
     private ArrayList<Tips> arrayList = new ArrayList<>();
+    private PopupWindow popupWindow;
 
 
     @Nullable
