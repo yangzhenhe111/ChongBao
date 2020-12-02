@@ -10,7 +10,7 @@ import com.suke.widget.SwitchButton;
 
 
 public class AcountSecurity extends AppCompatActivity {
-
+private  ScanView view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,5 +30,8 @@ public class AcountSecurity extends AppCompatActivity {
             }
 
         });
+
+        view = findViewById(R.id.acount_security_scan);
+        view.start();
     }
 }
