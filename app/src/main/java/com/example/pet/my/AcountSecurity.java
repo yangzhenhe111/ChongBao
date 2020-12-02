@@ -11,6 +11,7 @@ import com.suke.widget.SwitchButton;
 
 public class AcountSecurity extends AppCompatActivity {
 private  ScanView view;
+private  RadarView radarView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,5 +34,7 @@ private  ScanView view;
 
         view = findViewById(R.id.acount_security_scan);
         view.start();
+        radarView = findViewById(R.id.acount_security_radar);
+        radarView.start();
     }
 }
