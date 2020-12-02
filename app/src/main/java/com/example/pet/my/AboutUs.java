@@ -35,6 +35,13 @@ private Toolbar toolbar;
                 Intent intent = new Intent(this,AboutUsLaw.class);
                 startActivity(intent);
                 break;
+            case R.id.about_us_fun:
+                Intent intent1 = new Intent(this,FunIntroduction.class);
+                startActivity(intent1);
+                break;
+            case R.id.about_us_connect:
+                Intent intent2 = new Intent(this,ConnectUs.class);
+                startActivity(intent2);
 
         }
     }

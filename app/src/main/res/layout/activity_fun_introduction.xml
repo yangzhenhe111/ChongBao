@@ -1,9 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/fun_introduction_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/nav">
+
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="新功能介绍"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+        <TextView
+            android:gravity="center"
+             android:textColor="@color/colorTheme"
+            android:textSize="35sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I.m 宠 宝" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="#ef5b9c"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="论坛 乐在交流" />
+
+            <TextView
+                android:textSize="15sp"
+                android:gravity="center"
+                android:textColor="#f05b72"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="向宠宝主人分享日常，交流经验" />
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/lunspec" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="#9932CD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="医院 安全送达" />
+
+            <TextView
+                android:textSize="15sp"
+                android:gravity="center"
+                android:textColor="#6950a1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="查看宠物位置，您贴心的宠物管家" />
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/mapspec" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="#007947"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="我的 功能完善" />
+
+            <TextView
+                android:textSize="15sp"
+                android:gravity="center"
+                android:textColor="#1d953f"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="个性化定制属于自己的APP" />
     tools:context=".my.FunIntroduction">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/myspec" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

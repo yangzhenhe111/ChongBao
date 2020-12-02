@@ -8,17 +8,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.pet.R;
 
-public class FunIntroduction extends AppCompatActivity {
-private Toolbar toolbar;
+public class ConnectUs extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fun_introduction);
-        toolbar = findViewById(R.id.fun_introduction_toolbar);
+        setContentView(R.layout.activity_connect_us);
+        Toolbar toolbar = findViewById(R.id.connect_us_toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FunIntroduction.this.finish();
+                ConnectUs.this.finish();
             }
         });
     }
