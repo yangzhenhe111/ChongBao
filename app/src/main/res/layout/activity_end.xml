@@ -79,14 +79,31 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="15dp"
                         android:text="地址"
+                        android:textColor="#000000"
                         android:textSize="17sp" />
 
-                    <EditText
-                        android:id="@+id/endadd"
+                    <RelativeLayout
+                        android:onClick="choice"
+                        android:id="@+id/choice"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textSize="17sp" />
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="选择地址"
+                            android:textColor="#000000"
+                            android:id="@+id/newend"/>
+                        <ImageView
+                            android:layout_marginTop="5dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/choice"/>
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -97,6 +114,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:textColor="#000000"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -104,6 +122,7 @@
                         android:textSize="17sp" />
 
                     <EditText
+                        android:textColor="#000000"
                         android:id="@+id/endmen"
                         android:hint="例：3栋2单元603室"
                         android:layout_width="match_parent"
@@ -119,6 +138,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:textColor="#000000"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -126,6 +146,7 @@
                         android:textSize="17sp" />
 
                     <EditText
+                        android:textColor="#000000"
                         android:id="@+id/endpeo"
                         android:hint="请填写联系人姓名"
                         android:layout_width="match_parent"
@@ -141,6 +162,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:textColor="#000000"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
@@ -148,6 +170,7 @@
                         android:textSize="17sp" />
 
                     <EditText
+                        android:textColor="#000000"
                         android:id="@+id/endtel"
                         android:hint="请填写联系人手机号"
                         android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package com.example.pet.nursing;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.pet.R;
@@ -24,10 +26,11 @@ import java.util.List;
 public class EndActivity extends AppCompatActivity {
     private ListView addlv;
     private HisaddAdapter hadapter;
+    private RelativeLayout choice;
     private RadioGroup yesno;
     private List<HisAddress> addlist = new ArrayList<>();
     private TextView histv;
-    private EditText add;
+    private TextView add;
     private EditText men;
     private EditText peo;
     private EditText tel;
@@ -64,10 +67,12 @@ public class EndActivity extends AppCompatActivity {
     }
 
     private void getViews() {
+        choice = findViewById(R.id.choice);
         btnsure = findViewById(R.id.btnsure);
         yesno = findViewById(R.id.yesno);
         addlv = findViewById(R.id.lvhis);
-        add = findViewById(R.id.endadd);
+        add = findViewById(R.id.newend);
+        add.setText(AddressInfo.END);
         men = findViewById(R.id.endmen);
         peo = findViewById(R.id.endpeo);
         tel = findViewById(R.id.endtel);
@@ -88,8 +93,10 @@ public class EndActivity extends AppCompatActivity {
             AddressInfo.END = add.getText().toString() + men.getText().toString();
             AddressInfo.ENDPE= peo.getText().toString();
             AddressInfo.ENDTEL = tel.getText().toString();
-            Intent intent = new Intent();
-            setResult(888, intent);
+            Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+            intent.putExtra("data","refresh");
+            LocalBroadcastManager.getInstance(EndActivity.this).sendBroadcast(intent);
+            sendBroadcast(intent);
             finish();
         }
     }
@@ -138,14 +145,25 @@ public class EndActivity extends AppCompatActivity {
                 AddressInfo.END = addlist.get(position).getAdd();
                 AddressInfo.ENDPE = addlist.get(position).getName();
                 AddressInfo.ENDTEL = addlist.get(position).getTel();
-                Intent intent = new Intent();
-                setResult(888, intent);
                 finish();
             }
         });
     }
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+    }
     public void back(View view) {
         finish();
+    }
+
+    public void choice(View view) {
+        Intent i = new Intent(this,Choice2Activity.class);
+        startActivity(i);
     }
 }
