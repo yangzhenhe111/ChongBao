@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.baidu.mapapi.map.Circle;
 import com.example.pet.R;
 import com.example.pet.my.order.MyOrderActivity;
+import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Article;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -31,7 +32,6 @@ public class MyFragment extends Fragment {
     private TextView infoSetting;
     private TextView infoAboutUs;
     private CircleImageView infoPhoto;
-
     public MyFragment() {
     }
 
@@ -41,10 +41,15 @@ public class MyFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_my,container,false);
         //初始化
         setView();
-
+        setViewContent();
         return view;
     }
+//设置控件内容
+    private void setViewContent() {
+        //infoPhoto.setImageBitmap(Cache.user.);
+    }
 
+    //获得控件和监听器
     private void setView() {
         MyListener listener = new MyListener();
         infoArticle = view.findViewById(R.id.info_article);
@@ -97,7 +102,6 @@ public class MyFragment extends Fragment {
                     Intent intent6 = new Intent(getContext(), AboutUs.class);
                     startActivity(intent6);
                     break;
-
                 case R.id.info_photo:
                     Intent intent7 = new Intent(getContext(),Login.class);
                     startActivity(intent7);
