@@ -4,13 +4,33 @@ import android.graphics.Bitmap;
 
 public class Tips {
     private int id;
-    private Bitmap head;
-    private String name;
+    private int userId;
+    private String userName;
+    private Bitmap userHead;
     private String time;
     private String topic;
     private String title;
-    private Bitmap thumbnail;
     private String text;
+    private Bitmap thumbnail;
+    private int likes;
+    private int comments;
+    private int forwards;
+
+
+//    public Tips(int id, int userId, String userName, Bitmap userHead, String time, String topic, String title, String text, Bitmap thumbnail, int likes, int comments, int forwards) {
+//        this.id = id;
+//        this.userId = userId;
+//        this.userName = userName;
+//        this.userHead = userHead;
+//        this.time = time;
+//        this.topic = topic;
+//        this.title = title;
+//        this.text = text;
+//        this.thumbnail = thumbnail;
+//        this.likes = likes;
+//        this.comments = comments;
+//        this.forwards = forwards;
+//    }
 
     public int getId() {
         return id;
@@ -20,20 +40,28 @@ public class Tips {
         this.id = id;
     }
 
-    public Bitmap getHead() {
-        return head;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setHead(Bitmap head) {
-        this.head = head;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Bitmap getUserHead() {
+        return userHead;
+    }
+
+    public void setUserHead(Bitmap userHead) {
+        this.userHead = userHead;
     }
 
     public String getTime() {
@@ -60,14 +88,6 @@ public class Tips {
         this.title = title;
     }
 
-    public Bitmap getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(Bitmap thumbnail) {
-        this.thumbnail = thumbnail;
-    }
-
     public String getText() {
         return text;
     }
@@ -76,17 +96,37 @@ public class Tips {
         this.text = text;
     }
 
-    @Override
-    public String toString() {
-        return "Tips{" +
-                "id=" + id +
-                ", head=" + head +
-                ", name='" + name + '\'' +
-                ", time='" + time + '\'' +
-                ", topic='" + topic + '\'' +
-                ", title='" + title + '\'' +
-                ", thumbnail=" + thumbnail +
-                ", text='" + text + '\'' +
-                '}';
+    public Bitmap getThumbnail() {
+        return thumbnail;
     }
+
+    public void setThumbnail(Bitmap thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
+    }
+
+    public int getForwards() {
+        return forwards;
+    }
+
+    public void setForwards(int forwards) {
+        this.forwards = forwards;
+    }
+
+
 }

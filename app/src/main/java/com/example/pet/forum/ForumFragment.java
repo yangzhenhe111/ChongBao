@@ -1,5 +1,8 @@
 package com.example.pet.forum;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextPaint;
 import android.util.Log;
@@ -8,8 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,12 +24,26 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.pet.R;
+import com.example.pet.other.entity.BaseUrl;
 import com.example.pet.other.entity.Tips;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ForumFragment extends Fragment {
 
@@ -46,11 +67,12 @@ public class ForumFragment extends Fragment {
     private Banner banner;
     private ArrayList<Tips> arrayList = new ArrayList<>();
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forum,container,false);
+        init();
+        Log.e("1","1");
         et_search = view.findViewById(R.id.et_main_search);
         btn_search = view.findViewById(R.id.btn_main_search);
         btn_search.setOnClickListener(new View.OnClickListener() {
@@ -254,7 +276,7 @@ public class ForumFragment extends Fragment {
         for (int i = 0; i < 5; i++) {
             Tips tips = new Tips();
             tips.setId(1);
-            tips.setName("名字" + i);
+            tips.setUserName("名字" + i);
             tips.setTime("2020-11-28/16:36:0" + i);
             tips.setTopic("标签" + i);
             tips.setTitle("标题" + i);
@@ -267,7 +289,68 @@ public class ForumFragment extends Fragment {
     }
 
     public void init(){
-
+        Log.e("2","2");
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    Log.e("3","3");
+                    URL url = new URL("http://192.168.43.227:8080//LovePet/SearchAllPostServlet");
+                    Log.e("5","5");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    Log.e("7","7");
+                    connection.setRequestMethod("GET");
+                    InputStream input = connection.getInputStream();
+                    Log.e("6","6");
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
+                    StringBuffer stringBuffer = new StringBuffer();
+                    String line;
+                    while ((line=bufferedReader.readLine())!=null){
+                        stringBuffer.append(line);
+                    }
+                    Log.e("4","4");
+                    Log.e("4","4");
+                    JSONArray jsonArray = new JSONArray(stringBuffer.toString());
+                    Log.e("9",jsonArray+"");
+                    Log.e("10","10");
+                    List<Tips> tipsList = new ArrayList<>();
+                    for (int i=0;i<jsonArray.length();i++){
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        int id = jsonObject.getInt("id");
+                        int usedid = jsonObject.getInt("userId");
+                        String userName = jsonObject.getString("userName");
+                        String userhead = jsonObject.getString("userHead");
+                        String time = jsonObject.getString("time");
+                        String topic = jsonObject.getString("topic");
+                        String title = jsonObject.getString("title");
+                        String text = jsonObject.getString("text");
+                        int likes = jsonObject.getInt("like");
+                        int comments = jsonObject.getInt("comments");
+                        int forwards = jsonObject.getInt("forwards");
+                        Tips tips = new Tips();
+                        tips.setUserName(userName);
+                        tips.setId(id);
+                        tips.setUserId(usedid);
+                        tips.setTime(time);
+                        tips.setTopic(topic);
+                        tips.setTitle(title);
+                        tips.setText(text);
+                        tips.setLikes(likes);
+                        tips.setComments(comments);
+                        tips.setForwards(forwards);
+                        Log.e("userid+",jsonObject+"");
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (ProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     public void search(){
@@ -278,4 +361,5 @@ public class ForumFragment extends Fragment {
             }
         };
     }
+
 }

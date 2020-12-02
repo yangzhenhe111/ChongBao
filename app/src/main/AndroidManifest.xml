@@ -4,28 +4,26 @@
     <permission
         android:name="${applicationId}.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-    <!-- 访问网络，进行地图相关业务数据请求，包括地图数据，路线规划，POI检索等 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 获取网络状态，根据网络状态切换进行数据请求网络转换 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 读取外置存储。如果开发者使用了so动态加载功能并且把so文件放在了外置存储区域，则需要申请该权限，否则不需要 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- 这个权限用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- 这个权限用于访问GPS定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
 
     <application
+        android:usesCleartextTraffic="true"
         android:name="com.example.pet.other.DebugApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -33,6 +31,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".my.AcountSecurity">
+
+        </activity>
+
+        <activity android:name=".my.ConnectUs" />
         <activity android:name="com.example.pet.my.order.MyOrderActivity"></activity>
         <activity android:name="com.example.pet.my.OrderComplete"></activity>
         <activity android:name="com.example.pet.my.EditInfo"></activity>
@@ -56,18 +59,16 @@
         <activity android:name="com.example.pet.forum.TopicActivity" />
         <activity android:name="com.example.pet.forum.PublishActivity" />
         <activity android:name="com.example.pet.nursing.CancelActivity"/>
-        <activity android:name="com.example.pet.nursing.ChoiceActivity"/>
         <activity android:name="com.example.pet.nursing.JiedanActivity"/>
         <activity android:name="com.example.pet.nursing.ChangehisActivity"/>
         <activity android:name="com.example.pet.nursing.EndActivity"/>
-        <activity android:name="com.example.pet.nursing.Choice2Activity"/>
         <activity android:name="com.example.pet.nursing.StartActivity"/>
         <activity android:name="com.example.pet.nursing.NeworderActivity"/>
         <activity android:name="com.example.pet.nursing.CostActivity"/>
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="z0zj4cmy9htsus2Z8rzg6KI6vbDCfwxB" />
+            android:value="Gy6t4iVa5bjCYSlblHYFLNKNCFmABmH3" />
 
         <service
             android:name="com.baidu.location.f"

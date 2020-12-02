@@ -38,7 +38,7 @@ public class LandlordActivity extends AppCompatActivity {
         for (int i = 5; i < 5; i++) {
             Tips tips = new Tips();
             tips.setId(1);
-            tips.setName("名字+" + i);
+            tips.setUserName("名字+" + i);
             tips.setTime("时间+" + i);
             tips.setTopic("标签" + i);
             tips.setTitle("标题" + i);
