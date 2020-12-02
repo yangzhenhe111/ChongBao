@@ -116,6 +116,7 @@ public class Choice2Activity extends AppCompatActivity implements OnGetPoiSearch
             }
         });
     }
+    //dhfjkdhfjd
     private void initMap() {
         mMapView = (MapView) findViewById(R.id.bmapView);
         mBaiduMap = mMapView.getMap();
