@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.pet.forum.ForumFragment;
 import com.example.pet.my.MyFragment;
 import com.example.pet.nursing.NursingFragment;
-import com.mob.MobSDK;
+//import com.mob.MobSDK;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //短信授权
-        MobSDK.submitPolicyGrantResult(granted, null);
+        //MobSDK.submitPolicyGrantResult(granted, null);
 
         //添加第二条注释
         //加一条注释
