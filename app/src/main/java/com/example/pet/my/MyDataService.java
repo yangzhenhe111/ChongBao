@@ -94,6 +94,7 @@ public class MyDataService extends IntentService {
                             break;
                         }
                     }
+                    //设置
                     order.setAddresser(rs.getString("addresser"));
                     order.setAddresseeContact(rs.getString("addressee"));
                     order.setPetShopContact(rs.getString("petShopContact"));
