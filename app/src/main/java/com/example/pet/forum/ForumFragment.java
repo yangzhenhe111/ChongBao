@@ -72,7 +72,6 @@ public class ForumFragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forum,container,false);
         init();
-        Log.e("1","1");
         et_search = view.findViewById(R.id.et_main_search);
         btn_search = view.findViewById(R.id.btn_main_search);
         btn_search.setOnClickListener(new View.OnClickListener() {
@@ -273,72 +272,51 @@ public class ForumFragment extends Fragment {
         });
 
         lv_tips = view.findViewById(R.id.lv_tips);
-        for (int i = 0; i < 5; i++) {
-            Tips tips = new Tips();
-            tips.setId(1);
-            tips.setUserName("名字" + i);
-            tips.setTime("2020-11-28/16:36:0" + i);
-            tips.setTopic("标签" + i);
-            tips.setTitle("标题" + i);
-            tips.setText("正文" + i);
-            arrayList.add(tips);
-        }
+//        for (int i = 0; i < 5; i++) {
+//            Tips tips = new Tips();
+//            tips.setId(1);
+//            tips.setUserName("名字" + i);
+//            tips.setTime("2020-11-28/16:36:0" + i);
+//            tips.setTopic("标签" + i);
+//            tips.setTitle("标题" + i);
+//            tips.setText("正文" + i);
+//            arrayList.add(tips);
+//        }
         MainForumTipsAdapter mainForumTipsAdapter = new MainForumTipsAdapter(getContext(),arrayList,R.layout.forum_tips_item);
         lv_tips.setAdapter(mainForumTipsAdapter);
         return view;
     }
 
     public void init(){
-        Log.e("2","2");
         new Thread(){
             @Override
             public void run() {
                 try {
-                    Log.e("3","3");
-                    URL url = new URL("http://192.168.43.227:8080//LovePet/SearchAllPostServlet");
-                    Log.e("5","5");
+                    URL url = new URL("http:10.7.90.222:8080/ChongBao_war_exploded/PostContent");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    Log.e("7","7");
                     connection.setRequestMethod("GET");
                     InputStream input = connection.getInputStream();
-                    Log.e("6","6");
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
                     StringBuffer stringBuffer = new StringBuffer();
                     String line;
                     while ((line=bufferedReader.readLine())!=null){
                         stringBuffer.append(line);
                     }
-                    Log.e("4","4");
-                    Log.e("4","4");
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
-                    Log.e("9",jsonArray+"");
-                    Log.e("10","10");
-                    List<Tips> tipsList = new ArrayList<>();
+                    arrayList = new ArrayList<>();
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        int id = jsonObject.getInt("id");
-                        int usedid = jsonObject.getInt("userId");
-                        String userName = jsonObject.getString("userName");
-                        String userhead = jsonObject.getString("userHead");
-                        String time = jsonObject.getString("time");
-                        String topic = jsonObject.getString("topic");
-                        String title = jsonObject.getString("title");
-                        String text = jsonObject.getString("text");
-                        int likes = jsonObject.getInt("like");
-                        int comments = jsonObject.getInt("comments");
-                        int forwards = jsonObject.getInt("forwards");
+                        String post_title = jsonObject.getString("post_title");
+                        String post_time = jsonObject.getString("post_time");
+                        String post_text = jsonObject.getString("post_text");
+                        String name = jsonObject.getString("name");
+                        String user_name = jsonObject.getString("user_name");
                         Tips tips = new Tips();
-                        tips.setUserName(userName);
-                        tips.setId(id);
-                        tips.setUserId(usedid);
-                        tips.setTime(time);
-                        tips.setTopic(topic);
-                        tips.setTitle(title);
-                        tips.setText(text);
-                        tips.setLikes(likes);
-                        tips.setComments(comments);
-                        tips.setForwards(forwards);
-                        Log.e("userid+",jsonObject+"");
+                        tips.setTitle(post_title);
+                        tips.setText(post_text);
+                        tips.setTime(post_time);
+                        tips.setUserName(user_name);
+                        arrayList.add(tips);
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
