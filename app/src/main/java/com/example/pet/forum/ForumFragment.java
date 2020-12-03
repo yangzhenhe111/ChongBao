@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextPaint;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +26,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.pet.R;
-import com.example.pet.other.entity.BaseUrl;
 import com.example.pet.other.entity.Tips;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -44,6 +45,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ForumFragment extends Fragment {
 
@@ -68,11 +70,22 @@ public class ForumFragment extends Fragment {
     private ArrayList<Tips> arrayList = new ArrayList<>();
     private ArrayList<Tips> tipsArrayList;
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message message) {
+            switch (message.what){
+                case 1:
+                    init((ArrayList) message.obj);
+                    break;
+            }
+        }
+    };
+
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forum,container,false);
-        init();
+        getAllTips();
         et_search = view.findViewById(R.id.et_main_search);
         btn_search = view.findViewById(R.id.btn_main_search);
         btn_search.setOnClickListener(new View.OnClickListener() {
@@ -229,7 +242,6 @@ public class ForumFragment extends Fragment {
             }
         });
 
-
         ArrayList<Integer> images = new ArrayList<>();
         ArrayList<String> title = new ArrayList<>();
         title.add("新手推荐文章1");
@@ -283,12 +295,15 @@ public class ForumFragment extends Fragment {
 //            tips.setText("正文" + i);
 //            arrayList.add(tips);
 //        }
-        MainForumTipsAdapter mainForumTipsAdapter = new MainForumTipsAdapter(getContext(),arrayList,R.layout.forum_tips_item);
-        lv_tips.setAdapter(mainForumTipsAdapter);
         return view;
     }
 
-    public void init(){
+    public void init(ArrayList arrayList){
+        MainForumTipsAdapter mainForumTipsAdapter = new MainForumTipsAdapter(getContext(),arrayList,R.layout.forum_tips_item);
+        lv_tips.setAdapter(mainForumTipsAdapter);
+    }
+
+    public void getAllTips(){
         new Thread(){
             @Override
             public void run() {
@@ -297,13 +312,16 @@ public class ForumFragment extends Fragment {
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream input = connection.getInputStream();
+                    Log.e("3", "sybs");
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
                     StringBuffer stringBuffer = new StringBuffer();
                     String line;
+                    Log.e("4", "sybs");
                     while ((line=bufferedReader.readLine())!=null){
                         stringBuffer.append(line);
                     }
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
+                    Log.e("5", "sybs");
                     tipsArrayList = new ArrayList<>();
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -317,8 +335,12 @@ public class ForumFragment extends Fragment {
                         tips.setText(post_text);
                         tips.setTime(post_time);
                         tips.setUserName(user_name);
-                        Log.e("name",name);
                         arrayList.add(tips);
+
+                        Message message = handler.obtainMessage();
+                        message.what = 1;
+                        message.obj = arrayList;
+                        handler.sendMessage(message);
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
