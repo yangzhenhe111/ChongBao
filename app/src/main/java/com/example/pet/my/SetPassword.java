@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,16 +19,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pet.R;
+import com.example.pet.other.Cache;
+import com.example.pet.other.entity.User;
+import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.security.auth.callback.Callback;
-
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class SetPassword extends AppCompatActivity {
     private Toolbar toolbar;
@@ -43,6 +59,9 @@ public class SetPassword extends AppCompatActivity {
     public String country="86";//这是中国区号，如果需要其他国家列表，可以使用getSupportedCountries();获得国家区号
 
     private static final int CODE_REPEAT = 1; //重新发送
+    private static final int CODE_TRUE = 2; //注册成功
+    private static final int CODE_FALSE = 3; //已存在
+    private static final int CODE_FALSE1 = 4; //未知原因错误
 
     Handler hd = new Handler() {
         @Override
@@ -53,9 +72,16 @@ public class SetPassword extends AppCompatActivity {
                 tt.cancel();//取消任务
                 TIME = 60;//时间重置
                 btnCheck.setText("重新发送验证码");
-            }else {
+            }else if(msg.what == CODE_TRUE){
+                SetPassword.this.finish();
+            }else if(msg.what == CODE_FALSE){
+                toast(msg.obj.toString());
+            }else if(msg.what == CODE_FALSE1){
+                toast("后台服务繁忙，请1分钟后再次申请注册！");
+            }else{
                 btnCheck.setText(TIME + "重新发送验证码");
             }
+
         }
     };
 
@@ -81,7 +107,53 @@ public class SetPassword extends AppCompatActivity {
         }
     };
 
+    /**
+     * 上传服务端
+     */
     private void insert() {
+        //发送数据
+        Log.e("register","1");
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Log.e("register","2");
+        RequestBody requestBody = new FormBody.Builder()
+                .add("phone",phone)
+                .add("pass",etPass.getText().toString())
+                .build();
+        final Request request = new Request.Builder()
+                .post(requestBody)
+                .url(Cache.MY_URL + "RegisterServlet")
+                .build();
+        Log.e("register","3");
+        Call call = okHttpClient.newCall(request);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //请求失败
+                toast("注册失败，原因不明！");
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //请求成功
+                Log.e("register","4");
+                //使用HandlerMessage修改用户界面
+                Message msg = new Message();
+                String str = response.body().string();
+                if(str.equals("true")){
+                    msg.what = CODE_TRUE;
+                }else if(str.equals("false")){
+                    msg.what = CODE_FALSE1;
+                }else{
+                    msg.what = CODE_FALSE;
+                }
+                msg.obj = str;
+                hd.sendMessage(msg);
+
+                Log.e("register","5");
+            }
+        });
 
     }
 
