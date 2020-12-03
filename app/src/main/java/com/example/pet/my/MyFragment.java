@@ -17,11 +17,17 @@ import com.example.pet.R;
 import com.example.pet.my.order.MyOrderActivity;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Article;
+import com.example.pet.other.entity.Order;
 import com.example.pet.other.entity.User;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,6 +46,11 @@ private  TextView infoName;
     public MyFragment() {
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,12 +62,14 @@ private  TextView infoName;
     }
 //设置控件内容
     private void setViewContent() {
-        if(Cache.user !=null){
 
+        if(Cache.user !=null){
+            Cache.user = new User();
             Cache.user.setPicturePath("/imgs/1.png");
             Cache.user.setUserName("洛洛");
             Cache.user.setUserAutograph("我心向阳");
         }else{
+            Log.e("1",Cache.MY_URL+"MyPet?userId=1");
             Cache.user = new User();
             Cache.user.setUserName("游客");
         }
@@ -105,6 +118,8 @@ private  TextView infoName;
                     startActivity(intent);
                     break;
                 case R.id.info_order:
+                    Intent intentOrder = new Intent(getContext(),MyDataService.class);
+                    getContext().startService(intentOrder);
                     Intent intent1 = new Intent(getContext(), MyOrderActivity.class);
                     startActivity(intent1);
                     break;

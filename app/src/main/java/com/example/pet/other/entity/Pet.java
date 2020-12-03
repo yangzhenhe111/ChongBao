@@ -3,35 +3,15 @@ package com.example.pet.other.entity;
 import java.io.Serializable;
 
 public class Pet implements Serializable {
-    private int petId;//宠物ID
-    private String petName;//宠物名称
-    private String petType;//宠物种类
-    private int petAge;//宠物年龄
-    private int petWeight;//宠物重量
-    private String picturePath;//宠物头像
+    private int  petId;
+    private String  picturePath;
+    private String petName;
+    private String petType;
+    private int petAge;
+    private String petWeight;
+    private int userId;
 
     public Pet() {
-    }
-
-    public Pet(int petId, String petName, String petType, int petAge, int petWeight, String picturePath) {
-        this.petId = petId;
-        this.petName = petName;
-        this.petType = petType;
-        this.petAge = petAge;
-        this.petWeight = petWeight;
-        this.picturePath = picturePath;
-    }
-
-    @Override
-    public String toString() {
-        return "Pet{" +
-                "petId=" + petId +
-                ", petName='" + petName + '\'' +
-                ", petType='" + petType + '\'' +
-                ", petAge=" + petAge +
-                ", petWeight=" + petWeight +
-                ", picturePath='" + picturePath + '\'' +
-                '}';
     }
 
     public int getPetId() {
@@ -40,6 +20,14 @@ public class Pet implements Serializable {
 
     public void setPetId(int petId) {
         this.petId = petId;
+    }
+
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
     }
 
     public String getPetName() {
@@ -66,19 +54,32 @@ public class Pet implements Serializable {
         this.petAge = petAge;
     }
 
-    public int getPetWeight() {
+    public String getPetWeight() {
         return petWeight;
     }
 
-    public void setPetWeight(int petWeight) {
+    public void setPetWeight(String petWeight) {
         this.petWeight = petWeight;
     }
 
-    public String getPicturePath() {
-        return picturePath;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "petId=" + petId +
+                ", picturePath='" + picturePath + '\'' +
+                ", petName='" + petName + '\'' +
+                ", petType='" + petType + '\'' +
+                ", petAge=" + petAge +
+                ", petWeight='" + petWeight + '\'' +
+                ", userId=" + userId +
+                '}';
     }
 }

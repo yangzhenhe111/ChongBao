@@ -17,7 +17,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.baidu.mapapi.utils.DistanceUtil;
 import com.example.pet.R;
+
+import java.text.DecimalFormat;
 
 public class NeworderActivity extends AppCompatActivity {
     private RelativeLayout fei;
@@ -83,6 +86,11 @@ public class NeworderActivity extends AppCompatActivity {
                 pop();
             }
         });
+        if(!AddressInfo.END.equals("送去哪里？") && !AddressInfo.START.equals("到哪里接？")){
+            DecimalFormat df = new DecimalFormat("######0");
+            String distance = df.format(DistanceUtil.getDistance(Point.END, Point.START));
+            lu.setText(distance+"米");
+        }
     }
     @Override
     protected void onRestart() {

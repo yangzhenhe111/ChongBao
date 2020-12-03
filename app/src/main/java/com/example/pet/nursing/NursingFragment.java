@@ -92,30 +92,39 @@ public class NursingFragment extends Fragment {
 
     private void Position() {
         lc = new LocationClient(getActivity().getApplicationContext());
-        LocationClientOption option = new LocationClientOption();
-        option.setOpenGps(true);
-        option.setCoorType("bd09ll");
-        option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
-        lc.setLocOption(option);
-        lc.registerLocationListener(new BDAbstractLocationListener() {
-            @Override
-            public void onReceiveLocation(BDLocation bdLocation) {
-                double wd = 38.0037;//纬度
-                double jd = 114.529194;//经度
-                LatLng point = new LatLng(wd,jd);
-                MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(point);
-                //移动地图界面
-                bm.animateMapStatus(update);
-                MyLocationConfiguration configuration = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.COMPASS,true,BitmapDescriptorFactory.fromResource(R.drawable.marker));//使用默认小图标
-                bm.setMyLocationConfiguration(configuration);
-                bm.setMyLocationEnabled(true);
-                MyLocationData data = new MyLocationData.Builder().latitude(wd).longitude(jd).build();
-                bm.setMyLocationData(data);
-            }
-        });
-        lc.start();
+        this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},100);
     }
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100 && grantResults[0] == 0){
+            LocationClientOption option = new LocationClientOption();
+            option.setOpenGps(true);
+            option.setCoorType("bd09ll");
+            option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
+            lc.setLocOption(option);
+            lc.registerLocationListener(new BDAbstractLocationListener() {
+                @Override
+                public void onReceiveLocation(BDLocation bdLocation) {
+                    double wd = bdLocation.getLatitude();//纬度
+                    double jd = bdLocation.getLongitude();//经度
+                    LatLng point = new LatLng(wd,jd);
+                    MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(point);
+                    //移动地图界面
+                    bm.animateMapStatus(update);
+                    MyLocationConfiguration configuration = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.COMPASS,true,BitmapDescriptorFactory.fromResource(R.drawable.marker));//使用默认小图标
+                    bm.setMyLocationConfiguration(configuration);
+                    bm.setMyLocationEnabled(true);
+                    MyLocationData data = new MyLocationData.Builder()
+                            .latitude(wd)
+                            .longitude(jd)
+                            .build();
+                    bm.setMyLocationData(data);
+                }
+            });
+            lc.start();
+        }
+    }
     @Override
     public void onStart() {
         super.onStart();

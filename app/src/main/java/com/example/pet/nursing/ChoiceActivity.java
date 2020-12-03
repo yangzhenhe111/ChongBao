@@ -1,9 +1,7 @@
 package com.example.pet.nursing;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,13 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.CoordType;
-import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -43,17 +38,14 @@ import com.baidu.mapapi.search.poi.PoiCitySearchOption;
 import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiDetailSearchResult;
 import com.baidu.mapapi.search.poi.PoiIndoorResult;
-import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
-import com.baidu.mapapi.search.poi.PoiSortType;
 import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
 import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.baidu.mapapi.search.sug.SuggestionSearch;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.example.pet.R;
 import com.example.pet.nursing.adapter.Adapter_SearchAddress;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +77,6 @@ public class ChoiceActivity extends AppCompatActivity implements OnGetPoiSearchR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_choice);
         mContext = ChoiceActivity.this;
         tv_city = findViewById(R.id.tv_city);
@@ -249,16 +240,6 @@ public class ChoiceActivity extends AppCompatActivity implements OnGetPoiSearchR
                     return;
                 }
                 List<SuggestionResult.SuggestionInfo> sugList = suggestionResult.getAllSuggestions();
-                for (SuggestionResult.SuggestionInfo info : sugList) {
-                    if (info.key != null) {
-                        //Log.e(TAG, "搜索结果：" + info.toString());
-                        //Log.e(TAG, "key：" + info.key);
-                        DecimalFormat df = new DecimalFormat("######0");
-                        //用当前所在位置算出距离
-                        String distance = df.format(DistanceUtil.getDistance(currentLatLng, info.pt));
-                        //Log.e(TAG, "距离：" + distance);
-                    }
-                }
             }
         });
     }
@@ -331,6 +312,7 @@ public class ChoiceActivity extends AppCompatActivity implements OnGetPoiSearchR
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AddressInfo.START = poiInfoListForGeoCoder.get(position).getName();
+                Point.START = poiInfoListForGeoCoder.get(position).getLocation();
                 finish();
             }
         });
@@ -342,6 +324,7 @@ public class ChoiceActivity extends AppCompatActivity implements OnGetPoiSearchR
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AddressInfo.START = poiInfoListForSearch.get(position).getName();
+                Point.START = poiInfoListForGeoCoder.get(position).getLocation();
                 finish();
             }
         });

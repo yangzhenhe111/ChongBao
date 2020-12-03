@@ -2,11 +2,14 @@ package com.example.pet.my;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Order;
+import  com.example.pet.other.entity.Pet;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,12 +37,46 @@ public class MyDataService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         //宠物数据下载
+        if(Cache.myPetList == null){
+            try{
+                Cache.myPetList = new ArrayList<>();
+                URL url = new URL(Cache.MY_URL+"MyPet?userId=1");
+                InputStream in = url.openStream();
+                StringBuilder str = new StringBuilder();
+                byte[] bytes = new byte[256];
+                int len =0;
+                while ((len=in.read(bytes))!=-1){
+                    str.append(new String(bytes,0,len,"utf-8"));
+                }
+
+                in.close();
+                JSONArray jsonArray = new JSONArray(str.toString());
+
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject rs = jsonArray.getJSONObject(i);
+
+                   Pet pet= new Pet();
+                    pet.setPetId(rs.getInt("petId"));
+                    pet.setPicturePath(rs.getString("picturePath"));
+                    pet.setPetName(rs.getString("petName"));
+                    pet.setPetType(rs.getString("petType"));
+                    pet.setPetAge(rs.getInt("petAge"));
+                    pet.setPetWeight(rs.getString("petWeight"));
+                    pet.setUserId(rs.getInt("userId"));
+                    Log.e("MyDataService",pet.toString());
+                    Cache.myPetList.add(pet);
+                }
+
+            }catch(IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         //订单数据下载
-        if (Cache.myOrderList == null || Cache.myOrderList.size() == 0) {
+        if (Cache.myOrderList == null) {
             try {
                 Cache.myOrderList = new ArrayList<Order>();
-                URL url  = new URL(Cache.MY_URL +"MyOrder?userId="+Cache.user.getUserId());
+                URL url  = new URL(Cache.MY_URL +"MyOrder?userId=1");
                 InputStream in  = url.openStream();
                 StringBuilder str= new StringBuilder();
                 byte[] bytes = new byte[256];
@@ -48,21 +85,25 @@ public class MyDataService extends IntentService {
                     str.append(new String(bytes,0,len,"utf-8"));
 
                 }
+
                 in.close();
                 JSONArray jsonArray = new JSONArray(str.toString());
+                Log.e("",jsonArray.toString());
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject rs = jsonArray.getJSONObject(i);
                     Order order = new Order();
-                    order.setOrderId(rs.getString("orderId")+"");
+                    order.setOrderId(rs.getInt("orderId"));
                     order.setOrderStart(rs.getString("orderStart"));
                     order.setOrderEnd(rs.getString("orderEnd"));
-                    int id = Integer.parseInt(rs.getString("petId").trim());
+                    int id = rs.getInt("petId");
                     for(int j=0;j<Cache.myPetList.size();j++){
                         if(Cache.myPetList.get(j).getPetId() == id){
                             order.setPet(Cache.myPetList.get(j));
-                            break;
+                            Log.e("MyDataService","123");
+
                         }
                     }
+                    //设置
                     order.setAddresser(rs.getString("addresser"));
                     order.setAddresseeContact(rs.getString("addressee"));
                     order.setPetShopContact(rs.getString("petShopContact"));
@@ -74,8 +115,9 @@ public class MyDataService extends IntentService {
                     order.setOrderTime(rs.getString("orderTime"));
                     order.setKilometers(rs.getString("kilometers"));
                     order.setOrderState(rs.getString("orderState"));
-                    order.setUserId(rs.getString("userId")+"");
+                    order.setUserId(rs.getInt("userId"));
                     order.setAddresseeContact(rs.getString("addresseeContact"));
+
                     Cache.myOrderList.add(order);
                 }
             } catch (IOException | JSONException e) {

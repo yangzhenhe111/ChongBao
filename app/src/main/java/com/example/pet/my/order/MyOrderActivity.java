@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.example.pet.R;
 import com.example.pet.my.Order2;
 import com.example.pet.nursing.JiedanActivity;
+import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Order;
 import com.example.pet.other.entity.Pet;
 
@@ -29,7 +30,7 @@ public class MyOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_order);
         Log.e("order","2");
 
-        initData();
+        //initData();
         initMyOrderActivity();
     }
 
@@ -62,7 +63,7 @@ public class MyOrderActivity extends AppCompatActivity {
             }
             Pet pet = new Pet();
             pet.setPetType("哈士奇");
-            pet.setPetWeight(2);
+            pet.setPetWeight("2");
             order.setPet(pet);
             orders.add(order);
         }
@@ -75,6 +76,7 @@ public class MyOrderActivity extends AppCompatActivity {
     private void initMyOrderActivity() {
         lvOrder = findViewById(R.id.lv_my_order);
         Log.e("log","2");
+        orders = Cache.myOrderList;
         initMyOrderAdapter();
 
     }
@@ -84,7 +86,7 @@ public class MyOrderActivity extends AppCompatActivity {
      */
     private void initMyOrderAdapter() {
         myOrderAdapter = new MyOrderAdapter(this,
-                orders,
+                Cache.myOrderList,
                 R.layout.item_my_order);
         lvOrder.setAdapter(myOrderAdapter);
         Log.e("log","3");

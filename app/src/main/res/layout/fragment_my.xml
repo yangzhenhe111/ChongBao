@@ -23,6 +23,7 @@
             android:layout_marginTop="15dp"
             android:src="@drawable/photo"
             app:civ_border_width="2dp"
+            android:background="@drawable/bg_circle"
             app:civ_border_color="#00ffffff"/>
         <LinearLayout
             android:layout_width="match_parent"
