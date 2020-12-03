@@ -8,30 +8,35 @@
     android:paddingRight="20dp">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/register_toolbar"
+        android:onClick="onClicked"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/nav">
 
         <TextView
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
             android:text="手机号注册"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
         <TextView
+            android:id="@+id/tv_login"
+            android:onClick="onClicked"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/colorTheme"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="right"
+            android:layout_marginRight="5dp"
             android:text="登录"/>
 
     </androidx.appcompat.widget.Toolbar>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit"
@@ -44,15 +49,19 @@
             android:gravity="center"
             android:text="+86"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginRight="5dp"/>
 
         <EditText
+            android:id="@+id/et_phone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="手机号" />
     </LinearLayout>
 
     <Button
+        android:id="@+id/btn_next1"
+        android:onClick="onClicked"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/shape"
@@ -67,6 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <CheckBox
+            android:id="@+id/cb_xieyi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView

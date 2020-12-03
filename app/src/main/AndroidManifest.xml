@@ -31,6 +31,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".my.AcountSecurity">
+
+        </activity>
+
+        <activity android:name=".my.ConnectUs" />
         <activity android:name="com.example.pet.my.order.MyOrderActivity"></activity>
         <activity android:name="com.example.pet.my.OrderComplete"></activity>
         <activity android:name="com.example.pet.my.EditInfo"></activity>

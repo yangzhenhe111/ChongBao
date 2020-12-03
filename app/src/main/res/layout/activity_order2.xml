@@ -5,11 +5,13 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:background="#10000000"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
+            android:background="#FFFFFF"
             android:id="@+id/order_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -130,7 +132,7 @@
 
                             android:gravity="center"
                             android:text="取消订单"
-                            android:textColor="@color/black"
+                            android:textColor="@color/bg1"
                             android:textSize="18sp" />
 
 
@@ -151,7 +153,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
                         android:text="订单已取消"
-                        android:textColor="@color/red"
+                        android:textColor="@color/bg1"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
@@ -291,7 +293,7 @@
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/p" />
+                            android:src="@drawable/r" />
                     </LinearLayout>
 
                     <RelativeLayout
@@ -334,7 +336,7 @@
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/r" />
+                            android:src="@drawable/p" />
                     </LinearLayout>
 
                     <RelativeLayout
@@ -475,7 +477,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
                         android:text="订单已完成"
-                        android:textColor="@color/red"
+                        android:textColor="@color/bg1"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 

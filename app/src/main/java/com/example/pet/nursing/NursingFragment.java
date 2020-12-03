@@ -1,8 +1,13 @@
 package com.example.pet.nursing;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -28,9 +34,14 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.example.pet.R;
 import com.example.pet.my.order.MyOrderActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NursingFragment extends Fragment {
 
@@ -65,11 +76,10 @@ public class NursingFragment extends Fragment {
     }
 
     private void ScaleControl() {
-        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(18.0f);
+        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(19.0f);
         bm.setMapStatus(msu);
-        bm.setMaxAndMinZoomLevel(19.0f,13.0f);
+        bm.setMaxAndMinZoomLevel(20.0f,13.0f);
     }
-
 
     private void SellerPostion() {
         LatLng point = new LatLng(38.001171, 114.531944);
@@ -82,39 +92,28 @@ public class NursingFragment extends Fragment {
 
     private void Position() {
         lc = new LocationClient(getActivity().getApplicationContext());
-        NursingFragment.this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},100);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 100 && grantResults[0] == 0){
-            LocationClientOption option = new LocationClientOption();
-            option.setOpenGps(true);
-            option.setCoorType("bd09ll");
-            option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
-            lc.setLocOption(option);
-            lc.registerLocationListener(new BDAbstractLocationListener() {
-                @Override
-                public void onReceiveLocation(BDLocation bdLocation) {
-                    double wd = bdLocation.getLatitude();//纬度
-                    double jd = bdLocation.getLongitude();//经度
-                    LatLng point = new LatLng(wd,jd);
-                    MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(point);
-                    //移动地图界面
-                    bm.animateMapStatus(update);
-                    MyLocationConfiguration configuration = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.COMPASS,true,BitmapDescriptorFactory.fromResource(R.drawable.marker));//使用默认小图标
-                    bm.setMyLocationConfiguration(configuration);
-                    bm.setMyLocationEnabled(true);
-                    MyLocationData data = new MyLocationData.Builder()
-                            .latitude(wd)
-                            .longitude(jd)
-                            .build();
-                    bm.setMyLocationData(data);
-                }
-            });
-            lc.start();
-        }
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true);
+        option.setCoorType("bd09ll");
+        option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
+        lc.setLocOption(option);
+        lc.registerLocationListener(new BDAbstractLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                double wd = 38.0037;//纬度
+                double jd = 114.529194;//经度
+                LatLng point = new LatLng(wd,jd);
+                MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(point);
+                //移动地图界面
+                bm.animateMapStatus(update);
+                MyLocationConfiguration configuration = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.COMPASS,true,BitmapDescriptorFactory.fromResource(R.drawable.marker));//使用默认小图标
+                bm.setMyLocationConfiguration(configuration);
+                bm.setMyLocationEnabled(true);
+                MyLocationData data = new MyLocationData.Builder().latitude(wd).longitude(jd).build();
+                bm.setMyLocationData(data);
+            }
+        });
+        lc.start();
     }
 
     @Override
@@ -141,14 +140,28 @@ public class NursingFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mv.onResume();
     }
     @Override
     public void onPause() {
         super.onPause();
-        mv.onPause();
     }
-
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getActivity());
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.intent.action.CART_BROADCAST");
+        BroadcastReceiver mItemViewListClickReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent){
+                String msg = intent.getStringExtra("data");
+                if("refresh".equals(msg)){
+                    setViews();
+                }
+            }
+        };
+        broadcastManager.registerReceiver(mItemViewListClickReceiver, intentFilter);
+    }
     private void setViews() {
         pos = root.findViewById(R.id.position);
         slin = root.findViewById(R.id.start);
