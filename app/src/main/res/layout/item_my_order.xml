@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:background="@drawable/bg_my_order1"
-            android:text="取送"
+            android:text="宠物"
             android:textColor="@color/change_tab"
             android:textSize="12sp" />
 
