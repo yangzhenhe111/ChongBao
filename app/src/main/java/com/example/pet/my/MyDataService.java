@@ -2,6 +2,7 @@ package com.example.pet.my;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -36,10 +37,11 @@ public class MyDataService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         //宠物数据下载
-        if(Cache.myPetList == null && Cache.user !=null){
+        if(Cache.myPetList == null){
             try{
                 Cache.myPetList = new ArrayList<>();
-                URL url = new URL(Cache.MY_URL+"MyPet?userId="+Cache.user.getUserId());
+                URL url = new URL(Cache.MY_URL+"MyPet?userId=1");
+
                 InputStream in = url.openStream();
                 StringBuilder str = new StringBuilder();
                 byte[] bytes = new byte[256];
@@ -67,10 +69,10 @@ public class MyDataService extends IntentService {
         }
 
         //订单数据下载
-        if (Cache.myOrderList == null && Cache.user !=null) {
+        if (Cache.myOrderList == null) {
             try {
                 Cache.myOrderList = new ArrayList<Order>();
-                URL url  = new URL(Cache.MY_URL +"MyOrder?userId="+Cache.user.getUserId());
+                URL url  = new URL(Cache.MY_URL +"MyOrder?userId=1");
                 InputStream in  = url.openStream();
                 StringBuilder str= new StringBuilder();
                 byte[] bytes = new byte[256];
@@ -79,6 +81,7 @@ public class MyDataService extends IntentService {
                     str.append(new String(bytes,0,len,"utf-8"));
 
                 }
+                Log.e("MyDataService",str.toString());
                 in.close();
                 JSONArray jsonArray = new JSONArray(str.toString());
                 for (int i = 0; i < jsonArray.length(); i++) {
