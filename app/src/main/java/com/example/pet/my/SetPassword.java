@@ -138,7 +138,6 @@ public class SetPassword extends AppCompatActivity {
             case R.id.set_password_login:
                 Intent intent = new Intent(this,Login.class);
                 startActivity(intent);
-                SetPassword.this.finish();
                 break;
         }
     }
