@@ -17,8 +17,7 @@
     <color name="colorTheme">#0B97FF</color>
     <color name="red">#ff5555</color>
     <color name="black">#000000</color>
-    <color name="background">#eeeeee</color>
-
+    <color name="background">#20000000</color>
     <color name="gray61">#9C9C9C</color>
     <color name="gray71">#B5B5B5</color>
     <color name="gray81">#CFCFCF</color>

@@ -1,9 +1,11 @@
 package com.example.pet.nursing;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,14 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -48,7 +46,6 @@ import com.baidu.mapapi.search.sug.SuggestionSearch;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.example.pet.R;
 import com.example.pet.nursing.adapter.Adapter_SearchAddress;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +77,6 @@ public class Choice2Activity extends AppCompatActivity implements OnGetPoiSearch
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_choice);
         mContext = Choice2Activity.this;
         tv_city = findViewById(R.id.tv_city);
@@ -116,7 +112,6 @@ public class Choice2Activity extends AppCompatActivity implements OnGetPoiSearch
             }
         });
     }
-    //dhfjkdhfjd
     private void initMap() {
         mMapView = (MapView) findViewById(R.id.bmapView);
         mBaiduMap = mMapView.getMap();
@@ -327,6 +322,7 @@ public class Choice2Activity extends AppCompatActivity implements OnGetPoiSearch
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AddressInfo.END = poiInfoListForGeoCoder.get(position).getName();
+                Point.END = poiInfoListForGeoCoder.get(position).getLocation();
                 finish();
             }
         });
@@ -338,6 +334,7 @@ public class Choice2Activity extends AppCompatActivity implements OnGetPoiSearch
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AddressInfo.END = poiInfoListForSearch.get(position).getName();
+                Point.END = poiInfoListForGeoCoder.get(position).getLocation();
                 finish();
             }
         });
