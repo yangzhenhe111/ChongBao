@@ -328,13 +328,20 @@ public class ForumFragment extends Fragment {
                         String post_title = jsonObject.getString("post_title");
                         String post_time = jsonObject.getString("post_time");
                         String post_text = jsonObject.getString("post_text");
-                        String name = jsonObject.getString("name");
+                        String topic = jsonObject.getString("post_topic");
                         String user_name = jsonObject.getString("user_name");
+                        int count_likes = jsonObject.getInt("likes");
+                        int count_comments = jsonObject.getInt("comments");
+                        int count_forwards = jsonObject.getInt("forwards");
                         Tips tips = new Tips();
                         tips.setTitle(post_title);
                         tips.setText(post_text);
                         tips.setTime(post_time);
                         tips.setUserName(user_name);
+                        tips.setTopic(topic);
+                        tips.setLikes(count_likes);
+                        tips.setComments(count_comments);
+                        tips.setForwards(count_forwards);
                         arrayList.add(tips);
 
                         Message message = handler.obtainMessage();

@@ -104,7 +104,6 @@
                 android:id="@+id/tv_tips_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
                 android:textSize="20dp"
                 android:layout_marginLeft="12dp"
                 android:layout_gravity="center" />
@@ -126,7 +125,6 @@
                 android:id="@+id/tv_tips_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
                 android:textSize="20dp"
                 android:layout_marginLeft="12dp"
                 android:layout_gravity="center" />
@@ -149,7 +147,6 @@
                 android:id="@+id/tv_tips_forward"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
                 android:textSize="20dp"
                 android:layout_marginLeft="12dp"
                 android:layout_gravity="center" />
