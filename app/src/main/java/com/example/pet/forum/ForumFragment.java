@@ -292,7 +292,7 @@ public class ForumFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http:10.7.90.222:8080/ChongBao_war_exploded/PostContent");
+                    URL url = new URL("http:10.7.90.222:8080/ChongBao_war_exploded/GetAllPostServlet");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream input = connection.getInputStream();
