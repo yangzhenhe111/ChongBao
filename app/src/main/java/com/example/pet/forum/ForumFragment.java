@@ -293,7 +293,7 @@ public class ForumFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http:10.7.90.222:8080/ChongBao_war_exploded/GetAllPostServlet");
+                    URL url = new URL("http:172.20.10.2:8080/ChongBao_war_exploded/GetAllPostServlet");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream input = connection.getInputStream();
@@ -317,6 +317,7 @@ public class ForumFragment extends Fragment {
                         tips.setText(post_text);
                         tips.setTime(post_time);
                         tips.setUserName(user_name);
+                        Log.e("name",name);
                         arrayList.add(tips);
                     }
                 } catch (MalformedURLException e) {
