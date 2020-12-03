@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pet.R;
@@ -32,6 +33,7 @@ public class SetPassword extends AppCompatActivity {
     private Toolbar toolbar;
     private String phone;
     private EditText etPass;
+    private TextView tvLogin;
 
     private TimerTask tt;
     private Timer tm;
@@ -114,6 +116,7 @@ public class SetPassword extends AppCompatActivity {
         etCheckecode = findViewById(R.id.et_yan);
         btnCheck = findViewById(R.id.btn_getYan);
         etPass = findViewById(R.id.et_password);
+        tvLogin = findViewById(R.id.set_password_login);
     }
 
     public void onClicked(View view) {
@@ -131,6 +134,10 @@ public class SetPassword extends AppCompatActivity {
                 }else{//如果用户输入的内容为空，提醒用户
                     toast("请输入验证码后再提交");
                 }
+                break;
+            case R.id.set_password_login:
+                Intent intent = new Intent(this,Login.class);
+                startActivity(intent);
                 break;
         }
     }

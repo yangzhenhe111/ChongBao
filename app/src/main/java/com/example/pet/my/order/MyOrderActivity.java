@@ -63,7 +63,7 @@ public class MyOrderActivity extends AppCompatActivity {
             Pet pet = new Pet();
             pet.setPetType("哈士奇");
             pet.setPetWeight(2);
-            order.setPetInfo(pet);
+            order.setPet(pet);
             orders.add(order);
         }
         Log.e("log","1");

@@ -83,6 +83,12 @@ public class MainForumTipsAdapter extends BaseAdapter {
         tipsthumbnail.setImageBitmap(tipsArrayList.get(position).getThumbnail());
         TextView tipstext = convertView.findViewById(R.id.tv_tips_text);
         tipstext.setText(tipsArrayList.get(position).getText());
+        TextView tipslikes = convertView.findViewById(R.id.tv_tips_like);
+        tipslikes.setText(tipsArrayList.get(position).getLikes());
+        TextView tipscomments = convertView.findViewById(R.id.tv_tips_comment);
+        tipscomments.setText(tipsArrayList.get(position).getComments());
+        TextView tipsforwards = convertView.findViewById(R.id.tv_tips_forward);
+        tipsforwards.setText(tipsArrayList.get(position).getForwards());
         LinearLayout totips = convertView.findViewById(R.id.btn_tips_totips);
         totips.setOnClickListener(new View.OnClickListener() {
             @Override

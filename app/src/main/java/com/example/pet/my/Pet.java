@@ -16,6 +16,7 @@ import java.util.List;
 
 public class Pet extends AppCompatActivity {
     private List<String> list = new ArrayList<String>();
+
     private Spinner spinner;
     private ArrayAdapter<String> adapter;
     private Toolbar toolbar;
