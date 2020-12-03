@@ -86,7 +86,7 @@ public class MyOrderActivity extends AppCompatActivity {
      */
     private void initMyOrderAdapter() {
         myOrderAdapter = new MyOrderAdapter(this,
-                orders,
+                Cache.myOrderList,
                 R.layout.item_my_order);
         lvOrder.setAdapter(myOrderAdapter);
         Log.e("log","3");

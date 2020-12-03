@@ -149,6 +149,29 @@ public class Order implements Serializable {
         this.orderId = orderId;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", orderStart='" + orderStart + '\'' +
+                ", orderEnd='" + orderEnd + '\'' +
+                ", pet=" + pet +
+                ", addresser='" + addresser + '\'' +
+                ", addressee='" + addressee + '\'' +
+                ", petShopContact='" + petShopContact + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", orderAmount='" + orderAmount + '\'' +
+                ", clientContact='" + clientContact + '\'' +
+                ", runnerContact='" + runnerContact + '\'' +
+                ", runnerName='" + runnerName + '\'' +
+                ", orderTime='" + orderTime + '\'' +
+                ", kilometers='" + kilometers + '\'' +
+                ", orderState='" + orderState + '\'' +
+                ", userId=" + userId +
+                ", addresseeContact='" + addresseeContact + '\'' +
+                '}';
+    }
+
     public int getUserId() {
         return userId;
     }

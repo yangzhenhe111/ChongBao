@@ -41,7 +41,6 @@ public class MyDataService extends IntentService {
             try{
                 Cache.myPetList = new ArrayList<>();
                 URL url = new URL(Cache.MY_URL+"MyPet?userId=1");
-
                 InputStream in = url.openStream();
                 StringBuilder str = new StringBuilder();
                 byte[] bytes = new byte[256];
@@ -49,10 +48,13 @@ public class MyDataService extends IntentService {
                 while ((len=in.read(bytes))!=-1){
                     str.append(new String(bytes,0,len,"utf-8"));
                 }
+
                 in.close();
                 JSONArray jsonArray = new JSONArray(str.toString());
+
                 for(int i=0;i<jsonArray.length();i++){
                     JSONObject rs = jsonArray.getJSONObject(i);
+
                    Pet pet= new Pet();
                     pet.setPetId(rs.getInt("petId"));
                     pet.setPicturePath(rs.getString("picturePath"));
@@ -61,8 +63,10 @@ public class MyDataService extends IntentService {
                     pet.setPetAge(rs.getInt("petAge"));
                     pet.setPetWeight(rs.getString("petWeight"));
                     pet.setUserId(rs.getInt("userId"));
+                    Log.e("MyDataService",pet.toString());
                     Cache.myPetList.add(pet);
                 }
+
             }catch(IOException | JSONException e) {
                 e.printStackTrace();
             }
@@ -81,9 +85,10 @@ public class MyDataService extends IntentService {
                     str.append(new String(bytes,0,len,"utf-8"));
 
                 }
-                Log.e("MyDataService",str.toString());
+
                 in.close();
                 JSONArray jsonArray = new JSONArray(str.toString());
+                Log.e("",jsonArray.toString());
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject rs = jsonArray.getJSONObject(i);
                     Order order = new Order();
@@ -94,7 +99,8 @@ public class MyDataService extends IntentService {
                     for(int j=0;j<Cache.myPetList.size();j++){
                         if(Cache.myPetList.get(j).getPetId() == id){
                             order.setPet(Cache.myPetList.get(j));
-                            break;
+                            Log.e("MyDataService","123");
+
                         }
                     }
                     //设置
@@ -111,6 +117,7 @@ public class MyDataService extends IntentService {
                     order.setOrderState(rs.getString("orderState"));
                     order.setUserId(rs.getInt("userId"));
                     order.setAddresseeContact(rs.getString("addresseeContact"));
+
                     Cache.myOrderList.add(order);
                 }
             } catch (IOException | JSONException e) {

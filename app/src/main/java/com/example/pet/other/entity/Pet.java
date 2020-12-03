@@ -69,4 +69,17 @@ public class Pet implements Serializable {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "petId=" + petId +
+                ", picturePath='" + picturePath + '\'' +
+                ", petName='" + petName + '\'' +
+                ", petType='" + petType + '\'' +
+                ", petAge=" + petAge +
+                ", petWeight='" + petWeight + '\'' +
+                ", userId=" + userId +
+                '}';
+    }
 }
