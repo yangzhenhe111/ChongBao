@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.pet.forum.ForumFragment;
 import com.example.pet.my.MyFragment;
 import com.example.pet.nursing.NursingFragment;
+import com.mob.MobSDK;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,11 +32,15 @@ public class MainActivity extends AppCompatActivity {
     private ImageView ivMy;
 
     private Fragment currentFragment;
+
+    boolean granted = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //短信授权
+        MobSDK.submitPolicyGrantResult(granted, null);
 
         //添加第二条注释
         //加一条注释

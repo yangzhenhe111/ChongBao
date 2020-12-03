@@ -12,7 +12,7 @@
         app:navigationIcon="@drawable/nav">
 
         <TextView
-            android:layout_width="250dp"
+            android:layout_width="240dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="编辑个人信息"
