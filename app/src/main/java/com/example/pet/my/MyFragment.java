@@ -29,7 +29,6 @@ public class MyFragment extends Fragment {
 
     private  View view;
 private  TextView infoName;
-
     private TextView infoArticle;
     private TextView infoOrder;
     private TextView infoUpdate;
@@ -52,10 +51,16 @@ private  TextView infoName;
     }
 //设置控件内容
     private void setViewContent() {
-        Cache.user = new User();
-        Cache.user.setPicturePath("/imgs/1.png");
-        Cache.user.setUserName("洛洛");
-        Cache.user.setUserAutograph("我心向阳");
+        if(Cache.user !=null){
+
+            Cache.user.setPicturePath("/imgs/1.png");
+            Cache.user.setUserName("洛洛");
+            Cache.user.setUserAutograph("我心向阳");
+        }else{
+            Cache.user = new User();
+            Cache.user.setUserName("游客");
+        }
+
 //        try {
            // InputStream photoStream = new URL(Cache.MY_URL+Cache.user.getPicturePath()).openStream();
             //infoPhoto.setImageBitmap(BitmapFactory.decodeStream(photoStream));
