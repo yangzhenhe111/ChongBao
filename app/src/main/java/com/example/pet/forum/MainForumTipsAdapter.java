@@ -3,6 +3,7 @@ package com.example.pet.forum;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,20 +83,26 @@ public class MainForumTipsAdapter extends BaseAdapter {
         ImageView tipsthumbnail = convertView.findViewById(R.id.iv_tips_thumbnail);
         tipsthumbnail.setImageBitmap(tipsArrayList.get(position).getThumbnail());
         TextView tipstext = convertView.findViewById(R.id.tv_tips_text);
-        tipstext.setText(tipsArrayList.get(position).getText());
+        String str = tipsArrayList.get(position).getText();
+        int i = 40;
+        str = str.substring(0,i) + "...";
+        tipstext.setText(str);
         TextView tipslikes = convertView.findViewById(R.id.tv_tips_like);
-        tipslikes.setText(tipsArrayList.get(position).getLikes());
+        tipslikes.setText(""+tipsArrayList.get(position).getLikes());
         TextView tipscomments = convertView.findViewById(R.id.tv_tips_comment);
-        tipscomments.setText(tipsArrayList.get(position).getComments());
+        tipscomments.setText(""+tipsArrayList.get(position).getComments());
         TextView tipsforwards = convertView.findViewById(R.id.tv_tips_forward);
-        tipsforwards.setText(tipsArrayList.get(position).getForwards());
+        tipsforwards.setText(""+tipsArrayList.get(position).getForwards());
         LinearLayout totips = convertView.findViewById(R.id.btn_tips_totips);
         totips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(),TipsActivity.class);
-                intent.putExtra("tipsid",tipsArrayList.get(position).getId());
+                int i = tipsArrayList.get(position).getId();
+                String id = Integer.toString(i);
+                Log.e("St id", id);
+                intent.putExtra("tipsid",id);
                 context.startActivity(intent);
             }
         });

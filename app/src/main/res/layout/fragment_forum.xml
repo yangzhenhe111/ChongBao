@@ -95,6 +95,7 @@
                                 android:src="@drawable/food" />
 
                             <TextView
+                                android:id="@+id/tv_food"
                                 android:layout_width="70dp"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/food_img"
@@ -117,6 +118,7 @@
                                 android:src="@drawable/articles" />
 
                             <TextView
+                                android:id="@+id/tv_articles"
                                 android:layout_width="70dp"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/articles_img"
@@ -139,6 +141,7 @@
                                 android:src="@drawable/daily" />
 
                             <TextView
+                                android:id="@+id/tv_daily"
                                 android:layout_width="70dp"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/daily_img"
@@ -161,6 +164,7 @@
                                 android:src="@drawable/cosmetology" />
 
                             <TextView
+                                android:id="@+id/tv_cosmetology"
                                 android:layout_width="70dp"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/cosmetology_img"
@@ -183,6 +187,7 @@
                                 android:src="@drawable/train" />
 
                             <TextView
+                                android:id="@+id/tv_train"
                                 android:layout_width="70dp"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/train_img"
@@ -217,6 +222,7 @@
                                     android:src="@drawable/deworming" />
 
                                 <TextView
+                                    android:id="@+id/tv_deworming"
                                     android:layout_width="70dp"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/deworming_img"
@@ -239,6 +245,7 @@
                                     android:src="@drawable/disease" />
 
                                 <TextView
+                                    android:id="@+id/tv_disease"
                                     android:layout_width="70dp"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/disease_img"
@@ -261,6 +268,7 @@
                                     android:src="@drawable/randomtalk" />
 
                                 <TextView
+                                    android:id="@+id/tv_randomtalk"
                                     android:layout_width="70dp"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/randomtalk_img"
@@ -283,6 +291,7 @@
                                     android:src="@drawable/question" />
 
                                 <TextView
+                                    android:id="@+id/tv_question"
                                     android:layout_width="70dp"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/question_img"
@@ -305,6 +314,7 @@
                                     android:src="@drawable/sharephotos" />
 
                                 <TextView
+                                    android:id="@+id/tv_sharephotos"
                                     android:layout_width="70dp"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/sharephotos_img"
