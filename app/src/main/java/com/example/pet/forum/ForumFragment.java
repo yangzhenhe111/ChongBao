@@ -66,6 +66,7 @@ public class ForumFragment extends Fragment {
     private ListView lv_tips;
     private Banner banner;
     private ArrayList<Tips> arrayList = new ArrayList<>();
+    private ArrayList<Tips> tipsArrayList;
 
     @Nullable
     @Override
@@ -303,7 +304,7 @@ public class ForumFragment extends Fragment {
                         stringBuffer.append(line);
                     }
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
-                    arrayList = new ArrayList<>();
+                    tipsArrayList = new ArrayList<>();
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String post_title = jsonObject.getString("post_title");
