@@ -1,6 +1,7 @@
 package com.example.pet.my.order;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyOrderActivity extends AppCompatActivity {
-
+private Toolbar toolbar;
     private ListView lvOrder;
     private MyOrderAdapter myOrderAdapter;
     private List<Order> orders;
@@ -28,7 +29,13 @@ public class MyOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order);
-
+toolbar = findViewById(R.id.my_order_toolbar);
+toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        MyOrderActivity.this.finish();
+    }
+});
         initData();
         initMyOrderActivity();
     }
