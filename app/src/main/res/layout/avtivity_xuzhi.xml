@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#DCDCDC"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".nursing.XuzhiActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0B97FF">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal|center"
+            android:singleLine="true"
+            android:text="取送服务须知"
+            android:textColor="#000000"
+            android:textSize="25dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="back"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/back1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="返回"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                android:text="《服务契约条款》"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15sp"
+                android:text="特别声明：发件人请确保每票快件价值不超过2万元，超过者请拆分至每票2万元以下分别托运。客户寄递价值超过2万元的，应当在下单时向自由服务人员声明。客户未声明，该快件因可归责于自由服务人员的原因毁损、灭失时，赔偿金额将仅按照不超过2万元的一般快件的赔偿标准加以确定。宠宝所提供的各项服务的运营权，均归属于本公司。"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:text="1、宠宝平台，是包括但不限于宠宝官网(Web站点)、微信公众号 和名称为宠宝的APP应用的合称，是为自由服务人员提供自由服务人员信息管理、配送信息浏览与查询、配送交易撮合与处理、订单查询与管理、代理配送费磋商与谈判、配送费用代收代付、争议调解等互联网信息服务和在线交易处理服务的网络平台。宠宝平台并非配送服务的需求方，也非配送服务的提供者。在客户与自由服务人员达成交易的过程中，宠宝平台仅起居间摄合作用，跑腿宠宝平台并不参与客户与自由服务人员之间的配送交易。客户与自由服务人员之间因履行配送合同发生争议的，应当根据合同相对性原则向对方主张权利，并自行协商处理或寻求宠宝平台调解争议。
+            \n\n2、客户，是指在宠宝平台发布的配送订单的需求方。
+            \n\n3、客户对自己账户及余额，对应手机号码有保管的义务，未尽到保管义务，需独立承担责任、损失。
+            \n\n4、该账户不允许用来从事违反相关法律法规的行为，如违反法规或侵害到宠宝或他人权益的，须自行承担全部责任和赔偿一切损失，与宠宝无关。
+            \n\n5、客户下单详细信息是本契约的组成部分，本契约自客户下单成功，且将快件交付给自由.服务人员揽收成功后成立。客户下单委托配送的费用支出按照宠宝平台公示的收费规则收取，下单时宠宝平台会有相关提示，下单成功即表示接受该费用标准。
+            \n\n6、为保证快件安全、及时送达，客户寄件时应履行以下义务:
+            \n\n1)如实申报快件内容和价值，并准确、清楚地填写客户、收件人的名称、地址、联系电话等资料。如地址不正确、联系方式错误、收件人拒收等原因而造成无法派送的快件，若客户要求退回，双程费用均由客户承担。
+            \n\n2)根据快件的性质(尤其是易碎品)，提供充分的防破损措施，保障快件安全派送。
+            \n\n3)客户不得交寄有爆炸性、易燃性、腐蚀性、放射性、毒性的危险品、麻醉药品、生化制品、现金以及国家法律、法规禁止寄递的物品，不得隐瞒交寄快件的内件状况，配合本公司验视快件。需要的情况下客户应当依照国家规定出示相关部]的安全证明和有效证件。对已接受委托后发现属于不能安全、合法运送的物品(包括但不限于危险品、违禁品)，自由服务人员保留拒绝运送的权利，并由客户承担违约责任，该物品将由自由服务人员经由本公司送交有关部门处理。客户匿报、隐蔽交寄禁寄和限寄物品导致本公司、自由服务人员或第三人人身或财产伤害的，客户应当向本公司、自由服务人员或第三人承担赔偿责任。
+            \n\n7、自由服务人员有权并有义务依法收寄快件，对信件以外的快件按照国家有关规定应当当场验视，对违寄物品和拒绝验视的物品不予收寄。本公司向客户提供自交寄之日起一年内的查询服务。
+            \n\n8、自由服务人员将快件送达收件人地址，经收件人或经收件人(客户)允许的代收人签字，视为送达。若无收件人姓名，仅有收件单位地址，则由单位收件人员签字，视为送达,特殊部门单位(如政府部门)不能提供签字，以签收信息上传，视为送达。
+            \n\n9、赔偿标准:是否保价由客户自愿选择，贵重快件建议选择保价。
+            \n\n1)若因自由服务人员原因造成快件毁损、灭失的，将免除本次运费。
+            \n\n2)若客户未选择保价，丢失、损毁、短少，文件/物品最高赔偿不超过1000元/票，如核销单、提单等重要文件，建议保价，否则按未保价文件标准赔付，另有约定的按约定办理。
+            \n\n3)若客户已选择保价，若快件仅有部分毁损或内件短少，则按照投保金额和损失的比例赔偿。若快件丢失、损毁、短少的，按照实际损失价值赔偿，但最高不超过快件的保价金额。快件残值由本公司组织自由服务人员和客户双方协商处理;如折归客户，在核定赔偿金额时将扣减残值。
+            \n\n4)自由服务人员不承担丢失、损毁、短少导致的一切预期可利益损失或间接损失(快件可能获得的收益、利润、实际用途、商业机会、商业价值等)
+            \n\n5)保价费为保价金额的1%o，最低收费2元。
+            \n\n10、对于签单返还服务，若因自由服务人员原因导致签收回单毁损、灭失的，本公司将免费提供一-次签单返还服务作为赔偿。
+            \n\n11、索赔仅限快件交付验货时当场提出。快件签收后提出索赔要求的视为自动放弃索赔权利。对于客户提出的有效索赔，本公司将在三十日内作出答复。
+            \n\n12、托运物重量计量单位为千克。按1-5kg,6-10kg, 11-15kg分档计算费用。
+           \n\n13、快件箱规限制:
+            \n\n1)重量限定:单票货物重量不得>15kg
+            \n\n2)体积限定:单件货物箱规长宽高最长边不得>55cm，45cm，35cm。
+            \n\n14、自由服务人员同意授权本公司自客户处代为收取配送费用。本公司在向月结客户代收月结款时提供发票;有发票需求的非月结客户，请在付款后1个月内凭下单号向本公司索.取发票，逾期不再提供。.
+           \n\n15、本公司及自由服务人员对如下损失不承担责任:
+            \n\n1)因不可抗力(包含但不限于自然灾害、 政府行为、战争等社会异常事件)造成货物损坏、短缺、灭失、污染、变质或迟延交付;
+            \n\n2)因货物本身的自然性质、质量瑕疵或缺陷、合理损耗等造成的损失;
+            \n\n3)客户自行包装或容器不良，但从外部无法发现;
+            \n\n4)客户自行包装，到达时外包装完好而内件缺少或损坏;
+            \n\n5)自由服务人员包装的非新品运输，外包装完好而内件缺少或损坏; .
+            \n\n6)由于客户故意或过失导致损失;
+            \n\n16、扣款标准:客户取消订单扣款标准。
+            \n\n1)客户下单成功,快递员接单后，5分钟内取消订单，扣运费5元。
+            \n\n2)客户下单成功，快递员接单后，超过5分钟取消订单，扣运费50%。
+            \n\n17、客户在平台在线商城所购买的商品，除商品质量问题外，平台概不接受退换货。
+            \n\n18、3公里1 个半小时内送达，3公里后每5公里增加30分钟，如接单后未及时送件，本单超时快递员运费提成将为0。夜间服务费:在19:00-凌晨7:00收取: 19:00- 22 : 30,运费xl.5倍收取; 22 : 30- 7 : 00，运费x3倍收取夫亮
+            \n\n19、用户不能恶意刷单，经确认发现客户有恶意刷单行为的或未刷单成功但已被发现的,平台将有权收回全部赠送金额。
+            \n\n20、本契约条款未作约定的，或本契约条款与国家相关法律法规的规定相冲突的，按照相关法律法规的规定执行。本契约内容同时包括本公司可能不断发布或更新的相关契约内容。. 上述内容一经正式发布，即为本契约条款不可分割的组成部分。本公司将在宠宝APP应用上公布更新。\n\n" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

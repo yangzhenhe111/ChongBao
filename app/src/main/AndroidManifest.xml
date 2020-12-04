@@ -60,6 +60,7 @@
         <activity android:name="com.example.pet.nursing.CancelActivity"/>
         <activity android:name="com.example.pet.nursing.JiedanActivity"/>
         <activity android:name="com.example.pet.nursing.ChoiceActivity"/>
+        <activity android:name="com.example.pet.nursing.XuzhiActivity"/>
         <activity android:name="com.example.pet.nursing.Choice2Activity"/>
         <activity android:name="com.example.pet.nursing.ChangehisActivity"/>
         <activity android:name="com.example.pet.nursing.EndActivity"/>

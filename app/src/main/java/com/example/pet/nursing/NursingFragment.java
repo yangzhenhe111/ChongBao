@@ -106,8 +106,8 @@ public class NursingFragment extends Fragment {
             lc.registerLocationListener(new BDAbstractLocationListener() {
                 @Override
                 public void onReceiveLocation(BDLocation bdLocation) {
-                    double wd = bdLocation.getLatitude();//纬度
-                    double jd = bdLocation.getLongitude();//经度
+                    double wd = 38.003672;//纬度
+                    double jd = 114.529189;//经度
                     LatLng point = new LatLng(wd,jd);
                     MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(point);
                     //移动地图界面
