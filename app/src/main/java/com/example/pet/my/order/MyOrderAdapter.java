@@ -16,7 +16,7 @@ import java.util.List;
 public class MyOrderAdapter extends BaseAdapter {
 
     private Context context ;
-    private  List<Order> orders = new ArrayList<Order>();
+    private  List<Order> orders ;
     private int itrnLayoutRes;
 
     public MyOrderAdapter(Context context, List<Order> orders, int itrnLayoutRes) {

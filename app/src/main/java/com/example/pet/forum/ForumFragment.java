@@ -1,6 +1,7 @@
 package com.example.pet.forum;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.pet.R;
+import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Tips;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -43,9 +45,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 public class ForumFragment extends Fragment {
 
@@ -62,6 +66,16 @@ public class ForumFragment extends Fragment {
     private RelativeLayout forum_randomtalk;
     private RelativeLayout forum_question;
     private RelativeLayout forum_sharephotos;
+    private TextView tv_food;
+    private TextView tv_articles;
+    private TextView tv_daily;
+    private TextView tv_cosmetology;
+    private TextView tv_train;
+    private TextView tv_deworming;
+    private TextView tv_disease;
+    private TextView tv_randomtalk;
+    private TextView tv_question;
+    private TextView tv_sharephotos;
     private TextView tv_newest;
     private TextView tv_hot;
     private TextView tv_essence;
@@ -75,6 +89,7 @@ public class ForumFragment extends Fragment {
         public void handleMessage(@NonNull Message message) {
             switch (message.what){
                 case 1:
+                    Log.e("handler", "gethere----------------------");
                     init((ArrayList) message.obj);
                     break;
             }
@@ -104,12 +119,33 @@ public class ForumFragment extends Fragment {
                 getActivity().finish();
             }
         });
+        tv_food = view.findViewById(R.id.tv_food);
+        tv_articles = view.findViewById(R.id.tv_articles);
+        tv_daily = view.findViewById(R.id.tv_daily);
+        tv_cosmetology = view.findViewById(R.id.tv_cosmetology);
+        tv_train = view.findViewById(R.id.tv_train);
+        tv_deworming = view.findViewById(R.id.tv_deworming);
+        tv_disease = view.findViewById(R.id.tv_disease);
+        tv_randomtalk = view.findViewById(R.id.tv_randomtalk);
+        tv_question = view.findViewById(R.id.tv_question);
+        tv_sharephotos = view.findViewById(R.id.tv_sharephotos);
+        final String food = tv_food.getText().toString();
+        final String articles = tv_articles.getText().toString();
+        final String daily = tv_daily.getText().toString();
+        final String cosmetology = tv_cosmetology.getText().toString();
+        final String train = tv_train.getText().toString();
+        final String deworming = tv_deworming.getText().toString();
+        final String disease = tv_disease.getText().toString();
+        final String randomtalk = tv_randomtalk.getText().toString();
+        final String question = tv_question.getText().toString();
+        final String sharephotos = tv_sharephotos.getText().toString();
         forum_food = view.findViewById(R.id.forum_food);
         forum_food.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(),ClassifiedForumActivity.class);
+                intent.putExtra("classified",food);
                 getContext().startActivity(intent);
             }
         });
@@ -119,6 +155,7 @@ public class ForumFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(),ClassifiedForumActivity.class);
+                intent.putExtra("classified",articles);
                 getContext().startActivity(intent);
             }
         });
@@ -128,6 +165,7 @@ public class ForumFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(),ClassifiedForumActivity.class);
+                intent.putExtra("classified",daily);
                 getContext().startActivity(intent);
             }
         });
@@ -137,6 +175,7 @@ public class ForumFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(),ClassifiedForumActivity.class);
+                intent.putExtra("classified",cosmetology);
                 getContext().startActivity(intent);
             }
         });
@@ -146,6 +185,7 @@ public class ForumFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(),ClassifiedForumActivity.class);
+                intent.putExtra("classified",train);
                 getContext().startActivity(intent);
             }
         });
@@ -155,6 +195,7 @@ public class ForumFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(),ClassifiedForumActivity.class);
+                intent.putExtra("classified",deworming);
                 getContext().startActivity(intent);
             }
         });
@@ -164,6 +205,7 @@ public class ForumFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(),ClassifiedForumActivity.class);
+                intent.putExtra("classified",disease);
                 getContext().startActivity(intent);
             }
         });
@@ -173,6 +215,7 @@ public class ForumFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(),ClassifiedForumActivity.class);
+                intent.putExtra("classified",randomtalk);
                 getContext().startActivity(intent);
             }
         });
@@ -182,6 +225,7 @@ public class ForumFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(),ClassifiedForumActivity.class);
+                intent.putExtra("classified",question);
                 getContext().startActivity(intent);
             }
         });
@@ -191,6 +235,7 @@ public class ForumFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(),ClassifiedForumActivity.class);
+                intent.putExtra("classified",sharephotos);
                 getContext().startActivity(intent);
             }
         });
@@ -285,20 +330,51 @@ public class ForumFragment extends Fragment {
         });
 
         lv_tips = view.findViewById(R.id.lv_tips);
-//        for (int i = 0; i < 5; i++) {
-//            Tips tips = new Tips();
-//            tips.setId(1);
-//            tips.setUserName("名字" + i);
-//            tips.setTime("2020-11-28/16:36:0" + i);
-//            tips.setTopic("标签" + i);
-//            tips.setTitle("标题" + i);
-//            tips.setText("正文" + i);
-//            arrayList.add(tips);
-//        }
         return view;
     }
 
     public void init(ArrayList arrayList){
+        Log.e("init方法", "----------------------------");
+        getImages(arrayList);
+    }
+
+    public void getImages(final ArrayList<Tips> arrayList) {
+        final CountDownLatch latch = new CountDownLatch(arrayList.size());
+
+        for (int i = 0; i < arrayList.size(); i ++ ) {
+            final Tips tips = arrayList.get(i);
+            new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        String path = tips.getImagepath();
+                        URL url = new URL(Cache.url + "GetImageByPath?path=" + path);
+                        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                        InputStream in = urlConnection.getInputStream();
+                        Bitmap bitmap = BitmapFactory.decodeStream(in);
+                        tips.setThumbnail(bitmap);
+                        in.close();
+                        latch.countDown();
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }.start();
+        }
+        try {
+            latch.await();
+            initAdapter();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void initAdapter() {
+        Log.e("initAdapter方法", "-------------------------");
         MainForumTipsAdapter mainForumTipsAdapter = new MainForumTipsAdapter(getContext(),arrayList,R.layout.forum_tips_item);
         lv_tips.setAdapter(mainForumTipsAdapter);
     }
@@ -308,23 +384,23 @@ public class ForumFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http:172.20.10.2:8080/ChongBao_war_exploded/GetAllPostServlet");
+                    URL url = new URL(Cache.url + "GetAllPostServlet");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream input = connection.getInputStream();
-                    Log.e("3", "sybs");
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
                     StringBuffer stringBuffer = new StringBuffer();
                     String line;
-                    Log.e("4", "sybs");
                     while ((line=bufferedReader.readLine())!=null){
                         stringBuffer.append(line);
                     }
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
-                    Log.e("5", "sybs");
-                    tipsArrayList = new ArrayList<>();
+//                    tipsArrayList = new ArrayList<>();
+//                    Log.e("长度", jsonArray.toString());
+                    System.out.println(jsonArray);
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        int post_id = jsonObject.getInt("post_id");
                         String post_title = jsonObject.getString("post_title");
                         String post_time = jsonObject.getString("post_time");
                         String post_text = jsonObject.getString("post_text");
@@ -333,7 +409,9 @@ public class ForumFragment extends Fragment {
                         int count_likes = jsonObject.getInt("likes");
                         int count_comments = jsonObject.getInt("comments");
                         int count_forwards = jsonObject.getInt("forwards");
+                        String img_path = jsonObject.getString("picture_path");
                         Tips tips = new Tips();
+                        tips.setId(post_id);
                         tips.setTitle(post_title);
                         tips.setText(post_text);
                         tips.setTime(post_time);
@@ -342,13 +420,17 @@ public class ForumFragment extends Fragment {
                         tips.setLikes(count_likes);
                         tips.setComments(count_comments);
                         tips.setForwards(count_forwards);
+                        tips.setImagepath(img_path);
                         arrayList.add(tips);
 
-                        Message message = handler.obtainMessage();
-                        message.what = 1;
-                        message.obj = arrayList;
-                        handler.sendMessage(message);
+                        Log.e("post_id", i + "");
+
                     }
+                    Log.e("pppppppppppppppppppppp", "------------------");
+                    Message message = handler.obtainMessage();
+                    message.what = 1;
+                    message.obj = arrayList;
+                    handler.sendMessage(message);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (ProtocolException e) {

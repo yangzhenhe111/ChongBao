@@ -17,11 +17,17 @@ import com.example.pet.R;
 import com.example.pet.my.order.MyOrderActivity;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Article;
+import com.example.pet.other.entity.Order;
 import com.example.pet.other.entity.User;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,6 +46,11 @@ private  TextView infoName;
     public MyFragment() {
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,24 +62,15 @@ private  TextView infoName;
     }
 //设置控件内容
     private void setViewContent() {
+
         if(Cache.user !=null){
-
-            Cache.user.setPicturePath("/imgs/1.png");
-            Cache.user.setUserName("洛洛");
-            Cache.user.setUserAutograph("我心向阳");
+            infoName.setText(Cache.user.getUserName());
         }else{
-            Cache.user = new User();
-            Cache.user.setUserName("游客");
+            infoName.setText("立即登录");
         }
+        Intent intentOrder = new Intent(getContext(),MyDataService.class);
+        getContext().startService(intentOrder);
 
-//        try {
-           // InputStream photoStream = new URL(Cache.MY_URL+Cache.user.getPicturePath()).openStream();
-            //infoPhoto.setImageBitmap(BitmapFactory.decodeStream(photoStream));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        infoName.setText(Cache.user.getUserName());
 
 
     }
@@ -91,15 +93,15 @@ private  TextView infoName;
         infoAboutUs = view.findViewById(R.id.info_about_us);
         infoAboutUs.setOnClickListener(listener);
         infoPhoto = view.findViewById(R.id.info_photo);
-        infoPhoto.setOnClickListener(listener);
         infoName = view.findViewById(R.id.info_name);
+        infoName.setOnClickListener(listener);
 
     }
     private class MyListener implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId() ){
                 case R.id.info_article:
                     Intent intent = new Intent(getContext(), Post.class);
                     startActivity(intent);
@@ -128,11 +130,10 @@ private  TextView infoName;
                     Intent intent6 = new Intent(getContext(), AboutUs.class);
                     startActivity(intent6);
                     break;
-                case R.id.info_photo:
+                case R.id.info_name:
                     Intent intent7 = new Intent(getContext(),Login.class);
                     startActivity(intent7);
                     break;
-
             }
         }
     }

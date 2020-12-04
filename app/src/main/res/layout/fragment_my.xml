@@ -23,8 +23,10 @@
             android:layout_marginTop="15dp"
             android:src="@drawable/photo"
             app:civ_border_width="2dp"
+            android:background="@drawable/bg_circle"
             app:civ_border_color="#00ffffff"/>
         <LinearLayout
+            android:onClick="onClicked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -36,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
-                android:text="昵称"
+                android:text="立即登录"
                 android:textSize="18sp" />
 
         </LinearLayout>

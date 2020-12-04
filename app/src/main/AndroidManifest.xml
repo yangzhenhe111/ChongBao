@@ -31,7 +31,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".my.AcountSecurity">
-
         </activity>
 
         <activity android:name=".my.ConnectUs" />
@@ -179,7 +178,7 @@
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>
         </service>
-
+        <service android:name=".my.MyDataService"/>
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="jpush_channel" />

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.pet.forum.ForumFragment;
+import com.example.pet.my.MyDataService;
 import com.example.pet.my.MyFragment;
 import com.example.pet.nursing.NursingFragment;
 //import com.mob.MobSDK;
@@ -38,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //短信授权
         //MobSDK.submitPolicyGrantResult(granted, null);
 
