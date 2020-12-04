@@ -28,7 +28,13 @@ private  TextView loginUpdate;
                 Intent intent1 = new Intent(this,Update.class);
                 startActivity(intent1);
                 break;
+            case  R.id.btn_login:
+                loginUp();
 
         }
+    }
+
+    private void loginUp() {
+
     }
 }

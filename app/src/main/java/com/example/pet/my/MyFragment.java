@@ -1,33 +1,21 @@
 package com.example.pet.my;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.pet.R;
+import com.example.pet.my.editinfo.EditInfo;
 import com.example.pet.my.order.MyOrderActivity;
 import com.example.pet.other.Cache;
-import com.example.pet.other.entity.Article;
-import com.example.pet.other.entity.Order;
-import com.example.pet.other.entity.User;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -131,8 +119,12 @@ private  TextView infoName;
                     startActivity(intent6);
                     break;
                 case R.id.info_name:
-                    Intent intent7 = new Intent(getContext(),Login.class);
-                    startActivity(intent7);
+                    if(Cache.user == null){
+                        Intent intent7 = new Intent(getContext(),Login.class);
+                        startActivity(intent7);
+                    }else {
+                        Toast.makeText(getContext(), "已有用户登录，请先退出当前用户", Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
         }

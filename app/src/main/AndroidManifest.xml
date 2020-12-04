@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pet">
 
     <permission
@@ -12,6 +13,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -37,7 +41,8 @@
         <activity android:name=".my.ConnectUs" />
         <activity android:name=".my.order.MyOrderActivity" />
         <activity android:name=".my.OrderComplete" />
-        <activity android:name=".my.EditInfo" />
+        <activity android:name=".my.editinfo.EditInfo"
+            android:windowSoftInputMode="adjustPan|adjustUnspecified|stateHidden"/>
         <activity android:name=".my.SetPassword" />
         <activity android:name=".my.FunIntroduction" />
         <activity android:name=".my.AboutUsLaw" />
@@ -80,6 +85,16 @@
                 <action android:name="com.baidu.location.service_v5.0.0" />
             </intent-filter>
         </service>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
         <activity
             android:name=".MainActivity"

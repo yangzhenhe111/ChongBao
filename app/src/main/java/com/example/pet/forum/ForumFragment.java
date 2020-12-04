@@ -458,9 +458,7 @@ public class ForumFragment extends Fragment {
                         tips.setImagepath(img_path);
                         tips.setHeadImagepath(head_img_path);
                         arrayList.add(tips);
-
                         Log.e("post_id", i + "");
-
                     }
                     Log.e("pppppppppppppppppppppp", "------------------");
                     Message message = handler.obtainMessage();
