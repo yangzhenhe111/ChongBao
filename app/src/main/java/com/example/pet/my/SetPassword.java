@@ -75,6 +75,9 @@ public class SetPassword extends AppCompatActivity {
                 TIME = 60;//时间重置
                 btnCheck.setText("重新发送验证码");
             }else if(msg.what == CODE_TRUE){
+                Intent intent = new Intent();
+                intent.setClass(SetPassword.this,Login.class);
+                startActivity(intent);
                 SetPassword.this.finish();
             }else if(msg.what == CODE_FALSE){
                 Log.e("register","6");
