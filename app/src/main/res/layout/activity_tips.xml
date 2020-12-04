@@ -27,7 +27,7 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="center_horizontal|center"
                     android:singleLine="true"
-                    android:text="历史订单"
+                    android:text="贴子正文"
                     android:textColor="#000000"
                     android:textSize="25dp" />
 
@@ -54,6 +54,8 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,6 +94,8 @@
                     android:layout_marginRight="20dp" />
             </RelativeLayout>
             <LinearLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -103,6 +107,8 @@
                     android:textSize="30sp" />
             </LinearLayout>
             <LinearLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -111,10 +117,12 @@
                     android:layout_marginRight="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="40sp"
+                    android:textSize="18sp"
                     android:text="正文内容" />
             </LinearLayout>
             <LinearLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -128,6 +136,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -191,6 +201,9 @@
                         android:layout_gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

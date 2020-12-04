@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,7 @@ public class PublishActivity extends AppCompatActivity {
     private Button btn_publish;
     private EditText et_title;
     private EditText et_text;
-    private LinearLayout add_image;
+    private RelativeLayout add_image;
     private TextView tv_add_topic;
     private Button btn_topic;
 

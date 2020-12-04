@@ -7,6 +7,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,7 +39,7 @@ public class TipsActivity extends AppCompatActivity {
 
     private ArrayList<Comment> arrayList = new ArrayList<>();
     private ListView listView;
-    private Button btn_back;
+    private LinearLayout btn_back;
     private TextView tv_landlordname;
     private TextView tv_time;
     private Button btn_topic;
