@@ -1,6 +1,7 @@
 package com.example.pet.forum;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,9 +45,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 public class ForumFragment extends Fragment {
 
@@ -86,6 +89,7 @@ public class ForumFragment extends Fragment {
         public void handleMessage(@NonNull Message message) {
             switch (message.what){
                 case 1:
+                    Log.e("handler", "gethere----------------------");
                     init((ArrayList) message.obj);
                     break;
             }
@@ -330,6 +334,47 @@ public class ForumFragment extends Fragment {
     }
 
     public void init(ArrayList arrayList){
+        Log.e("init方法", "----------------------------");
+        getImages(arrayList);
+    }
+
+    public void getImages(final ArrayList<Tips> arrayList) {
+        final CountDownLatch latch = new CountDownLatch(arrayList.size());
+
+        for (int i = 0; i < arrayList.size(); i ++ ) {
+            final Tips tips = arrayList.get(i);
+            new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        String path = tips.getImagepath();
+                        URL url = new URL(Cache.url + "GetImageByPath?path=" + path);
+                        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                        InputStream in = urlConnection.getInputStream();
+                        Bitmap bitmap = BitmapFactory.decodeStream(in);
+                        tips.setThumbnail(bitmap);
+                        in.close();
+                        latch.countDown();
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }.start();
+        }
+        try {
+            latch.await();
+            initAdapter();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void initAdapter() {
+        Log.e("initAdapter方法", "-------------------------");
         MainForumTipsAdapter mainForumTipsAdapter = new MainForumTipsAdapter(getContext(),arrayList,R.layout.forum_tips_item);
         lv_tips.setAdapter(mainForumTipsAdapter);
     }
@@ -350,7 +395,9 @@ public class ForumFragment extends Fragment {
                         stringBuffer.append(line);
                     }
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
-                    tipsArrayList = new ArrayList<>();
+//                    tipsArrayList = new ArrayList<>();
+//                    Log.e("长度", jsonArray.toString());
+                    System.out.println(jsonArray);
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         int post_id = jsonObject.getInt("post_id");
@@ -362,6 +409,7 @@ public class ForumFragment extends Fragment {
                         int count_likes = jsonObject.getInt("likes");
                         int count_comments = jsonObject.getInt("comments");
                         int count_forwards = jsonObject.getInt("forwards");
+                        String img_path = jsonObject.getString("picture_path");
                         Tips tips = new Tips();
                         tips.setId(post_id);
                         tips.setTitle(post_title);
@@ -372,15 +420,17 @@ public class ForumFragment extends Fragment {
                         tips.setLikes(count_likes);
                         tips.setComments(count_comments);
                         tips.setForwards(count_forwards);
+                        tips.setImagepath(img_path);
                         arrayList.add(tips);
 
-                        Log.e("post_id", post_id+"");
+                        Log.e("post_id", i + "");
 
-                        Message message = handler.obtainMessage();
-                        message.what = 1;
-                        message.obj = arrayList;
-                        handler.sendMessage(message);
                     }
+                    Log.e("pppppppppppppppppppppp", "------------------");
+                    Message message = handler.obtainMessage();
+                    message.what = 1;
+                    message.obj = arrayList;
+                    handler.sendMessage(message);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (ProtocolException e) {
