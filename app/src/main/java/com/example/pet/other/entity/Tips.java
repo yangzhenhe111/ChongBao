@@ -15,8 +15,15 @@ public class Tips {
     private int likes;
     private int comments;
     private int forwards;
+    private String imagepath;
 
+    public String getImagepath() {
+        return imagepath;
+    }
 
+    public void setImagepath(String imagepath) {
+        this.imagepath = imagepath;
+    }
 //    public Tips(int id, int userId, String userName, Bitmap userHead, String time, String topic, String title, String text, Bitmap thumbnail, int likes, int comments, int forwards) {
 //        this.id = id;
 //        this.userId = userId;
@@ -128,5 +135,22 @@ public class Tips {
         this.forwards = forwards;
     }
 
-
+    @Override
+    public String toString() {
+        return "Tips{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", userHead=" + userHead +
+                ", time='" + time + '\'' +
+                ", topic='" + topic + '\'' +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", thumbnail=" + thumbnail +
+                ", likes=" + likes +
+                ", comments=" + comments +
+                ", forwards=" + forwards +
+                ", imagepath='" + imagepath + '\'' +
+                '}';
+    }
 }

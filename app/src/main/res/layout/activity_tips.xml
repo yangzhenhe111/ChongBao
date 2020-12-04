@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ScrollView
+        android:id="@+id/sv_tips"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -13,36 +14,48 @@
             android:orientation="vertical"
             android:fitsSystemWindows="true">
 
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/re"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/Blue"
-                android:clipToPadding="true">
+                android:background="#0B97FF">
 
-                <Button
-                    android:id="@+id/tips_back"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/back" />
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_horizontal|center"
+                    android:singleLine="true"
+                    android:text="贴子正文"
+                    android:textColor="#000000"
+                    android:textSize="25dp" />
+
+                <LinearLayout
+                    android:id="@+id/tips_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/back1" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="贴子正文"
-                        android:textSize="24sp"
-                        android:textColor="@color/Black"
-                        android:layout_gravity="center"/>
+                        android:layout_marginTop="15dp"
+                        android:text="返回"
+                        android:textColor="#000000"
+                        android:textSize="20dp" />
                 </LinearLayout>
-
-            </LinearLayout>
+            </RelativeLayout>
 
             <RelativeLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,15 +76,16 @@
                     android:layout_toRightOf="@id/img_head" />
 
                 <TextView
+                    android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_time"
                     android:layout_marginTop="20px"
                     android:layout_toRightOf="@id/img_head"
                     android:layout_below="@id/tv_landlordname"
                     android:text="发帖时间" />
 
                 <Button
+                    android:id="@+id/btn_t_topic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -80,6 +94,8 @@
                     android:layout_marginRight="20dp" />
             </RelativeLayout>
             <LinearLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -91,6 +107,8 @@
                     android:textSize="30sp" />
             </LinearLayout>
             <LinearLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -99,10 +117,12 @@
                     android:layout_marginRight="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="40sp"
+                    android:textSize="18sp"
                     android:text="正文内容" />
             </LinearLayout>
             <LinearLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -116,6 +136,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -179,7 +201,9 @@
                         android:layout_gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

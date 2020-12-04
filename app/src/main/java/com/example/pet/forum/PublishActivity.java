@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,8 +20,8 @@ public class PublishActivity extends AppCompatActivity {
     private Button btn_publish;
     private EditText et_title;
     private EditText et_text;
-    private LinearLayout add_image;
-    private Button btn_add_topic;
+    private RelativeLayout add_image;
+    private TextView tv_add_topic;
     private Button btn_topic;
 
     @Override
@@ -52,8 +54,8 @@ public class PublishActivity extends AppCompatActivity {
 
             }
         });
-        btn_add_topic = findViewById(R.id.btn_add_topic);
-        btn_add_topic.setOnClickListener(new View.OnClickListener() {
+        tv_add_topic = findViewById(R.id.btn_add_topic);
+        tv_add_topic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
