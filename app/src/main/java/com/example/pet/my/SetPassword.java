@@ -22,6 +22,7 @@ import com.example.pet.R;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.User;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONObject;
 
@@ -44,6 +45,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class SetPassword extends AppCompatActivity {
     private Toolbar toolbar;
@@ -75,6 +77,8 @@ public class SetPassword extends AppCompatActivity {
             }else if(msg.what == CODE_TRUE){
                 SetPassword.this.finish();
             }else if(msg.what == CODE_FALSE){
+                Log.e("register","6");
+                Log.e("6",msg.obj.toString());
                 toast(msg.obj.toString());
             }else if(msg.what == CODE_FALSE1){
                 toast("后台服务繁忙，请1分钟后再次申请注册！");
@@ -93,7 +97,7 @@ public class SetPassword extends AppCompatActivity {
                 if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                     toast("验证成功，密码是："+etPass.getText().toString());
                     insert();
-                }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){       //获取验证码成功
+                }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){        //获取验证码成功
                     toast("获取验证码成功");
                 }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){//如果你调用了获取国家区号类表会在这里回调
                     //返回支持发送验证码的国家列表
@@ -114,16 +118,21 @@ public class SetPassword extends AppCompatActivity {
         //发送数据
         Log.e("register","1");
         OkHttpClient okHttpClient = new OkHttpClient();
-        Log.e("register","2");
-        RequestBody requestBody = new FormBody.Builder()
-                .add("phone",phone)
-                .add("pass",etPass.getText().toString())
-                .build();
-        final Request request = new Request.Builder()
+        Gson gson = new GsonBuilder()
+                .serializeNulls()//序列化空值
+                .create();
+        User user = new User();
+        user.setUserPassword(etPass.getText().toString());
+        user.setUserPhone(phone);
+        String str = gson.toJson(user);
+        Log.e("register","2   " + str);
+        RequestBody requestBody = RequestBody.create(MediaType.parse(
+                "text/plain;charset=UTF-8"),str);
+        Request request = new Request.Builder()
                 .post(requestBody)
                 .url(Cache.MY_URL + "RegisterServlet")
                 .build();
-        Log.e("register","3");
+        Log.e("register",request.toString());
         Call call = okHttpClient.newCall(request);
 
         call.enqueue(new Callback() {
@@ -198,6 +207,7 @@ public class SetPassword extends AppCompatActivity {
                 alterWarning();
                 break;
             case R.id.btn_submit1:
+//                insert();
                 //获得用户输入的验证码
                 String code = etCheckecode.getText().toString().replaceAll("/s","");
                 if (!TextUtils.isEmpty(code)) {//判断验证码是否为空

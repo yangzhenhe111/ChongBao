@@ -64,24 +64,13 @@ private  TextView infoName;
     private void setViewContent() {
 
         if(Cache.user !=null){
-            Cache.user = new User();
-            Cache.user.setPicturePath("/imgs/1.png");
-            Cache.user.setUserName("洛洛");
-            Cache.user.setUserAutograph("我心向阳");
+            infoName.setText(Cache.user.getUserName());
         }else{
-            Log.e("1",Cache.MY_URL+"MyPet?userId=1");
-            Cache.user = new User();
-            Cache.user.setUserName("游客");
+            infoName.setText("立即登录");
         }
+        Intent intentOrder = new Intent(getContext(),MyDataService.class);
+        getContext().startService(intentOrder);
 
-//        try {
-           // InputStream photoStream = new URL(Cache.MY_URL+Cache.user.getPicturePath()).openStream();
-            //infoPhoto.setImageBitmap(BitmapFactory.decodeStream(photoStream));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        infoName.setText(Cache.user.getUserName());
 
 
     }
@@ -104,22 +93,20 @@ private  TextView infoName;
         infoAboutUs = view.findViewById(R.id.info_about_us);
         infoAboutUs.setOnClickListener(listener);
         infoPhoto = view.findViewById(R.id.info_photo);
-        infoPhoto.setOnClickListener(listener);
         infoName = view.findViewById(R.id.info_name);
+        infoName.setOnClickListener(listener);
 
     }
     private class MyListener implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId() ){
                 case R.id.info_article:
                     Intent intent = new Intent(getContext(), Post.class);
                     startActivity(intent);
                     break;
                 case R.id.info_order:
-                    Intent intentOrder = new Intent(getContext(),MyDataService.class);
-                    getContext().startService(intentOrder);
                     Intent intent1 = new Intent(getContext(), MyOrderActivity.class);
                     startActivity(intent1);
                     break;
@@ -143,11 +130,10 @@ private  TextView infoName;
                     Intent intent6 = new Intent(getContext(), AboutUs.class);
                     startActivity(intent6);
                     break;
-                case R.id.info_photo:
+                case R.id.info_name:
                     Intent intent7 = new Intent(getContext(),Login.class);
                     startActivity(intent7);
                     break;
-
             }
         }
     }

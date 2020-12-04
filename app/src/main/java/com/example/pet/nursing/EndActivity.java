@@ -159,6 +159,10 @@ public class EndActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void back(View view) {
+        Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+        intent.putExtra("data","refresh");
+        LocalBroadcastManager.getInstance(EndActivity.this).sendBroadcast(intent);
+        sendBroadcast(intent);
         finish();
     }
 

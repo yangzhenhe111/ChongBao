@@ -334,8 +334,7 @@
             android:layout_height="wrap_content"
             android:textSize="35sp"
             android:id="@+id/money"
-            android:textColor="#DC143C"
-            android:text="15元"/>
+            android:textColor="#DC143C"/>
         <ImageView
             android:id="@+id/feiyong"
             android:layout_width="wrap_content"

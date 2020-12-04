@@ -56,7 +56,7 @@ public class CostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cost);
         Intent i = getIntent();
-        price = (String) i.getStringExtra("price");
+        price = (String) i.getStringExtra("cost");
         cakename = (String) i.getSerializableExtra("cakename");
         getviews();
         tv.setText("本次需支付" + price);
@@ -70,9 +70,13 @@ public class CostActivity extends AppCompatActivity {
 
     public void cost(View view) {
         if (btn.getText().equals("立即支付")) {
-            SimpleDateFormat sd = new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss"); //获得下单时间
+            /*SimpleDateFormat sd = new SimpleDateFormat("yyyy年MM月dd日HH:mm:ss"); //获得下单时间
             Date date = new Date(System.currentTimeMillis());
-            Usercost("Usercost" + "?username=" +  "&cakename=" + cakename + "&time=" + sd.format(date) + "&price=" + price);
+            Usercost("Usercost" + "?username=" +  "&cakename=" + cakename + "&time=" + sd.format(date) + "&price=" + price);*/
+            tv.setText("支付成功");
+            imv.setBackgroundResource(0);
+            imv.setImageResource(R.drawable.costs);
+            btn.setText("完成");
         } else if (btn.getText().equals("完成")) {
             finish();
         }

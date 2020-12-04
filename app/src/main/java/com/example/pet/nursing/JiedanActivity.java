@@ -25,7 +25,10 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.utils.DistanceUtil;
 import com.example.pet.R;
+
+import java.text.DecimalFormat;
 
 public class JiedanActivity extends AppCompatActivity {
     private TextView start;
@@ -53,9 +56,9 @@ public class JiedanActivity extends AppCompatActivity {
         bm.setMapType(BaiduMap.MAP_TYPE_NORMAL);
     }
     private void ScaleControl() {
-        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(18.0f);
+        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(19.0f);
         bm.setMapStatus(msu);
-        bm.setMaxAndMinZoomLevel(19.0f,13.0f);
+        bm.setMaxAndMinZoomLevel(20.0f,13.0f);
     }
 
     private void Position() {
@@ -75,15 +78,17 @@ public class JiedanActivity extends AppCompatActivity {
             lc.registerLocationListener(new BDAbstractLocationListener() {
                 @Override
                 public void onReceiveLocation(BDLocation bdLocation) {
-                    double wd = bdLocation.getLatitude();//纬度
-                    double jd = bdLocation.getLongitude();//经度
+                    double wd = 38.003672;//纬度
+                    double jd = 114.529189;//经度
                     LatLng point = new LatLng(wd,jd);
                     BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.sell);
                     MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(point);
                     MarkerOptions options = new MarkerOptions().position(point).icon(icon).draggable(true);
                     Marker marker = (Marker) bm.addOverlay(options);
                     TextView contentTV = new TextView(JiedanActivity.this);
-                    contentTV.setText("跑者正在送货\n距终点");
+                    DecimalFormat df = new DecimalFormat("######0");
+                    String distance = df.format(DistanceUtil.getDistance(Point.END, point));
+                    contentTV.setText("距接收点"+distance+"米\n还需"+(Integer.parseInt(distance)/100+1)+"分钟");
                     contentTV.setTextColor(Color.BLACK);
                     contentTV.setTextSize(14.0f);
                     contentTV.setPadding(20, 20, 20,0);

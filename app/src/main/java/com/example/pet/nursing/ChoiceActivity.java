@@ -1,7 +1,10 @@
 package com.example.pet.nursing;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -137,25 +140,28 @@ public class ChoiceActivity extends AppCompatActivity implements OnGetPoiSearchR
         mLocationClient.start();
     }
     private void navigateTo(BDLocation location) {
-        double longitude = location.getLongitude();
-        double latitude = location.getLatitude();
+        double longitude = 114.529189; //location.getLongitude();
+        double latitude = 38.003672; //location.getLatitude();
         if (isFirstLocation) {
             currentLatLng = new LatLng(latitude, longitude);
             MapStatus.Builder builder = new MapStatus.Builder();
             MapStatus mapStatus = builder.target(currentLatLng).zoom(17.0f).build();
             mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(mapStatus));
             isFirstLocation = false;
-            //反向地理解析（含有poi列表）
             mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(currentLatLng));
         }
         MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
-        locationBuilder.latitude(location.getLatitude());
-        locationBuilder.longitude(location.getLongitude());
+        locationBuilder.latitude(38.003672);
+        locationBuilder.longitude(114.529189);
         MyLocationData locationData = locationBuilder.build();
         mBaiduMap.setMyLocationData(locationData);
     }
 
     public void back(View view) {
+        Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+        intent.putExtra("data","refresh");
+        LocalBroadcastManager.getInstance(ChoiceActivity.this).sendBroadcast(intent);
+        sendBroadcast(intent);
         finish();
     }
 

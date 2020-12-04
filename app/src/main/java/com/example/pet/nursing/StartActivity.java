@@ -172,6 +172,10 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void back(View view) {
+        Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+        intent.putExtra("data","refresh");
+        LocalBroadcastManager.getInstance(StartActivity.this).sendBroadcast(intent);
+        sendBroadcast(intent);
         finish();
     }
 }

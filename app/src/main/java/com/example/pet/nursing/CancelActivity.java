@@ -27,7 +27,7 @@ public class CancelActivity extends AppCompatActivity {
 
     private void pop(){
         TextView textView = new TextView(CancelActivity.this);
-        textView.setText("下单时间小于三分钟免费取消订单，大于等于三分钟扣除手续费三元。");
+        textView.setText("下单后截止目前无人接单可免费取消订单。若有人接单，接单时间小于五分钟需扣除五元手续费，大于等于五分钟扣除对应订单金额的50%。");
         final PopupWindow popupWindow = new PopupWindow(textView,2*shuo.getWidth(),2*shuo.getHeight());
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.box));//设置背景
