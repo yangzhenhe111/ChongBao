@@ -349,7 +349,7 @@ public class ForumFragment extends Fragment {
                 public void run() {
                     try {
                         String path = tips.getImagepath();
-                        URL url = new URL(Cache.url + "GetImageByPath?path=" + path);
+                        URL url = new URL(Cache.MY_URL + "GetImageByPath?path=" + path);
                         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                         InputStream in = urlConnection.getInputStream();
                         Bitmap bitmap = BitmapFactory.decodeStream(in);
@@ -384,7 +384,7 @@ public class ForumFragment extends Fragment {
                 public void run() {
                     try {
                         String path = tips.getHeadImagepath();
-                        URL url = new URL(Cache.url + "GetImageByPath?path=" + path);
+                        URL url = new URL(Cache.MY_URL + "GetImageByPath?path=" + path);
                         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                         InputStream in = urlConnection.getInputStream();
                         Bitmap bitmap = BitmapFactory.decodeStream(in);
@@ -420,7 +420,7 @@ public class ForumFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(Cache.url + "GetAllPostServlet");
+                    URL url = new URL(Cache.MY_URL + "GetAllPostServlet");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream input = connection.getInputStream();

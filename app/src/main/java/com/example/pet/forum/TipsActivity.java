@@ -126,7 +126,7 @@ public class TipsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(Cache.url + "GetImageByPath?path=" + path);
+                    URL url = new URL(Cache.MY_URL + "GetImageByPath?path=" + path);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     InputStream in = urlConnection.getInputStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(in);
@@ -149,7 +149,7 @@ public class TipsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(Cache.url + "GetImageByPath?path=" + path);
+                    URL url = new URL(Cache.MY_URL + "GetImageByPath?path=" + path);
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     InputStream in = urlConnection.getInputStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(in);
@@ -174,7 +174,7 @@ public class TipsActivity extends AppCompatActivity {
                 String id = getIntent().getStringExtra("tipsid");
                 Log.e("id", id + "");
                 try {
-                    URL url = new URL(Cache.url + "GetIdPostServlet?post_id=" + id);
+                    URL url = new URL(Cache.MY_URL + "GetIdPostServlet?post_id=" + id);
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream input = connection.getInputStream();
