@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:networkSecurityConfig="@xml/network_security_config"
         android:usesCleartextTraffic="true"
         android:name=".other.DebugApp"
         android:allowBackup="true"
@@ -69,7 +70,7 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="4oVCUApegoz9Q5Mn4RHXsX4QeVgkNZIT" />
+            android:value="Gy6t4iVa5bjCYSlblHYFLNKNCFmABmH3" />
 
         <service
             android:name="com.baidu.location.f"
