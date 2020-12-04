@@ -75,7 +75,7 @@ public class MyDataService extends IntentService {
         //订单数据下载
         if (Cache.myOrderList == null) {
             try {
-                Cache.myOrderList = new ArrayList<Order>();
+
                 URL url  = new URL(Cache.MY_URL +"MyOrder?userId=1");
                 InputStream in  = url.openStream();
                 StringBuilder str= new StringBuilder();
@@ -89,6 +89,7 @@ public class MyDataService extends IntentService {
                 in.close();
                 JSONArray jsonArray = new JSONArray(str.toString());
                 Log.e("",jsonArray.toString());
+                Cache.myOrderList = new ArrayList();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject rs = jsonArray.getJSONObject(i);
                     Order order = new Order();
@@ -99,13 +100,13 @@ public class MyDataService extends IntentService {
                     for(int j=0;j<Cache.myPetList.size();j++){
                         if(Cache.myPetList.get(j).getPetId() == id){
                             order.setPet(Cache.myPetList.get(j));
-                            Log.e("MyDataService","123");
+                            Log.e("MyDataService",id+ "gggg");
 
                         }
                     }
                     //设置
                     order.setAddresser(rs.getString("addresser"));
-                    order.setAddresseeContact(rs.getString("addressee"));
+                    order.setAddressee(rs.getString("addressee"));
                     order.setPetShopContact(rs.getString("petShopContact"));
                     order.setRemarks(rs.getString("remarks"));
                     order.setOrderAmount(rs.getString("orderAmount"));
@@ -117,7 +118,7 @@ public class MyDataService extends IntentService {
                     order.setOrderState(rs.getString("orderState"));
                     order.setUserId(rs.getInt("userId"));
                     order.setAddresseeContact(rs.getString("addresseeContact"));
-
+Log.e("MyDataService",order.toString());
                     Cache.myOrderList.add(order);
                 }
             } catch (IOException | JSONException e) {

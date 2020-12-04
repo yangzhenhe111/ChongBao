@@ -28,9 +28,8 @@ public class MyOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order);
-        Log.e("order","2");
 
-        //initData();
+        initData();
         initMyOrderActivity();
     }
 
@@ -67,7 +66,7 @@ public class MyOrderActivity extends AppCompatActivity {
             order.setPet(pet);
             orders.add(order);
         }
-        Log.e("log","1");
+
     }
 
     /**
@@ -75,8 +74,8 @@ public class MyOrderActivity extends AppCompatActivity {
      */
     private void initMyOrderActivity() {
         lvOrder = findViewById(R.id.lv_my_order);
-        Log.e("log","2");
-        orders = Cache.myOrderList;
+        //Log.e("log",Cache.myOrderList.size()+"ffff");
+       // orders = Cache.myOrderList;
         initMyOrderAdapter();
 
     }
@@ -86,7 +85,7 @@ public class MyOrderActivity extends AppCompatActivity {
      */
     private void initMyOrderAdapter() {
         myOrderAdapter = new MyOrderAdapter(this,
-                Cache.myOrderList,
+               orders,
                 R.layout.item_my_order);
         lvOrder.setAdapter(myOrderAdapter);
         Log.e("log","3");
