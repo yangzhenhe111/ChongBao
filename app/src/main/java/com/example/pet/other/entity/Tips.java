@@ -16,6 +16,15 @@ public class Tips {
     private int comments;
     private int forwards;
     private String imagepath;
+    private String headImagepath;
+
+    public String getHeadImagepath() {
+        return headImagepath;
+    }
+
+    public void setHeadImagepath(String headImagepath) {
+        this.headImagepath = headImagepath;
+    }
 
     public String getImagepath() {
         return imagepath;
