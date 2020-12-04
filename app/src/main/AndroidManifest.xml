@@ -33,7 +33,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".my.AddInfoActivity"></activity>
         <activity android:name=".my.AcountSecurity"></activity>
         <activity android:name=".my.ConnectUs" />
         <activity android:name=".my.order.MyOrderActivity" />
