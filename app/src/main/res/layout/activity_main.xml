@@ -24,7 +24,7 @@
                 android:id="@+id/iv_forum"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/forum1"/>
+                android:src="@drawable/onee"/>
             <TextView
                 android:id="@+id/tv_forum"
                 android:layout_width="wrap_content"
@@ -44,13 +44,34 @@
                 android:id="@+id/iv_nursing"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/nursing1"/>
+                android:src="@drawable/twoo"/>
             <TextView
                 android:id="@+id/tv_nursing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="@string/tabs_nursing"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:onClick="onClicked">
+
+            <ImageView
+                android:id="@+id/iv_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/three" />
+            <TextView
+                android:id="@+id/tv_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="消息"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_my"
@@ -64,7 +85,7 @@
                 android:id="@+id/iv_my"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/my1"/>
+                android:src="@drawable/four"/>
             <TextView
                 android:id="@+id/tv_my"
                 android:layout_width="wrap_content"

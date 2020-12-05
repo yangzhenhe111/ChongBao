@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/booking_backgound"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+   <!-- 顶部标题栏-->
+    <LinearLayout
+        android:id="@+id/booking_top"
+        android:layout_alignParentTop="true"
+        android:background="@color/page4"
+        android:layout_width="match_parent"
+        android:layout_height="71dp">
+        <ImageButton
+            android:id="@+id/booking_return"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/backpay"
+            android:layout_width="17dp"
+            android:layout_height="17dp" />
+        <TextView
+            android:text="@string/booking"
+            android:id="@+id/booking_text"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="31dp"
+            android:textColor="@color/titleText"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+           <ImageView
+               android:layout_marginRight="40dp"
+               android:background="@drawable/search3"
+               android:layout_marginTop="35dp"
+               android:layout_toLeftOf="@+id/booking_more"
+               android:layout_width="19dp"
+               android:layout_height="19dp" />
+            <ImageButton
+               android:id="@+id/booking_more"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="35dp"
+                android:background="@drawable/menu"
+                android:layout_width="19dp"
+                android:layout_height="19dp" />
+        </RelativeLayout>
+    </LinearLayout>
+    <!-- 内容-->
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/booking_top_text"
+                android:textSize="11sp"
+                android:textColor="@color/gongqingtuan_text"
+                android:text="@string/booking_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="20dp"
+               android:layout_below="@+id/booking_top_text"
+                android:id="@+id/booking_recycler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </androidx.recyclerview.widget.RecyclerView>
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:layout_below="@+id/booking_recycler"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <ListView
+                   android:divider="@null"
+                   android:dividerHeight="0dp"
+                   android:id="@+id/booking_list"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent">
+               </ListView>
+           </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="page4">#EDEDED</color>
+    <color name="booking_backgound">#F0EFF4</color>
+    <color name="green_dot">#07C160</color>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="contact_background">#EDEDED</color>
+    <color name="gongqingtuan_text">#7D7D7D</color>
     <color name="list_background">#FFFFFF</color>
     <color name="chat_divier">#DEDEDE</color>
     <color name="titleText">#181818</color>
     <color name="user_num">#7F7F7F</color>
-    <color name="change_tab">#4086FF</color>
+    <color name="change_tab">#D2691E</color>
     <color name="change_tab2">#FF5158</color>
-    <color name="tab">#aaaaaa</color>
+    <color name="tab">#515151</color>
     <color name="white">#ffffff</color>
     <color name="bg1">#0D60F2</color>
+    <color name="loginButtonBackgroundFouse">#07C160</color>
     <color name="Blue">#0B97FF</color>
+    <color name="purse">#FFFFFF</color>
     <color name="Beige">#FFFFE0</color>
     <color name="White">#FFFFFF</color>
+    <color name="pay_background">#F7F7F7</color>
+    <color name="chat_text">#999999</color>
+    <color name="chat_time">#B3B3B3</color>
+    <color name="loginButtonTextFouse">#FFFFFF</color>
     <color name="Black">#101010</color>
     <color name="Orange">#E0630F</color>
+    <color name="booking_time">#C7C7C7</color>
     <color name="Purple">#B83EBA</color>
     <color name="colorTheme">#0B97FF</color>
     <color name="red">#ff5555</color>

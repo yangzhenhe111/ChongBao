@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.pet.chat.WeChatFragment;
 import com.example.pet.forum.ForumFragment;
 import com.example.pet.my.MyDataService;
 import com.example.pet.my.MyFragment;
@@ -22,16 +23,17 @@ import com.example.pet.nursing.NursingFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private LinearLayout llForum;
-    private LinearLayout llNursing;
-    private LinearLayout llMy;
     private Fragment forumFragment;
     private Fragment nursingFragment;
+    private Fragment chatFragment;
     private Fragment myFragment;
+
     private TextView tvForum;
     private ImageView ivForum;
     private TextView tvNursing;
     private ImageView ivNursing;
+    private TextView tvchat;
+    private ImageView ivchat;
     private TextView tvMy;
     private ImageView ivMy;
 
@@ -62,23 +64,27 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initMainActivity() {
         currentFragment = new Fragment();
-
+        chatFragment = new WeChatFragment();
         forumFragment = new ForumFragment();
         nursingFragment = new NursingFragment();
         myFragment = new MyFragment();
-        llForum = findViewById(R.id.ll_forum);
+
         tvForum = findViewById(R.id.tv_forum);
         ivForum = findViewById(R.id.iv_forum);
-        llNursing = findViewById(R.id.ll_nursing);
+
         tvNursing = findViewById(R.id.tv_nursing);
         ivNursing = findViewById(R.id.iv_nursing);
-        llMy = findViewById(R.id.ll_my);
+
+        tvchat = findViewById(R.id.tv_chat);
+        ivchat = findViewById(R.id.iv_chat);
+
         tvMy = findViewById(R.id.tv_my);
         ivMy = findViewById(R.id.iv_my);
+
         initTabs();
-        changeTab(forumFragment);
-        tvForum.setTextColor(getResources().getColor(R.color.change_tab));
-        ivForum.setImageDrawable(getResources().getDrawable(R.drawable.forum2));
+        changeTab(myFragment);
+        tvMy.setTextColor(getResources().getColor(R.color.change_tab));
+        ivMy.setImageDrawable(getResources().getDrawable(R.drawable.fourr));
     }
 
 
@@ -87,11 +93,13 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initTabs() {
         tvForum.setTextColor(getResources().getColor(R.color.tab));
-        ivForum.setImageDrawable(getResources().getDrawable(R.drawable.forum1));
+        ivForum.setImageDrawable(getResources().getDrawable(R.drawable.onee));
         tvNursing.setTextColor(getResources().getColor(R.color.tab));
-        ivNursing.setImageDrawable(getResources().getDrawable(R.drawable.nursing1));
+        ivNursing.setImageDrawable(getResources().getDrawable(R.drawable.twoo));
+        tvchat.setTextColor(getResources().getColor(R.color.tab));
+        ivchat.setImageDrawable(getResources().getDrawable(R.drawable.three));
         tvMy.setTextColor(getResources().getColor(R.color.tab));
-        ivMy.setImageDrawable(getResources().getDrawable(R.drawable.my1));
+        ivMy.setImageDrawable(getResources().getDrawable(R.drawable.four));
     }
 
     /**
@@ -104,20 +112,26 @@ public class MainActivity extends AppCompatActivity {
                 changeTab(forumFragment);
                 initTabs();
                 tvForum.setTextColor(getResources().getColor(R.color.change_tab));
-                ivForum.setImageDrawable(getResources().getDrawable(R.drawable.forum2));
+                ivForum.setImageDrawable(getResources().getDrawable(R.drawable.one));
             break;
             case R.id.ll_nursing:
                 changeTab(nursingFragment);
                 initTabs();
-                tvNursing.setTextColor(getResources().getColor(R.color.change_tab2));
-                ivNursing.setImageDrawable(getResources().getDrawable(R.drawable.nursing2));
+                tvNursing.setTextColor(getResources().getColor(R.color.change_tab));
+                ivNursing.setImageDrawable(getResources().getDrawable(R.drawable.two));
+                break;
+            case R.id.ll_chat:
+                changeTab(chatFragment);
+                initTabs();
+                tvchat.setTextColor(getResources().getColor(R.color.change_tab));
+                ivchat.setImageDrawable(getResources().getDrawable(R.drawable.threee));
                 break;
             case R.id.ll_my:
                 changeTab(myFragment);
                 initTabs();
                 tvMy.setTextColor(getResources().getColor(R.color.change_tab));
-                ivMy.setImageDrawable(getResources().getDrawable(R.drawable.my2));
-
+                ivMy.setImageDrawable(getResources().getDrawable(R.drawable.fourr));
+                break;
         }
     }
 
