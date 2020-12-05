@@ -336,6 +336,7 @@ public class ForumFragment extends Fragment {
     public void init(ArrayList arrayList){
         Log.e("init方法", "----------------------------");
         getImages(arrayList);
+        getHeadImages(arrayList);
     }
 
     public void getImages(final ArrayList<Tips> arrayList) {
@@ -348,11 +349,46 @@ public class ForumFragment extends Fragment {
                 public void run() {
                     try {
                         String path = tips.getImagepath();
-                        URL url = new URL(Cache.url + "GetImageByPath?path=" + path);
+                        URL url = new URL(Cache.MY_URL + "GetImageByPath?path=" + path);
                         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                         InputStream in = urlConnection.getInputStream();
                         Bitmap bitmap = BitmapFactory.decodeStream(in);
                         tips.setThumbnail(bitmap);
+                        in.close();
+                        latch.countDown();
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }.start();
+        }
+        try {
+            latch.await();
+            initAdapter();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void getHeadImages(final ArrayList<Tips> arrayList) {
+        final CountDownLatch latch = new CountDownLatch(arrayList.size());
+
+        for (int i = 0; i < arrayList.size(); i ++ ) {
+            final Tips tips = arrayList.get(i);
+            new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        String path = tips.getHeadImagepath();
+                        URL url = new URL(Cache.MY_URL + "GetImageByPath?path=" + path);
+                        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                        InputStream in = urlConnection.getInputStream();
+                        Bitmap bitmap = BitmapFactory.decodeStream(in);
+                        tips.setUserHead(bitmap);
                         in.close();
                         latch.countDown();
                     } catch (MalformedURLException e) {
@@ -384,7 +420,7 @@ public class ForumFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    URL url = new URL(Cache.url + "GetAllPostServlet");
+                    URL url = new URL(Cache.MY_URL + "GetAllPostServlet");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream input = connection.getInputStream();
@@ -395,8 +431,6 @@ public class ForumFragment extends Fragment {
                         stringBuffer.append(line);
                     }
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
-//                    tipsArrayList = new ArrayList<>();
-//                    Log.e("长度", jsonArray.toString());
                     System.out.println(jsonArray);
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -410,6 +444,7 @@ public class ForumFragment extends Fragment {
                         int count_comments = jsonObject.getInt("comments");
                         int count_forwards = jsonObject.getInt("forwards");
                         String img_path = jsonObject.getString("picture_path");
+                        String head_img_path = jsonObject.getString("user_picture_path");
                         Tips tips = new Tips();
                         tips.setId(post_id);
                         tips.setTitle(post_title);
@@ -421,10 +456,9 @@ public class ForumFragment extends Fragment {
                         tips.setComments(count_comments);
                         tips.setForwards(count_forwards);
                         tips.setImagepath(img_path);
+                        tips.setHeadImagepath(head_img_path);
                         arrayList.add(tips);
-
                         Log.e("post_id", i + "");
-
                     }
                     Log.e("pppppppppppppppppppppp", "------------------");
                     Message message = handler.obtainMessage();

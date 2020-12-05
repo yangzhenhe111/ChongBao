@@ -3,6 +3,11 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="contact_background">#EDEDED</color>
+    <color name="list_background">#FFFFFF</color>
+    <color name="chat_divier">#DEDEDE</color>
+    <color name="titleText">#181818</color>
+    <color name="user_num">#7F7F7F</color>
     <color name="change_tab">#4086FF</color>
     <color name="change_tab2">#FF5158</color>
     <color name="tab">#aaaaaa</color>

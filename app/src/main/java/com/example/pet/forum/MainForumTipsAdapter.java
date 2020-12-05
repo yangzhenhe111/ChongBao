@@ -108,8 +108,6 @@ public class MainForumTipsAdapter extends BaseAdapter {
         });
         LinearLayout tipslike = convertView.findViewById(R.id.tips_like);
         final ImageView iv_like = convertView.findViewById(R.id.iv_tips_like);
-        final TextView tv_like = convertView.findViewById(R.id.tv_tips_like);
-        final int[] tips_like = {Integer.parseInt(tv_like.getText().toString())};
         tipslike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

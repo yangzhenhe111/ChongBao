@@ -48,6 +48,8 @@ public class MyOrderActivity extends AppCompatActivity {
         orders = new ArrayList<Order>();
         for (int i = 0; i < 25; i++) {
             Order order = new Order();
+            order.setOrderStart("河北师范大学软件学院" + (i/6) + "0" + (i%6) + "教室");
+            order.setOrderEnd("河北师范0大学国培大厦" + (i/8) + "0" + (i%8) + "房间");
             order.setOrderStart("河北师范大学软件学院" + (i / 6) + "0" + (i % 6) + "教室");
             order.setOrderEnd("河北师范大学国培大厦" + (i / 8) + "0" + (i % 8) + "房间");
             order.setOrderTime("2020-04-28 11:53");

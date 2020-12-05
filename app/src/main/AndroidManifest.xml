@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pet">
+
     <permission
         android:name="${applicationId}.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
@@ -10,6 +12,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -22,54 +27,54 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:name=".other.DebugApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/lastlogo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@drawable/lastlogo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".my.AcountSecurity">
-        </activity>
-
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".my.AcountSecurity"></activity>
         <activity android:name=".my.ConnectUs" />
-        <activity android:name="com.example.pet.my.order.MyOrderActivity"></activity>
-        <activity android:name="com.example.pet.my.OrderComplete"></activity>
-        <activity android:name="com.example.pet.my.EditInfo"></activity>
-        <activity android:name="com.example.pet.my.SetPassword" />
-        <activity android:name="com.example.pet.my.FunIntroduction"></activity>
-        <activity android:name="com.example.pet.my.AboutUsLaw" />
-        <activity android:name="com.example.pet.my.Agreement" />
-        <activity android:name="com.example.pet.my.Order2"/>
-        <activity android:name="com.example.pet.my.Register" />
-        <activity android:name="com.example.pet.my.Update" />
-        <activity android:name="com.example.pet.my.Check" />
-        <activity android:name="com.example.pet.my.Login" />
-        <activity android:name="com.example.pet.my.Pet" />
-        <activity android:name="com.example.pet.my.History" />
-        <activity android:name="com.example.pet.my.AboutUs" />
-        <activity android:name="com.example.pet.my.Setting" />
-        <activity android:name="com.example.pet.my.Post" />
-        <activity android:name="com.example.pet.forum.LandlordActivity"></activity>
-        <activity android:name="com.example.pet.forum.TipsActivity" />
-        <activity android:name="com.example.pet.forum.ClassifiedForumActivity" />
-        <activity android:name="com.example.pet.forum.TopicActivity" />
-        <activity android:name="com.example.pet.forum.PublishActivity" />
-        <activity android:name="com.example.pet.nursing.CancelActivity"/>
-        <activity android:name="com.example.pet.nursing.JiedanActivity"/>
-        <activity android:name="com.example.pet.nursing.ChoiceActivity"/>
-        <activity android:name="com.example.pet.nursing.XuzhiActivity"/>
-        <activity android:name="com.example.pet.nursing.Choice2Activity"/>
-        <activity android:name="com.example.pet.nursing.ChangehisActivity"/>
-        <activity android:name="com.example.pet.nursing.EndActivity"/>
-        <activity android:name="com.example.pet.nursing.StartActivity"/>
-        <activity android:name="com.example.pet.nursing.NeworderActivity"/>
-        <activity android:name="com.example.pet.nursing.CostActivity"/>
+        <activity android:name=".my.order.MyOrderActivity" />
+        <activity android:name=".my.OrderComplete" />
+        <activity android:name=".my.editinfo.EditInfo"
+            android:windowSoftInputMode="adjustPan|adjustUnspecified|stateHidden"/>
+        <activity android:name=".my.SetPassword" />
+        <activity android:name=".my.FunIntroduction" />
+        <activity android:name=".my.AboutUsLaw" />
+        <activity android:name=".my.Agreement" />
+        <activity android:name=".my.Order2" />
+        <activity android:name=".my.Register" />
+        <activity android:name=".my.Update" />
+        <activity android:name=".my.Check" />
+        <activity android:name=".my.Login" />
+        <activity android:name=".my.Pet" />
+        <activity android:name=".my.History" />
+        <activity android:name=".my.AboutUs" />
+        <activity android:name=".my.Setting" />
+        <activity android:name=".my.Post" />
+        <activity android:name=".forum.LandlordActivity" />
+        <activity android:name=".forum.TipsActivity" />
+        <activity android:name=".forum.ClassifiedForumActivity" />
+        <activity android:name=".forum.TopicActivity" />
+        <activity android:name=".forum.PublishActivity" />
+        <activity android:name=".nursing.CancelActivity" />
+        <activity android:name=".nursing.JiedanActivity" />
+        <activity android:name=".nursing.ChoiceActivity" />
+        <activity android:name=".nursing.XuzhiActivity" />
+        <activity android:name=".nursing.Choice2Activity" />
+        <activity android:name=".nursing.ChangehisActivity" />
+        <activity android:name=".nursing.EndActivity" />
+        <activity android:name=".nursing.StartActivity" />
+        <activity android:name=".nursing.NeworderActivity" />
+        <activity android:name=".nursing.CostActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="4oVCUApegoz9Q5Mn4RHXsX4QeVgkNZIT" />
+            android:value="X9PswedQCXVcGIkb8FR9u0oWpOE72WB5" />
 
         <service
             android:name="com.baidu.location.f"
@@ -80,7 +85,18 @@
             </intent-filter>
         </service>
 
-        <activity android:name="com.example.pet.MainActivity"
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity
+            android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -140,7 +156,7 @@
             android:exported="false" /> <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
         <!-- since 3.3.0 接收JPush相关事件 -->
         <receiver
-            android:name="com.example.pet.other.JpushReceiver"
+            android:name=".other.JpushReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
@@ -172,13 +188,14 @@
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <!-- User defined.  For test only 继承自cn.jpush.android.service.JCommonService -->
         <service
-            android:name="com.example.pet.other.JpushService"
+            android:name=".other.JpushService"
             android:process=":pushcore">
             <intent-filter>
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>
         </service>
-        <service android:name=".my.MyDataService"/>
+        <service android:name=".my.MyDataService" />
+
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="jpush_channel" />
