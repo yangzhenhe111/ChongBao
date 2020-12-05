@@ -60,6 +60,8 @@
         <activity android:name=".forum.TipsActivity" />
         <activity android:name=".forum.ClassifiedForumActivity" />
         <activity android:name=".forum.TopicActivity" />
+        <activity android:name=".chat.ChatView" />
+        <activity android:name=".chat.Booking" />
         <activity android:name=".forum.PublishActivity" />
         <activity android:name=".nursing.CancelActivity" />
         <activity android:name=".nursing.JiedanActivity" />
@@ -71,6 +73,13 @@
         <activity android:name=".nursing.StartActivity" />
         <activity android:name=".nursing.NeworderActivity" />
         <activity android:name=".nursing.CostActivity" />
+        <activity android:name=".StartActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -98,11 +107,6 @@
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="cn.jpush.android.ui.PushActivity"

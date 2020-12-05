@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_width="78dp"
+    android:layout_height="wrap_content">
+    <com.example.pet.my.RoundImageView
+       android:layout_marginLeft="10dp"
+        android:id="@+id/booking_reimg"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <LinearLayout
+             android:layout_marginLeft="8dp"
+             android:gravity="center_horizontal"
+             android:layout_marginTop="10dp"
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+             <!--绿色小圆点-->
+             <ImageView
+                 android:layout_marginTop="5dp"
+                 android:background="@drawable/green_dot"
+                 android:layout_width="6dp"
+                 android:layout_height="6dp" />
+             <TextView
+                 android:layout_marginLeft="5dp"
+                 android:id="@+id/booking_retext"
+                 android:layout_gravity="center_horizontal"
+                 android:textColor="@color/gongqingtuan_text"
+                 android:textSize="11sp"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content" />
+         </LinearLayout>
+
+
+
+</LinearLayout>

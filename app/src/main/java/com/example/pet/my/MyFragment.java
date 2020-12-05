@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.pet.R;
+import com.example.pet.my.editinfo.EditInfo;
 import com.example.pet.my.order.MyOrderActivity;
 
 import java.io.File;
