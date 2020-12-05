@@ -50,31 +50,46 @@ public class MyOrderAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder = null;
         if(convertView == null){
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(itrnLayoutRes,null);
+            holder = new ViewHolder();
+            holder.tvFlag = convertView.findViewById(R.id.tv_flag);
+            holder.tvStart = convertView.findViewById(R.id.tv_start);
+           holder.tvEnd = convertView.findViewById(R.id.tv_end);
+           holder.tvTime = convertView.findViewById(R.id.tv_order_time);
+            holder.tvState = convertView.findViewById(R.id.tv_order_state);
+            holder.petInfo = convertView.findViewById(R.id.tv_pet_info);
+            convertView.setTag(holder);
+        }else{
+            holder = (ViewHolder) convertView.getTag();
         }
-        TextView tvFlag = convertView.findViewById(R.id.tv_flag);
-        TextView tvStart = convertView.findViewById(R.id.tv_start);
-        TextView tvEnd = convertView.findViewById(R.id.tv_end);
-        TextView tvTime = convertView.findViewById(R.id.tv_order_time);
-        TextView tvState = convertView.findViewById(R.id.tv_order_state);
 
-        tvFlag.getBackground().setAlpha(60);
-        tvStart.setText(orders.get(position).getOrderStart());
-        tvEnd.setText(orders.get(position).getOrderEnd());
-        tvTime.setText(orders.get(position).getOrderTime());
+        holder.petInfo.setText(orders.get(position).getPet().getPetName()+"/"+orders.get(position).getPet().getPetWeight());
+        holder.tvFlag.getBackground().setAlpha(60);
+        holder.tvStart.setText(orders.get(position).getOrderStart());
+        holder.tvEnd.setText(orders.get(position).getOrderEnd());
+        holder.tvTime.setText(orders.get(position).getOrderTime());
         String state = orders.get(position).getOrderState();
-        tvState.setText(state);
+        holder.tvState.setText(state);
         if("待支付".equals(state)){
-            tvState.setTextColor(convertView.getResources().getColor(R.color.change_tab2));
+            holder.tvState.setTextColor(convertView.getResources().getColor(R.color.change_tab2));
         }else if("待接单".equals(state)){
-            tvState.setTextColor(convertView.getResources().getColor(R.color.change_tab2));
+            holder.tvState.setTextColor(convertView.getResources().getColor(R.color.change_tab2));
         }else if("已接单".equals(state)){
-            tvState.setTextColor(convertView.getResources().getColor(R.color.change_tab));
+            holder.tvState.setTextColor(convertView.getResources().getColor(R.color.change_tab));
         }else if("已完成".equals(state)){
-            tvState.setTextColor(convertView.getResources().getColor(R.color.change_tab));
+            holder.tvState.setTextColor(convertView.getResources().getColor(R.color.change_tab));
         }
         return convertView;
+    }
+    private class ViewHolder{
+        TextView tvFlag ;
+        TextView tvStart ;
+        TextView tvEnd ;
+        TextView tvTime ;
+        TextView tvState ;
+        TextView petInfo;
     }
 }

@@ -3,7 +3,9 @@ package com.example.pet.my;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,8 +14,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.pet.MainActivity;
 import com.example.pet.R;
 import com.example.pet.other.entity.Order;
+
+import org.w3c.dom.Text;
+
+import java.net.URL;
 
 public class Order2 extends AppCompatActivity {
     private LinearLayout statusPay;
@@ -22,9 +29,28 @@ public class Order2 extends AppCompatActivity {
     private LinearLayout statusComplete;
     private LinearLayout statusUncomplete;
     private LinearLayout orderDeatil;
+    private  LinearLayout orderExtra;
     private Toolbar toolbar;
-    private TextView toolbarTitle;
 
+
+    private TextView totalCount;
+    private TextView countDetail;
+    private TextView countStart;
+    private TextView countExtra;
+    private TextView orderTime;
+    private TextView orderStart;
+    private TextView orderEnd;
+    private TextView orderAddressee;
+    private TextView orderAddresser;
+    private TextView orderRemark;
+    private TextView orderPet;
+    private TextView toolbarTitle;
+private  TextView orderFinishStart;
+private  TextView orderFinishAddressee;
+private  TextView orderFinishEnd;
+private TextView orderFinishAddresser;
+private  TextView orderFinishPet;
+private TextView orderFinishRemark;
     private Order order;
 
     @Override
@@ -34,7 +60,7 @@ public class Order2 extends AppCompatActivity {
         setView();
         Intent intent = getIntent();
         order = (Order) intent.getSerializableExtra("order");
-        Log.e("order","4");
+        Log.e("order", "4");
 //        order = new Order();
 //        order.setOrderState("待接单");
         setStatus();
@@ -70,11 +96,49 @@ public class Order2 extends AppCompatActivity {
                 statusUncomplete.setVisibility(View.GONE);
                 break;
         }
+        int count = Integer.parseInt(order.getOrderAmount().trim());
+        totalCount.setText(count + "元");
+        if (count > 15) {
+            countExtra.setText((count - 15) + "元");
+            orderExtra.setVisibility(View.VISIBLE);
+        }
+        orderTime.setText(order.getOrderTime());
+        orderFinishRemark.setText(order.getRemarks());
+        orderRemark.setText(order.getRemarks());
+        orderAddresser.setText(order.getAddresser() + "  " + order.getPetShopContact());
+        orderFinishAddresser.setText(order.getAddresser() + "  " + order.getPetShopContact());
+        orderFinishAddressee.setText(order.getAddressee() + " " + order.getClientContact());
+        orderAddressee.setText(order.getAddressee() + " " + order.getClientContact());
+        orderPet.setText(order.getPet().getPetName() + order.getPet().getPetWeight());
+        orderFinishPet.setText(order.getPet().getPetName() + order.getPet().getPetWeight());
+        orderStart.setText(order.getOrderStart());
+        orderFinishStart.setText(order.getOrderStart());
+        orderEnd.setText(order.getOrderEnd());
+        orderFinishEnd.setText(order.getOrderEnd());
     }
 
     private void setView() {
+        orderExtra = findViewById(R.id.order_count_extra1);
+        orderFinishRemark = findViewById(R.id.order_finish_remark);
+        orderFinishPet = findViewById(R.id.order_finish_end);
+        orderFinishAddresser = findViewById(R.id.order_finish_addrresser);
+        orderFinishEnd = findViewById(R.id.order_finish_end);
+        orderFinishStart = findViewById(R.id.order_finish_start);
+        orderFinishAddressee = findViewById(R.id.order_finish_addrressee);
+        countDetail = findViewById(R.id.order_count_detail);
+        totalCount = findViewById(R.id.order_total_count);
+
+        countStart = findViewById(R.id.order_count_start);
+        countExtra = findViewById(R.id.order_count_extra);
+        orderTime = findViewById(R.id.order_time);
+        orderStart = findViewById(R.id.order_start);
+        orderEnd = findViewById(R.id.order_end);
+        orderAddressee = findViewById(R.id.order_addressee);
+        orderAddresser = findViewById(R.id.order_addresser);
+        orderRemark = findViewById(R.id.order_remark);
+        orderPet = findViewById(R.id.order_pet);
         orderDeatil = findViewById(R.id.order_count_detail1);
-        toolbarTitle =findViewById(R.id.order_toolbar_title);
+        toolbarTitle = findViewById(R.id.order_toolbar_title);
         statusPay = findViewById(R.id.order_wait_pay);
         statusRunner = findViewById(R.id.order_wait_runner);
         statusCancel = findViewById(R.id.order_status_cancel);
@@ -82,28 +146,88 @@ public class Order2 extends AppCompatActivity {
         statusUncomplete = findViewById(R.id.order_status_uncomplete);
         toolbar = findViewById(R.id.order_toolbar);
         setSupportActionBar(toolbar);
-       getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Order2.this.finish();
             }
         });
+
     }
 
     public void onClicked(View view) {
         switch (view.getId()) {
             case R.id.order_btn_cancel:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("确定取消订单");
-                builder.setPositiveButton("确定取消", null);
-                builder.setNegativeButton("再等等", null);
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                orderToCancel();
+                break;
+            case R.id.order_btn_cancel1:
+                orderToCancel();
                 break;
             case R.id.order_count_detail:
-                orderDeatil.setVisibility(View.VISIBLE);
+              
+                if (countDetail.getText().toString().equals("展开详情")) {
+
+                    countDetail.setText("收起详情");
+                    orderDeatil.setVisibility(View.VISIBLE);
+                } else if (countDetail.getText().toString().equals("收起详情")) {
+                    countDetail.setText("展开详情");
+                    Log.e("Order2","展开");
+                    orderDeatil.setVisibility(View.GONE);
+                }
+
                 break;
+            case R.id.order_start_connect:
+               callStart();
+                break;
+            case R.id.order_end_connect:
+                callEnd();
+                break;
+            case R.id.tv_pay_now:
+                //跳转支付页面
+                break;
+            case R.id.order_readd:
+                newOrder();
+                break;
+            case R.id.order_readd1:
+                newOrder();
+                break;
+
+
         }
+
+    }
+
+    private void changeState(String state) {
+    }
+    //取消订单
+    private void orderToCancel() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("确定取消订单");
+        builder.setPositiveButton("确定取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                changeState("已取消");
+            }
+        });
+        builder.setNegativeButton("再等等", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    //重新下单
+    private void newOrder(){
+        Intent intent2 = new Intent(this, MainActivity.class);
+        startActivity(intent2);
+    }
+    //致电起点
+    private void callStart(){
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + order.getClientContact()));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+    private  void callEnd(){
+        Intent intent1 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + order.getPetShopContact()));
+        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent1);
     }
 }

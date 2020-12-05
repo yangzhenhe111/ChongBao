@@ -79,8 +79,8 @@ private  TextView infoName;
     private void setView() {
         MyListener listener = new MyListener();
         infoArticle = view.findViewById(R.id.info_article);
-        infoArticle.setOnClickListener(listener);
         infoOrder = view.findViewById(R.id.info_order);
+        infoArticle.setOnClickListener(listener);
         infoOrder.setOnClickListener(listener);
         infoUpdate = view.findViewById(R.id.info_update);
         infoUpdate.setOnClickListener(listener);

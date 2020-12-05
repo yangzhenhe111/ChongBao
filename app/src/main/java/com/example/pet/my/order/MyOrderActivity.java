@@ -21,22 +21,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyOrderActivity extends AppCompatActivity {
-private Toolbar toolbar;
+    private Toolbar toolbar;
     private ListView lvOrder;
     private MyOrderAdapter myOrderAdapter;
     private List<Order> orders;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order);
-toolbar = findViewById(R.id.my_order_toolbar);
-toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        MyOrderActivity.this.finish();
-    }
-});
-        initData();
+        toolbar = findViewById(R.id.my_order_toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyOrderActivity.this.finish();
+            }
+        });
+        //initData();
         initMyOrderActivity();
     }
 
@@ -45,12 +46,12 @@ toolbar.setNavigationOnClickListener(new View.OnClickListener() {
      */
     private void initData() {
         orders = new ArrayList<Order>();
-        for(int i = 0;i < 25;i++){
+        for (int i = 0; i < 25; i++) {
             Order order = new Order();
-            order.setOrderStart("河北师范大学软件学院" + (i/6) + "0" + (i%6) + "教室");
-            order.setOrderEnd("河北师范大学国培大厦" + (i/8) + "0" + (i%8) + "房间");
+            order.setOrderStart("河北师范大学软件学院" + (i / 6) + "0" + (i % 6) + "教室");
+            order.setOrderEnd("河北师范大学国培大厦" + (i / 8) + "0" + (i % 8) + "房间");
             order.setOrderTime("2020-04-28 11:53");
-            switch (i%5){
+            switch (i % 5) {
                 case 0:
                     order.setOrderState("已完成");
                     break;
@@ -82,7 +83,7 @@ toolbar.setNavigationOnClickListener(new View.OnClickListener() {
     private void initMyOrderActivity() {
         lvOrder = findViewById(R.id.lv_my_order);
         //Log.e("log",Cache.myOrderList.size()+"ffff");
-       // orders = Cache.myOrderList;
+        // orders = Cache.myOrderList;
         initMyOrderAdapter();
 
     }
@@ -92,43 +93,23 @@ toolbar.setNavigationOnClickListener(new View.OnClickListener() {
      */
     private void initMyOrderAdapter() {
         myOrderAdapter = new MyOrderAdapter(this,
-               orders,
+                Cache.myOrderList,
                 R.layout.item_my_order);
         lvOrder.setAdapter(myOrderAdapter);
-        Log.e("log","3");
+
         lvOrder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if("待支付".equals(orders.get(position).getOrderState())){
-                    Log.e("gfgfgfg",orders.get(position).toString());
-                    Intent intent = new Intent();
-                    intent.setClass(MyOrderActivity.this, Order2.class);
-                    Log.e("order","3");
-                    intent.putExtra("order", orders.get(position));
-                    //跳转到待支付页面
-                    startActivityForResult(intent,1);
-                }else if("已取消".equals(orders.get(position).getOrderState())){
-                    Intent intent = new Intent();
-                    intent.setClass(MyOrderActivity.this, Order2.class);
-                    intent.putExtra("order", orders.get(position));
-                    //跳转到待支付页面
-                    startActivityForResult(intent,1);
-                }else if("待接单".equals(orders.get(position).getOrderState())){
-                    Intent intent = new Intent();
-                    intent.setClass(MyOrderActivity.this, Order2.class);
-                    intent.putExtra("order", orders.get(position));
-                    //跳转到待支付页面
-                    startActivityForResult(intent,1);
-                }else if("已完成".equals(orders.get(position).getOrderState())){
-                    Intent intent = new Intent();
-                    intent.setClass(MyOrderActivity.this, Order2.class);
-                    intent.putExtra("order", orders.get(position));
-                    //跳转到待支付页面
-                    startActivityForResult(intent,1);
-                }else if("已接单".equals(orders.get(position).getOrderState())){
+                Log.e("MyOrderActiviyt",position+"");
+                 if ("已接单".equals(Cache.myOrderList.get(position).getOrderState())) {
                     Intent intent = new Intent();
                     intent.setClass(MyOrderActivity.this, JiedanActivity.class);
                     //跳转到待支付页面
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent();
+                    intent.setClass(MyOrderActivity.this, Order2.class);
+                    intent.putExtra("order", Cache.myOrderList.get(position));
                     startActivity(intent);
                 }
             }

@@ -9,7 +9,7 @@ public class Order implements Serializable {
     private String orderEnd;
     private Pet pet;
     private String addresser;//收货人
-    private String addressee;
+    private String addressee;//发货人
     private String petShopContact;
     private String remarks;
     private String orderAmount;

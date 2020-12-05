@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <androidx.appcompat.widget.Toolbar
             android:background="#FFFFFF"
             android:id="@+id/order_toolbar"
@@ -27,7 +26,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
-
         <LinearLayout
             android:id="@+id/order_status_uncomplete"
             android:layout_width="match_parent"
@@ -73,10 +71,11 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_pay_now"
+                            android:onClick="onClicked"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-
                             android:gravity="center"
                             android:text="立即支付"
                             android:textColor="@color/black"
@@ -126,10 +125,11 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:onClick="onClicked"
+                            android:id="@+id/order_btn_cancel1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-
                             android:gravity="center"
                             android:text="取消订单"
                             android:textColor="@color/bg1"
@@ -170,6 +170,8 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:onClick="onClicked"
+                            android:id="@+id/order_readd"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -213,7 +215,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="展开详情 "
+                        android:text="展开详情"
                         android:textSize="18sp" />
                 </LinearLayout>
 
@@ -236,23 +238,41 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:textSize="15sp"
                             android:layout_weight="3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="起步跑腿费(2.6)公里" />
 
                         <TextView
+                            android:id="@+id/order_count_start"
                             android:layout_gravity="right"
                             android:layout_weight="1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="15元" />
                     </LinearLayout>
-                    <TextView
-                        android:gravity="center"
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/order_count_extra1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="计费规则"/>
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_weight="3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="额外费用       " />
+
+                        <TextView
+                            android:id="@+id/order_count_extra"
+                            android:layout_gravity="right"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="15元" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -264,6 +284,7 @@
                 android:paddingTop="15dp">
 
                 <TextView
+                    android:id="@+id/order_time"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:gravity="center_vertical"
@@ -289,7 +310,6 @@
                         android:layout_marginRight="10dp">
 
                         <ImageView
-
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:layout_gravity="center"
@@ -302,6 +322,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/order_start"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
@@ -310,6 +331,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/order_addressee"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
@@ -345,6 +367,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/order_end"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
@@ -353,6 +376,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/order_addresser"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
@@ -399,6 +423,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/order_remark"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="鲜花/2kg"
@@ -441,6 +466,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/order_pet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="鲜花/2kg"
@@ -473,6 +499,7 @@
                     android:paddingRight="20dp">
 
                     <TextView
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
@@ -493,6 +520,8 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:onClick="onClicked"
+                            android:id="@+id/order_readd1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -531,6 +560,8 @@
                         android:src="@drawable/phone" />
 
                     <TextView
+                        android:id="@+id/order_start_connect"
+                        android:onClick="onClicked"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -552,6 +583,8 @@
                         android:src="@drawable/phone" />
 
                     <TextView
+                        android:id="@+id/order_end_connect"
+                        android:onClick="onClicked"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -606,6 +639,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/order_finish_start"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
@@ -614,6 +648,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/order_finish_addrressee"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
@@ -649,6 +684,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/order_finish_end"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
@@ -657,6 +693,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/order_finish_addrresser"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
@@ -703,6 +740,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/order_finish_pet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="鲜花/2kg"
@@ -738,6 +776,7 @@
                         android:orientation="vertical">
 
                         <TextView
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="备注"
@@ -745,6 +784,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/order_finish_remark"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="鲜花/2kg"
