@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,11 +33,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -72,6 +76,12 @@ public class TipsActivity extends AppCompatActivity {
                     break;
                 case 3:
                     initimg((ArrayList)message.obj);
+                case 4:
+                    Toast.makeText(TipsActivity.this,"上传成功",Toast.LENGTH_LONG);
+                    break;
+                case 5:
+                    Toast.makeText(TipsActivity.this,"上传失败",Toast.LENGTH_LONG);
+                    break;
             }
         }
     };
@@ -80,7 +90,7 @@ public class TipsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tips);
-        int id = Integer.parseInt(getIntent().getStringExtra("tipsid"));
+        final int id = Integer.parseInt(getIntent().getStringExtra("tipsid"));
         Log.e("post_id", id + "");
         getPost(id);
         getAllComments(id);
@@ -105,7 +115,14 @@ public class TipsActivity extends AppCompatActivity {
         tv_forwards = findViewById(R.id.tv_forward);
         iv_pic = findViewById(R.id.tips_images);
         iv_head = findViewById(R.id.img_head);
-
+        enter_comment = findViewById(R.id.enter_comment);
+        publish_comment = findViewById(R.id.publish_comment);
+        publish_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                publishComment(id);
+            }
+        });
     }
 
     public void init(){
@@ -326,7 +343,41 @@ public class TipsActivity extends AppCompatActivity {
 
     }
 
-    public void publishComment(String comment,int tip_id,int user_id){
+    public void publishComment(final int postid){
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    String text = enter_comment.getText().toString();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+                    Date date = new Date(System.currentTimeMillis());
+                    String time = simpleDateFormat.format(date);
+                    int userid = Cache.user_id;
+                    URL url = new URL(Cache.MY_URL + "PostComment?comment="+text+"&comment_time="+time+"&post_id="+postid+"&user_id="+userid);
+                    InputStream inputStream = url.openStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
+                    String isRegister = bufferedReader.readLine();
+                    if (isRegister.equals("true")){
+                        Message message = handler.obtainMessage();
+                        message.what = 4;
+                        handler.sendMessage(message);
+                    }else{
+                        Message message = handler.obtainMessage();
+                        message.what = 5;
+                        handler.sendMessage(message);
+                    }
+                    bufferedReader.close();
+                    inputStream.close();
 
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
     }
 }
