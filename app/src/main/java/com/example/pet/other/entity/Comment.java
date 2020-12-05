@@ -1,10 +1,22 @@
 package com.example.pet.other.entity;
 
+import android.graphics.Bitmap;
+
 public class Comment {
+    private int id;
     private String Name;
     private String Time;
-    private int Head;
+    private Bitmap Head;
     private String Content;
+    private String path;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return Name;
@@ -22,11 +34,11 @@ public class Comment {
         Time = time;
     }
 
-    public int getHead() {
+    public Bitmap getHead() {
         return Head;
     }
 
-    public void setHead(int head) {
+    public void setHead(Bitmap head) {
         Head = head;
     }
 
@@ -36,6 +48,14 @@ public class Comment {
 
     public void setContent(String content) {
         Content = content;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override

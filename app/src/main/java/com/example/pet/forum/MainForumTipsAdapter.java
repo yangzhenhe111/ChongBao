@@ -18,6 +18,7 @@ import com.example.pet.R;
 import com.example.pet.other.entity.Tips;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class MainForumTipsAdapter extends BaseAdapter {
 

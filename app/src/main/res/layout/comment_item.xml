@@ -43,6 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="评论的内容"
-            android:textSize="40sp" />
+            android:textSize="28sp" />
     </LinearLayout>
 </LinearLayout>

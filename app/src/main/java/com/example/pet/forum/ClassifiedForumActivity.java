@@ -46,7 +46,6 @@ public class ClassifiedForumActivity extends AppCompatActivity {
     private TextView tv_classified_essence;
     private ListView lv_tips;
     private ArrayList<Tips> arrayList = new ArrayList<>();
-    private ArrayList<Tips> tipsArrayList;
     private String classified;
 
 
@@ -65,7 +64,8 @@ public class ClassifiedForumActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_classified_forum);
-        getClassifiedTips();
+        classified = getIntent().getStringExtra("classified");
+        getClassifiedTips(1);
         et_classified_search = findViewById(R.id.et_classified_search);
         btn_classified_search = findViewById(R.id.btn_classified_search);
         btn_classified_search.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +101,7 @@ public class ClassifiedForumActivity extends AppCompatActivity {
                 hot.setFakeBoldText(false);
                 TextPaint essence = tv_classified_essence.getPaint();
                 essence.setFakeBoldText(false);
+                getClassifiedTips(1);
             }
         });
         tv_classified_hot.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +116,7 @@ public class ClassifiedForumActivity extends AppCompatActivity {
                 hot.setFakeBoldText(true);
                 TextPaint essence = tv_classified_essence.getPaint();
                 essence.setFakeBoldText(false);
+                getClassifiedTips(2);
             }
         });
         tv_classified_essence.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +131,7 @@ public class ClassifiedForumActivity extends AppCompatActivity {
                 hot.setFakeBoldText(false);
                 TextPaint essence = tv_classified_essence.getPaint();
                 essence.setFakeBoldText(true);
+                getClassifiedTips(3);
             }
         });
         lv_tips = findViewById(R.id.lv_classified_articles);
@@ -217,14 +220,13 @@ public class ClassifiedForumActivity extends AppCompatActivity {
 
     }
 
-    public void getClassifiedTips(){
+    public void getClassifiedTips(final int i){
         new Thread(){
             @Override
             public void run() {
                 try {
-                    classified = getIntent().getStringExtra("classified");
-                    Log.e("classified", classified);
-                    URL url = new URL(Cache.url + "GetAllSortServlet?sortname="+classified);
+                    Log.e("classified", classified + i);
+                    URL url = new URL(Cache.MY_URL + "GetAllSortServlet?sortname="+classified+"&i="+i);
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream input = connection.getInputStream();
@@ -234,9 +236,9 @@ public class ClassifiedForumActivity extends AppCompatActivity {
                     while ((line=bufferedReader.readLine())!=null){
                         stringBuffer.append(line);
                     }
+                    arrayList.clear();
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
                     Log.e("arrayList", stringBuffer.toString());
-                    tipsArrayList = new ArrayList<>();
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         int post_id = jsonObject.getInt("post_id");

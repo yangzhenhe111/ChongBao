@@ -201,12 +201,10 @@
                         android:layout_gravity="center"/>
                 </LinearLayout>
             </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="45dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="45dp">
 
                 <com.example.pet.forum.MyListView
                     android:id="@+id/lv_comment"
@@ -225,11 +223,13 @@
         android:background="@color/White">
 
         <EditText
+            android:id="@+id/enter_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="输入评论"/>
 
         <Button
+            android:id="@+id/publish_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
