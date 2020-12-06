@@ -16,11 +16,16 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
+import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Order;
 
-import org.w3c.dom.Text;
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
+
 
 public class Order2 extends AppCompatActivity {
     private LinearLayout statusPay;
@@ -71,7 +76,7 @@ public class Order2 extends AppCompatActivity {
     }
 
     private void setStatus() {
-      changeView();
+        changeView();
         int count = Integer.parseInt(order.getOrderAmount().trim());
         totalCount.setText(count + "元");
         if (count > 15) {
@@ -184,42 +189,66 @@ public class Order2 extends AppCompatActivity {
 
     }
 
-    private void changeState(String state) {
- new Thread(){
+    private void changeState() {
 
- }.start();
 
+        new Thread() {
+            @Override
+            public void run() {
+                URL url = null;
+                try {
+                    url = new URL(Cache.MY_URL+ "ChangeState?state=已取消&orderID" +order.getOrderId());
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    InputStream inputStream = conn.getInputStream();
+                    inputStream.close();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+        order.setOrderState("已取消");
+        for (int i=0;i<Cache.myOrderList.size();i++){
+            if(Cache.myOrderList.get(i).getOrderId()==order.getOrderId()){
+                Cache.myOrderList.get(i).setOrderState("已取消");
+            }
+        }
+        changeView();
     }
-public void changeView(){
-    switch (order.getOrderState()) {
-        case "已取消":
-            toolbarTitle.setText("已取消");
-            statusComplete.setVisibility(View.GONE);
-            statusCancel.setVisibility(View.VISIBLE);
-            statusRunner.setVisibility(View.INVISIBLE);
-            statusPay.setVisibility(View.INVISIBLE);
-            break;
-        case "待支付":
-            toolbarTitle.setText("待支付");
-            statusComplete.setVisibility(View.GONE);
-            statusCancel.setVisibility(View.INVISIBLE);
-            statusRunner.setVisibility(View.INVISIBLE);
-            statusPay.setVisibility(View.VISIBLE);
-            break;
-        case "待接单":
-            toolbarTitle.setText("待接单");
-            statusComplete.setVisibility(View.GONE);
-            statusCancel.setVisibility(View.INVISIBLE);
-            statusRunner.setVisibility(View.VISIBLE);
-            statusPay.setVisibility(View.INVISIBLE);
-            break;
-        case "已完成":
-            toolbarTitle.setText("已完成");
-            statusComplete.setVisibility(View.VISIBLE);
-            statusUncomplete.setVisibility(View.GONE);
-            break;
+
+    public void changeView() {
+        switch (order.getOrderState()) {
+            case "已取消":
+                toolbarTitle.setText("已取消");
+                statusComplete.setVisibility(View.GONE);
+                statusCancel.setVisibility(View.VISIBLE);
+                statusRunner.setVisibility(View.INVISIBLE);
+                statusPay.setVisibility(View.INVISIBLE);
+                break;
+            case "待支付":
+                toolbarTitle.setText("待支付");
+                statusComplete.setVisibility(View.GONE);
+                statusCancel.setVisibility(View.INVISIBLE);
+                statusRunner.setVisibility(View.INVISIBLE);
+                statusPay.setVisibility(View.VISIBLE);
+                break;
+            case "待接单":
+                toolbarTitle.setText("待接单");
+                statusComplete.setVisibility(View.GONE);
+                statusCancel.setVisibility(View.INVISIBLE);
+                statusRunner.setVisibility(View.VISIBLE);
+                statusPay.setVisibility(View.INVISIBLE);
+                break;
+            case "已完成":
+                toolbarTitle.setText("已完成");
+                statusComplete.setVisibility(View.VISIBLE);
+                statusUncomplete.setVisibility(View.GONE);
+                break;
+        }
     }
-}
+
     //取消订单
     private void orderToCancel() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -227,7 +256,7 @@ public void changeView(){
         builder.setPositiveButton("确定取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                changeState("已取消");
+                changeState();
             }
         });
 
