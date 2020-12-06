@@ -4,19 +4,23 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.pet.R;
 import com.example.pet.my.editinfo.EditInfo;
 import com.example.pet.my.order.MyOrderActivity;
+import com.example.pet.other.Cache;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +30,7 @@ import java.util.List;
 public class MyFragment extends Fragment {
     private View view;
     private TextView login;
+private  TextView count;
     private List<My> myList1 = new ArrayList<>();
     private List<My> myList2 = new ArrayList<>();
     private List<My> myList3 = new ArrayList<>();
@@ -34,7 +39,9 @@ public class MyFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my, container, false);
-        login = view.findViewById(R.id.login);
+        login = view.findViewById(R.id.fragment_login);
+        count = view.findViewById(R.id.fragment_count);
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +64,7 @@ public class MyFragment extends Fragment {
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(Cache.user !=null){
                 switch (position) {
                     case 0:
                         Intent intent2 = new Intent(getContext(), EditInfo.class);
@@ -64,12 +72,15 @@ public class MyFragment extends Fragment {
                         break;
                     default:
                         break;
+                }}else{
+                    showLoginToast();
                 }
             }
         });
         listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(Cache.user != null){
                 switch (position) {
                     case 0:
                         Intent intent = new Intent(getContext(), Post.class);
@@ -89,6 +100,8 @@ public class MyFragment extends Fragment {
                         break;
                     default:
                         break;
+                }}else {
+                    showLoginToast();
                 }
             }
         });
@@ -143,5 +156,20 @@ public class MyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
+    }
+//通过生命周期方法 获得当前用户数据
+    @Override
+    public void onStart() {
+        if(Cache.user !=null){
+            login.setText(Cache.user.getUserName());
+            count.setText(Cache.user.getUserPhone());
+        }
+        super.onStart();
+        Log.e("MyFragemnt","onStart");
+      //  Log.e("MyFragemnt",Cache.user.getUserName());
+
+    }
+    public void showLoginToast(){
+        Toast.makeText(getContext(),"请先登录",Toast.LENGTH_LONG).show();
     }
 }
