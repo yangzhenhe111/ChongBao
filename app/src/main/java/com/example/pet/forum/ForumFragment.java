@@ -82,7 +82,6 @@ public class ForumFragment extends Fragment {
     private ListView lv_tips;
     private Banner banner;
     private ArrayList<Tips> arrayList = new ArrayList<>();
-    private ArrayList<Tips> tipsArrayList;
 
     private Handler handler = new Handler(){
         @Override
@@ -100,7 +99,7 @@ public class ForumFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forum,container,false);
-        getAllTips();
+        getAllTips(1);
         et_search = view.findViewById(R.id.et_main_search);
         btn_search = view.findViewById(R.id.btn_main_search);
         btn_search.setOnClickListener(new View.OnClickListener() {
@@ -256,6 +255,7 @@ public class ForumFragment extends Fragment {
                 hot.setFakeBoldText(false);
                 TextPaint essence = tv_essence.getPaint();
                 essence.setFakeBoldText(false);
+                getAllTips(1);
             }
         });
         tv_hot.setOnClickListener(new View.OnClickListener() {
@@ -270,6 +270,7 @@ public class ForumFragment extends Fragment {
                 hot.setFakeBoldText(true);
                 TextPaint essence = tv_essence.getPaint();
                 essence.setFakeBoldText(false);
+                getAllTips(2);
             }
         });
         tv_essence.setOnClickListener(new View.OnClickListener() {
@@ -284,6 +285,7 @@ public class ForumFragment extends Fragment {
                 hot.setFakeBoldText(false);
                 TextPaint essence = tv_essence.getPaint();
                 essence.setFakeBoldText(true);
+                getAllTips(3);
             }
         });
 
@@ -415,12 +417,12 @@ public class ForumFragment extends Fragment {
         lv_tips.setAdapter(mainForumTipsAdapter);
     }
 
-    public void getAllTips(){
+    public void getAllTips(final int i){
         new Thread(){
             @Override
             public void run() {
                 try {
-                    URL url = new URL(Cache.MY_URL + "GetAllPostServlet");
+                    URL url = new URL(Cache.MY_URL + "GetPostByTime?i="+i);
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream input = connection.getInputStream();
@@ -430,8 +432,8 @@ public class ForumFragment extends Fragment {
                     while ((line=bufferedReader.readLine())!=null){
                         stringBuffer.append(line);
                     }
+                    arrayList.clear();
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
-                    System.out.println(jsonArray);
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         int post_id = jsonObject.getInt("post_id");
@@ -458,7 +460,6 @@ public class ForumFragment extends Fragment {
                         tips.setImagepath(img_path);
                         tips.setHeadImagepath(head_img_path);
                         arrayList.add(tips);
-                        Log.e("post_id", i + "");
                     }
                     Log.e("pppppppppppppppppppppp", "------------------");
                     Message message = handler.obtainMessage();

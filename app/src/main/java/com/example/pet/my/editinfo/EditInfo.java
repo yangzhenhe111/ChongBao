@@ -59,14 +59,14 @@ public class EditInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_info);
-        if (Build.VERSION.SDK_INT >= 21) {   //只有5.0及以上系统才支持，因此这里先进行了一层if判断
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE    //设置为全屏显示，必须这两行代码一起才能生效
-                    |View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色
-            decorView.setSystemUiVisibility(option);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
-        }
+//        if (Build.VERSION.SDK_INT >= 21) {   //只有5.0及以上系统才支持，因此这里先进行了一层if判断
+//            View decorView = getWindow().getDecorView();
+//            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE    //设置为全屏显示，必须这两行代码一起才能生效
+//                    |View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色
+//            decorView.setSystemUiVisibility(option);
+//            getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
+//        }
         //设置控件内容
         setView();
     }
@@ -125,17 +125,19 @@ public class EditInfo extends AppCompatActivity {
         verifyStoragePermissions(this);
         PictureSelector.create(this)
                 .openGallery(PictureConfig.TYPE_IMAGE)
+                .imageEngine(GlideEngine.createGlideEngine())
                 .imageSpanCount(4)// 每行显示个数 int
                 .maxSelectNum(1)
+                .isWeChatStyle(true)
                 .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE
                 .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回
-                .previewImage(true)// 是否可预览图片 true or false
+                .isPreviewImage(true)// 是否可预览图片 true or false
                 .isCamera(true)// 是否显示拍照按钮 true or false
                 .imageFormat(PictureMimeType.JPEG)// 拍照保存图片格式后缀,默认jpeg
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
                 .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填
-                .enableCrop(true)// 是否裁剪 true or false
-                .compress(true)// 是否压缩 true or false
+                .isEnableCrop(true)// 是否裁剪 true or false
+                .isCompress(true)// 是否压缩 true or false
                 .compressSavePath(Const.getImgPath())//压缩图片保存地址
                 .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
                 .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
@@ -153,7 +155,7 @@ public class EditInfo extends AppCompatActivity {
                     Log.e("地址：",selectList.get(0).getCompressPath());
                     upPhoto.setImageURI(Uri.parse(selectList.get(0).getCompressPath()));
                     //上传图片
-                    setPicture(selectList.get(0).getCompressPath());
+//                    setPicture(selectList.get(0).getCompressPath());
                     break;
             }
         }

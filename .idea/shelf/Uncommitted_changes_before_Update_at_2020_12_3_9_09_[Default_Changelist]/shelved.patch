@@ -1,0 +1,175 @@
+Index: app/src/main/java/com/example/pet/other/entity/BaseUrl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.other.entity;\r\n\r\npublic class BaseUrl {\r\n    public static String url = \"http://192.168.43.227:8080//LovePet/\";\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/other/entity/BaseUrl.java	(revision 70772a57e4d51a2222224889684257011a2a1791)
++++ app/src/main/java/com/example/pet/other/entity/BaseUrl.java	(date 1606897521348)
+@@ -1,5 +1,5 @@
+ package com.example.pet.other.entity;
+ 
+ public class BaseUrl {
+-    public static String url = "http://192.168.43.227:8080//LovePet/";
++    public static String url = "http://192.168.43.202:8080/ChongBao_war_exploded/";
+ }
+Index: app/src/main/java/com/example/pet/forum/ForumFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.forum;\r\nimport android.content.Intent;\r\nimport android.graphics.Bitmap;\r\nimport android.os.Bundle;\r\nimport android.text.TextPaint;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.ListView;\r\nimport android.widget.PopupWindow;\r\nimport android.widget.RelativeLayout;\r\nimport android.widget.Switch;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.pet.R;\r\nimport com.example.pet.other.entity.BaseUrl;\r\nimport com.example.pet.other.entity.Tips;\r\nimport com.youth.banner.Banner;\r\nimport com.youth.banner.BannerConfig;\r\nimport com.youth.banner.listener.OnBannerListener;\r\n\r\nimport org.json.JSONArray;\r\nimport org.json.JSONException;\r\nimport org.json.JSONObject;\r\n\r\nimport java.io.BufferedReader;\r\nimport java.io.IOException;\r\nimport java.io.InputStream;\r\nimport java.io.InputStreamReader;\r\nimport java.net.HttpURLConnection;\r\nimport java.net.MalformedURLException;\r\nimport java.net.ProtocolException;\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class ForumFragment extends Fragment {\r\n\r\n    private EditText et_search;\r\n    private Button btn_search;\r\n    private Button btn_publish;\r\n    private RelativeLayout forum_food;\r\n    private RelativeLayout forum_articles;\r\n    private RelativeLayout forum_daily;\r\n    private RelativeLayout forum_cosmetology;\r\n    private RelativeLayout forum_train;\r\n    private RelativeLayout forum_deworming;\r\n    private RelativeLayout forum_disease;\r\n    private RelativeLayout forum_randomtalk;\r\n    private RelativeLayout forum_question;\r\n    private RelativeLayout forum_sharephotos;\r\n    private TextView tv_newest;\r\n    private TextView tv_hot;\r\n    private TextView tv_essence;\r\n    private ListView lv_tips;\r\n    private Banner banner;\r\n    private ArrayList<Tips> arrayList = new ArrayList<>();\r\n    private PopupWindow popupWindow;\r\n\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_forum,container,false);\r\n        init();\r\n        Log.e(\"1\",\"1\");\r\n        et_search = view.findViewById(R.id.et_main_search);\r\n        btn_search = view.findViewById(R.id.btn_main_search);\r\n        btn_search.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n\r\n            }\r\n        });\r\n        btn_publish = view.findViewById(R.id.btn_publish_articles);\r\n        btn_publish.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),PublishActivity.class);\r\n                startActivity(intent);\r\n                getActivity().finish();\r\n            }\r\n        });\r\n        forum_food = view.findViewById(R.id.forum_food);\r\n        forum_food.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_articles = view.findViewById(R.id.forum_articles);\r\n        forum_articles.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_daily = view.findViewById(R.id.forum_daily);\r\n        forum_daily.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_cosmetology = view.findViewById(R.id.forum_cosmetology);\r\n        forum_cosmetology.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_train = view.findViewById(R.id.forum_train);\r\n        forum_train.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_deworming = view.findViewById(R.id.forum_deworming);\r\n        forum_deworming.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_disease = view.findViewById(R.id.forum_disease);\r\n        forum_disease.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_randomtalk = view.findViewById(R.id.forum_randomtalk);\r\n        forum_randomtalk.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_question = view.findViewById(R.id.forum_question);\r\n        forum_question.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_sharephotos = view.findViewById(R.id.forum_sharephotos);\r\n        forum_sharephotos.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        tv_newest = view.findViewById(R.id.forum_newest);\r\n        TextPaint base = tv_newest.getPaint();\r\n        base.setFakeBoldText(true);\r\n        tv_hot = view.findViewById(R.id.forum_hot);\r\n        tv_essence = view.findViewById(R.id.forum_essence);\r\n        tv_newest.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                tv_newest.setBackgroundColor(getResources().getColor(R.color.Blue));\r\n                tv_hot.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_essence.setBackgroundColor(getResources().getColor(R.color.White));\r\n                TextPaint newest = tv_newest.getPaint();\r\n                newest.setFakeBoldText(true);\r\n                TextPaint hot = tv_hot.getPaint();\r\n                hot.setFakeBoldText(false);\r\n                TextPaint essence = tv_essence.getPaint();\r\n                essence.setFakeBoldText(false);\r\n            }\r\n        });\r\n        tv_hot.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                tv_newest.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_hot.setBackgroundColor(getResources().getColor(R.color.Orange));\r\n                tv_essence.setBackgroundColor(getResources().getColor(R.color.White));\r\n                TextPaint newest = tv_newest.getPaint();\r\n                newest.setFakeBoldText(false);\r\n                TextPaint hot = tv_hot.getPaint();\r\n                hot.setFakeBoldText(true);\r\n                TextPaint essence = tv_essence.getPaint();\r\n                essence.setFakeBoldText(false);\r\n            }\r\n        });\r\n        tv_essence.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                tv_newest.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_hot.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_essence.setBackgroundColor(getResources().getColor(R.color.Purple));\r\n                TextPaint newest = tv_newest.getPaint();\r\n                newest.setFakeBoldText(false);\r\n                TextPaint hot = tv_hot.getPaint();\r\n                hot.setFakeBoldText(false);\r\n                TextPaint essence = tv_essence.getPaint();\r\n                essence.setFakeBoldText(true);\r\n            }\r\n        });\r\n\r\n\r\n        ArrayList<Integer> images = new ArrayList<>();\r\n        ArrayList<String> title = new ArrayList<>();\r\n        title.add(\"新手推荐文章1\");\r\n        title.add(\"新手推荐文章2\");\r\n        title.add(\"新手推荐文章3\");\r\n        title.add(\"新手推荐文章4\");\r\n        title.add(\"新手推荐文章5\");\r\n        images.add(R.drawable.recommend1);\r\n        images.add(R.drawable.recommend2);\r\n        images.add(R.drawable.recommend3);\r\n        images.add(R.drawable.recommend4);\r\n        images.add(R.drawable.recommend5);\r\n\r\n        banner = view.findViewById(R.id.banner);\r\n        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);\r\n        banner.setBannerTitles(title);\r\n        banner.setImageLoader(new GlideImageLoader());\r\n        banner.setImages(images);\r\n        banner.start();\r\n\r\n        banner.setOnBannerListener(new OnBannerListener() {\r\n            @Override\r\n            public void OnBannerClick(int position) {\r\n                Intent intent;\r\n                switch (position){\r\n                    case 0:\r\n                        intent = new Intent(getContext(),TipsActivity.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                    case 1:\r\n                        intent = new Intent(getContext(),TipsActivity.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                    case 2:\r\n                        intent = new Intent(getContext(),TipsActivity.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                }\r\n                Log.e(\"点击了第几张轮播图:\",position+\"\");\r\n            }\r\n        });\r\n\r\n        lv_tips = view.findViewById(R.id.lv_tips);\r\n        for (int i = 0; i < 5; i++) {\r\n            Tips tips = new Tips();\r\n            tips.setId(1);\r\n            tips.setUserName(\"名字\" + i);\r\n            tips.setTime(\"2020-11-28/16:36:0\" + i);\r\n            tips.setTopic(\"标签\" + i);\r\n            tips.setTitle(\"标题\" + i);\r\n            tips.setText(\"正文\" + i);\r\n            arrayList.add(tips);\r\n        }\r\n        MainForumTipsAdapter mainForumTipsAdapter = new MainForumTipsAdapter(getContext(),arrayList,R.layout.forum_tips_item);\r\n        lv_tips.setAdapter(mainForumTipsAdapter);\r\n        return view;\r\n    }\r\n\r\n    public void init(){\r\n        Log.e(\"2\",\"2\");\r\n        new Thread(){\r\n            @Override\r\n            public void run() {\r\n                try {\r\n                    Log.e(\"3\",\"3\");\r\n                    URL url = new URL(\"http://192.168.43.227:8080//LovePet/SearchAllPostServlet\");\r\n                    Log.e(\"5\",\"5\");\r\n                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();\r\n                    Log.e(\"7\",\"7\");\r\n                    connection.setRequestMethod(\"GET\");\r\n                    InputStream input = connection.getInputStream();\r\n                    Log.e(\"6\",\"6\");\r\n                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));\r\n                    StringBuffer stringBuffer = new StringBuffer();\r\n                    String line;\r\n                    while ((line=bufferedReader.readLine())!=null){\r\n                        stringBuffer.append(line);\r\n                    }\r\n                    Log.e(\"4\",\"4\");\r\n                    Log.e(\"4\",\"4\");\r\n                    JSONArray jsonArray = new JSONArray(stringBuffer.toString());\r\n                    Log.e(\"9\",jsonArray+\"\");\r\n                    Log.e(\"10\",\"10\");\r\n                    List<Tips> tipsList = new ArrayList<>();\r\n                    for (int i=0;i<jsonArray.length();i++){\r\n                        JSONObject jsonObject = jsonArray.getJSONObject(i);\r\n                        int id = jsonObject.getInt(\"id\");\r\n                        int usedid = jsonObject.getInt(\"userId\");\r\n                        String userName = jsonObject.getString(\"userName\");\r\n                        String userhead = jsonObject.getString(\"userHead\");\r\n                        String time = jsonObject.getString(\"time\");\r\n                        String topic = jsonObject.getString(\"topic\");\r\n                        String title = jsonObject.getString(\"title\");\r\n                        String text = jsonObject.getString(\"text\");\r\n                        int likes = jsonObject.getInt(\"like\");\r\n                        int comments = jsonObject.getInt(\"comments\");\r\n                        int forwards = jsonObject.getInt(\"forwards\");\r\n                        Tips tips = new Tips();\r\n                        tips.setUserName(userName);\r\n                        tips.setId(id);\r\n                        tips.setUserId(usedid);\r\n                        tips.setTime(time);\r\n                        tips.setTopic(topic);\r\n                        tips.setTitle(title);\r\n                        tips.setText(text);\r\n                        tips.setLikes(likes);\r\n                        tips.setComments(comments);\r\n                        tips.setForwards(forwards);\r\n                        Log.e(\"userid+\",jsonObject+\"\");\r\n                    }\r\n                } catch (MalformedURLException e) {\r\n                    e.printStackTrace();\r\n                } catch (ProtocolException e) {\r\n                    e.printStackTrace();\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                } catch (JSONException e) {\r\n                    e.printStackTrace();\r\n                }\r\n            }\r\n        }.start();\r\n    }\r\n\r\n    public void search(){\r\n        new Thread(){\r\n            @Override\r\n            public void run() {\r\n                String search = et_search.getText().toString();\r\n            }\r\n        };\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/forum/ForumFragment.java	(revision 70772a57e4d51a2222224889684257011a2a1791)
++++ app/src/main/java/com/example/pet/forum/ForumFragment.java	(date 1606957099338)
+@@ -40,7 +40,9 @@
+ import java.net.ProtocolException;
+ import java.net.URL;
+ import java.util.ArrayList;
++import java.util.HashMap;
+ import java.util.List;
++import java.util.Map;
+ 
+ public class ForumFragment extends Fragment {
+ 
+@@ -63,7 +65,6 @@
+     private ListView lv_tips;
+     private Banner banner;
+     private ArrayList<Tips> arrayList = new ArrayList<>();
+-    private PopupWindow popupWindow;
+ 
+ 
+     @Nullable
+@@ -71,7 +72,6 @@
+     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+         View view = inflater.inflate(R.layout.fragment_forum,container,false);
+         init();
+-        Log.e("1","1");
+         et_search = view.findViewById(R.id.et_main_search);
+         btn_search = view.findViewById(R.id.btn_main_search);
+         btn_search.setOnClickListener(new View.OnClickListener() {
+@@ -288,44 +288,40 @@
+     }
+ 
+     public void init(){
+-        Log.e("2","2");
+         new Thread(){
+             @Override
+             public void run() {
+                 try {
+-                    Log.e("3","3");
+-                    URL url = new URL("http://192.168.43.227:8080//LovePet/SearchAllPostServlet");
+-                    Log.e("5","5");
+-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+-                    Log.e("7","7");
+-                    connection.setRequestMethod("GET");
+-                    InputStream input = connection.getInputStream();
++                    URL url = new URL("http://192.168.43.202:8080/ChongBao_war_exploded/SearchAllPostServlet");
++                    //HttpURLConnection connection = (HttpURLConnection) url.openConnection();
++                    //connection.setRequestMethod("GET");
++                    //InputStream input = connection.getInputStream();
++                    Log.e("6","6");
++                    InputStream inputStream = url.openStream();
+                     Log.e("6","6");
+-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
+-                    StringBuffer stringBuffer = new StringBuffer();
++                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
++                    String getAllTips = "";
+                     String line;
+-                    while ((line=bufferedReader.readLine())!=null){
+-                        stringBuffer.append(line);
++                    while((line = bufferedReader.readLine()) != null){
++                        getAllTips += line;
+                     }
+-                    Log.e("4","4");
+-                    Log.e("4","4");
+-                    JSONArray jsonArray = new JSONArray(stringBuffer.toString());
+-                    Log.e("9",jsonArray+"");
+-                    Log.e("10","10");
++                    Log.e("123",getAllTips);
+                     List<Tips> tipsList = new ArrayList<>();
+-                    for (int i=0;i<jsonArray.length();i++){
+-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+-                        int id = jsonObject.getInt("id");
+-                        int usedid = jsonObject.getInt("userId");
+-                        String userName = jsonObject.getString("userName");
+-                        String userhead = jsonObject.getString("userHead");
+-                        String time = jsonObject.getString("time");
+-                        String topic = jsonObject.getString("topic");
+-                        String title = jsonObject.getString("title");
+-                        String text = jsonObject.getString("text");
+-                        int likes = jsonObject.getInt("like");
+-                        int comments = jsonObject.getInt("comments");
+-                        int forwards = jsonObject.getInt("forwards");
++                    Log.e("6","6");
++                    for (int i = 0; i < tipsList.size(); i++){
++                        Log.e("6","6");
++                        Map<String ,Object> map = new HashMap<>(i);
++                        int id = (int) map.get("id");
++                        int usedid = (int) map.get("userId");
++                        String userName = (String) map.get("userName");
++                        String userhead = (String) map.get("userHead");
++                        String time = (String) map.get("time");
++                        String topic = (String) map.get("topic");
++                        String title = (String) map.get("title");
++                        String text = (String) map.get("text");
++                        int likes = (int) map.get("like");
++                        int comments = (int) map.get("comments");
++                        int forwards = (int) map.get("forwards");
+                         Tips tips = new Tips();
+                         tips.setUserName(userName);
+                         tips.setId(id);
+@@ -337,16 +333,49 @@
+                         tips.setLikes(likes);
+                         tips.setComments(comments);
+                         tips.setForwards(forwards);
+-                        Log.e("userid+",jsonObject+"");
++                        Log.e("userid+",map+"");
+                     }
++                   // BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
++                   // StringBuffer stringBuffer = new StringBuffer();
++                   // String line;
++                  //  while ((line=bufferedReader.readLine())!=null){
++                       // stringBuffer.append(line);
++                   // }
++                    //JSONArray jsonArray = new JSONArray(stringBuffer.toString());
++                    //Log.e("9",jsonArray+"");
++//                    List<Tips> tipsList = new ArrayList<>();
++//                    for (int i=0;i<jsonArray.length();i++){
++//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
++//                        int id = jsonObject.getInt("id");
++//                        int usedid = jsonObject.getInt("userId");
++//                        String userName = jsonObject.getString("userName");
++//                        String userhead = jsonObject.getString("userHead");
++//                        String time = jsonObject.getString("time");
++//                        String topic = jsonObject.getString("topic");
++//                        String title = jsonObject.getString("title");
++//                        String text = jsonObject.getString("text");
++//                        int likes = jsonObject.getInt("like");
++//                        int comments = jsonObject.getInt("comments");
++//                        int forwards = jsonObject.getInt("forwards");
++//                        Tips tips = new Tips();
++//                        tips.setUserName(userName);
++//                        tips.setId(id);
++//                        tips.setUserId(usedid);
++//                        tips.setTime(time);
++//                        tips.setTopic(topic);
++//                        tips.setTitle(title);
++//                        tips.setText(text);
++//                        tips.setLikes(likes);
++//                        tips.setComments(comments);
++//                        tips.setForwards(forwards);
++//                        Log.e("userid+",jsonObject+"");
++//                    }
+                 } catch (MalformedURLException e) {
+                     e.printStackTrace();
+                 } catch (ProtocolException e) {
+                     e.printStackTrace();
+                 } catch (IOException e) {
+                     e.printStackTrace();
+-                } catch (JSONException e) {
+-                    e.printStackTrace();
+                 }
+             }
+         }.start();
