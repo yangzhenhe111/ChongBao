@@ -23,7 +23,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -73,6 +72,7 @@
         <activity android:name=".nursing.StartActivity" />
         <activity android:name=".nursing.NeworderActivity" />
         <activity android:name=".nursing.CostActivity" />
+        <activity android:name=".forum.SearchResult"/>
         <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -94,15 +94,15 @@
             </intent-filter>
         </service>
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+<!--        <provider-->
+<!--            android:name="androidx.core.content.FileProvider"-->
+<!--            android:authorities="${applicationId}.provider"-->
+<!--            android:exported="false"-->
+<!--            android:grantUriPermissions="true">-->
+<!--            <meta-data-->
+<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
+<!--                android:resource="" />-->
+<!--        </provider>-->
 
         <activity
             android:name=".MainActivity"
@@ -136,6 +136,7 @@
             android:authorities="${applicationId}.DataProvider"
             android:exported="false"
             android:process=":pushcore" /> <!-- Required SDK核心功能 -->
+        <service android:name=".my.MyUserService"/>
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true">

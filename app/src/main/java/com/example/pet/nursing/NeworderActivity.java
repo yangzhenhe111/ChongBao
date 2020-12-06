@@ -41,6 +41,7 @@ public class NeworderActivity extends AppCompatActivity {
     private TextView end;
     private TextView endpeople;
     private TextView endtel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +72,7 @@ public class NeworderActivity extends AppCompatActivity {
                     Intent intent = new Intent(NeworderActivity.this, CostActivity.class);
                     intent.putExtra("cost", money.getText().toString());
                     startActivity(intent);
-                }
-                else{
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(NeworderActivity.this);
                     builder.setTitle("提示");
                     builder.setMessage("有必填项为空");
@@ -85,14 +85,14 @@ public class NeworderActivity extends AppCompatActivity {
         stlin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NeworderActivity.this,StartActivity.class);
+                Intent intent = new Intent(NeworderActivity.this, StartActivity.class);
                 startActivity(intent);
             }
         });
         endlin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NeworderActivity.this,EndActivity.class);
+                Intent intent = new Intent(NeworderActivity.this, EndActivity.class);
                 startActivity(intent);
             }
         });
@@ -102,19 +102,19 @@ public class NeworderActivity extends AppCompatActivity {
                 pop();
             }
         });
-        if(!AddressInfo.END.equals("送去哪里？") && !AddressInfo.START.equals("到哪里接？")){
+        if (!AddressInfo.END.equals("送去哪里？") && !AddressInfo.START.equals("到哪里接？")) {
             DecimalFormat df = new DecimalFormat("######0");
             String distance = df.format(DistanceUtil.getDistance(Point.END, Point.START));
-            lu.setText(distance+"米");
-            if(Integer.parseInt(lu.getText().toString().substring(0,lu.getText().toString().length()-1)) <= 2500){
+            lu.setText(distance + "米");
+            if (Integer.parseInt(lu.getText().toString().substring(0, lu.getText().toString().length() - 1)) <= 2500) {
                 money.setText("15元");
-            }
-            else {
-                int l = Integer.parseInt(lu.getText().toString().substring(0,lu.getText().toString().length()-1));
+            } else {
+                int l = Integer.parseInt(lu.getText().toString().substring(0, lu.getText().toString().length() - 1));
                 money.setText(15 + (l / 1000) * 2 + "元");
             }
         }
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -124,12 +124,13 @@ public class NeworderActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
         startActivity(intent);
     }
-    private void pop(){
+
+    private void pop() {
         LayoutInflater mLayoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);//自定义布局
         View pop = mLayoutInflater.inflate(R.layout.window, null, false);
         TextView qibu = (TextView) pop.findViewById(R.id.qibu);
         TextView ewai = (TextView) pop.findViewById(R.id.ewai);
-        if(!lu.getText().toString().equals("")) {
+        if (!lu.getText().toString().equals("")) {
             if (Integer.parseInt(lu.getText().toString().substring(0, lu.getText().toString().length() - 1)) <= 2500) {
                 qibu.setText("15元");
                 ewai.setText("0元");
@@ -142,8 +143,9 @@ public class NeworderActivity extends AppCompatActivity {
         PopupWindow popupWindow = new PopupWindow(pop, fei.getWidth(), LinearLayout.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.box));//设置背景
-        popupWindow.showAsDropDown(fei,0, -3*fei.getHeight());
+        popupWindow.showAsDropDown(fei, 0, -3 * fei.getHeight());
     }
+
     private void setText() {
         start.setText(AddressInfo.START);
         startpeople.setText(AddressInfo.STARTPE);
@@ -173,17 +175,17 @@ public class NeworderActivity extends AppCompatActivity {
     }
 
     private void check() {
-        if(cb.isChecked()){
+        if (cb.isChecked()) {
             cost.setEnabled(true);
             cost.setBackgroundColor(Color.parseColor("#1E90FF"));
-        }
-        else{
+        } else {
             cost.setEnabled(false);
             cost.setBackgroundColor(Color.parseColor("#808080"));
         }
     }
+
     public void xuzhi(View view) {
-        Intent i = new Intent(this,XuzhiActivity.class);
+        Intent i = new Intent(this, XuzhiActivity.class);
         startActivity(i);
     }
 

@@ -82,7 +82,6 @@ public class ForumFragment extends Fragment {
     private ListView lv_tips;
     private Banner banner;
     private ArrayList<Tips> arrayList = new ArrayList<>();
-    private ArrayList<Tips> tipsArrayList;
 
     private Handler handler = new Handler(){
         @Override
@@ -100,13 +99,15 @@ public class ForumFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forum,container,false);
-        getAllTips();
+        getAllTips(1);
         et_search = view.findViewById(R.id.et_main_search);
         btn_search = view.findViewById(R.id.btn_main_search);
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent();
+                intent.setClass(getContext(),SearchResult.class);
+                getContext().startActivity(intent);
             }
         });
         btn_publish = view.findViewById(R.id.btn_publish_articles);
@@ -256,6 +257,7 @@ public class ForumFragment extends Fragment {
                 hot.setFakeBoldText(false);
                 TextPaint essence = tv_essence.getPaint();
                 essence.setFakeBoldText(false);
+                getAllTips(1);
             }
         });
         tv_hot.setOnClickListener(new View.OnClickListener() {
@@ -270,6 +272,7 @@ public class ForumFragment extends Fragment {
                 hot.setFakeBoldText(true);
                 TextPaint essence = tv_essence.getPaint();
                 essence.setFakeBoldText(false);
+                getAllTips(2);
             }
         });
         tv_essence.setOnClickListener(new View.OnClickListener() {
@@ -284,16 +287,17 @@ public class ForumFragment extends Fragment {
                 hot.setFakeBoldText(false);
                 TextPaint essence = tv_essence.getPaint();
                 essence.setFakeBoldText(true);
+                getAllTips(3);
             }
         });
 
         ArrayList<Integer> images = new ArrayList<>();
         ArrayList<String> title = new ArrayList<>();
-        title.add("新手推荐文章1");
-        title.add("新手推荐文章2");
-        title.add("新手推荐文章3");
-        title.add("新手推荐文章4");
-        title.add("新手推荐文章5");
+        title.add("猫咪的洗澡和驱虫");
+        title.add("猫咪的日常用品");
+        title.add("猫咪的食物");
+        title.add("猫咪的日常护理");
+        title.add("猫咪的常见病症");
         images.add(R.drawable.recommend1);
         images.add(R.drawable.recommend2);
         images.add(R.drawable.recommend3);
@@ -314,14 +318,27 @@ public class ForumFragment extends Fragment {
                 switch (position){
                     case 0:
                         intent = new Intent(getContext(),TipsActivity.class);
+                        intent.putExtra("tipsid","1");
                         startActivity(intent);
                         break;
                     case 1:
                         intent = new Intent(getContext(),TipsActivity.class);
+                        intent.putExtra("tipsid","2");
                         startActivity(intent);
                         break;
                     case 2:
                         intent = new Intent(getContext(),TipsActivity.class);
+                        intent.putExtra("tipsid","3");
+                        startActivity(intent);
+                        break;
+                    case 3:
+                        intent = new Intent(getContext(),TipsActivity.class);
+                        intent.putExtra("tipsid","4");
+                        startActivity(intent);
+                        break;
+                    case 4:
+                        intent = new Intent(getContext(),TipsActivity.class);
+                        intent.putExtra("tipsid","5");
                         startActivity(intent);
                         break;
                 }
@@ -415,12 +432,12 @@ public class ForumFragment extends Fragment {
         lv_tips.setAdapter(mainForumTipsAdapter);
     }
 
-    public void getAllTips(){
+    public void getAllTips(final int i){
         new Thread(){
             @Override
             public void run() {
                 try {
-                    URL url = new URL(Cache.MY_URL + "GetAllPostServlet");
+                    URL url = new URL(Cache.MY_URL + "GetPostByTime?i="+i);
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream input = connection.getInputStream();
@@ -430,8 +447,8 @@ public class ForumFragment extends Fragment {
                     while ((line=bufferedReader.readLine())!=null){
                         stringBuffer.append(line);
                     }
+                    arrayList.clear();
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
-                    System.out.println(jsonArray);
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         int post_id = jsonObject.getInt("post_id");
@@ -458,9 +475,7 @@ public class ForumFragment extends Fragment {
                         tips.setImagepath(img_path);
                         tips.setHeadImagepath(head_img_path);
                         arrayList.add(tips);
-                        Log.e("post_id", i + "");
                     }
-                    Log.e("pppppppppppppppppppppp", "------------------");
                     Message message = handler.obtainMessage();
                     message.what = 1;
                     message.obj = arrayList;
@@ -482,7 +497,14 @@ public class ForumFragment extends Fragment {
         new Thread(){
             @Override
             public void run() {
-                String search = et_search.getText().toString();
+                try {
+                    String search = et_search.getText().toString();
+                    URL url = new URL("");
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+
             }
         };
     }

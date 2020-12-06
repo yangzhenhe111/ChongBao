@@ -1,22 +1,23 @@
 package com.example.pet.forum;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.util.EthiopicCalendar;
+import android.opengl.ETC1Util;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextPaint;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.pet.MainActivity;
 import com.example.pet.R;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Tips;
@@ -36,112 +37,49 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
-public class ClassifiedForumActivity extends AppCompatActivity {
+public class SearchResult extends AppCompatActivity {
 
-    private EditText et_classified_search;
-    private Button btn_classified_search;
-    private Button btn_classified_publish;
-    private TextView tv_classified_newest;
-    private TextView tv_classified_hot;
-    private TextView tv_classified_essence;
-    private ListView lv_tips;
+    private Button btn_back;
+    private EditText et_search;
+    private Button btn_search;
+    private ListView lv_search_tips;
     private ArrayList<Tips> arrayList = new ArrayList<>();
-    private String classified;
-
 
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message message) {
             switch (message.what){
                 case 1:
+                    Log.e("handler", "gethere----------------------");
                     init((ArrayList) message.obj);
                     break;
             }
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_classified_forum);
-        classified = getIntent().getStringExtra("classified");
-        getClassifiedTips(1);
-        et_classified_search = findViewById(R.id.et_classified_search);
-        btn_classified_search = findViewById(R.id.btn_classified_search);
-        btn_classified_search.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_search_result);
+        lv_search_tips = findViewById(R.id.result_listview);
+        btn_back = findViewById(R.id.search_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-            }
-        });
-        btn_classified_publish = findViewById(R.id.btn_classified_publish_articles);
-        btn_classified_publish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(ClassifiedForumActivity.this,PublishActivity.class);
+                intent.setClass(SearchResult.this, MainActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
-        tv_classified_newest = findViewById(R.id.classified_newest);
-        TextPaint base = tv_classified_newest.getPaint();
-        base.setFakeBoldText(true);
-        tv_classified_hot = findViewById(R.id.classified_hot);
-        tv_classified_essence = findViewById(R.id.classified_essence);
-        tv_classified_newest.setOnClickListener(new View.OnClickListener() {
+        et_search = findViewById(R.id.et_search);
+        btn_search = findViewById(R.id.btn_search);
+        btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                tv_classified_newest.setBackgroundColor(getResources().getColor(R.color.Blue));
-                tv_classified_hot.setBackgroundColor(getResources().getColor(R.color.White));
-                tv_classified_essence.setBackgroundColor(getResources().getColor(R.color.White));
-                TextPaint newest = tv_classified_newest.getPaint();
-                newest.setFakeBoldText(true);
-                TextPaint hot = tv_classified_hot.getPaint();
-                hot.setFakeBoldText(false);
-                TextPaint essence = tv_classified_essence.getPaint();
-                essence.setFakeBoldText(false);
-                getClassifiedTips(1);
+            public void onClick(View view) {
+                search();
             }
         });
-        tv_classified_hot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_classified_newest.setBackgroundColor(getResources().getColor(R.color.White));
-                tv_classified_hot.setBackgroundColor(getResources().getColor(R.color.Orange));
-                tv_classified_essence.setBackgroundColor(getResources().getColor(R.color.White));
-                TextPaint newest = tv_classified_newest.getPaint();
-                newest.setFakeBoldText(false);
-                TextPaint hot = tv_classified_hot.getPaint();
-                hot.setFakeBoldText(true);
-                TextPaint essence = tv_classified_essence.getPaint();
-                essence.setFakeBoldText(false);
-                getClassifiedTips(2);
-            }
-        });
-        tv_classified_essence.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_classified_newest.setBackgroundColor(getResources().getColor(R.color.White));
-                tv_classified_hot.setBackgroundColor(getResources().getColor(R.color.White));
-                tv_classified_essence.setBackgroundColor(getResources().getColor(R.color.Purple));
-                TextPaint newest = tv_classified_newest.getPaint();
-                newest.setFakeBoldText(false);
-                TextPaint hot = tv_classified_hot.getPaint();
-                hot.setFakeBoldText(false);
-                TextPaint essence = tv_classified_essence.getPaint();
-                essence.setFakeBoldText(true);
-                getClassifiedTips(3);
-            }
-        });
-        lv_tips = findViewById(R.id.lv_classified_articles);
-
-
-    }
-
-    public void initAdapter(){
-        ClassfiedForumAdapter classfiedForumAdapter = new ClassfiedForumAdapter(this,arrayList,R.layout.forum_tips_item);
-        lv_tips.setAdapter(classfiedForumAdapter);
     }
 
     public void init(ArrayList arrayList){
@@ -220,13 +158,19 @@ public class ClassifiedForumActivity extends AppCompatActivity {
 
     }
 
-    public void getClassifiedTips(final int i){
+    public void initAdapter() {
+        Log.e("initAdapter方法", "-------------------------");
+        SearchResultAdapter searchResultAdapter = new SearchResultAdapter(this,arrayList,R.layout.forum_tips_item);
+        lv_search_tips.setAdapter(searchResultAdapter);
+    }
+
+    public void search(){
         new Thread(){
             @Override
             public void run() {
+                String search = et_search.getText().toString();
                 try {
-                    Log.e("classified", classified + i);
-                    URL url = new URL(Cache.MY_URL + "GetAllSortServlet?sortname="+classified+"&i="+i);
+                    URL url = new URL(Cache.MY_URL+"Search?search="+search);
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     InputStream input = connection.getInputStream();
@@ -238,7 +182,6 @@ public class ClassifiedForumActivity extends AppCompatActivity {
                     }
                     arrayList.clear();
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
-                    Log.e("arrayList", stringBuffer.toString());
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         int post_id = jsonObject.getInt("post_id");
@@ -265,33 +208,19 @@ public class ClassifiedForumActivity extends AppCompatActivity {
                         tips.setImagepath(img_path);
                         tips.setHeadImagepath(head_img_path);
                         arrayList.add(tips);
-
-                        Log.e("post_id", post_id+"");
-
-                        Message message = handler.obtainMessage();
-                        message.what = 1;
-                        message.obj = arrayList;
-                        handler.sendMessage(message);
                     }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (ProtocolException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                    Message message = handler.obtainMessage();
+                    message.what = 1;
+                    message.obj = arrayList;
+                    handler.sendMessage(message);
+                } catch (MalformedURLException | ProtocolException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }.start();
-    }
-
-    public void search(){
-        new Thread(){
-            @Override
-            public void run() {
-                String search = et_classified_search.getText().toString();
-            }
-        };
     }
 }

@@ -9,7 +9,8 @@
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/Blue">
+        android:background="@color/Blue"
+        android:layout_marginTop="50dp">
 
         <EditText
             android:layout_toLeftOf="@+id/btn_publish_articles"
