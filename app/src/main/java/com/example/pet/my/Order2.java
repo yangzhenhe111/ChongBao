@@ -28,7 +28,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-
 public class Order2 extends AppCompatActivity {
     private LinearLayout statusPay;
     private LinearLayout statusRunner;
