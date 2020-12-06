@@ -29,8 +29,6 @@ public class MyFragment extends Fragment {
     private List<My> myList1 = new ArrayList<>();
     private List<My> myList2 = new ArrayList<>();
     private List<My> myList3 = new ArrayList<>();
-    private Uri imageUri;
-    public static final int TAKE_PHOTO=1;
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my, container, false);
@@ -107,16 +105,6 @@ public class MyFragment extends Fragment {
                     default:
                         break;
                 }
-            }
-        });
-        //调用摄像头
-        ImageButton camera=(ImageButton) view.findViewById(R.id.mycamera);
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
-                startActivityForResult(intent,TAKE_PHOTO);
             }
         });
         return view;

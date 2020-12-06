@@ -8,6 +8,7 @@
     <androidx.appcompat.widget.Toolbar
        android:id="@+id/edit_toolbar"
         android:onClick="onClicked"
+        android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/nav">
@@ -16,6 +17,7 @@
             android:layout_width="240dp"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textSize="18sp"
             android:text="编辑个人信息"
             android:textColor="@color/black"/>
         <TextView
