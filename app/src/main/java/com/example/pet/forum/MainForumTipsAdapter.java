@@ -15,8 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pet.R;
+import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Tips;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -109,12 +117,21 @@ public class MainForumTipsAdapter extends BaseAdapter {
         });
         LinearLayout tipslike = convertView.findViewById(R.id.tips_like);
         final ImageView iv_like = convertView.findViewById(R.id.iv_tips_like);
+        final TextView tv_like = convertView.findViewById(R.id.tv_tips_like);
+        String s = tv_like.getText().toString();
+        final int likes = Integer.parseInt(s);
         tipslike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int i = likes;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (iv_like.getDrawable().getConstantState().equals(getContext().getDrawable(R.drawable.like1).getConstantState())){
+                        i = i + 1;
+                        Log.e("点赞后", i+"");
+                        tv_like.setText(String.valueOf(i));
                         iv_like.setImageResource(R.drawable.like2);
+                        int id = tipsArrayList.get(position).getId();
+                        publishLikes(id,i);
                     }else{
                         Toast toast = Toast.makeText(context,"您已经点赞过了"
                                 , Toast.LENGTH_SHORT);
@@ -150,5 +167,27 @@ public class MainForumTipsAdapter extends BaseAdapter {
             }
         });
         return convertView;
+    }
+
+    public void publishLikes(final int id, final int likes){
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(Cache.MY_URL + "likes?post_id="+id+"&likes="+likes);
+                    InputStream inputStream = url.openStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
+                    String isPublish = bufferedReader.readLine();
+                    Log.e("返回的东西", isPublish);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
     }
 }
