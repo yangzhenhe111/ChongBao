@@ -4,19 +4,23 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.pet.R;
 import com.example.pet.my.editinfo.EditInfo;
 import com.example.pet.my.order.MyOrderActivity;
+import com.example.pet.other.Cache;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +30,7 @@ import java.util.List;
 public class MyFragment extends Fragment {
     private View view;
     private TextView login;
+private  TextView count;
     private List<My> myList1 = new ArrayList<>();
     private List<My> myList2 = new ArrayList<>();
     private List<My> myList3 = new ArrayList<>();
@@ -34,7 +39,9 @@ public class MyFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my, container, false);
-        login = view.findViewById(R.id.login);
+        login = view.findViewById(R.id.fragment_login);
+        count = view.findViewById(R.id.fragment_count);
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +64,7 @@ public class MyFragment extends Fragment {
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(Cache.user !=null){
                 switch (position) {
                     case 0:
                         Intent intent2 = new Intent(getContext(), EditInfo.class);
@@ -64,12 +72,15 @@ public class MyFragment extends Fragment {
                         break;
                     default:
                         break;
+                }}else{
+                    showLoginToast();
                 }
             }
         });
         listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(Cache.user != null){
                 switch (position) {
                     case 0:
                         Intent intent = new Intent(getContext(), Post.class);
@@ -89,6 +100,8 @@ public class MyFragment extends Fragment {
                         break;
                     default:
                         break;
+                }}else {
+                    showLoginToast();
                 }
             }
         });
@@ -107,87 +120,6 @@ public class MyFragment extends Fragment {
                     default:
                         break;
                 }
-    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_my,container,false);
-        //初始化
-        setView();
-        setViewContent();
-        return view;
-    }
-//设置控件内容
-    private void setViewContent() {
-
-        if(Cache.user !=null){
-            infoName.setText(Cache.user.getUserName());
-        }else{
-            infoName.setText("立即登录");
-        }
-        Intent intentOrder = new Intent(getContext(),MyDataService.class);
-        getContext().startService(intentOrder);
-
-
-
-    }
-
-    //获得控件和监听器
-    private void setView() {
-        MyListener listener = new MyListener();
-        infoArticle = view.findViewById(R.id.info_article);
-        infoOrder = view.findViewById(R.id.info_order);
-        infoArticle.setOnClickListener(listener);
-        infoOrder.setOnClickListener(listener);
-        infoUpdate = view.findViewById(R.id.info_update);
-        infoUpdate.setOnClickListener(listener);
-        infoHistory = view.findViewById(R.id.info_history);
-        infoHistory.setOnClickListener(listener);
-        infoPet = view.findViewById(R.id.info_pet);
-        infoPet.setOnClickListener(listener);
-        infoSetting = view.findViewById(R.id.info_set);
-        infoSetting.setOnClickListener(listener);
-        infoAboutUs = view.findViewById(R.id.info_about_us);
-        infoAboutUs.setOnClickListener(listener);
-        infoPhoto = view.findViewById(R.id.info_photo);
-        infoName = view.findViewById(R.id.info_name);
-        infoName.setOnClickListener(listener);
-
-    }
-    private class MyListener implements View.OnClickListener{
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId() ){
-                case R.id.info_article:
-                    Intent intent = new Intent(getContext(), Post.class);
-                    startActivity(intent);
-                    break;
-                case R.id.info_order:
-                    Intent intent1 = new Intent(getContext(), MyOrderActivity.class);
-                    startActivity(intent1);
-                    break;
-                case R.id.info_update:
-                    Intent intent2 = new Intent(getContext(), EditInfo.class);
-                    startActivity(intent2);
-                    break;
-                case R.id.info_history:
-                    Intent intent3 = new Intent(getContext(), History.class);
-                    startActivity(intent3);
-                    break;
-                case R.id.info_pet:
-                    Intent intent4 = new Intent(getContext(), Pet.class);
-                    startActivity(intent4);
-                    break;
-                case R.id.info_set:
-                    Intent intent5 = new Intent(getContext(), Setting.class);
-                    startActivity(intent5);
-                    break;
-                case R.id.info_about_us:
-                    Intent intent6 = new Intent(getContext(), AboutUs.class);
-                    startActivity(intent6);
-                    break;
-                case R.id.info_name:
-                    Intent intent7 = new Intent(getContext(),Login.class);
-                    startActivity(intent7);
-                    break;
             }
         });
         //调用摄像头
@@ -224,5 +156,20 @@ public class MyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
+    }
+//通过生命周期方法 获得当前用户数据
+    @Override
+    public void onStart() {
+        if(Cache.user !=null){
+            login.setText(Cache.user.getUserName());
+            count.setText(Cache.user.getUserPhone());
+        }
+        super.onStart();
+        Log.e("MyFragemnt","onStart");
+      //  Log.e("MyFragemnt",Cache.user.getUserName());
+
+    }
+    public void showLoginToast(){
+        Toast.makeText(getContext(),"请先登录",Toast.LENGTH_LONG).show();
     }
 }

@@ -16,7 +16,7 @@
             android:layout_width="240dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="编辑个人信息"
+            android:text="个人信息"
             android:textColor="@color/black"/>
         <TextView
             android:id="@+id/tv_save"

@@ -191,28 +191,30 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/edit"
-                android:orientation="vertical"
-                android:paddingLeft="20dp"
-                android:paddingRight="25dp">
+                android:orientation="vertical">
 
                 <LinearLayout
+                    android:paddingLeft="20dp"
+                    android:paddingRight="25dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
+                        android:layout_gravity="center_vertical"
                         android:id="@+id/order_total_count"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:layout_weight="4"
-                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="left"
                         android:text="15元"
                         android:textSize="25sp"
                         android:textStyle="bold" />
                     <TextView
+                        android:layout_gravity="center_vertical"
                         android:onClick="onClicked"
                         android:id="@+id/order_count_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
                         android:text="展开详情"
@@ -220,6 +222,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_marginTop="4dp"
                     android:visibility="gone"
                     android:id="@+id/order_count_detail1"
                     android:layout_width="match_parent"
@@ -233,26 +236,30 @@
                         android:background="@color/black" />
 
                     <LinearLayout
+                        android:paddingLeft="20dp"
+                        android:paddingRight="25dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:textSize="15sp"
-                            android:layout_weight="3"
+                            android:layout_weight="1"
+                            android:gravity="left"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="起步跑腿费(2.6)公里" />
 
                         <TextView
                             android:id="@+id/order_count_start"
-                            android:layout_gravity="right"
+                            android:gravity="right"
                             android:layout_weight="1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="15元" />
                     </LinearLayout>
                     <LinearLayout
+                        android:paddingLeft="20dp"
+                        android:paddingRight="25dp"
                         android:visibility="gone"
                         android:id="@+id/order_count_extra1"
                         android:layout_width="match_parent"
@@ -260,14 +267,15 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_weight="3"
+                            android:layout_weight="1"
+                            android:gravity="left"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="额外费用       " />
 
                         <TextView
                             android:id="@+id/order_count_extra"
-                            android:layout_gravity="right"
+                            android:gravity="right"
                             android:layout_weight="1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -820,6 +828,7 @@
                         android:text="配送跑者" />
 
                     <TextView
+                        android:id="@+id/order_finish_runner"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -842,6 +851,8 @@
                         android:src="@drawable/phone" />
 
                     <TextView
+                        android:onClick="onClicked"
+                        android:id="@+id/order_finish_end_connect"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -879,12 +890,14 @@
                     android:paddingRight="20dp">
 
                     <TextView
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="订单号码" />
 
                     <TextView
+                        android:id="@+id/order_finish_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -905,6 +918,7 @@
                         android:text="下单时间" />
 
                     <TextView
+                        android:id="@+id/order_finish_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -967,9 +981,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="起步跑腿费（2.6公里）" />
+                        android:text="跑腿费用" />
 
                     <TextView
+                        android:id="@+id/order_finish_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"

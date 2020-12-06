@@ -29,10 +29,10 @@ public class Order2 extends AppCompatActivity {
     private LinearLayout statusComplete;
     private LinearLayout statusUncomplete;
     private LinearLayout orderDeatil;
-    private  LinearLayout orderExtra;
+    private LinearLayout orderExtra;
     private Toolbar toolbar;
 
-
+    private TextView finishCount;
     private TextView totalCount;
     private TextView countDetail;
     private TextView countStart;
@@ -45,12 +45,15 @@ public class Order2 extends AppCompatActivity {
     private TextView orderRemark;
     private TextView orderPet;
     private TextView toolbarTitle;
-private  TextView orderFinishStart;
-private  TextView orderFinishAddressee;
-private  TextView orderFinishEnd;
-private TextView orderFinishAddresser;
-private  TextView orderFinishPet;
-private TextView orderFinishRemark;
+    private TextView orderFinishStart;
+    private TextView orderFinishAddressee;
+    private TextView orderFinishEnd;
+    private TextView orderFinishAddresser;
+    private TextView orderFinishPet;
+    private TextView orderFinishRemark;
+    private TextView orderFinishRunner;
+    private TextView finishId;
+    private TextView finishTime;
     private Order order;
 
     @Override
@@ -68,34 +71,7 @@ private TextView orderFinishRemark;
     }
 
     private void setStatus() {
-        switch (order.getOrderState()) {
-            case "已取消":
-                toolbarTitle.setText("已取消");
-                statusComplete.setVisibility(View.GONE);
-                statusCancel.setVisibility(View.VISIBLE);
-                statusRunner.setVisibility(View.INVISIBLE);
-                statusPay.setVisibility(View.INVISIBLE);
-                break;
-            case "待支付":
-                toolbarTitle.setText("待支付");
-                statusComplete.setVisibility(View.GONE);
-                statusCancel.setVisibility(View.INVISIBLE);
-                statusRunner.setVisibility(View.INVISIBLE);
-                statusPay.setVisibility(View.VISIBLE);
-                break;
-            case "待接单":
-                toolbarTitle.setText("待接单");
-                statusComplete.setVisibility(View.GONE);
-                statusCancel.setVisibility(View.INVISIBLE);
-                statusRunner.setVisibility(View.VISIBLE);
-                statusPay.setVisibility(View.INVISIBLE);
-                break;
-            case "已完成":
-                toolbarTitle.setText("已完成");
-                statusComplete.setVisibility(View.VISIBLE);
-                statusUncomplete.setVisibility(View.GONE);
-                break;
-        }
+      changeView();
         int count = Integer.parseInt(order.getOrderAmount().trim());
         totalCount.setText(count + "元");
         if (count > 15) {
@@ -115,9 +91,17 @@ private TextView orderFinishRemark;
         orderFinishStart.setText(order.getOrderStart());
         orderEnd.setText(order.getOrderEnd());
         orderFinishEnd.setText(order.getOrderEnd());
+        orderFinishRunner.setText(order.getRunnerName());
+        finishId.setText(order.getOrderId() + "");
+        finishTime.setText(order.getOrderTime());
+        finishCount.setText(count + "元");
     }
 
     private void setView() {
+        finishCount = findViewById(R.id.order_finish_count);
+        finishTime = findViewById(R.id.order_finish_time);
+        finishId = findViewById(R.id.order_finish_id);
+        orderFinishRunner = findViewById(R.id.order_finish_runner);
         orderExtra = findViewById(R.id.order_count_extra1);
         orderFinishRemark = findViewById(R.id.order_finish_remark);
         orderFinishPet = findViewById(R.id.order_finish_end);
@@ -153,7 +137,6 @@ private TextView orderFinishRemark;
                 Order2.this.finish();
             }
         });
-
     }
 
     public void onClicked(View view) {
@@ -165,20 +148,20 @@ private TextView orderFinishRemark;
                 orderToCancel();
                 break;
             case R.id.order_count_detail:
-              
+
                 if (countDetail.getText().toString().equals("展开详情")) {
 
                     countDetail.setText("收起详情");
                     orderDeatil.setVisibility(View.VISIBLE);
                 } else if (countDetail.getText().toString().equals("收起详情")) {
                     countDetail.setText("展开详情");
-                    Log.e("Order2","展开");
+                    Log.e("Order2", "展开");
                     orderDeatil.setVisibility(View.GONE);
                 }
 
                 break;
             case R.id.order_start_connect:
-               callStart();
+                callStart();
                 break;
             case R.id.order_end_connect:
                 callEnd();
@@ -192,6 +175,9 @@ private TextView orderFinishRemark;
             case R.id.order_readd1:
                 newOrder();
                 break;
+            case R.id.order_finish_end_connect:
+                callEnd();
+                break;
 
 
         }
@@ -199,7 +185,41 @@ private TextView orderFinishRemark;
     }
 
     private void changeState(String state) {
+ new Thread(){
+
+ }.start();
+
     }
+public void changeView(){
+    switch (order.getOrderState()) {
+        case "已取消":
+            toolbarTitle.setText("已取消");
+            statusComplete.setVisibility(View.GONE);
+            statusCancel.setVisibility(View.VISIBLE);
+            statusRunner.setVisibility(View.INVISIBLE);
+            statusPay.setVisibility(View.INVISIBLE);
+            break;
+        case "待支付":
+            toolbarTitle.setText("待支付");
+            statusComplete.setVisibility(View.GONE);
+            statusCancel.setVisibility(View.INVISIBLE);
+            statusRunner.setVisibility(View.INVISIBLE);
+            statusPay.setVisibility(View.VISIBLE);
+            break;
+        case "待接单":
+            toolbarTitle.setText("待接单");
+            statusComplete.setVisibility(View.GONE);
+            statusCancel.setVisibility(View.INVISIBLE);
+            statusRunner.setVisibility(View.VISIBLE);
+            statusPay.setVisibility(View.INVISIBLE);
+            break;
+        case "已完成":
+            toolbarTitle.setText("已完成");
+            statusComplete.setVisibility(View.VISIBLE);
+            statusUncomplete.setVisibility(View.GONE);
+            break;
+    }
+}
     //取消订单
     private void orderToCancel() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -214,18 +234,21 @@ private TextView orderFinishRemark;
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
     //重新下单
-    private void newOrder(){
+    private void newOrder() {
         Intent intent2 = new Intent(this, MainActivity.class);
         startActivity(intent2);
     }
+
     //致电起点
-    private void callStart(){
+    private void callStart() {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + order.getClientContact()));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-    private  void callEnd(){
+
+    private void callEnd() {
         Intent intent1 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + order.getPetShopContact()));
         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent1);

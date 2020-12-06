@@ -55,7 +55,7 @@ public class MyOrderActivity extends AppCompatActivity {
         MyOrderActivity.this.finish();
     }
 });
-        initData();
+       // initData();
         initMyOrderActivity();
     }
 

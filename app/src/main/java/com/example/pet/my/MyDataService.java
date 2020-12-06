@@ -37,10 +37,10 @@ public class MyDataService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         //宠物数据下载
-        if(Cache.myPetList == null){
+
             try{
                 Cache.myPetList = new ArrayList<>();
-                URL url = new URL(Cache.MY_URL+"MyPet?userId=1");
+                URL url = new URL(Cache.MY_URL+"MyPet?userId="+Cache.user.getUserId());
                 InputStream in = url.openStream();
                 StringBuilder str = new StringBuilder();
                 byte[] bytes = new byte[256];
@@ -70,13 +70,10 @@ public class MyDataService extends IntentService {
             }catch(IOException | JSONException e) {
                 e.printStackTrace();
             }
-        }
 
-        //订单数据下载
-        if (Cache.myOrderList == null) {
             try {
 
-                URL url  = new URL(Cache.MY_URL +"MyOrder?userId=1");
+                URL url  = new URL(Cache.MY_URL +"MyOrder?userId="+Cache.user.getUserId());
                 InputStream in  = url.openStream();
                 StringBuilder str= new StringBuilder();
                 byte[] bytes = new byte[256];
@@ -124,6 +121,6 @@ Log.e("MyDataService",order.toString());
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-        }
+
     }
 }
