@@ -19,13 +19,14 @@ import com.example.pet.R;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Order;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-
 
 public class Order2 extends AppCompatActivity {
     private LinearLayout statusPay;
@@ -65,6 +66,8 @@ public class Order2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order2);
+
+
         setView();
         Intent intent = getIntent();
         order = (Order) intent.getSerializableExtra("order");
@@ -197,7 +200,7 @@ public class Order2 extends AppCompatActivity {
             public void run() {
                 URL url = null;
                 try {
-                    url = new URL(Cache.MY_URL+ "ChangeState?state=已取消&orderID" +order.getOrderId());
+                    url = new URL(Cache.MY_URL+ "ChangeState?state=已取消&orderId=" +order.getOrderId());
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
                     InputStream inputStream = conn.getInputStream();
@@ -215,6 +218,7 @@ public class Order2 extends AppCompatActivity {
                 Cache.myOrderList.get(i).setOrderState("已取消");
             }
         }
+        EventBus.getDefault().post("更新");
         changeView();
     }
 
@@ -283,5 +287,11 @@ public class Order2 extends AppCompatActivity {
         Intent intent1 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + order.getPetShopContact()));
         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent1);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

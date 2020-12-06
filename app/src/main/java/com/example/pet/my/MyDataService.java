@@ -39,7 +39,12 @@ public class MyDataService extends IntentService {
         //宠物数据下载
 
             try{
-                Cache.myPetList = new ArrayList<>();
+                if(Cache.myPetList!=null){
+                    Cache.myPetList.clear();
+                }else{
+                    Cache.myPetList = new ArrayList<>();
+                }
+
                 URL url = new URL(Cache.MY_URL+"MyPet?userId="+Cache.user.getUserId());
                 InputStream in = url.openStream();
                 StringBuilder str = new StringBuilder();
