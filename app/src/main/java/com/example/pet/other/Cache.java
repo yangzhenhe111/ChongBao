@@ -11,7 +11,7 @@ public class Cache {
      * 存储一些全局信息
      */
 public static  User user;
-public static final String MY_URL="http://172.20.10.2:8080/ChongBaoService_war_exploded/";//我的URL
+public static final String MY_URL="http://192.168.43.202:8080/ChongBaoService_war_exploded/";//我的URL
 public static String url = "http://10.7.89.96:8080/ChongBao_war_exploded/";
 
 public static int user_id = 1;

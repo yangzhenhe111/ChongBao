@@ -10,7 +10,6 @@ public class User {
     private String userPhone;//用户手机号
     private String userEmail;//用户邮箱
     private String userAutograph;//个性签名
-
     public User() {
     }
 

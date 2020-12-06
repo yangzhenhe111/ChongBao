@@ -135,6 +135,7 @@
             android:authorities="${applicationId}.DataProvider"
             android:exported="false"
             android:process=":pushcore" /> <!-- Required SDK核心功能 -->
+        <service android:name=".my.MyUserService"/>
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true">

@@ -139,23 +139,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="生日"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:gravity="center_vertical"
                     android:layout_marginRight="25sp"
                     android:textColor="#000"/>
                 <LinearLayout
-                    android:id="@+id/ll_upBrithday"
-                    android:onClick="onClicked"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:background="@drawable/bg_myinfo">
                     <TextView
+                        android:onClick="onClicked"
                         android:id="@+id/upBrithday"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="完善生日信息"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:gravity="center_vertical"/>
                 </LinearLayout>
             </LinearLayout>
@@ -168,7 +167,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="个人简介"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:gravity="center_vertical"
                     android:layout_marginTop="25sp"
                     android:textColor="#000"
@@ -178,7 +177,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp">
                     <EditText
-                        android:id="@+id/id_et_input"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:enabled="true"
@@ -188,11 +186,10 @@
                         android:maxLines="6"
                         android:scrollbars="vertical"
                         android:hint="还差一句简介，有趣的灵魂就会被发现呦~"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:background="@null"
                         />
                     <TextView
-                        android:id="@+id/id_tv_input"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
@@ -205,4 +202,144 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/bg_myinfo">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="头像"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:layout_marginRight="25sp"
+                android:textColor="#000"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/head"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="昵称"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:layout_marginRight="25sp"
+                android:textColor="#000"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/bg_myinfo">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="有光"
+                    android:textSize="12sp"
+                    android:gravity="center_vertical"/>
+            </LinearLayout>
+
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="性别"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:layout_marginRight="25sp"
+                android:textColor="#000"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/bg_myinfo">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="完善性别信息"
+                    android:textSize="12sp"
+                    android:gravity="center_vertical"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="生日"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:layout_marginRight="25sp"
+                android:textColor="#000"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/bg_myinfo">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="完善生日信息"
+                    android:textSize="12sp"
+                    android:gravity="center_vertical"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_myinfo"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="个人简介"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:layout_marginTop="25sp"
+                android:textColor="#000"
+                android:layout_marginBottom="20dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:gravity="left|top"
+                android:inputType="textMultiLine"
+                android:minLines="6"
+                android:maxLines="10"
+                android:scrollbars="vertical"
+                android:hint="还差一句简介，有趣的灵魂就会被发现呦~"
+                android:textSize="12sp"
+                android:background="@null"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>
