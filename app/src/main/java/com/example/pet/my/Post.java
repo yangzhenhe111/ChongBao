@@ -118,6 +118,9 @@ public class Post extends AppCompatActivity {
         }.start();
     }
 
+
+
+
     private void setView() {
         smartRefreshLayout = findViewById(R.id.srl);
         toolbar = findViewById(R.id.post_toolbar);
