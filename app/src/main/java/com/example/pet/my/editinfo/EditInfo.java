@@ -6,22 +6,30 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.CustomListener;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.example.pet.R;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -30,6 +38,10 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -41,12 +53,15 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class EditInfo extends AppCompatActivity {
-    private TextView btnSex;
+    private TextView upSex;
     private PopupWindow popupWindow;
     private Toolbar toolbar;
     private CircleImageView upPhoto;
     private TextView upBrithday;
     private TextView upName;
+    private TimePickerView pvTime;
+    private OptionsPickerView pvCustomOptions;
+    private ArrayList<String> cardItem = new ArrayList<>();
 
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -79,43 +94,125 @@ public class EditInfo extends AppCompatActivity {
                 break;
             case R.id.upName:
                 break;
-            case R.id.edit_info_sex:
-                showPopupWindow();
-            case R.id.upBrithday:
+            case R.id.ll_upSex:
+                pvCustomOptions.show();
                 break;
-            case R.id.edit_toolbar:
-                EditInfo.this.finish();
+            case R.id.ll_upBrithday:
+                pvTime.show();
                 break;
         }
     }
-    private void showPopupWindow() {
-        //创建PopupWindow
-        popupWindow = new PopupWindow(this);
-        //设置弹出窗口的宽度
-        popupWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
-        popupWindow.setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
-        //设置视图
-        View view = getLayoutInflater().inflate(R.layout.popupwindow, null);
-        //设置控件属性和监听器
-        EditListener listener = new EditListener();
-        Button btnMan = view.findViewById(R.id.edit_info_sex_man);
-        Button btnWoman = view.findViewById(R.id.edit_info_sex_woman);
-        Button btnCancel = view.findViewById(R.id.edit_info_sex_cancel);
-        btnMan.setOnClickListener(listener);
-        btnWoman.setOnClickListener(listener);
-        btnCancel.setOnClickListener(listener);
-        popupWindow.setContentView(view);
-        //必须指定显示位置
-        LinearLayout root = findViewById(R.id.edit_info_root);
-        popupWindow.showAtLocation(root, Gravity.BOTTOM, 0, 0);
+
+    private void upSex() {
+        // 注意：自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针
+        // 具体可参考demo 里面的两个自定义布局
+        pvCustomOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+               //返回的分别是三个级别的选中位置
+                String tx = cardItem.get(options1);
+                upSex.setText(tx);
+            }
+        })
+                .setLayoutRes(R.layout.picker_sex_bg, new CustomListener() {
+                    @Override
+                    public void customLayout(View v) {
+                        //自定义布局中的控件初始化及事件处理
+                        final TextView tvSubmit = v.findViewById(R.id.tv_finish);
+                        TextView tvCancel = v.findViewById(R.id.tv_cancel);
+                        tvSubmit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvCustomOptions.returnData();
+                                pvCustomOptions.dismiss();
+                            }
+                        });
+                        tvCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvCustomOptions.dismiss();
+                            }
+                        });
+
+                    }
+                })
+                .setOutSideCancelable(true)
+                .build();
+        pvCustomOptions.setPicker(cardItem);//添加数据
     }
 
+    private void upBri() {
+        Calendar selectedDate = Calendar.getInstance();//系统当前时间
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(1900, 1, 1);
+        Calendar endDate = Calendar.getInstance();
+        pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                upBrithday.setText(getTimes(date));
+            }
+        })
+                .setDate(selectedDate)
+                .setRangDate(startDate,endDate)
+                .setLayoutRes(R.layout.picker_time_bg, new CustomListener() {
+                    @Override
+                    public void customLayout(View v) {
+                        TextView tvSubmit = v.findViewById(R.id.tv_finish);
+                        TextView tvCannel = v.findViewById(R.id.tv_cancel);
+                        tvSubmit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvTime.returnData();
+                                pvTime.dismiss();
+                            }
+                        });
+                        tvCannel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                pvTime.dismiss();
+                            }
+                        });
+                    }
+                })
+                .setOutSideCancelable(true)
+                .setContentTextSize(18)
+                .setType(new boolean[]{true, true, true, false, false, false})
+                .setLabel("年", "月", "日", "时", "分", "秒")
+                .setLineSpacingMultiplier(1.2f)
+                .setTextXOffset(0, 0, 0, 40, 0, -40)
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .setDividerColor(0xFF24AD9D)
+                .build();
+    }
+
+    //格式化时间
+    private String getTimes(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
+    }
+
+
+
     private void setView() {
-        btnSex = findViewById(R.id.edit_info_sex);
+        upSex = findViewById(R.id.edit_info_sex);
         toolbar = findViewById(R.id.edit_toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditInfo.this.finish();
+            }
+        });
         upBrithday = findViewById(R.id.upBrithday);
         upName = findViewById(R.id.upName);
         upPhoto = findViewById(R.id.upPhoto);
+        cardItem.add("未知");
+        cardItem.add("男");
+        cardItem.add("女");
+        //加载数据
+        upSex();
+        upBri();
+
+
 
     }
 
@@ -182,7 +279,7 @@ public class EditInfo extends AppCompatActivity {
         }
     }
 
-    //然后通过一个函数来申请
+    //然后通过一个函数来申请权限
     public static void verifyStoragePermissions(Activity activity) {
         try {
             //检测是否有写的权限
@@ -194,26 +291,6 @@ public class EditInfo extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    private class EditListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.edit_info_sex_man:
-                    btnSex.setText("男");
-                    popupWindow.dismiss();
-                    break;
-                case R.id.edit_info_sex_woman:
-                    btnSex.setText("女");
-                    popupWindow.dismiss();
-                    break;
-                case R.id.edit_info_sex_cancel:
-                    popupWindow.dismiss();
-                    break;
-            }
         }
     }
 

@@ -105,7 +105,7 @@ public class ForumFragment extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                search();
             }
         });
         btn_publish = view.findViewById(R.id.btn_publish_articles);
@@ -291,11 +291,11 @@ public class ForumFragment extends Fragment {
 
         ArrayList<Integer> images = new ArrayList<>();
         ArrayList<String> title = new ArrayList<>();
-        title.add("新手推荐文章1");
-        title.add("新手推荐文章2");
-        title.add("新手推荐文章3");
-        title.add("新手推荐文章4");
-        title.add("新手推荐文章5");
+        title.add("猫咪的洗澡和驱虫");
+        title.add("猫咪的日常用品");
+        title.add("猫咪的食物");
+        title.add("猫咪的日常护理");
+        title.add("猫咪的常见病症");
         images.add(R.drawable.recommend1);
         images.add(R.drawable.recommend2);
         images.add(R.drawable.recommend3);
@@ -316,14 +316,27 @@ public class ForumFragment extends Fragment {
                 switch (position){
                     case 0:
                         intent = new Intent(getContext(),TipsActivity.class);
+                        intent.putExtra("tipsid","1");
                         startActivity(intent);
                         break;
                     case 1:
                         intent = new Intent(getContext(),TipsActivity.class);
+                        intent.putExtra("tipsid","2");
                         startActivity(intent);
                         break;
                     case 2:
                         intent = new Intent(getContext(),TipsActivity.class);
+                        intent.putExtra("tipsid","3");
+                        startActivity(intent);
+                        break;
+                    case 3:
+                        intent = new Intent(getContext(),TipsActivity.class);
+                        intent.putExtra("tipsid","4");
+                        startActivity(intent);
+                        break;
+                    case 4:
+                        intent = new Intent(getContext(),TipsActivity.class);
+                        intent.putExtra("tipsid","5");
                         startActivity(intent);
                         break;
                 }
@@ -461,7 +474,6 @@ public class ForumFragment extends Fragment {
                         tips.setHeadImagepath(head_img_path);
                         arrayList.add(tips);
                     }
-                    Log.e("pppppppppppppppppppppp", "------------------");
                     Message message = handler.obtainMessage();
                     message.what = 1;
                     message.obj = arrayList;
@@ -483,7 +495,14 @@ public class ForumFragment extends Fragment {
         new Thread(){
             @Override
             public void run() {
-                String search = et_search.getText().toString();
+                try {
+                    String search = et_search.getText().toString();
+                    URL url = new URL("");
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+
             }
         };
     }
