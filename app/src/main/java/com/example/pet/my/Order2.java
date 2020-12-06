@@ -230,6 +230,8 @@ public void changeView(){
                 changeState("已取消");
             }
         });
+
+
         builder.setNegativeButton("再等等", null);
         AlertDialog dialog = builder.create();
         dialog.show();
