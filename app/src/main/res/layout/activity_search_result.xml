@@ -3,17 +3,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:id="@+id/search_back"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/back"/>
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_toRightOf="@id/search_back"
+            android:layout_marginLeft="20dp"
+            android:layout_toLeftOf="@id/btn_search"
+            android:hint="请输入您想查找的内容"
+            android:background="@color/White"/>
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/search3"/>
+    </RelativeLayout>
     <ListView
         android:id="@+id/result_listview"
         android:layout_width="match_parent"

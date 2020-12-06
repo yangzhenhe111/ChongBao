@@ -111,7 +111,7 @@ public class Login extends AppCompatActivity {
     private void loginService() {
         phone = etName.getText().toString();
 
-        String pwd = etPassword.getText().toString();
+        final String pwd = etPassword.getText().toString();
         if(phone.length() ==11 && pwd.length()!=0){
             new Thread(){
                 @Override

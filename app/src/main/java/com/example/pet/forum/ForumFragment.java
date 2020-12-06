@@ -105,7 +105,9 @@ public class ForumFragment extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                search();
+                Intent intent = new Intent();
+                intent.setClass(getContext(),SearchResult.class);
+                getContext().startActivity(intent);
             }
         });
         btn_publish = view.findViewById(R.id.btn_publish_articles);
