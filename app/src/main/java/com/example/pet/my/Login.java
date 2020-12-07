@@ -172,6 +172,7 @@ Cache.userPhone = etName.getText().toString();
                 startService(intent1);
                 Intent intent = new Intent(Login.this,MainActivity.class);
                 startActivity(intent);
+                Login.this.finish();
             }
             @Override
             public void onAnimationCancel(Animator animation) {
