@@ -20,9 +20,10 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/add_new_pet"
             android:textColor="@color/black"
             android:gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="+"
             android:textSize="35sp"

@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.pet.R;
 import com.example.pet.other.Cache;
@@ -27,6 +29,14 @@ public class NewPet extends AppCompatActivity {
     }
 
     private void setView() {
+        TextView addPet= findViewById(R.id.add_new_pet);
+        addPet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(NewPet.this,Pet.class);
+                startActivity(intent);
+            }
+        });
         ViewPager pager = findViewById(R.id.pet_pager);
         Toolbar toolbar = findViewById(R.id.pet_toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

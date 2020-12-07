@@ -172,6 +172,7 @@ Cache.userPhone = etName.getText().toString();
                 startService(intent1);
                 Intent intent = new Intent(Login.this,MainActivity.class);
                 startActivity(intent);
+                Login.this.finish();
             }
             @Override
             public void onAnimationCancel(Animator animation) {
@@ -187,7 +188,6 @@ Cache.userPhone = etName.getText().toString();
         animator3.setInterpolator(new JellyInterpolator());
         animator3.start();
     }
-
     public void back(View view) {
         Intent intent = new Intent(Login.this,MainActivity.class);
         startActivity(intent);

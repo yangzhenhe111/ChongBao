@@ -1,5 +1,7 @@
 package com.example.pet.other.entity;
 
+import android.graphics.Bitmap;
+
 public class User {
     private int userId;//用户ID
     private String userName;//用户姓名
@@ -11,8 +13,16 @@ public class User {
     private String userPhone;//用户手机号
     private String userBrithday;//用户邮箱
     private String userAutograph;//个性签名
-
+private Bitmap photo;
     public User() {
+    }
+
+    public Bitmap getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Bitmap photo) {
+        this.photo = photo;
     }
 
     public User(int userId, String userName, String userSex, String accountNumber, double accountAmount, String picturePath, String userPassword, String userPhone, String userBrithday, String userAutograph) {

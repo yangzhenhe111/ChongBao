@@ -2,6 +2,8 @@ package com.example.pet.my;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 
@@ -47,6 +49,10 @@ public class MyUserService extends IntentService {
             }
             in.close();
             Cache.user = new Gson().fromJson(str.toString(),User.class);
+            URL url1 = new URL(Cache.MY_URL+"img/"+Cache.user.getPicturePath());
+            InputStream in1 = url1.openStream();
+            Bitmap bitmap = BitmapFactory.decodeStream(in1);
+            Cache.user.setPhoto(bitmap);
             Log.e("MyUserService",Cache.user.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();

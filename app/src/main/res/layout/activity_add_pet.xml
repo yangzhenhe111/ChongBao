@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="30dp"
+        android:orientation="vertical">
+        <!--顶栏-->
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="close"
+                android:src="@drawable/shutdown" />
+        </LinearLayout>
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/pet_photo"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="21dp"
+                    android:background="@drawable/hashiqi" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="50dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="25sp"
+                        android:gravity="center_vertical"
+                        android:text="爱称"
+                        android:textColor="#000"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_myinfo"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/pet_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:gravity="center_vertical"
+                            android:onClick="onClicked"
+                            android:text="有光"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="25sp"
+                        android:gravity="center_vertical"
+                        android:text="种类"
+                        android:textColor="#000"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_myinfo"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/pet_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:gravity="center_vertical"
+                            android:onClick="onClicked"
+                            android:text="哈士奇"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="25sp"
+                        android:gravity="center_vertical"
+                        android:text="年龄"
+                        android:textColor="#000"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_myinfo"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/pet_age"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:gravity="center_vertical"
+                            android:onClick="onClicked"
+                            android:text="4岁"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25sp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center_vertical"
+                        android:text="宠物简介"
+                        android:textColor="#000"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_marginBottom="30dp"
+                        android:background="@drawable/bg_myinfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp">
+
+                        <EditText
+                            android:id="@+id/pet_autograph"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:background="@null"
+                            android:enabled="true"
+                            android:gravity="start"
+                            android:hint="阿巴阿巴阿巴"
+                            android:inputType="textMultiLine"
+                            android:maxLines="6"
+                            android:minLines="6"
+                            android:scrollbars="vertical"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                    <Button
+                        android:textColor="@color/red"
+                        android:id="@+id/pet_update"
+                        android:background="@drawable/edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="添加宠物" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>
