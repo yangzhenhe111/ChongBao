@@ -3,21 +3,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--顶栏-->
+
     <LinearLayout
-        android:layout_marginTop="35dp"
-        android:gravity="right"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageButton
-            android:id="@+id/mycamera"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/camera"
-            android:layout_width="21dp"
-            android:layout_height="21dp" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="70dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

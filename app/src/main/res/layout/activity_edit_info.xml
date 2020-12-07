@@ -8,6 +8,7 @@
     <androidx.appcompat.widget.Toolbar
        android:id="@+id/edit_toolbar"
         android:onClick="onClicked"
+        android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/nav">

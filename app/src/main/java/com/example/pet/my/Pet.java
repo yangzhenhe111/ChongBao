@@ -3,12 +3,16 @@ package com.example.pet.my;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.example.pet.R;
@@ -17,11 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pet extends AppCompatActivity {
-    private List<String> list = new ArrayList<String>();
-
-    private Spinner spinner;
-    private ArrayAdapter<String> adapter;
-    private Toolbar toolbar;
+    private Uri imageUri;
+    public static final int TAKE_PHOTO=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,34 +35,14 @@ public class Pet extends AppCompatActivity {
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
         }
-        list.add("蓝色精灵");
-        list.add("格斗小五");
-        list.add("麋鹿");
-        list.add("冰龙王");
-        spinner = findViewById(R.id.spinner_pet);
-        //定义适配器
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
-        //设置下拉菜单元样式
-        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        //将适配器添加到下拉列表上
-        spinner.setAdapter(adapter);
-        //添加监听器
-        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        toolbar = findViewById(R.id.pet_toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        //调用摄像头
+        ImageButton camera=(ImageButton) findViewById(R.id.mycamera);
+        camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Pet.this.finish();
+                Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+                startActivityForResult(intent,TAKE_PHOTO);
             }
         });
     }

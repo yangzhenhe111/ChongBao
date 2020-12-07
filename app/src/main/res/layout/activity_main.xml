@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="@string/tabs_forum"/>
+                android:text="宠物圈"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_nursing"

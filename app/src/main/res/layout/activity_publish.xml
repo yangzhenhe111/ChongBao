@@ -36,7 +36,52 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/mmmm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/re_tv_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="话题"
+                    android:textSize="26sp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_below="@+id/re_tv_one"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/re_tv_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(请选择一个话题)"
+                    android:textSize="16sp"/>
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/btn_add_topic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="添加话题  >"
+                    android:textColor="@color/Blue"
+                    android:textSize="20dp"
+                    android:padding="3dp"
+                    android:layout_marginRight="10dp"/>
+                <Button
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/re_tv_two"
+                    android:id="@+id/btn_topic"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape1"
+                    android:layout_marginTop="20dp"
+                    android:text="食品"
+                    android:textSize="20dp"
+                    android:textColor="@color/Blue"/>
+            </RelativeLayout>
             <LinearLayout
+                android:layout_below="@+id/mmmm"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -45,12 +90,11 @@
                     android:id="@+id/et_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="标题（30字以内）"
+                    android:hint="标题（6-30字之间）"
                     android:textSize="26sp"
                     android:background="@color/White"
                     android:layout_marginTop="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:maxLength="30"/>
+                    android:layout_marginLeft="10dp"/>
                 <EditText
                     android:id="@+id/et_text"
                     android:layout_width="match_parent"
@@ -61,8 +105,7 @@
                     android:background="@drawable/shape_publish"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:maxLength="2000"/>
+                    android:layout_marginRight="10dp"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -116,44 +159,6 @@
                         android:layout_height="wrap_content">
                     </HorizontalScrollView>
                 </RelativeLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="话题"
-                        android:textSize="26sp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="(请选择一个话题)"
-                        android:textSize="16sp"/>
-                    <TextView
-                        android:id="@+id/btn_add_topic"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="添加话题  >"
-                        android:textColor="@color/Blue"
-                        android:textSize="20dp"
-                        android:gravity="right"
-                        android:padding="3dp"
-                        android:layout_marginRight="10dp"/>
-                </LinearLayout>
-                <Button
-                    android:id="@+id/btn_topic"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/shape1"
-                    android:layout_marginTop="20dp"
-                    android:text="食品"
-                    android:textSize="20dp"
-                    android:textColor="@color/Blue"/>
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
