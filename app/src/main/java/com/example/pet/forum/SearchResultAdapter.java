@@ -26,18 +26,17 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
-public class MainForumTipsAdapter extends BaseAdapter {
+public class SearchResultAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<Tips> tipsArrayList = new ArrayList<>();
-    private int tipslayout;
+    private int searchLayout;
 
-    public MainForumTipsAdapter(Context context, ArrayList<Tips> tipsArrayList, int tipslayout) {
+    public SearchResultAdapter(Context context, ArrayList<Tips> tipsArrayList, int searchLayout) {
         this.context = context;
         this.tipsArrayList = tipsArrayList;
-        this.tipslayout = tipslayout;
+        this.searchLayout = searchLayout;
     }
 
     public Context getContext(){
@@ -66,11 +65,11 @@ public class MainForumTipsAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        if (convertView == null){
-            convertView = LayoutInflater.from(context).inflate(tipslayout,null);
+    public View getView(final int position, View view, ViewGroup viewGroup) {
+        if (view == null){
+            view = LayoutInflater.from(context).inflate(searchLayout,null);
         }
-        ImageView landlordhead = convertView.findViewById(R.id.iv_tips_landlordhead);
+        ImageView landlordhead = view.findViewById(R.id.iv_tips_landlordhead);
         landlordhead.setImageBitmap(tipsArrayList.get(position).getUserHead());
         landlordhead.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,28 +80,28 @@ public class MainForumTipsAdapter extends BaseAdapter {
 
             }
         });
-        TextView landlordname = convertView.findViewById(R.id.tv_tips_landlordname);
+        TextView landlordname = view.findViewById(R.id.tv_tips_landlordname);
         landlordname.setText(tipsArrayList.get(position).getUserName());
-        TextView tipstime = convertView.findViewById(R.id.tv_tips_tipstime);
+        TextView tipstime = view.findViewById(R.id.tv_tips_tipstime);
         tipstime.setText(tipsArrayList.get(position).getTime());
-        Button tipstopic = convertView.findViewById(R.id.btn_tips_topic);
+        Button tipstopic = view.findViewById(R.id.btn_tips_topic);
         tipstopic.setText(tipsArrayList.get(position).getTopic());
-        TextView tipstitle = convertView.findViewById(R.id.tv_tips_tipstitle);
+        TextView tipstitle = view.findViewById(R.id.tv_tips_tipstitle);
         tipstitle.setText(tipsArrayList.get(position).getTitle());
-        ImageView tipsthumbnail = convertView.findViewById(R.id.iv_tips_thumbnail);
+        ImageView tipsthumbnail = view.findViewById(R.id.iv_tips_thumbnail);
         tipsthumbnail.setImageBitmap(tipsArrayList.get(position).getThumbnail());
-        TextView tipstext = convertView.findViewById(R.id.tv_tips_text);
+        TextView tipstext = view.findViewById(R.id.tv_tips_text);
         String str = tipsArrayList.get(position).getText();
         int i = 40;
         str = str.substring(0,i) + "...";
         tipstext.setText(str);
-        TextView tipslikes = convertView.findViewById(R.id.tv_tips_like);
+        TextView tipslikes = view.findViewById(R.id.tv_tips_like);
         tipslikes.setText(""+tipsArrayList.get(position).getLikes());
-        TextView tipscomments = convertView.findViewById(R.id.tv_tips_comment);
+        TextView tipscomments = view.findViewById(R.id.tv_tips_comment);
         tipscomments.setText(""+tipsArrayList.get(position).getComments());
-        TextView tipsforwards = convertView.findViewById(R.id.tv_tips_forward);
+        TextView tipsforwards = view.findViewById(R.id.tv_tips_forward);
         tipsforwards.setText(""+tipsArrayList.get(position).getForwards());
-        LinearLayout totips = convertView.findViewById(R.id.btn_tips_totips);
+        LinearLayout totips = view.findViewById(R.id.btn_tips_totips);
         totips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,13 +109,14 @@ public class MainForumTipsAdapter extends BaseAdapter {
                 intent.setClass(getContext(),TipsActivity.class);
                 int i = tipsArrayList.get(position).getId();
                 String id = Integer.toString(i);
+                Log.e("St id", id);
                 intent.putExtra("tipsid",id);
                 context.startActivity(intent);
             }
         });
-        LinearLayout tipslike = convertView.findViewById(R.id.tips_like);
-        final ImageView iv_like = convertView.findViewById(R.id.iv_tips_like);
-        final TextView tv_like = convertView.findViewById(R.id.tv_tips_like);
+        LinearLayout tipslike = view.findViewById(R.id.tips_like);
+        final ImageView iv_like = view.findViewById(R.id.iv_tips_like);
+        final TextView tv_like = view.findViewById(R.id.tv_tips_like);
         String s = tv_like.getText().toString();
         final int likes = Integer.parseInt(s);
         tipslike.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +139,7 @@ public class MainForumTipsAdapter extends BaseAdapter {
                 }
             }
         });
-        LinearLayout tipscomment = convertView.findViewById(R.id.tips_comment);
+        LinearLayout tipscomment = view.findViewById(R.id.tips_comment);
         tipscomment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,8 +149,8 @@ public class MainForumTipsAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-        LinearLayout tipsforward = convertView.findViewById(R.id.tips_forward);
-        final ImageView iv_forward = convertView.findViewById(R.id.iv_tips_forward);
+        LinearLayout tipsforward = view.findViewById(R.id.tips_forward);
+        final ImageView iv_forward = view.findViewById(R.id.iv_tips_forward);
         tipsforward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,9 +165,8 @@ public class MainForumTipsAdapter extends BaseAdapter {
                 }
             }
         });
-        return convertView;
+        return view;
     }
-
     public void publishLikes(final int id, final int likes){
         new Thread(){
             @Override

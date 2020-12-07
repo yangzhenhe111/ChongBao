@@ -38,8 +38,29 @@
             android:layout_height="45dp"
             android:hint="输入关键字" />
     </LinearLayout>
-    <ListView
-        android:id="@+id/lv_article"
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/srl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.header.BezierRadarHeader
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/inout" />
+
+        <ListView
+            android:id="@+id/lv_article"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+         <com.scwang.smartrefresh.layout.footer.BallPulseFooter
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

@@ -76,6 +76,7 @@
         <activity android:name=".nursing.StartActivity" />
         <activity android:name=".nursing.NeworderActivity" />
         <activity android:name=".nursing.CostActivity" />
+        <activity android:name=".forum.SearchResult"/>
         <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

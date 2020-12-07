@@ -19,6 +19,10 @@ import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Order;
 import com.example.pet.other.entity.Pet;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +36,9 @@ public class MyOrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order);
+        //注册事件订阅者
+        EventBus.getDefault().register(this);
+
         toolbar = findViewById(R.id.my_order_toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,10 +114,19 @@ public class MyOrderActivity extends AppCompatActivity {
         initMyOrderAdapter();
 
     }
+//当取消订单，EventBus更新视图
+@Subscribe(threadMode = ThreadMode.MAIN)
+public void onMessageEvent(String event) {
+if(event.equals("更新")){
+    myOrderAdapter.notifyDataSetChanged();
+}
+};
 
-    /**
-     * 初始化adapter
-     */
+
+
+/**
+ * 初始化adapter
+ */
     private void initMyOrderAdapter() {
         myOrderAdapter = new MyOrderAdapter(this,
                 Cache.myOrderList,
@@ -134,5 +150,11 @@ public class MyOrderActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

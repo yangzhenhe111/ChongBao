@@ -1,5 +1,6 @@
 package com.example.pet.forum;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -45,7 +46,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-public class TipsActivity extends AppCompatActivity {
+public class TipsActivity extends Activity {
 
     private ArrayList<Comment> arrayList = new ArrayList<>();
     private ListView listView;
@@ -121,6 +122,7 @@ public class TipsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 publishComment(id);
+                refresh();
             }
         });
     }
@@ -273,6 +275,7 @@ public class TipsActivity extends AppCompatActivity {
                     while ((line=bufferedReader.readLine())!=null){
                         stringBuffer.append(line);
                     }
+                    arrayList.clear();
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
                     for (int i=0;i<jsonArray.length();i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -356,8 +359,9 @@ public class TipsActivity extends AppCompatActivity {
                     URL url = new URL(Cache.MY_URL + "PostComment?comment="+text+"&comment_time="+time+"&post_id="+postid+"&user_id="+userid);
                     InputStream inputStream = url.openStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
-                    String isRegister = bufferedReader.readLine();
-                    if (isRegister.equals("true")){
+                    String isPublish = bufferedReader.readLine();
+                    Log.e("返回的东西", isPublish);
+                    if (isPublish.equals("true")){
                         Message message = handler.obtainMessage();
                         message.what = 4;
                         handler.sendMessage(message);
@@ -379,5 +383,8 @@ public class TipsActivity extends AppCompatActivity {
 
             }
         }.start();
+    }
+    private void refresh() {
+        onCreate(null);
     }
 }
