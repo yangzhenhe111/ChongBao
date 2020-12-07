@@ -1,10 +1,12 @@
 package com.example.pet.forum;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.pet.R;
@@ -50,14 +52,24 @@ public class TopicAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null){
             convertView = LayoutInflater.from(context).inflate(topiclayout,null);
         }
+        LinearLayout topic = convertView.findViewById(R.id.topic);
         TextView name = convertView.findViewById(R.id.topic_name);
         name.setText(topicArrayList.get(position).getName());
         TextView count = convertView.findViewById(R.id.topic_count);
         count.setText(topicArrayList.get(position).getCount());
+        topic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(),PublishActivity.class);
+                intent.putExtra("topic",topicArrayList.get(position).getName());
+                getContext().startActivity(intent);
+            }
+        });
         return convertView;
     }
 }
