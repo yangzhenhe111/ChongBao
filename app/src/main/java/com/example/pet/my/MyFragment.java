@@ -28,11 +28,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.smssdk.ui.companent.CircleImageView;
+
 public class MyFragment extends Fragment {
     private View view;
     private TextView login;
     private TextView count;
-    private ImageView photo;
+    private CircleImageView photo;
     private List<My> myList1 = new ArrayList<>();
     private List<My> myList2 = new ArrayList<>();
     private List<My> myList3 = new ArrayList<>();
