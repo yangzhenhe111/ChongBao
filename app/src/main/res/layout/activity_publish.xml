@@ -45,11 +45,12 @@
                     android:id="@+id/et_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="标题（6-30字之间）"
+                    android:hint="标题（30字以内）"
                     android:textSize="26sp"
                     android:background="@color/White"
                     android:layout_marginTop="20dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:maxLength="30"/>
                 <EditText
                     android:id="@+id/et_text"
                     android:layout_width="match_parent"
@@ -60,7 +61,8 @@
                     android:background="@drawable/shape_publish"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="10dp"
+                    android:maxLength="2000"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -143,19 +145,19 @@
                         android:padding="3dp"
                         android:layout_marginRight="10dp"/>
                 </LinearLayout>
+                <Button
+                    android:id="@+id/btn_topic"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape1"
+                    android:layout_marginTop="20dp"
+                    android:text="食品"
+                    android:textSize="20dp"
+                    android:textColor="@color/Blue"/>
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <Button
-                        android:id="@+id/btn_topic"
-                        android:layout_width="100dp"
-                        android:layout_height="50dp"
-                        android:background="@drawable/shape1"
-                        android:layout_marginTop="20dp"
-                        android:text="食品"
-                        android:textSize="20dp"
-                        android:textColor="@color/Blue"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

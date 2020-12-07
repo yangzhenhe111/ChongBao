@@ -226,7 +226,8 @@
             android:id="@+id/enter_comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="输入评论"/>
+            android:maxLength="200"
+            android:hint="请输入评论(最大可输入两百字)"/>
 
         <Button
             android:id="@+id/publish_comment"

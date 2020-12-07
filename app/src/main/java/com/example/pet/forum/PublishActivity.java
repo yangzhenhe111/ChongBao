@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -61,7 +62,6 @@ public class PublishActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(PublishActivity.this,TopicActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
         btn_topic = findViewById(R.id.btn_topic);
