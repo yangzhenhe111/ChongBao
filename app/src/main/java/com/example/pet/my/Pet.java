@@ -40,7 +40,7 @@ public class Pet extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
         }
         //调用摄像头
-        ImageButton camera=(ImageButton) findViewById(R.id.mycamera);
+     /*   ImageButton camera=(ImageButton) findViewById(R.id.mycamera);
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +48,6 @@ public class Pet extends AppCompatActivity {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
                 startActivityForResult(intent,TAKE_PHOTO);
             }
-        });
+        });*/
     }
 }

@@ -1,15 +1,26 @@
 package com.example.pet.other.entity;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public class Pet implements Serializable {
     private int  petId;
-    private String  picturePath;
+    private Bitmap picture;
     private String petName;
     private String petType;
     private int petAge;
     private String petWeight;
     private int userId;
+        private String petAutograph;
+
+    public String getPetAutograph() {
+        return petAutograph;
+    }
+
+    public void setPetAutograph(String petAutograph) {
+        this.petAutograph = petAutograph;
+    }
 
     public Pet() {
     }
@@ -22,12 +33,12 @@ public class Pet implements Serializable {
         this.petId = petId;
     }
 
-    public String getPicturePath() {
-        return picturePath;
+    public Bitmap getPicture() {
+        return picture;
     }
 
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
+    public void setPicture(Bitmap picture) {
+        this.picture = picture;
     }
 
     public String getPetName() {
@@ -74,12 +85,13 @@ public class Pet implements Serializable {
     public String toString() {
         return "Pet{" +
                 "petId=" + petId +
-                ", picturePath='" + picturePath + '\'' +
+                ", picture=" + picture +
                 ", petName='" + petName + '\'' +
                 ", petType='" + petType + '\'' +
                 ", petAge=" + petAge +
                 ", petWeight='" + petWeight + '\'' +
                 ", userId=" + userId +
+                ", petAutograph='" + petAutograph + '\'' +
                 '}';
     }
 }
