@@ -99,7 +99,7 @@ public class SetPassword extends AppCompatActivity {
             if (result == SMSSDK.RESULT_COMPLETE) {
                 if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                     toast("验证成功，密码是："+etPass.getText().toString());
-//                    insert();
+                    insert();
                 }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){        //获取验证码成功
                     toast("获取验证码成功");
                 }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){//如果你调用了获取国家区号类表会在这里回调
@@ -209,15 +209,15 @@ public class SetPassword extends AppCompatActivity {
                 alterWarning();
                 break;
             case R.id.btn_submit1:
-                insert();
-//                //获得用户输入的验证码
-//                String code = etCheckecode.getText().toString().replaceAll("/s","");
-//                if (!TextUtils.isEmpty(code)) {//判断验证码是否为空
-//                    //验证
-//                    SMSSDK.submitVerificationCode( country,  phone,  code);
-//                }else{//如果用户输入的内容为空，提醒用户
-//                    toast("请输入验证码后再提交");
-//                }
+//                insert();
+                //获得用户输入的验证码
+                String code = etCheckecode.getText().toString().replaceAll("/s","");
+                if (!TextUtils.isEmpty(code)) {//判断验证码是否为空
+                    //验证
+                    SMSSDK.submitVerificationCode( country,  phone,  code);
+                }else{//如果用户输入的内容为空，提醒用户
+                    toast("请输入验证码后再提交");
+                }
                 break;
             case R.id.set_password_login:
                 Intent intent = new Intent(this,Login.class);

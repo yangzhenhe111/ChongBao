@@ -24,11 +24,13 @@
             android:textColor="@color/black"/>
         <TextView
             android:id="@+id/tv_save"
+            android:onClick="onClicked"
             android:textColor="@color/colorTheme"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="保存"/>
+            android:text="保存"
+            android:layout_marginRight="15dp"/>
     </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
@@ -72,7 +74,7 @@
                         android:onClick="onClicked"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/head"/>
+                        android:src="@drawable/addimage"/>
                 </LinearLayout>
 
 
@@ -98,7 +100,7 @@
                         android:onClick="onClicked"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="有光"
+                        android:hint="有光"
                         android:textSize="14sp"
                         android:background="@null"
                         android:gravity="center_vertical"/>
@@ -126,7 +128,7 @@
                     android:background="@drawable/bg_myinfo">
                     <TextView
                         android:id="@+id/edit_info_sex"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="完善性别信息"
                         android:textSize="14sp"
@@ -142,23 +144,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="生日"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:gravity="center_vertical"
                     android:layout_marginRight="25sp"
                     android:textColor="#000"/>
                 <LinearLayout
                     android:id="@+id/ll_upBrithday"
+                    android:onClick="onClicked"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:background="@drawable/bg_myinfo">
                     <TextView
-                        android:onClick="onClicked"
                         android:id="@+id/upBrithday"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="完善生日信息"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:gravity="center_vertical"/>
                 </LinearLayout>
             </LinearLayout>
@@ -171,7 +173,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="个人简介"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:gravity="center_vertical"
                     android:layout_marginTop="25sp"
                     android:textColor="#000"
@@ -181,6 +183,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp">
                     <EditText
+                        android:id="@+id/et_input"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:enabled="true"
@@ -190,10 +193,11 @@
                         android:maxLines="6"
                         android:scrollbars="vertical"
                         android:hint="还差一句简介，有趣的灵魂就会被发现呦~"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:background="@null"
                         />
                     <TextView
+                        android:id="@+id/tv_input"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
