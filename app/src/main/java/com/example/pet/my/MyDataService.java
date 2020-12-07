@@ -149,6 +149,7 @@ public class MyDataService extends IntentService {
             while ((len = in.read(bytes))!=-1){
                 str.append(new String(bytes,0,len,"utf-8"));
             }
+
             in.close();
             JSONArray jsonArray = new JSONArray(str.toString());
             Log.e("Post",jsonArray.toString());
