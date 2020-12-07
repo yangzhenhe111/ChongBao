@@ -63,7 +63,6 @@ public class TopicActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(TopicActivity.this,PublishActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
         topic_list = findViewById(R.id.lv_topic);
@@ -99,7 +98,6 @@ public class TopicActivity extends AppCompatActivity {
                         topic.setCount(String.valueOf(count));
                         arrayList.add(topic);
                     }
-                    Log.e("arrayList", arrayList.toString());
                     Message message = handler.obtainMessage();
                     message.what = 1;
                     message.obj = arrayList;

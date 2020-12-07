@@ -325,7 +325,6 @@ public class TipsActivity extends Activity {
                         InputStream in = urlConnection.getInputStream();
                         Bitmap bitmap = BitmapFactory.decodeStream(in);
                         comment.setHead(bitmap);
-                        Log.e("head", bitmap.toString());
                         in.close();
                         latch.countDown();
                     } catch (MalformedURLException e) {
