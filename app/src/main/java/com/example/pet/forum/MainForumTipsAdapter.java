@@ -110,6 +110,7 @@ public class MainForumTipsAdapter extends BaseAdapter {
                 intent.setClass(getContext(),TipsActivity.class);
                 int i = tipsArrayList.get(position).getId();
                 String id = Integer.toString(i);
+                Log.e("MainForum",i+"");
                 intent.putExtra("tipsid",id);
                 context.startActivity(intent);
             }
