@@ -3,25 +3,28 @@ package com.example.pet.other.entity;
 public class User {
     private int userId;//用户ID
     private String userName;//用户姓名
+    private String userSex;//用户性别
     private String accountNumber;//账号
     private double accountAmount;//账户金额
     private String picturePath;//图片路径
     private String userPassword;//用户密码
     private String userPhone;//用户手机号
-    private String userEmail;//用户邮箱
+    private String userBrithday;//用户邮箱
     private String userAutograph;//个性签名
+
     public User() {
     }
 
-    public User(int userId, String userName, String accountNumber, double accountAmount, String picturePath, String userPassword, String userPhone, String userEmail, String userAutograph) {
+    public User(int userId, String userName, String userSex, String accountNumber, double accountAmount, String picturePath, String userPassword, String userPhone, String userBrithday, String userAutograph) {
         this.userId = userId;
         this.userName = userName;
+        this.userSex = userSex;
         this.accountNumber = accountNumber;
         this.accountAmount = accountAmount;
         this.picturePath = picturePath;
         this.userPassword = userPassword;
         this.userPhone = userPhone;
-        this.userEmail = userEmail;
+        this.userBrithday = userBrithday;
         this.userAutograph = userAutograph;
     }
 
@@ -30,14 +33,23 @@ public class User {
         return "User{" +
                 "userId=" + userId +
                 ", userName='" + userName + '\'' +
+                ", userSex='" + userSex + '\'' +
                 ", accountNumber='" + accountNumber + '\'' +
                 ", accountAmount=" + accountAmount +
                 ", picturePath='" + picturePath + '\'' +
                 ", userPassword='" + userPassword + '\'' +
                 ", userPhone='" + userPhone + '\'' +
-                ", userEmail='" + userEmail + '\'' +
+                ", userBrithday='" + userBrithday + '\'' +
                 ", userAutograph='" + userAutograph + '\'' +
                 '}';
+    }
+
+    public String getUserSex() {
+        return userSex;
+    }
+
+    public void setUserSex(String userSex) {
+        this.userSex = userSex;
     }
 
     public double getAccountAmount() {
@@ -96,12 +108,12 @@ public class User {
         this.userPhone = userPhone;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getUserBrithday() {
+        return userBrithday;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setUserBrithday(String userBrithday) {
+        this.userBrithday = userBrithday;
     }
 
     public String getUserAutograph() {
