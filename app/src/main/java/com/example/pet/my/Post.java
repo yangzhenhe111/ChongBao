@@ -4,10 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -40,10 +45,24 @@ public class Post extends AppCompatActivity {
     private List<Article> list;
     private ListView listView;
     private Toolbar toolbar;
-    private ArrayList<Tips> arrayList;
+    //private ArrayList<Tips> arrayList = new ArrayList<>();
     private MainForumTipsAdapter mainForumTipsAdapter;
     private SmartRefreshLayout smartRefreshLayout;
-
+private Handler handler = new Handler(){
+    @Override
+    public void handleMessage(@NonNull Message msg) {
+        switch (msg.what){
+            case 1:
+                mainForumTipsAdapter.notifyDataSetChanged();
+                smartRefreshLayout.finishRefresh();
+                break;
+            case 2:
+                mainForumTipsAdapter.notifyDataSetChanged();
+                smartRefreshLayout.finishLoadMore();
+                break;
+        }
+    }
+};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,75 +75,30 @@ public class Post extends AppCompatActivity {
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
         }
-        initData();
+       // initData();
         setView();
 
     }
 
-    private void initData() {
+  /*  private void initData() {
         new Thread() {
             @Override
             public void run() {
-                try {
-                    arrayList = new ArrayList<>();
-                    URL url = new URL(Cache.MY_URL + "MyTip?userId" + Cache.user.getUserId());
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-                    InputStream input = connection.getInputStream();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
-                    StringBuffer stringBuffer = new StringBuffer();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        stringBuffer.append(line);
-                    }
-                    arrayList.clear();
-                    JSONArray jsonArray = new JSONArray(stringBuffer.toString());
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        int post_id = jsonObject.getInt("post_id");
-                        String post_title = jsonObject.getString("post_title");
-                        String post_time = jsonObject.getString("post_time");
-                        String post_text = jsonObject.getString("post_text");
-                        String topic = jsonObject.getString("post_topic");
-                        String user_name = jsonObject.getString("user_name");
-                        int count_likes = jsonObject.getInt("likes");
-                        int count_comments = jsonObject.getInt("comments");
-                        int count_forwards = jsonObject.getInt("forwards");
-                        String img_path = jsonObject.getString("picture_path");
-                        String head_img_path = jsonObject.getString("user_picture_path");
-                        Tips tips = new Tips();
-                        tips.setId(post_id);
-                        tips.setTitle(post_title);
-                        tips.setText(post_text);
-                        tips.setTime(post_time);
-                        tips.setUserName(user_name);
-                        tips.setTopic(topic);
-                        tips.setLikes(count_likes);
-                        tips.setComments(count_comments);
-                        tips.setForwards(count_forwards);
-                        tips.setImagepath(img_path);
-                        tips.setHeadImagepath(head_img_path);
-                        arrayList.add(tips);
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
 
             }
         }.start();
-    }
+    }*/
 
 
 
 
     private void setView() {
+       // arrayList.add(new Tips());
+        listView = findViewById(R.id.lv_article);
         smartRefreshLayout = findViewById(R.id.srl);
         toolbar = findViewById(R.id.post_toolbar);
-        mainForumTipsAdapter = new MainForumTipsAdapter(this, arrayList, R.layout.forum_tips_item);
+        mainForumTipsAdapter = new MainForumTipsAdapter(this, Cache.myPostList, R.layout.forum_tips_item);
         listView.setAdapter(mainForumTipsAdapter);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,15 +109,23 @@ public class Post extends AppCompatActivity {
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                initData();
-                mainForumTipsAdapter.notifyDataSetChanged();
+               // initData();
+                Intent intent = new Intent(Post.this,MyDataService.class);
+                startService(intent);
+               Message message = new Message();
+               message.what = 1;
+               handler.sendMessage(message);
             }
         });
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                initData();
-                mainForumTipsAdapter.notifyDataSetChanged();
+                //initData();
+                Intent intent = new Intent(Post.this,MyDataService.class);
+                startService(intent);
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
             }
         });
     }
