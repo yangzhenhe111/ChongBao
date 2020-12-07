@@ -169,11 +169,10 @@
                         android:scrollbars="vertical"
                         android:textSize="12sp" />
                 </LinearLayout>
-
-
                 <Button
+                    android:textColor="@color/red"
                     android:id="@+id/pet_update"
-                    android:background="@drawable/bg_myinfo"
+                    android:background="@drawable/edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="修改" />

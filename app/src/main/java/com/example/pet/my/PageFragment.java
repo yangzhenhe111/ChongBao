@@ -23,13 +23,15 @@ public class PageFragment extends Fragment {
     private EditText petType;
     private EditText petAge;
     private EditText petAutograph;
-private Button btnUpdate;
+    private Button btnUpdate;
+    private int index;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_pet, container, false);
         Bundle bundle = getArguments();
-        int index = bundle.getInt("index");
+        index = bundle.getInt("index");
         //设置
         petPhoto = view.findViewById(R.id.pet_photo);
         petName = view.findViewById(R.id.pet_name);
@@ -37,14 +39,29 @@ private Button btnUpdate;
         petAge = view.findViewById(R.id.pet_age);
         petAutograph = view.findViewById(R.id.pet_autograph);
         btnUpdate = view.findViewById(R.id.pet_update);
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
+        setViewContent();
+        return view;
+    }
 
+    public void setViewContent() {
         petAutograph.setText(Cache.myPetList.get(index).getPetAutograph(), TextView.BufferType.EDITABLE);
         petPhoto.setImageBitmap(Cache.myPetList.get(index).getPicture());
         petName.setText(Cache.myPetList.get(index).getPetName(), TextView.BufferType.EDITABLE);
         petType.setText(Cache.myPetList.get(index).getPetType(), TextView.BufferType.EDITABLE);
-        petAge.setText(Cache.myPetList.get(index).getPetAge()+"",TextView.BufferType.EDITABLE);
-        return view;
+        petAge.setText(Cache.myPetList.get(index).getPetAge() + "", TextView.BufferType.EDITABLE);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setViewContent();
     }
 }
