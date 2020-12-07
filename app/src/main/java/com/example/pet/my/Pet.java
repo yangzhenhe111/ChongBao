@@ -23,6 +23,10 @@ import java.util.List;
 public class Pet extends AppCompatActivity {
     private Uri imageUri;
     public static final int TAKE_PHOTO=1;
+    private List<String> list = new ArrayList<String>();
+    private Spinner spinner;
+    private ArrayAdapter<String> adapter;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

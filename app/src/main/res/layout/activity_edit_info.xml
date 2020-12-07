@@ -17,8 +17,10 @@
             android:layout_width="240dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="个人信息"
             android:textSize="18sp"
+
+            android:text="个人信息"
+
             android:textColor="@color/black"/>
         <TextView
             android:id="@+id/tv_save"

@@ -54,7 +54,6 @@ public class Login extends AppCompatActivity {
                     Intent intent2 = new Intent(Login.this,MyUserService.class);
                     startService(intent2);
 
-
                    break;
                case 0:
                    Toast.makeText(Login.this,"密码有误，请重试",Toast.LENGTH_LONG).show();
@@ -92,9 +91,7 @@ public class Login extends AppCompatActivity {
             case R.id.login_btn:
                 mWidth = login.getMeasuredWidth();
                 mHeight = login.getMeasuredHeight();
-
                 loginService();
-
                 break;
             case R.id.login_register:
                 Intent intent = new Intent(this,Register.class);
@@ -110,7 +107,7 @@ public class Login extends AppCompatActivity {
 
     private void loginService() {
         phone = etName.getText().toString();
-
+Cache.userPhone = etName.getText().toString();
         final String pwd = etPassword.getText().toString();
         if(phone.length() ==11 && pwd.length()!=0){
             new Thread(){
