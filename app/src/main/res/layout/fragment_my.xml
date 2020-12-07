@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/user_photo"
             android:layout_marginLeft="25dp"
             android:background="@drawable/user"
             android:onClick="onClicked"

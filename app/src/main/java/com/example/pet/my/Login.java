@@ -187,7 +187,6 @@ Cache.userPhone = etName.getText().toString();
         animator3.setInterpolator(new JellyInterpolator());
         animator3.start();
     }
-
     public void back(View view) {
         Intent intent = new Intent(Login.this,MainActivity.class);
         startActivity(intent);
