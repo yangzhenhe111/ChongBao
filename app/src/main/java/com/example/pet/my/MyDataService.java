@@ -66,12 +66,17 @@ public class MyDataService extends IntentService {
 
                    Pet pet= new Pet();
                     pet.setPetId(rs.getInt("petId"));
-                    pet.setPicturePath(rs.getString("picturePath"));
+                    String path =rs.getString("picturePath");
+                    URL url1 = new URL(Cache.MY_URL +"img/" +path);
+                    InputStream in1 = url1.openStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(in1);
+                    pet.setPicture(bitmap);
                     pet.setPetName(rs.getString("petName"));
                     pet.setPetType(rs.getString("petType"));
                     pet.setPetAge(rs.getInt("petAge"));
                     pet.setPetWeight(rs.getString("petWeight"));
                     pet.setUserId(rs.getInt("userId"));
+                    pet.setPetAutograph(rs.getString("petAutograph"));
                     Log.e("MyDataService",pet.toString());
                     Cache.myPetList.add(pet);
                 }

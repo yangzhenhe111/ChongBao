@@ -93,7 +93,7 @@ private  TextView count;
                         startActivity(intent3);
                         break;
                     case 3:
-                        Intent intent4 = new Intent(getContext(), Pet.class);
+                        Intent intent4 = new Intent(getContext(), NewPet.class);
                         startActivity(intent4);
                         break;
                     default:
@@ -108,7 +108,7 @@ private  TextView count;
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        Intent intent = new Intent(getContext(), Post.class);
+                        Intent intent = new Intent(getContext(), Setting.class);
                         startActivity(intent);
                         break;
                     case 1:
