@@ -3,7 +3,13 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <LinearLayout
+        android:id="@+id/top1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/Blue"
+        android:orientation="horizontal">
+    </LinearLayout>
     <RelativeLayout
         android:id="@+id/main"
         android:layout_alignParentTop="true"
@@ -79,12 +85,11 @@
                         android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
+                        android:layout_marginTop="10dp">
 
                         <RelativeLayout
-
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="5dp"
                             android:id="@+id/forum_food"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
@@ -107,6 +112,8 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="5dp"
                             android:layout_toRightOf="@+id/forum_food"
                             android:id="@+id/forum_articles"
                             android:layout_width="wrap_content"
@@ -130,6 +137,8 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="5dp"
                             android:id="@+id/forum_daily"
                             android:layout_toRightOf="@+id/forum_articles"
                             android:layout_width="wrap_content"
@@ -153,6 +162,8 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="5dp"
                             android:id="@+id/forum_cosmetology"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -176,6 +187,8 @@
                         </RelativeLayout>
 
                         <RelativeLayout
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="5dp"
                             android:layout_toRightOf="@+id/forum_cosmetology"
                             android:id="@+id/forum_train"
                             android:layout_width="wrap_content"
@@ -200,6 +213,8 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -207,11 +222,11 @@
                             android:gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp">
+                            android:layout_marginTop="10dp">
 
                             <RelativeLayout
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="5dp"
                                 android:id="@+id/forum_deworming"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
@@ -234,6 +249,8 @@
                             </RelativeLayout>
 
                             <RelativeLayout
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="5dp"
                                 android:layout_toRightOf="@id/forum_deworming"
                                 android:id="@+id/forum_disease"
                                 android:layout_width="wrap_content"
@@ -257,6 +274,8 @@
                             </RelativeLayout>
 
                             <RelativeLayout
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="5dp"
                                 android:layout_toRightOf="@id/forum_disease"
                                 android:id="@+id/forum_randomtalk"
                                 android:layout_width="wrap_content"
@@ -280,6 +299,8 @@
                             </RelativeLayout>
 
                             <RelativeLayout
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="5dp"
                                 android:layout_toRightOf="@id/forum_randomtalk"
                                 android:id="@+id/forum_question"
                                 android:layout_width="wrap_content"
@@ -303,6 +324,8 @@
                             </RelativeLayout>
 
                             <RelativeLayout
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="5dp"
                                 android:layout_toRightOf="@id/forum_question"
                                 android:id="@+id/forum_sharephotos"
                                 android:layout_width="wrap_content"
