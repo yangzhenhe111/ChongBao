@@ -18,7 +18,7 @@ import java.util.List;
 
 public class InnerFragment_other extends Fragment {
 
-    private List<Tips> tipsList;
+    private ArrayList<Tips> tipsList;
     private RecyclerView recyclerView;
     private RecyAdapter recyAdapter;
 
