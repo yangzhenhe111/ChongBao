@@ -119,6 +119,8 @@ photo = view.findViewById(R.id.user_photo);
                         if (Cache.user != null) {
                             Intent intent = new Intent(getContext(), Setting.class);
                             startActivity(intent);
+                        }else {
+                            showLoginToast();
                         }
                         break;
                     case 1:
@@ -167,9 +169,6 @@ photo = view.findViewById(R.id.user_photo);
             photo.setImageBitmap(Cache.user.getPhoto());
         }
         super.onStart();
-        Log.e("MyFragemnt", "onStart");
-        //  Log.e("MyFragemnt",Cache.user.getUserName());
-
     }
 
     public void showLoginToast() {
