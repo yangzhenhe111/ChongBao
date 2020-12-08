@@ -110,7 +110,7 @@ public class MainForumTipsAdapter extends BaseAdapter {
                 intent.setClass(getContext(),TipsActivity.class);
                 int i = tipsArrayList.get(position).getId();
                 String id = Integer.toString(i);
-                Log.e("St id", id);
+                Log.e("MainForum",i+"");
                 intent.putExtra("tipsid",id);
                 context.startActivity(intent);
             }
@@ -146,7 +146,10 @@ public class MainForumTipsAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(),TipsActivity.class);
-                intent.putExtra("tipsid",tipsArrayList.get(position).getId());
+                int i = tipsArrayList.get(position).getId();
+                String id = Integer.toString(i);
+                Log.e("St id", id);
+                intent.putExtra("tipsid",id);
                 context.startActivity(intent);
             }
         });

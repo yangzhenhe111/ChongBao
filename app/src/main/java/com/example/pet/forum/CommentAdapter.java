@@ -51,7 +51,6 @@ public class CommentAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(itemLayoutRes, null);
-        Log.e("111111", commentList.toString());
         ImageView head = view.findViewById(R.id.comment_head);
         head.setImageBitmap(commentList.get(position).getHead());
         TextView name = view.findViewById(R.id.comment_name);

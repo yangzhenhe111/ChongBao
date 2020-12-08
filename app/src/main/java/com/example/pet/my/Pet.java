@@ -23,10 +23,14 @@ import java.util.List;
 public class Pet extends AppCompatActivity {
     private Uri imageUri;
     public static final int TAKE_PHOTO=1;
+    private List<String> list = new ArrayList<String>();
+    private Spinner spinner;
+    private ArrayAdapter<String> adapter;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pet);
+        setContentView(R.layout.activity_add_pet);
         if (Build.VERSION.SDK_INT >= 21) {   //只有5.0及以上系统才支持，因此这里先进行了一层if判断
             View decorView = getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -35,15 +39,13 @@ public class Pet extends AppCompatActivity {
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
         }
-        //调用摄像头
-        ImageButton camera=(ImageButton) findViewById(R.id.mycamera);
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
-                startActivityForResult(intent,TAKE_PHOTO);
-            }
-        });
+
+}
+
+    public void onClicked(View view) {
+    }
+
+    public void close(View view) {
+        Pet.this.finish();
     }
 }
