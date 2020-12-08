@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+    <RelativeLayout
+    android:background="#ffffffff"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.viewpager.widget.ViewPager
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/vip_anfi_functions"/>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/lil_anfi_indicators"
+        android:orientation="horizontal"
+        android:layout_marginBottom="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
+
+    <ImageView
+        android:background="@drawable/ty"
+        android:layout_height="63dp"
+        android:layout_width="95dp"
+        android:id="@+id/ty"
+        android:layout_marginBottom="210dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>

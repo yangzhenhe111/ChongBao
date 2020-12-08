@@ -30,11 +30,17 @@ android {
 }
 
 dependencies {
+    //TabHost相关
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+
     //noinspection GradleCompatible
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
+
     implementation 'org.greenrobot:eventbus:3.1.1'
     //时间选择器
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
@@ -48,6 +54,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.viewpager:viewpager:1.0.0'
     implementation 'com.google.android.material:material:1.1.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'

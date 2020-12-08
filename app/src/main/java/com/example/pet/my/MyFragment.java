@@ -132,7 +132,33 @@ photo = view.findViewById(R.id.user_photo);
                     default:
                         break;
                 }
-            }
+                    if(Cache.user != null) {
+                        switch (position) {
+                            case 0:
+                                Intent intent = new Intent(getContext(), Setting.class);
+                                startActivity(intent);
+                                break;
+                            case 1:
+                                Intent intent1 = new Intent(getContext(), AboutUs.class);
+                                startActivity(intent1);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else{
+                        switch (position) {
+                            case 1:
+                                Intent intent1 = new Intent(getContext(), AboutUs.class);
+                                startActivity(intent1);
+                                break;
+                            default:
+                                showLoginToast();
+                                break;
+                        }
+
+                    }
+                }
         });
         return view;
     }

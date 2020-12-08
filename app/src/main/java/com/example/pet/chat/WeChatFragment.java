@@ -2,7 +2,6 @@ package com.example.pet.chat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.fragment.app.Fragment;
 
@@ -30,19 +28,16 @@ public class WeChatFragment extends Fragment {
         ChatAdapter adapter=new ChatAdapter(view.getContext(),R.layout.wechat_listview,chatList);//实例化适配器
         final ListView listView=(ListView)view.findViewById(R.id.chat_listview);//获取ListView
         listView.setAdapter(adapter);//适配
-
         //为ListView添加上下文菜单
         listView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-
             @Override
             public void onCreateContextMenu(ContextMenu menu, View v,
                                             ContextMenu.ContextMenuInfo menuInfo) {
                       menu.add(0, 0, 0, "标为未读");
                       menu.add(0, 1, 0, "置顶聊天");
                       menu.add(0,2,0,"删除聊天");
-
             }
-                    });
+        });
           listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
               @Override
               public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -61,7 +56,6 @@ public class WeChatFragment extends Fragment {
               }
           });
         return view;
-
     }
     //初始化参数
     private void init(){
@@ -80,10 +74,8 @@ public class WeChatFragment extends Fragment {
     }
     @Override
     public void onStart() {
-        Log.d("TAG","onStart");
         super.onStart();
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
