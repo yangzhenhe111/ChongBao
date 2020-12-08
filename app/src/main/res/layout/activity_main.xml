@@ -18,12 +18,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_weight="1"
-            android:onClick="onClicked">
+            android:layout_weight="1">
             <ImageView
                 android:id="@+id/iv_forum"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
                 android:src="@drawable/onee"/>
             <TextView
                 android:id="@+id/tv_forum"
@@ -37,9 +36,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginRight="10dp"
             android:gravity="center"
-            android:layout_weight="1"
-            android:onClick="onClicked">
+            android:layout_weight="1">
             <ImageView
                 android:id="@+id/iv_nursing"
                 android:layout_width="30dp"
@@ -52,19 +51,25 @@
                 android:gravity="center_horizontal"
                 android:text="@string/tabs_nursing"/>
         </LinearLayout>
+        <ImageView
+            android:onClick="pop"
+            android:layout_width="40dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/jia"
+            android:layout_height="40dp"/>
         <LinearLayout
             android:id="@+id/ll_chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_weight="1"
-            android:onClick="onClicked">
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/iv_chat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
                 android:src="@drawable/three" />
             <TextView
                 android:id="@+id/tv_chat"
@@ -79,12 +84,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_weight="1"
-            android:onClick="onClicked">
+            android:layout_weight="1">
             <ImageView
                 android:id="@+id/iv_my"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
                 android:src="@drawable/four"/>
             <TextView
                 android:id="@+id/tv_my"
@@ -95,9 +99,10 @@
         </LinearLayout>
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/tab_content"
+    <androidx.viewpager.widget.ViewPager
+        android:layout_above="@+id/tabs"
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/tabs" />
+        android:layout_height="match_parent">
+    </androidx.viewpager.widget.ViewPager>
 </RelativeLayout>

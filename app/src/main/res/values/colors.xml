@@ -5,6 +5,8 @@
     <color name="green_dot">#07C160</color>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
+    <color name="bottom_text_press">#D2691E</color>
+    <color name="bottom_text_normal">#181818</color>
     <color name="colorAccent">#D81B60</color>
     <color name="contact_background">#EDEDED</color>
     <color name="gongqingtuan_text">#7D7D7D</color>
