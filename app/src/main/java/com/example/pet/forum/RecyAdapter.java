@@ -1,18 +1,23 @@
 package com.example.pet.forum;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pet.R;
 import com.example.pet.other.entity.Tips;
+import com.luck.picture.lib.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +30,11 @@ public class RecyAdapter extends RecyclerView.Adapter<RecyAdapter.MyHolder> {
         this.context = context;
         this.tipsList = tipsList;
     }
+
+    public Context getContext(){
+        return context;
+    }
+
 
     @NonNull
     @Override
@@ -47,6 +57,7 @@ public class RecyAdapter extends RecyclerView.Adapter<RecyAdapter.MyHolder> {
         holder.thumbnail.setImageBitmap(tipsList.get(position).getThumbnail());
         holder.title.setText(title);
         holder.time.setText(time);
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.pet.forum;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,18 +56,17 @@ public class ForumFragment extends Fragment {
         titles.add("杂谈");
         titles.add("提问");
         titles.add("晒图");
-        list.add(new InnerFragment_first());
-        list.add(new InnerFragment_other());
-        list.add(new InnerFragment_other());
-        list.add(new InnerFragment_other());
-        list.add(new InnerFragment_other());
-        list.add(new InnerFragment_other());
-        list.add(new InnerFragment_other());
-        list.add(new InnerFragment_other());
-        list.add(new InnerFragment_other());
-        list.add(new InnerFragment_other());
-        list.add(new InnerFragment_other());
-
+        list.add(new InnerFragment_first("文章"));
+        list.add(new InnerFragment_other("食品"));
+        list.add(new InnerFragment_other("用品"));
+        list.add(new InnerFragment_other("日常"));
+        list.add(new InnerFragment_other("美容"));
+        list.add(new InnerFragment_other("训练"));
+        list.add(new InnerFragment_other("驱虫"));
+        list.add(new InnerFragment_other("病症"));
+        list.add(new InnerFragment_other("杂谈"));
+        list.add(new InnerFragment_other("提问"));
+        list.add(new InnerFragment_other("晒图"));
 
         MyAdapter myAdapter = new MyAdapter(getFragmentManager(),list,titles);
         //设置适配器

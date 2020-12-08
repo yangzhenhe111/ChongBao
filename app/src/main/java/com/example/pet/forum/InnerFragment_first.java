@@ -1,5 +1,6 @@
 package com.example.pet.forum;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import com.example.pet.R;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Tips;
+import com.rohit.recycleritemclicksupport.RecyclerItemClickSupport;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -44,14 +46,17 @@ public class InnerFragment_first extends Fragment {
     private RecyclerView recyclerView;
     private RecyAdapter recyAdapter;
     private Banner banner;
+    private String title;
 
+    public InnerFragment_first(String title) {
+        this.title = title;
+    }
 
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message message) {
             switch (message.what){
                 case 1:
-                    Log.e("handler", "gethere----------------------");
                     init((ArrayList) message.obj);
                     break;
             }
@@ -68,6 +73,16 @@ public class InnerFragment_first extends Fragment {
         banner = view.findViewById(R.id.banner);
         getAllPost(tipsArrayList);
         initBanner();
+
+        RecyclerItemClickSupport.addTo(recyclerView).setOnItemClickListener(new RecyclerItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int i, View view) {
+                Intent intent = new Intent(getActivity(),New_post_detail.class);
+                intent.putExtra("id",tipsArrayList.get(i).getId());
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -76,14 +91,10 @@ public class InnerFragment_first extends Fragment {
             @Override
             public void run() {
                 try {
-                    Log.e("xzczxczx",313+"");
                     URL url = new URL(Cache.MY_URL + "GetPostByTime");
-                    Log.e("kljlj",3212313+"");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
-                    Log.e("asd",2313+"");
                     InputStream input = connection.getInputStream();
-                    Log.e("124",528+"");
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
                     StringBuffer stringBuffer = new StringBuffer();
                     String line;
@@ -91,7 +102,6 @@ public class InnerFragment_first extends Fragment {
                         stringBuffer.append(line);
                     }
                     tipsArrayList.clear();
-                    Log.e("124",stringBuffer.toString());
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
                     for (int i=0;i<jsonArray.length();i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -114,7 +124,6 @@ public class InnerFragment_first extends Fragment {
                     message.what = 1;
                     message.obj = tipsArrayList;
                     handler.sendMessage(message);
-                    Log.e("tiplist",tipsArrayList.toString());
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (ProtocolException e) {
