@@ -44,12 +44,23 @@ public class MyFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_my, container, false);
         login = view.findViewById(R.id.fragment_login);
         count = view.findViewById(R.id.fragment_count);
-photo = view.findViewById(R.id.user_photo);
+        photo = view.findViewById(R.id.user_photo);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), Login.class);
                 startActivity(intent);
+            }
+        });
+        photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Cache.user !=null){
+                Intent intent = new Intent(getContext(),EditInfo.class);
+                startActivity(intent);}
+                else {
+                    showLoginToast();
+                }
             }
         });
         //适配第一个listView
@@ -121,7 +132,7 @@ photo = view.findViewById(R.id.user_photo);
                         if (Cache.user != null) {
                             Intent intent = new Intent(getContext(), Setting.class);
                             startActivity(intent);
-                        }else {
+                        } else {
                             showLoginToast();
                         }
                         break;
@@ -132,33 +143,7 @@ photo = view.findViewById(R.id.user_photo);
                     default:
                         break;
                 }
-                    if(Cache.user != null) {
-                        switch (position) {
-                            case 0:
-                                Intent intent = new Intent(getContext(), Setting.class);
-                                startActivity(intent);
-                                break;
-                            case 1:
-                                Intent intent1 = new Intent(getContext(), AboutUs.class);
-                                startActivity(intent1);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    else{
-                        switch (position) {
-                            case 1:
-                                Intent intent1 = new Intent(getContext(), AboutUs.class);
-                                startActivity(intent1);
-                                break;
-                            default:
-                                showLoginToast();
-                                break;
-                        }
-
-                    }
-                }
+            }
         });
         return view;
     }
@@ -194,7 +179,9 @@ photo = view.findViewById(R.id.user_photo);
         if (Cache.user != null) {
             login.setText(Cache.user.getUserName());
             count.setText(Cache.user.getUserPhone());
+            if(Cache.user.getPhoto()!=null){
             photo.setImageBitmap(Cache.user.getPhoto());
+            }
         }
         super.onStart();
     }

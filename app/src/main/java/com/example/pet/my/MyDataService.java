@@ -12,6 +12,7 @@ import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Order;
 import  com.example.pet.other.entity.Pet;
 import com.example.pet.other.entity.Tips;
+import com.google.gson.Gson;
 
 
 import org.json.JSONArray;
@@ -63,20 +64,19 @@ public class MyDataService extends IntentService {
 
                 for(int i=0;i<jsonArray.length();i++){
                     JSONObject rs = jsonArray.getJSONObject(i);
-
-                   Pet pet= new Pet();
-                    pet.setPetId(rs.getInt("petId"));
+                    Pet pet= new Gson().fromJson(rs.toString(),Pet.class);
+//                    pet.setPetId(rs.getInt("petId"));
                     String path =rs.getString("picturePath");
                     URL url1 = new URL(Cache.MY_URL +"img/" +path);
                     InputStream in1 = url1.openStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(in1);
-                    pet.setPicture(bitmap);
-                    pet.setPetName(rs.getString("petName"));
-                    pet.setPetType(rs.getString("petType"));
-                    pet.setPetAge(rs.getInt("petAge"));
-                    pet.setPetWeight(rs.getString("petWeight"));
-                    pet.setUserId(rs.getInt("userId"));
-                    pet.setPetAutograph(rs.getString("petAutograph"));
+//                    pet.setPicture(bitmap);
+//                    pet.setPetName(rs.getString("petName"));
+//                    pet.setPetType(rs.getString("petType"));
+//                    pet.setPetAge(rs.getInt("petAge"));
+//                    pet.setPetWeight(rs.getString("petWeight"));
+//                    pet.setUserId(rs.getInt("userId"));
+//                    pet.setPetAutograph(rs.getString("petAutograph"));
                     Log.e("MyDataService",pet.toString());
                     Cache.myPetList.add(pet);
                 }
@@ -107,10 +107,10 @@ public class MyDataService extends IntentService {
                 Cache.myOrderList = new ArrayList();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject rs = jsonArray.getJSONObject(i);
-                    Order order = new Order();
-                    order.setOrderId(rs.getInt("orderId"));
-                    order.setOrderStart(rs.getString("orderStart"));
-                    order.setOrderEnd(rs.getString("orderEnd"));
+                    Order order = new Gson().fromJson(rs.toString(),Order.class);
+//                    order.setOrderId(rs.getInt("orderId"));
+//                    order.setOrderStart(rs.getString("orderStart"));
+//                    order.setOrderEnd(rs.getString("orderEnd"));
                     int id = rs.getInt("petId");
                     for(int j=0;j<Cache.myPetList.size();j++){
                         if(Cache.myPetList.get(j).getPetId() == id){
@@ -120,19 +120,19 @@ public class MyDataService extends IntentService {
                         }
                     }
                     //设置
-                    order.setAddresser(rs.getString("addresser"));
-                    order.setAddressee(rs.getString("addressee"));
-                    order.setPetShopContact(rs.getString("petShopContact"));
-                    order.setRemarks(rs.getString("remarks"));
-                    order.setOrderAmount(rs.getString("orderAmount"));
-                    order.setClientContact(rs.getString("clientContact"));
-                    order.setRunnerContact(rs.getString("runnerContact"));
-                    order.setRunnerName(rs.getString("runnerName"));
-                    order.setOrderTime(rs.getString("orderTime"));
-                    order.setKilometers(rs.getString("kilometers"));
-                    order.setOrderState(rs.getString("orderState"));
-                    order.setUserId(rs.getInt("userId"));
-                    order.setAddresseeContact(rs.getString("addresseeContact"));
+//                    order.setAddresser(rs.getString("addresser"));
+//                    order.setAddressee(rs.getString("addressee"));
+//                    order.setPetShopContact(rs.getString("petShopContact"));
+//                    order.setRemarks(rs.getString("remarks"));
+//                    order.setOrderAmount(rs.getString("orderAmount"));
+//                    order.setClientContact(rs.getString("clientContact"));
+//                    order.setRunnerContact(rs.getString("runnerContact"));
+//                    order.setRunnerName(rs.getString("runnerName"));
+//                    order.setOrderTime(rs.getString("orderTime"));
+//                    order.setKilometers(rs.getString("kilometers"));
+//                    order.setOrderState(rs.getString("orderState"));
+//                    order.setUserId(rs.getInt("userId"));
+//                    order.setAddresseeContact(rs.getString("addresseeContact"));
                     Log.e("MyDataService",order.toString());
                     Cache.myOrderList.add(order);
                 }
