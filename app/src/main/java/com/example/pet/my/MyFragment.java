@@ -106,19 +106,33 @@ private  TextView count;
         listView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        Intent intent = new Intent(getContext(), Post.class);
-                        startActivity(intent);
-                        break;
-                    case 1:
-                        Intent intent1 = new Intent(getContext(), AboutUs.class);
-                        startActivity(intent1);
-                        break;
-                    default:
-                        break;
+                    if(Cache.user != null) {
+                        switch (position) {
+                            case 0:
+                                Intent intent = new Intent(getContext(), Setting.class);
+                                startActivity(intent);
+                                break;
+                            case 1:
+                                Intent intent1 = new Intent(getContext(), AboutUs.class);
+                                startActivity(intent1);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else{
+                        switch (position) {
+                            case 1:
+                                Intent intent1 = new Intent(getContext(), AboutUs.class);
+                                startActivity(intent1);
+                                break;
+                            default:
+                                showLoginToast();
+                                break;
+                        }
+
+                    }
                 }
-            }
         });
         return view;
     }
