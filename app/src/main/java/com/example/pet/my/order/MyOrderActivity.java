@@ -145,7 +145,7 @@ if(event.equals("更新")){
                 } else {
                     Intent intent = new Intent();
                     intent.setClass(MyOrderActivity.this, Order2.class);
-                    intent.putExtra("order", Cache.myOrderList.get(position));
+                    intent.putExtra("index", position);
                     startActivity(intent);
                 }
             }

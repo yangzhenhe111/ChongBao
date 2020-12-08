@@ -24,12 +24,5 @@ public class Setting extends AppCompatActivity {
         });
     }
 
-    public void onClicked(View view) {
-        switch (view.getId()){
-            case R.id.setting_acount_security:
-                Intent intent = new Intent(this,AcountSecurity.class);
-                startActivity(intent);
-                break;
-        }
-    }
+
 }
