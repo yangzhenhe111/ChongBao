@@ -49,10 +49,12 @@ public class MyUserService extends IntentService {
             }
             in.close();
             Cache.user = new Gson().fromJson(str.toString(),User.class);
+            if(Cache.user.getPicturePath()!=null&&Cache.user.getPicturePath().length()!=0){
             URL url1 = new URL(Cache.MY_URL+"img/"+Cache.user.getPicturePath());
             InputStream in1 = url1.openStream();
             Bitmap bitmap = BitmapFactory.decodeStream(in1);
             Cache.user.setPhoto(bitmap);
+            }
             Log.e("MyUserService",Cache.user.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();

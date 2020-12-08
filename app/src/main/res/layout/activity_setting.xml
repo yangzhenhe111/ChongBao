@@ -5,19 +5,58 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <androidx.appcompat.widget.Toolbar
+        android:background="@color/colorTheme"
         android:id="@+id/setting_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/nav">
-
         <TextView
             android:layout_width="250dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="设置"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="20sp"/>
     </androidx.appcompat.widget.Toolbar>
-
+    <ImageView
+        android:layout_marginTop="35dp"
+        android:background="@color/contact_background"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <ListView
+        android:background="@color/list_background"
+        android:dividerHeight="0.5dp"
+        android:divider="@drawable/discover_divier"
+        android:id="@+id/setting_listview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+    <ImageView
+        android:background="@color/contact_background"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <ListView
+        android:background="@color/list_background"
+        android:dividerHeight="0.5dp"
+        android:divider="@drawable/discover_divier"
+        android:id="@+id/setting_listview2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+    <ImageView
+        android:background="@color/contact_background"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <ListView
+        android:background="@color/list_background"
+        android:dividerHeight="0.5dp"
+        android:divider="@drawable/discover_divier"
+        android:id="@+id/setting_listview3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+    <ImageView
+        android:background="@color/contact_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

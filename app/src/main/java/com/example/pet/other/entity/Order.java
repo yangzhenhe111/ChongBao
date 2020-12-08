@@ -8,6 +8,7 @@ public class Order implements Serializable {
     private String orderStart;
     private String orderEnd;
     private Pet pet;
+    private int petId;
     private String addresser;//收货人
     private String addressee;//发货人
     private String petShopContact;
@@ -21,6 +22,14 @@ public class Order implements Serializable {
     private String orderState;
     private int userId;
     private String addresseeContact;
+
+    public int getPetId() {
+        return petId;
+    }
+
+    public void setPetId(int petId) {
+        this.petId = petId;
+    }
 
     public Pet getPet() {
         return pet;

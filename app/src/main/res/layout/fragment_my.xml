@@ -13,7 +13,7 @@
             android:id="@+id/user_photo"
             android:layout_marginLeft="25dp"
             android:src="@drawable/user"
-            android:onClick="onClicked"
+
             android:layout_width="92dp"
             android:layout_height="92dp" />
         <LinearLayout
