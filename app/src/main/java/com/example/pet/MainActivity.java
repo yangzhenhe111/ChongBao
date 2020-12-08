@@ -8,10 +8,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -210,9 +212,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View pop = mLayoutInflater.inflate(R.layout.jiapop, null, false);
         //TextView qibu = (TextView) pop.findViewById(R.id.qibu);
         //TextView ewai = (TextView) pop.findViewById(R.id.ewai);
-        PopupWindow popupWindow = new PopupWindow(pop, tab.getWidth(), LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        PopupWindow popupWindow = new PopupWindow(pop, tab.getWidth(), 400, true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.box));//设置背景
-        popupWindow.showAsDropDown(tab, 0, -510);
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = 0.4f;
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        getWindow().setAttributes(lp);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp=getWindow().getAttributes();
+                lp.alpha=1f;
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                getWindow().setAttributes(lp);
+            }
+        });
+        popupWindow.showAsDropDown(tab, 0, -650);
+    }
+    private void darkenBackgroud(Float bgcolor) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgcolor;
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        getWindow().setAttributes(lp);
     }
 }

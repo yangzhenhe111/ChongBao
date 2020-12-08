@@ -132,7 +132,6 @@ photo = view.findViewById(R.id.user_photo);
                     default:
                         break;
                 }
-            }
                     if(Cache.user != null) {
                         switch (position) {
                             case 0:

@@ -12,23 +12,22 @@
         android:clickable="true"
         android:drawableTop="@drawable/shaichong"
         android:gravity="center_horizontal"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="35dp"
         android:textSize="20sp"
         android:textColor="#000000"
         android:text="晒宠" />
+
     <TextView
         android:id="@+id/x"
-
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
         android:layout_centerHorizontal="true"
+        android:clickable="true"
         android:drawableTop="@drawable/xiadan"
         android:gravity="center_horizontal"
-        android:layout_marginLeft="25dp"
-        android:textSize="20sp"
+        android:text="下单"
         android:textColor="#000000"
-        android:text="下单" />
+        android:textSize="20sp" />
     <TextView
         android:id="@+id/f"
         android:layout_alignParentRight="true"
@@ -37,7 +36,7 @@
         android:clickable="true"
         android:drawableTop="@drawable/fatie"
         android:gravity="center_horizontal"
-        android:layout_marginRight="25dp"
+        android:layout_marginRight="35dp"
         android:textSize="20sp"
         android:textColor="#000000"
         android:text="发帖" />
