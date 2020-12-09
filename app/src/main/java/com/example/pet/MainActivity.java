@@ -1,5 +1,6 @@
 package com.example.pet;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -36,21 +37,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<Fragment> fragmentList; //保存界面的view
     private LinearLayout one,two,three,four,tab;
     private ImageView imone,imtwo,imthree,imfour;
+    private HintPopupWindow hintPopupWindow;
     private TextView  tvone,tvtwo,tvthree,tvfour;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        hintPopupWindow = new HintPopupWindow(this);
         //短信授权
         //MobSDK.submitPolicyGrantResult(granted, null);
-        if (Build.VERSION.SDK_INT >= 21) {   //只有5.0及以上系统才支持，因此这里先进行了一层if判断
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE    //设置为全屏显示，必须这两行代码一起才能生效
-                    |View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色
-            decorView.setSystemUiVisibility(option);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
-        }
+        View decorView = getWindow().getDecorView();
+        int option = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色
+        decorView.setSystemUiVisibility(option);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
         initViews();
         initDatas();
         setViewPagerEvent();
@@ -207,28 +207,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         moveTaskToBack(true);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void pop(View view) {
-        LayoutInflater mLayoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);//自定义布局
-        View pop = mLayoutInflater.inflate(R.layout.jiapop, null, false);
-        //TextView qibu = (TextView) pop.findViewById(R.id.qibu);
-        //TextView ewai = (TextView) pop.findViewById(R.id.ewai);
-        PopupWindow popupWindow = new PopupWindow(pop, tab.getWidth(), 400, true);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.box));//设置背景
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = 0.4f;
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        getWindow().setAttributes(lp);
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                WindowManager.LayoutParams lp=getWindow().getAttributes();
-                lp.alpha=1f;
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-                getWindow().setAttributes(lp);
-            }
-        });
-        popupWindow.showAsDropDown(tab, 0, -650);
+        hintPopupWindow.showPopupWindow(view);
     }
     private void darkenBackgroud(Float bgcolor) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();

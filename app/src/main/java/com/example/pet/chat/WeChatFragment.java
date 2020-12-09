@@ -41,18 +41,12 @@ public class WeChatFragment extends Fragment {
           listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
               @Override
               public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                     if (position==0){
-                         Intent intent = new Intent(view.getContext(), Booking.class);//启动订阅号界面
-                         startActivity(intent);
-                     }
-                      if(position>=1) {
-                          LinearLayout layout = (LinearLayout) listView.getChildAt(position);
-                          TextView textView = (TextView) layout.findViewById(R.id.chat_name);//获取ListView中显示姓名的TextView
-                          String s = textView.getText().toString();//获取TextView的值
-                          Intent intent = new Intent(view.getContext(), ChatView.class);//启动聊天界面
-                          intent.putExtra("username", s);//将TextView的值传递给聊天界面
-                          startActivity(intent);
-                      }
+                  LinearLayout layout = (LinearLayout) listView.getChildAt(position);
+                  TextView textView = (TextView) layout.findViewById(R.id.chat_name);//获取ListView中显示姓名的TextView
+                  String s = textView.getText().toString();//获取TextView的值
+                  Intent intent = new Intent(view.getContext(), ChatView.class);//启动聊天界面
+                  intent.putExtra("username", s);//将TextView的值传递给聊天界面
+                  startActivity(intent);
               }
           });
         return view;

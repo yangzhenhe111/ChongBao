@@ -52,15 +52,25 @@ public class LandlordTipsAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(itemLayoutRes, null);
         ImageView landlord_tips_head = view.findViewById(R.id.landlord_tips_landlordhead);
+        landlord_tips_head.setImageBitmap(tipsList.get(i).getUserHead());
         TextView landlord_tips_name = view.findViewById(R.id.landlord_tips_landlordname);
+        landlord_tips_name.setText(tipsList.get(i).getUserName());
         TextView landlord_tips_time = view.findViewById(R.id.landlord_tips_tipstime);
+        landlord_tips_time.setText(tipsList.get(i).getTime());
         Button landlord_tips_topic = view.findViewById(R.id.landlord_tips_topic);
+        landlord_tips_topic.setText(tipsList.get(i).getTopic());
         TextView landlord_tips_title = view.findViewById(R.id.landlord_tips_tipstitle);
+        landlord_tips_title.setText(tipsList.get(i).getTitle());
         ImageView landlord_tips_thumbnail = view.findViewById(R.id.landlord_tips_thumbnail);
+        landlord_tips_thumbnail.setImageBitmap(tipsList.get(i).getThumbnail());
         TextView landlord_tips_text = view.findViewById(R.id.tv_tips_text);
+        landlord_tips_text.setText(tipsList.get(i).getText());
         TextView landlord_tips_like = view.findViewById(R.id.landlord_like);
+        landlord_tips_like.setText(tipsList.get(i).getLikes());
         TextView landlord_tips_comment = view.findViewById(R.id.landlord_comment);
-        TextView landlord_tips_forword = view.findViewById(R.id.landlord_forward);
+        landlord_tips_comment.setText(tipsList.get(i).getComments());
+        TextView landlord_tips_forward = view.findViewById(R.id.landlord_forward);
+        landlord_tips_forward.setText(tipsList.get(i).getForwards());
         return view;
     }
 }
