@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -45,7 +47,6 @@ import java.util.List;
 
 public class NursingFragment extends Fragment {
 
-    private LinearLayout ordertv;
     private View root;
     private BaiduMap bm;
     private LocationClient lc;
@@ -53,7 +54,6 @@ public class NursingFragment extends Fragment {
     private Button pos;
     private LinearLayout slin;
     private LinearLayout elin;
-    private LinearLayout neworder;
     private TextView starttv;
     private TextView endtv;
     @Override
@@ -175,12 +175,10 @@ public class NursingFragment extends Fragment {
         pos = root.findViewById(R.id.position);
         slin = root.findViewById(R.id.start);
         elin = root.findViewById(R.id.end);
-        neworder = root.findViewById(R.id.neworder);
         starttv = root.findViewById(R.id.starttv);
         starttv.setText(AddressInfo.START);
         endtv = root.findViewById(R.id.endtv);
         endtv.setText(AddressInfo.END);
-        ordertv = root.findViewById(R.id.ordertv);
     }
 
     class Clicklistener implements View.OnClickListener {
@@ -195,19 +193,8 @@ public class NursingFragment extends Fragment {
                 case R.id.end:
                     EndWhere();
                     break;
-                case R.id.neworder:
-                    NewOrder();
-                    break;
-                case R.id.ordertv:
-                    Myorder();
-                    break;
             }
         }
-    }
-
-    private void Myorder() { //我的订单页面
-        Intent i = new Intent(getContext(), MyOrderActivity.class);
-        startActivity(i);
     }
 
     private void setListener() {
@@ -215,8 +202,6 @@ public class NursingFragment extends Fragment {
         pos.setOnClickListener(l);
         slin.setOnClickListener(l);
         elin.setOnClickListener(l);
-        neworder.setOnClickListener(l);
-        ordertv.setOnClickListener(l);
     }
     public void StartWhere(){ //设置起点页面
         Intent i = new Intent(getActivity(),StartActivity.class);
@@ -224,10 +209,6 @@ public class NursingFragment extends Fragment {
     }
     public void EndWhere(){ //设置终点页面
         Intent i = new Intent(getActivity(),EndActivity.class);
-        startActivity(i);
-    }
-    public void NewOrder(){  //提交订单页面
-        Intent i = new Intent(getActivity(),NeworderActivity.class);
         startActivity(i);
     }
 

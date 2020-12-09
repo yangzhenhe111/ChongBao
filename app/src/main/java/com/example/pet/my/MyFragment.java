@@ -125,21 +125,28 @@ public class MyFragment extends Fragment {
         listView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        if (Cache.user != null) {
+                if (Cache.user != null) {
+                    switch (position) {
+                        case 0:
                             Intent intent = new Intent(getContext(), Setting.class);
                             startActivity(intent);
-                        } else {
+                            break;
+                        case 1:
+                            Intent intent1 = new Intent(getContext(), AboutUs.class);
+                            startActivity(intent1);
+                            break;
+                    }
+                }
+                else {
+                    switch (position) {
+                        case 0:
                             showLoginToast();
-                        }
-                        break;
-                    case 1:
-                        Intent intent1 = new Intent(getContext(), AboutUs.class);
-                        startActivity(intent1);
-                        break;
-                    default:
-                        break;
+                            break;
+                        case 1:
+                            Intent intent1 = new Intent(getContext(), AboutUs.class);
+                            startActivity(intent1);
+                            break;
+                    }
                 }
             }
         });
