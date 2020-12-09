@@ -118,6 +118,14 @@ public class New_post_detail extends Activity {
         tv_comments = findViewById(R.id.no_comment);
         iv_pic = findViewById(R.id.content_img);
         iv_head = findViewById(R.id.head);
+        iv_head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(New_post_detail.this,LandlordActivity.class);
+                startActivity(intent);
+            }
+        });
         enter_comment = findViewById(R.id.enter_comment);
         publish_comment = findViewById(R.id.publish_comment);
         tv_forwards = findViewById(R.id.no_forward);

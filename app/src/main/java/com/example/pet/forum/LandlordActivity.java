@@ -9,6 +9,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -39,7 +40,7 @@ public class LandlordActivity extends AppCompatActivity {
 
     private ArrayList<Tips> tipsArrayList = new ArrayList<>();
     private ListView listView;
-    private LinearLayout btn_back;
+    private ImageView btn_back;
 
     private Handler handler = new Handler(){
         @Override
