@@ -105,11 +105,13 @@
         <!-- </provider> -->
         <activity
             android:name=".StartActivity"
-            android:windowSoftInputMode="adjustPan"> <intent-filter>
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        </intent-filter>
+        </activity>
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"

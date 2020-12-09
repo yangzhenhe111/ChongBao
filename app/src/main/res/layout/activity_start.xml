@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#DCDCDC"
+    android:background="@color/page4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".nursing.StartActivity">
     <RelativeLayout
+        android:layout_marginTop="20dp"
         android:id="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0B97FF">
+        android:background="@color/page4">
 
         <TextView
             android:layout_width="match_parent"
