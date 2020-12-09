@@ -2,6 +2,8 @@ package com.example.pet.other.entity;
 
 import android.graphics.Bitmap;
 
+import java.util.Objects;
+
 public class User {
     private int userId;//用户ID
     private String userName;//用户姓名
@@ -132,5 +134,27 @@ private Bitmap photo;
 
     public void setUserAutograph(String userAutograph) {
         this.userAutograph = userAutograph;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userId == user.userId &&
+                Double.compare(user.accountAmount, accountAmount) == 0 &&
+                Objects.equals(userName, user.userName) &&
+                Objects.equals(userSex, user.userSex) &&
+                Objects.equals(accountNumber, user.accountNumber) &&
+                Objects.equals(picturePath, user.picturePath) &&
+                Objects.equals(userPassword, user.userPassword) &&
+                Objects.equals(userPhone, user.userPhone) &&
+                Objects.equals(userBrithday, user.userBrithday) &&
+                Objects.equals(userAutograph, user.userAutograph) ;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, userName, userSex, accountNumber, accountAmount, picturePath, userPassword, userPhone, userBrithday, userAutograph);
     }
 }

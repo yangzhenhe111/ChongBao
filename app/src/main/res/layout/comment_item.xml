@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:clipToPadding="true">
 
-        <ImageView
+        <com.example.pet.forum.RoundImageView
             android:id="@+id/comment_head"
             android:layout_width="50dp"
             android:layout_height="50dp"

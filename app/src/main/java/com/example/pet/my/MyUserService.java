@@ -31,31 +31,35 @@ public class MyUserService extends IntentService {
     public MyUserService(String name) {
         super(name);
     }
+
     public MyUserService() {
         super("MyUserService");
     }
+
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        Log.e("MyUserService",Cache.userPhone);
-        Cache.user = new User();
+        Log.e("MyUserService", Cache.userPhone);
+
         try {
-            URL url = new URL(Cache.MY_URL+"MyUser?phone="+Cache.userPhone);
+            URL url = new URL(Cache.MY_URL + "MyUser?phone=" + Cache.userPhone);
             InputStream in = url.openStream();
             StringBuilder str = new StringBuilder();
             byte[] bytes = new byte[256];
-            int len =0;
-            while ((len=in.read(bytes))!=-1){
-                str.append(new String(bytes,0,len,"utf-8"));
+            int len = 0;
+            while ((len = in.read(bytes)) != -1) {
+                str.append(new String(bytes, 0, len, "utf-8"));
             }
             in.close();
-            Cache.user = new Gson().fromJson(str.toString(),User.class);
-            if(Cache.user.getPicturePath()!=null&&Cache.user.getPicturePath().length()!=0){
-            URL url1 = new URL(Cache.MY_URL+"img/"+Cache.user.getPicturePath());
-            InputStream in1 = url1.openStream();
-            Bitmap bitmap = BitmapFactory.decodeStream(in1);
-            Cache.user.setPhoto(bitmap);
+            Cache.user = new Gson().fromJson(str.toString(), User.class);
+
+            if (Cache.user.getPicturePath() != null && Cache.user.getPicturePath().length() != 0) {
+                URL url1 = new URL(Cache.MY_URL + "img/" + Cache.user.getPicturePath());
+                InputStream in1 = url1.openStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(in1);
+                Cache.user.setPhoto(bitmap);
             }
-            Log.e("MyUserService",Cache.user.toString());
+            Cache.userHashSet.add(Cache.user);
+            Log.e("MyUserService", Cache.userHashSet.size()+"");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {

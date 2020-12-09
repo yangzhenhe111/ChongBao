@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+
+        android:id="@+id/acount_manage_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/nav">
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="账号管理"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </androidx.appcompat.widget.Toolbar>
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+            <ListView
+                android:id="@+id/acount_manage_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+
+                android:divider="@drawable/discover_divier"
+                android:dividerHeight="1dp" />
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:id="@+id/acount_manage_adduser"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_below="@id/acount_manage_listview"
+                android:layout_marginLeft="25dp"
+                android:onClick="onClicked"
+                android:orientation="horizontal">
+
+                <cn.smssdk.ui.companent.CircleImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+
+                    android:layout_marginRight="30dp"
+                    android:src="@drawable/adduser" />
+
+                <LinearLayout
+                    android:layout_width="220dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="添加账号"
+                        android:textColor="@color/black"
+                        android:textSize="22sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+        <TextView
+            android:id="@+id/acount_manage_loginout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/loginout"
+            android:gravity="center"
+            android:onClick="onClicked"
+            android:text="退出登录"
+            android:textSize="18sp" />
+    </RelativeLayout>
+</LinearLayout>
