@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.pet.my.Login;
 import com.example.pet.nursing.AddressInfo;
 import com.example.pet.nursing.CostActivity;
 import com.example.pet.nursing.NeworderActivity;
@@ -54,7 +55,8 @@ public class StartActivity extends AppCompatActivity {
         ty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(StartActivity.this,MainActivity.class);
+                Intent i = new Intent(StartActivity.this, Login.class);
+                i.putExtra("back",0);
                 startActivity(i);
                 finish();
             }

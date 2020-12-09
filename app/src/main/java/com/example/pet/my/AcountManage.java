@@ -80,7 +80,6 @@ private LinearLayout addUser;
             case R.id.acount_manage_adduser:
 
                 Intent intent = new Intent(AcountManage.this,Login.class);
-                intent.putExtra("back",1);
                 startActivity(intent);
                 break;
             case R.id.acount_manage_loginout:

@@ -75,7 +75,7 @@ public class Login extends AppCompatActivity {
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
         }
-        back =getIntent().getIntExtra("back",0);
+        back =getIntent().getIntExtra("back",1);
         initView();
     }
 
@@ -197,11 +197,12 @@ public class Login extends AppCompatActivity {
     }
 
     public void back(View view) {
-        if(back==1){
-            this.finish();
-        }else {
+        if(back==0){
             Intent intent = new Intent(Login.this, MainActivity.class);
             startActivity(intent);
+            this.finish();
+        }else {
+
             this.finish();
         }
     }
