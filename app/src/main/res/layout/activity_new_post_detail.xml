@@ -56,7 +56,6 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/main_title"
                     android:textColor="@color/black"
-                    android:text="这是标题内容"
                     android:textSize="40sp"/>
             </LinearLayout>
             <RelativeLayout
@@ -67,7 +66,7 @@
                 android:layout_below="@+id/main_lin1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <ImageView
+                <com.example.pet.forum.RoundImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:id="@+id/head"/>
@@ -76,13 +75,11 @@
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/head"
-                    android:text="发帖人名字"/>
+                    android:layout_toRightOf="@+id/head"/>
                 <TextView
                     android:layout_marginRight="35dp"
                     android:layout_toLeftOf="@+id/sort"
                     android:layout_centerVertical="true"
-                    android:text="2020/12/8/20:30"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/push_time"/>
@@ -91,8 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="分类"/>
+                    android:layout_centerVertical="true"/>
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/main_re2"
@@ -141,7 +137,6 @@
                         android:id="@+id/no_like"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20"
                         android:textSize="28sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -159,7 +154,6 @@
                         android:id="@+id/no_comment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20"
                         android:textSize="28sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -177,7 +171,6 @@
                         android:id="@+id/no_forward"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="20"
                         android:textSize="28sp"/>
                 </LinearLayout>
             </RelativeLayout>
