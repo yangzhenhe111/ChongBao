@@ -37,7 +37,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".forum.New_post_detail"></activity>
+        <activity android:name=".my.AcountManage"></activity>
         <activity android:name=".my.NewPet"></activity>
         <activity android:name=".my.AcountSecurity" />
         <activity android:name=".my.ConnectUs" />

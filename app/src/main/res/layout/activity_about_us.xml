@@ -19,16 +19,33 @@
             android:textSize="20sp"/>
     </androidx.appcompat.widget.Toolbar>
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="200dp"
         android:gravity="center">
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@drawable/lastlogo" />
+        <TextView
+            android:textColor="@color/colorTheme"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"
+            android:text="智慧生活，改变未来"/>
+        <TextView
+            android:textColor="@color/colorTheme"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="每一位开发者都是宠宝拥抱的光"/>
     </LinearLayout>
     <ImageView
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="100dp"
         android:background="@color/contact_background"
         android:layout_width="match_parent"
         android:layout_height="10dp" />

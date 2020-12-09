@@ -33,7 +33,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Login extends AppCompatActivity {
-    private String phone ;
+    private String phone;
     private View progress;
     private View mInputLayout;
     private TextView login;
@@ -41,26 +41,28 @@ public class Login extends AppCompatActivity {
     private LinearLayout mName, mPsw;
     private EditText etName;
     private EditText etPassword;
-    private Handler handler = new Handler( ){
+    private int back;
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-           switch (msg.what){
-               case 1:
-                   mName.setVisibility(View.INVISIBLE);
-                   mPsw.setVisibility(View.INVISIBLE);
-                   inputAnimator(mInputLayout, mWidth, mHeight);
+            switch (msg.what) {
+                case 1:
+                    mName.setVisibility(View.INVISIBLE);
+                    mPsw.setVisibility(View.INVISIBLE);
+                    inputAnimator(mInputLayout, mWidth, mHeight);
                     Cache.userPhone = phone;
-                    Log.e("Login","登录成功"+Cache.userPhone);
-                    Intent intent2 = new Intent(Login.this,MyUserService.class);
+                    Log.e("Login", "登录成功" + Cache.userPhone);
+                    Intent intent2 = new Intent(Login.this, MyUserService.class);
                     startService(intent2);
 
-                   break;
-               case 0:
-                   Toast.makeText(Login.this,"密码有误，请重试",Toast.LENGTH_LONG).show();
-                   break;
-           }
+                    break;
+                case 0:
+                    Toast.makeText(Login.this, "密码有误，请重试", Toast.LENGTH_LONG).show();
+                    break;
+            }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,10 +71,11 @@ public class Login extends AppCompatActivity {
             View decorView = getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE    //设置为全屏显示，必须这两行代码一起才能生效
-                    |View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色
+                    | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
         }
+        back =getIntent().getIntExtra("back",1);
         initView();
     }
 
@@ -87,18 +90,18 @@ public class Login extends AppCompatActivity {
     }
 
     public void onClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.login_btn:
                 mWidth = login.getMeasuredWidth();
                 mHeight = login.getMeasuredHeight();
                 loginService();
                 break;
             case R.id.login_register:
-                Intent intent = new Intent(this,Register.class);
+                Intent intent = new Intent(this, Register.class);
                 startActivity(intent);
                 break;
             case R.id.login_update:
-                Intent intent1 = new Intent(this,Update.class);
+                Intent intent1 = new Intent(this, Update.class);
                 startActivity(intent1);
                 break;
 
@@ -107,14 +110,14 @@ public class Login extends AppCompatActivity {
 
     private void loginService() {
         phone = etName.getText().toString();
-Cache.userPhone = etName.getText().toString();
+        Cache.userPhone = etName.getText().toString();
         final String pwd = etPassword.getText().toString();
-        if(phone.length() ==11 && pwd.length()!=0){
-            new Thread(){
+        if (phone.length() == 11 && pwd.length() != 0) {
+            new Thread() {
                 @Override
                 public void run() {
                     try {
-                        URL url = new URL(Cache.MY_URL+"LoginServlet?num="+phone+"&pwd="+pwd);
+                        URL url = new URL(Cache.MY_URL + "LoginServlet?num=" + phone + "&pwd=" + pwd);
                         InputStream in = url.openStream();
                         int num = in.read();
                         Message message = new Message();
@@ -129,8 +132,8 @@ Cache.userPhone = etName.getText().toString();
 
                 }
             }.start();
-        }else{
-            Toast.makeText(this,"输入格式有误",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "输入格式有误", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -158,28 +161,32 @@ Cache.userPhone = etName.getText().toString();
             public void onAnimationStart(Animator animation) {
 
             }
+
             @Override
             public void onAnimationRepeat(Animator animation) {
                 // TODO Auto-generated method stub
 
             }
+
             @Override
             public void onAnimationEnd(Animator animation) {
                 progress.setVisibility(View.VISIBLE);
                 progressAnimator(progress);
                 mInputLayout.setVisibility(View.INVISIBLE);
-                Intent intent1 = new Intent(Login.this,MyDataService.class);
+                Intent intent1 = new Intent(Login.this, MyDataService.class);
                 startService(intent1);
-                Intent intent = new Intent(Login.this,MainActivity.class);
+                Intent intent = new Intent(Login.this, MainActivity.class);
                 startActivity(intent);
                 Login.this.finish();
             }
+
             @Override
             public void onAnimationCancel(Animator animation) {
                 // TODO Auto-generated method stub
             }
         });
     }
+
     private void progressAnimator(final View view) {
         PropertyValuesHolder animator = PropertyValuesHolder.ofFloat("scaleX", 0.5f, 1f);
         PropertyValuesHolder animator2 = PropertyValuesHolder.ofFloat("scaleY", 0.5f, 1f);
@@ -188,9 +195,14 @@ Cache.userPhone = etName.getText().toString();
         animator3.setInterpolator(new JellyInterpolator());
         animator3.start();
     }
+
     public void back(View view) {
-        Intent intent = new Intent(Login.this,MainActivity.class);
-        startActivity(intent);
-        this.finish();
+        if(back==0){
+            Intent intent = new Intent(Login.this, MainActivity.class);
+            startActivity(intent);
+            this.finish();
+        }else {
+            this.finish();
+        }
     }
 }
