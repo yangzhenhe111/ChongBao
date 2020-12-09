@@ -78,9 +78,7 @@ public class MyFragment extends Fragment {
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /**
-                 * 暂时修改
-                 */
+
                 if (Cache.user != null) {
                     switch (position) {
                         case 0:

@@ -3,16 +3,12 @@ package com.example.pet.my;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.example.pet.R;
@@ -20,7 +16,7 @@ import com.example.pet.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pet extends AppCompatActivity {
+public class PetActivity extends AppCompatActivity {
     private Uri imageUri;
     public static final int TAKE_PHOTO=1;
     private List<String> list = new ArrayList<String>();
@@ -46,6 +42,6 @@ public class Pet extends AppCompatActivity {
     }
 
     public void close(View view) {
-        Pet.this.finish();
+        PetActivity.this.finish();
     }
 }
