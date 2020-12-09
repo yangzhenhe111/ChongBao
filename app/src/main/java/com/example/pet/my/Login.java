@@ -202,8 +202,6 @@ public class Login extends AppCompatActivity {
             startActivity(intent);
             this.finish();
         }else {
-
-
             this.finish();
         }
     }
