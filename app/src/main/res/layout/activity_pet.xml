@@ -8,9 +8,7 @@
     <RelativeLayout
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp">
+        android:layout_height="wrap_content">
         <Button
             android:textColor="@color/red"
             android:id="@+id/pet_update"
@@ -27,15 +25,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp">
 
                 <ImageView
                     android:id="@+id/pet_photo"
                     android:layout_width="250dp"
                     android:layout_height="200dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="21dp"
-                    android:background="@drawable/hashiqi" />
+                    android:layout_marginTop="21dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -50,6 +50,7 @@ public class MyDataService extends IntentService {
                     Cache.myPetList = new ArrayList<>();
                 }
 
+//                Log.e("id:      ",Cache.user.getUserId() + "");
                 URL url = new URL(Cache.MY_URL+"MyPet?userId="+Cache.user.getUserId());
                 InputStream in = url.openStream();
                 StringBuilder str = new StringBuilder();
