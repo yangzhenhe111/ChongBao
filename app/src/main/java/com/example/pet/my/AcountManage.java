@@ -24,8 +24,9 @@ import java.util.ArrayList;
 public class AcountManage extends AppCompatActivity {
     private ListView lvAcount;
     private ArrayList<User> list = new ArrayList<>();
-private   AcountAdapter adapter;
-private LinearLayout addUser;
+    private AcountAdapter adapter;
+    private LinearLayout addUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,7 @@ private LinearLayout addUser;
         for (User u : Cache.userHashSet) {
             list.add(u);
         }
-        Log.e("AcountManage",list.size()+"");
+        Log.e("AcountManage", list.size() + "");
     }
 
     private void setView() {
@@ -51,9 +52,9 @@ private LinearLayout addUser;
                 AcountManage.this.finish();
             }
 
-    });
+        });
         lvAcount = findViewById(R.id.acount_manage_listview);
-       adapter = new AcountAdapter(list, this, R.layout.acount_item);
+        adapter = new AcountAdapter(list, this, R.layout.acount_item);
         lvAcount.setAdapter(adapter);
         lvAcount.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,18 +77,19 @@ private LinearLayout addUser;
     }
 
     public void onClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.acount_manage_adduser:
 
-                Intent intent = new Intent(AcountManage.this,Login.class);
+                Intent intent = new Intent(AcountManage.this, Login.class);
                 startActivity(intent);
                 break;
             case R.id.acount_manage_loginout:
-                Cache.user =null;
+                Cache.user = null;
 
                 Intent intent1 = new Intent(AcountManage.this, MainActivity.class);
                 startActivity(intent1);
                 AcountManage.this.finish();
+                break;
         }
     }
 }

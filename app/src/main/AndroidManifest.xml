@@ -42,6 +42,7 @@
         <activity android:name=".my.NewPet">
 
         </activity>
+
         <activity android:name=".my.AcountSecurity" />
         <activity android:name=".my.ConnectUs" />
         <activity android:name=".my.order.MyOrderActivity" />
@@ -84,7 +85,7 @@
         <activity android:name=".MainActivity">
 
         </activity>
-
+<activity android:name=".my.AcountManage"/>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="Gy6t4iVa5bjCYSlblHYFLNKNCFmABmH3" />
