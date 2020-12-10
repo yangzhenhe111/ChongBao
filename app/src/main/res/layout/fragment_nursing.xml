@@ -21,59 +21,6 @@
             android:layout_height="wrap_content"
             android:text="当前位置"/>
     </FrameLayout>
-    <FrameLayout
-        android:id="@+id/my"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/orderlin">
-
-        <LinearLayout
-            android:id="@+id/ordertv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/orderbutton"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/order" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:text="我的订单" />
-        </LinearLayout>
-    </FrameLayout>
-
-
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_above="@+id/my"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:id="@+id/neworder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/neworder"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/newo" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:text="我要下单" />
-        </LinearLayout>
-    </FrameLayout>
     <LinearLayout
         android:id="@+id/orderlin"
         android:layout_width="match_parent"

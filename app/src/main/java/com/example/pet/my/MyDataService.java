@@ -65,12 +65,14 @@ public class MyDataService extends IntentService {
                 for(int i=0;i<jsonArray.length();i++){
                     JSONObject rs = jsonArray.getJSONObject(i);
                     Pet pet= new Gson().fromJson(rs.toString(),Pet.class);
+                    Log.e("pet",pet.toString());
 //                    pet.setPetId(rs.getInt("petId"));
                     String path =rs.getString("picturePath");
                     URL url1 = new URL(Cache.MY_URL +"img/" +path);
+                    Log.e("url",url1.toString());
                     InputStream in1 = url1.openStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(in1);
-//                    pet.setPicture(bitmap);
+                    pet.setPicture(bitmap);
 //                    pet.setPetName(rs.getString("petName"));
 //                    pet.setPetType(rs.getString("petType"));
 //                    pet.setPetAge(rs.getInt("petAge"));
@@ -79,6 +81,7 @@ public class MyDataService extends IntentService {
 //                    pet.setPetAutograph(rs.getString("petAutograph"));
                     Log.e("MyDataService",pet.toString());
                     Cache.myPetList.add(pet);
+                    Log.e("pet","next");
                 }
 
             }catch(IOException | JSONException e) {

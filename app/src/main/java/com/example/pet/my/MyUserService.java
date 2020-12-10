@@ -58,6 +58,9 @@ public class MyUserService extends IntentService {
                 Bitmap bitmap = BitmapFactory.decodeStream(in1);
                 Cache.user.setPhoto(bitmap);
             }
+
+
+
             Cache.userHashSet.add(Cache.user);
             Log.e("MyUserService", Cache.userHashSet.size()+"");
         } catch (MalformedURLException e) {

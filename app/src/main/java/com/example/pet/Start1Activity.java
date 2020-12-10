@@ -11,21 +11,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.pet.my.Login;
-import com.example.pet.nursing.AddressInfo;
-import com.example.pet.nursing.CostActivity;
-import com.example.pet.nursing.NeworderActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class StartActivity extends AppCompatActivity {
+public class Start1Activity extends AppCompatActivity {
     private ImageView ty;
     private ViewPager vip_anfi_functions;
     private LinearLayout lil_anfi_indicators;
@@ -55,7 +51,7 @@ public class StartActivity extends AppCompatActivity {
         ty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(StartActivity.this, Login.class);
+                Intent i = new Intent(Start1Activity.this, Login.class);
                 i.putExtra("back",0);
                 startActivity(i);
                 finish();

@@ -152,7 +152,7 @@ public class Login extends AppCompatActivity {
             }
         });
         ObjectAnimator animator2 = ObjectAnimator.ofFloat(mInputLayout, "scaleX", 1f, 0.5f);
-        set.setDuration(1500);
+        set.setDuration(4000);
         set.setInterpolator(new AccelerateDecelerateInterpolator());
         set.playTogether(animator, animator2);
         set.start();

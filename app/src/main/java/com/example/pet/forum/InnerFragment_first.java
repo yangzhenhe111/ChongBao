@@ -72,6 +72,9 @@ public class InnerFragment_first extends Fragment {
         }
     };
 
+    public InnerFragment_first() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //getCount();
