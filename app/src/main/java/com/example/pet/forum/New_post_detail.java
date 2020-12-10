@@ -140,9 +140,7 @@ public class New_post_detail extends Activity {
 
 
     public void init(){
-        Log.e("map", maps.toString());
         getImages(maps.get("img_path").toString());
-        Log.e("bitmap",maps.get("img_path").toString());
         getHeadImages(maps.get("head_img_path").toString());
     }
 
@@ -243,7 +241,6 @@ public class New_post_detail extends Activity {
                     int count_forwards = jsonObject.getInt("forwards");
                     String img_path = jsonObject.getString("img_path");
                     String head_img_path = jsonObject.getString("user_picture_path");
-                    Log.e("img_path", head_img_path);
 
                     maps.put("post_title",post_title);
                     maps.put("post_time",post_time);
@@ -255,7 +252,6 @@ public class New_post_detail extends Activity {
                     maps.put("count_forwards",count_forwards);
                     maps.put("img_path",img_path);
                     maps.put("head_img_path",head_img_path);
-                    Log.e("map0", maps.toString());
 
                     Message message = handler.obtainMessage();
                     message.what = 1;

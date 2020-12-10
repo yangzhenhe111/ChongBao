@@ -16,6 +16,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.pet.R;
 import com.example.pet.other.Cache;
@@ -40,6 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
+import static androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE;
+
 public class InnerFragment_first extends Fragment {
 
     private ArrayList<Tips> tipsArrayList = new ArrayList<>();
@@ -47,6 +52,10 @@ public class InnerFragment_first extends Fragment {
     private RecyAdapter recyAdapter;
     private Banner banner;
     private String title;
+    private LinearLayout ll_progress;
+    private int start = 0;
+    private int end = 9;
+    private int count = 0;
 
     public InnerFragment_first(String title) {
         this.title = title;
@@ -65,6 +74,7 @@ public class InnerFragment_first extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //getCount();
         View view = inflater.inflate(R.layout.fragment_inner_first, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -82,7 +92,6 @@ public class InnerFragment_first extends Fragment {
                 startActivity(intent);
             }
         });
-
         return view;
     }
 
@@ -90,52 +99,50 @@ public class InnerFragment_first extends Fragment {
         new Thread(){
             @Override
             public void run() {
-                try {
-                    URL url = new URL(Cache.MY_URL + "GetPostByTime");
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-                    InputStream input = connection.getInputStream();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
-                    StringBuffer stringBuffer = new StringBuffer();
-                    String line;
-                    while ((line=bufferedReader.readLine())!=null){
-                        stringBuffer.append(line);
-                    }
-                    tipsArrayList.clear();
-                    JSONArray jsonArray = new JSONArray(stringBuffer.toString());
-                    for (int i=0;i<jsonArray.length();i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        int post_id = jsonObject.getInt("post_id");
-                        String post_title = jsonObject.getString("post_title");
-                        String post_time = jsonObject.getString("post_time");
-                        int count_likes = jsonObject.getInt("likes");
-                        int count_comments = jsonObject.getInt("comments");
-                        String img_path = jsonObject.getString("picture_path");
-                        Tips tips = new Tips();
-                        tips.setId(post_id);
-                        tips.setTitle(post_title);
-                        tips.setTime(post_time);
-                        tips.setLikes(count_likes);
-                        tips.setComments(count_comments);
-                        tips.setImagepath(img_path);
-                        tipsArrayList.add(tips);
-                    }
-                    Message message = handler.obtainMessage();
-                    message.what = 1;
-                    message.obj = tipsArrayList;
-                    handler.sendMessage(message);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (ProtocolException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            try {
+                URL url = new URL(Cache.MY_URL + "GetPostByTime");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                InputStream input = connection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
+                StringBuffer stringBuffer = new StringBuffer();
+                String line;
+                while ((line=bufferedReader.readLine())!=null){
+                    stringBuffer.append(line);
                 }
+                JSONArray jsonArray = new JSONArray(stringBuffer.toString());
+                for (int i=0;i<jsonArray.length();i++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    int post_id = jsonObject.getInt("post_id");
+                    String post_title = jsonObject.getString("post_title");
+                    String post_time = jsonObject.getString("post_time");
+                    int count_likes = jsonObject.getInt("likes");
+                    int count_comments = jsonObject.getInt("comments");
+                    String img_path = jsonObject.getString("picture_path");
+                    Tips tips = new Tips();
+                    tips.setId(post_id);
+                    tips.setTitle(post_title);
+                    tips.setTime(post_time);
+                    tips.setLikes(count_likes);
+                    tips.setComments(count_comments);
+                    tips.setImagepath(img_path);
+                    tipsArrayList.add(tips);
+                }
+                Message message = handler.obtainMessage();
+                message.what = 1;
+                message.obj = tipsArrayList;
+                handler.sendMessage(message);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             }
         }.start();
-
     }
 
     public void init(ArrayList arrayList){
@@ -183,6 +190,37 @@ public class InnerFragment_first extends Fragment {
         linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyAdapter);
+    }
+
+    public void getCount(){
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL(Cache.MY_URL + "GetCountPostServlet");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    InputStream input = connection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
+                    StringBuffer stringBuffer = new StringBuffer();
+                    String line;
+                    while ((line=bufferedReader.readLine())!=null){
+                        stringBuffer.append(line);
+                    }
+                    Log.e("______________________", stringBuffer.toString());
+                    JSONObject jsonObject = new JSONObject(stringBuffer.toString());
+                    count = Integer.parseInt(jsonObject.getString("count"));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (ProtocolException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     public void initBanner(){

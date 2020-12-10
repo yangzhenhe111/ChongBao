@@ -128,9 +128,7 @@ public class TipsActivity extends Activity {
     }
 
     public void init(){
-        Log.e("map", maps.toString());
         getImages(maps.get("img_path").toString());
-        Log.e("bitmap",maps.get("img_path").toString());
         getHeadImages(maps.get("head_img_path").toString());
     }
 
@@ -243,7 +241,6 @@ public class TipsActivity extends Activity {
                     maps.put("count_forwards",count_forwards);
                     maps.put("img_path",img_path);
                     maps.put("head_img_path",head_img_path);
-                    Log.e("map0", maps.toString());
 
                     Message message = handler.obtainMessage();
                     message.what = 1;
