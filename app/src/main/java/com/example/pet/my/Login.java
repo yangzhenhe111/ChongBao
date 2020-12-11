@@ -112,6 +112,7 @@ public class Login extends AppCompatActivity {
         phone = etName.getText().toString();
         Cache.userPhone = etName.getText().toString();
         final String pwd = etPassword.getText().toString();
+
         if (phone.length() == 11 && pwd.length() != 0) {
             new Thread() {
                 @Override
