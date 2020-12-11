@@ -14,15 +14,15 @@ public class Pet implements Serializable {
     private int userId;
     private String petAutograph;
     private String picturePath;
-    private String phone;
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+//    private String phone;
+//
+//    public String getPhone() {
+//        return phone;
+//    }
+//
+//    public void setPhone(String phone) {
+//        this.phone = phone;
+//    }
 
     public String getPicturePath() {
         return picturePath;
@@ -111,7 +111,6 @@ public class Pet implements Serializable {
                 ", userId=" + userId +
                 ", petAutograph='" + petAutograph + '\'' +
                 ", picturePath='" + picturePath + '\'' +
-                ", phone='" + phone + '\'' +
                 '}';
     }
 }

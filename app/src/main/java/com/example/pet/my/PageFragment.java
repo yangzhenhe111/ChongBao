@@ -72,6 +72,7 @@ public class PageFragment extends Fragment {
     private int index;
     private Pet pet;
     private int agex;
+    private Bitmap bitmap;
 
 
     private OptionsPickerView pvAgeOptions;
@@ -105,15 +106,9 @@ public class PageFragment extends Fragment {
                 Toast.makeText(getContext(),"上传失败了",Toast.LENGTH_SHORT);
             }else if(msg.what == 5){
                 Uri uri = Uri.parse(msg.obj.toString());
-                Cache.myPetList.get(index).setPicturePath(image_path);
-//                try {
-//                    Bitmap bitmap = BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(Uri.parse(image_path)));
-//                    Cache.myPetList.get(index).setPicture(bitmap);
-//                    petPhoto.setImageBitmap(bitmap);
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-                petPhoto.setImageURI(uri);
+                bitmap = BitmapFactory.decodeFile(image_path);
+                petPhoto.setImageBitmap(bitmap);
+                //                petPhoto.setImageURI(uri);
             }else if(msg.what == 6) {
                 Log.e("up","6b");
                 Toast.makeText(getContext(),"上传失败了",Toast.LENGTH_SHORT);
@@ -126,6 +121,8 @@ public class PageFragment extends Fragment {
      * 未测试
      */
     public void upPhoto(String path) {
+        Cache.myPetList.get(index).setPicturePath(image_path);
+        Cache.myPetList.get(index).setPicture(bitmap);
         Log.e("up", "1");
         File file = new File(path);
         Log.e("up", "2");
@@ -135,7 +132,7 @@ public class PageFragment extends Fragment {
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("file",
-                            Cache.userPhone + Cache.myPetList.get(0).getPetId() + ".jpg",
+                            Cache.userPhone +"" + index + ".jpg",
                             RequestBody.create(MediaType.parse("image/png"), file))
                     .build();
             Request request = new Request.Builder()
@@ -212,6 +209,14 @@ public class PageFragment extends Fragment {
             @Override
             public void onClick(View v) {
 //                upData();
+                String type = petType.getText().toString();
+//        String age = petAge.getText().toString();
+                String autograph = petAutograph.getText().toString();
+                String name = petName.getText().toString();
+                Log.e("type:",type);
+                Log.e("age",agex+"岁");
+                Log.e("autogragh:",autograph);
+                Log.e("name:",name);
                 if(image_path != null){
                     upPhoto(image_path);
                 }else {
@@ -221,8 +226,10 @@ public class PageFragment extends Fragment {
         });
 
 
+//        Intent intent = new Intent(getContext(),MyDataService.class);
+//        getContext().startService(intent);
         setViewContent();
-//        countWords();
+        countWords();
         return view;
     }
 
@@ -235,10 +242,14 @@ public class PageFragment extends Fragment {
         Log.e("age",agex+"岁");
         Log.e("autogragh:",autograph);
         Log.e("name:",name);
+        Cache.myPetList.get(index).setPetAge(agex);
+        Cache.myPetList.get(index).setPetName(name);
+        Cache.myPetList.get(index).setPetAutograph(autograph);
+        Cache.myPetList.get(index).setPetType(type);
         if(image_path != null &&  type != null && agex != 0 && autograph != null && name != null){
             //发送
             pet.setPetId(Cache.myPetList.get(index).getPetId());
-            pet.setPicturePath(Cache.userPhone + Cache.myPetList.get(index).getPetId()+ ".jpg");
+            pet.setPicturePath(Cache.userPhone +""+ Cache.myPetList.get(index).getPetId()+ ".jpg");
             pet.setPetType(type);
             pet.setPetAutograph(autograph);
             pet.setPetName(name);
@@ -425,46 +436,55 @@ public class PageFragment extends Fragment {
     /**
      * 记录字数和限制最大输入字数
      */
-//    private void countWords() {
-//        petAutograph.addTextChangedListener(new TextWatcher() {
-//            //记录输入的字数
-//            private CharSequence wordNum;
-//            private int selectionStart;
-//            private int selectionEnd;
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                //实时记录输入的字数
-//                wordNum= s;
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//                Cache.user.setUserAutograph(Cache.user.getUserAutograph() + s);
-//                int number = num + s.length();
-//                //TextView显示剩余字数
-//                petAutograph.setText("" + number+"/" + mMaxNum);
-//                selectionStart=tvNum.getSelectionStart();
-//                selectionEnd = tvNum.getSelectionEnd();
-//                //判断大于最大值
-//                if (wordNum.length() > mMaxNum) {
-//                    //删除多余输入的字（不会显示出来）
-//                    s.delete(selectionStart - 1, selectionEnd);
-//                    int tempSelection = selectionEnd;
-//                    petAutograph.setText(s);
-//                    petAutograph.setSelection(tempSelection);//设置光标在最后
-//                    //吐司最多输入300字
-//                    Toast.makeText(getContext(), "最多输入"+mMaxNum+"字", Toast.LENGTH_SHORT).show();
-//
-//                }
-//            }
-//        });
-//    }
+    private void countWords() {
+        petAutograph.addTextChangedListener(new TextWatcher() {
+            //记录输入的字数
+            private CharSequence wordNum;
+            private int selectionStart;
+            private int selectionEnd;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                wordNum = s;
+                //判断大于最大值
+                tvNum.setText("" + count+"/" + mMaxNum);
+                if (wordNum.length() > mMaxNum) {
+                    int tempSelection = selectionEnd;
+                    petAutograph.setText(s);
+                    petAutograph.setSelection(tempSelection);//设置光标在最后
+                    //吐司最多输入300字
+                    Toast.makeText(getContext(), "最多输入"+mMaxNum+"字", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //实时记录输入的字数
+                wordNum= s;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int number = num + s.length();
+                //TextView显示剩余字数
+                tvNum.setText("" + number+"/" + mMaxNum);
+                selectionStart=petAutograph.getSelectionStart();
+                selectionEnd = petAutograph.getSelectionEnd();
+                //判断大于最大值
+                if (wordNum.length() > mMaxNum) {
+                    //删除多余输入的字（不会显示出来）
+                    s.delete(selectionStart - 1, selectionEnd);
+                    int tempSelection = selectionEnd;
+                    petAutograph.setText(s);
+                    petAutograph.setSelection(tempSelection);//设置光标在最后
+                    //吐司最多输入300字
+                    Toast.makeText(getContext(), "最多输入"+mMaxNum+"字", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+    }
 
     /**
      * 添加相片
@@ -533,95 +553,15 @@ public class PageFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        setViewContent();
+//        Intent intent = new Intent(getContext(),MyDataService.class);
+//        getContext().startService(intent);
+//        setViewContent();
     }
 
-    /**
-     * 上传数据
-     */
-//    public void upData(){
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        //创建请求体对象
-//        Cache.user.setUserPhone(Cache.userPhone);
-//        String name = petName.getText().toString();
-//        if(name == null){
-//            pet.setPetName("");
-//        }else {
-//            pet.setPetName(name);
-//        }
-//        String autograph = petAutograph.getText().toString();
-//        if(autograph == null){
-//            pet.setPetAutograph("");
-//        }else {
-//            pet.setPetAutograph(autograph);
-//        }
-//        String path = Cache.myPetList.get(0).getPetPicPath();
-//        if(path == null){
-//            pet.setPetPicPath("");
-//        }else {
-//            pet.setPetPicPath(path);
-//        }
-//        String age = petAge.getText().toString();
-//        if(age == null){
-//            pet.getPetAge("未知");
-//        }else {
-//            pet.getPetAge(age);
-//        }
-//        String brithday = upBrithday.getText().toString();
-//        if(brithday == null){
-//            Calendar selectedDate = Calendar.getInstance();//系统当前时间
-//            user.setUserBrithday(getTimes(selectedDate.getTime()));
-//        }else {
-//            user.setUserBrithday(brithday);
-//        }
-//
-//        RequestBody requestBody = RequestBody.create(MediaType.parse(
-//                "text/plain;charset=UTF-8"),new Gson().toJson(user));
-//        //3.创建请求对象
-//        Request request = new Request.Builder()
-//                .post(requestBody)
-//                .url(Cache.MY_URL + "UpDataUserInfo2Servlet")
-//                .build();
-//        //3.创建Call对象，发送请求，并接受响应
-//        Call call = okHttpClient.newCall(request);
-//        //异步网络请求（无需手动使用子线程）
-//        call.enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                //失败
-//                Message msg = new Message();
-//                msg.what = 4;
-//                msg.obj = 3;
-//                Log.e("up","5b");
-//                hd.sendMessage(msg);
-//                Log.e("up","6b");
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                //上传成功
-//                Message msg = new Message();
-//                String res = response.body().string();
-//                if(res.equals("true")){
-//                    msg.what = 3;
-//                    msg.obj = 1;
-//                    Log.e("updata",res);
-//                }else {
-//                    msg.what = 2;
-//                    msg.obj = 1;
-//                    Log.e("updata",res);
-//                }
-//                hd.sendMessage(msg);
-//
-//            }
-//        });
-//    }
     @Override
     public void onResume() {
         super.onResume();
         upAge();
         upType();
-//        setViewContent();
     }
 }
