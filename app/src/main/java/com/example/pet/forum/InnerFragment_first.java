@@ -1,5 +1,7 @@
 package com.example.pet.forum;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.pet.R;
 import com.example.pet.other.Cache;
@@ -85,7 +88,6 @@ public class InnerFragment_first extends Fragment {
                 startActivity(intent);
             }
         });
-
         return view;
     }
 
