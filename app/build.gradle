@@ -4,7 +4,7 @@ MobSDK {
     appKey "31a0f08bbf072"
     appSecret "a79d0868be86ae529a738c482cad4829"
     SMSSDK {}
-    fp true //严格模式
+//    fp true //严格模式
 }
 android {
     sourceSets {
@@ -30,6 +30,7 @@ android {
 }
 
 dependencies {
+
     //TabHost相关
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'

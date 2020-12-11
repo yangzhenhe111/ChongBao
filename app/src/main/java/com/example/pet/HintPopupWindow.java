@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.example.pet.forum.PublishActivity;
 import com.example.pet.nursing.NeworderActivity;
 
 /**
@@ -56,6 +57,14 @@ public class HintPopupWindow {
         //这是根布局
         rootView = (ViewGroup) View.inflate(activity, R.layout.item_root_hintpopupwindow, null);
         linearLayout = (ViewGroup) rootView.findViewById(R.id.relay);
+        fa = rootView.findViewById(R.id.f);
+        fa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(activity, PublishActivity.class);
+                activity.startActivity(i);
+            }
+        });
         neworder = rootView.findViewById(R.id.x);
         neworder.setOnClickListener(new View.OnClickListener() {
             @Override

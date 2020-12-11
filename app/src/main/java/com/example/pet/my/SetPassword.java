@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -243,6 +244,7 @@ public class SetPassword extends AppCompatActivity {
                 //做倒计时操作
                 Toast.makeText(SetPassword.this, "已发送" + which, Toast.LENGTH_SHORT).show();
                 btnCheck.setEnabled(false);
+//                new CountDownTimer()
                 tm = new Timer();
                 tt = new TimerTask() {
                     @Override

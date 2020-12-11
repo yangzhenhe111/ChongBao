@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -412,5 +414,22 @@ public class New_post_detail extends Activity {
     }
     private void refresh() {
         onCreate(null);
+    }
+
+    public void linforward(View view) {
+        shareQQ(this,"宠宝："+maps.get("post_title").toString());
+    }
+    public static void shareQQ(Context mContext, String content) {
+        if (PlatformUtil.isInstallApp(mContext,PlatformUtil.PACKAGE_MOBILE_QQ)) {
+            Intent intent = new Intent("android.intent.action.SEND");
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
+            intent.putExtra(Intent.EXTRA_TEXT, content);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setComponent(new ComponentName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity"));
+            mContext.startActivity(Intent.createChooser(intent, "Share"));
+        } else {
+            Toast.makeText(mContext, "您需要安装QQ客户端", Toast.LENGTH_LONG).show();
+        }
     }
 }
