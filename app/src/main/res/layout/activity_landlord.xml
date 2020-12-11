@@ -22,6 +22,7 @@
                         android:layout_height="50dp"
                         android:src="@drawable/back"/>
                     <Button
+                        android:id="@+id/btn_follow"
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -30,16 +31,30 @@
                         android:textStyle="bold"
                         android:textSize="20dp"/>
                 </RelativeLayout>
-                <com.example.pet.forum.RoundImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/kobe"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.example.pet.forum.RoundImageView
+                        android:id="@+id/iv_head"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:layout_centerHorizontal="true"/>
+                    <Button
+                        android:id="@+id/btn_private_letter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="私信"
+                        android:background="@color/Beige"
+                        android:textSize="20dp"
+                        android:layout_marginTop="20dp"/>
+                </RelativeLayout>
                 <TextView
+                    android:id="@+id/landlordname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="罗润泽"
                     android:textSize="24sp"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -58,11 +73,9 @@
                 android:layout_marginRight="15dp">
 
                 <com.example.pet.forum.MyListView
-                    android:id="@+id/lv_landlord_tips"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:id="@+id/lv_landlord"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"/>
             </LinearLayout>
         </RelativeLayout>
 </ScrollView>

@@ -123,6 +123,9 @@ public class New_post_detail extends Activity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(New_post_detail.this,LandlordActivity.class);
+                intent.putExtra("name", String.valueOf(maps.get("username")));
+                intent.putExtra("user_id", String.valueOf(maps.get("user_id")));
+                intent.putExtra("head_path",maps.get("head_img_path").toString());
                 startActivity(intent);
             }
         });
@@ -236,6 +239,7 @@ public class New_post_detail extends Activity {
                     String post_text = jsonObject.getString("post_text");
                     String topic = jsonObject.getString("post_topic");
                     String user_name = jsonObject.getString("user_name");
+                    int user_id = jsonObject.getInt("user_id");
                     int count_likes = jsonObject.getInt("likes");
                     int count_comments = jsonObject.getInt("comments");
                     int count_forwards = jsonObject.getInt("forwards");
@@ -252,6 +256,7 @@ public class New_post_detail extends Activity {
                     maps.put("count_forwards",count_forwards);
                     maps.put("img_path",img_path);
                     maps.put("head_img_path",head_img_path);
+                    maps.put("user_id",user_id);
 
                     Message message = handler.obtainMessage();
                     message.what = 1;

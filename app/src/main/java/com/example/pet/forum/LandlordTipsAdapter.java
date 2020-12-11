@@ -1,12 +1,15 @@
 package com.example.pet.forum;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.pet.R;
@@ -17,10 +20,10 @@ import java.util.List;
 
 public class LandlordTipsAdapter extends BaseAdapter {
     private Context context;
-    private List<Tips> tipsList = new ArrayList<>();
+    private ArrayList<Tips> tipsList = new ArrayList<>();
     private int itemLayoutRes;
 
-    public LandlordTipsAdapter(Context context, List<Tips> myList, int itemLayoutRes) {
+    public LandlordTipsAdapter(Context context, ArrayList<Tips> tipsList, int itemLayoutRes) {
         this.context = context;
         this.tipsList = tipsList;
         this.itemLayoutRes = itemLayoutRes;
@@ -51,26 +54,30 @@ public class LandlordTipsAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(itemLayoutRes, null);
-        ImageView landlord_tips_head = view.findViewById(R.id.landlord_tips_landlordhead);
-        landlord_tips_head.setImageBitmap(tipsList.get(i).getUserHead());
-        TextView landlord_tips_name = view.findViewById(R.id.landlord_tips_landlordname);
-        landlord_tips_name.setText(tipsList.get(i).getUserName());
-        TextView landlord_tips_time = view.findViewById(R.id.landlord_tips_tipstime);
+        Log.e("chuanguolaidedongxi", tipsList.toString());
+        LinearLayout ll_item = view.findViewById(R.id.landlord_item);
+        ll_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(context,New_post_detail.class);
+                context.startActivity(intent);
+            }
+        });
+        TextView landlord_tips_time = view.findViewById(R.id.post_time);
         landlord_tips_time.setText(tipsList.get(i).getTime());
-        Button landlord_tips_topic = view.findViewById(R.id.landlord_tips_topic);
-        landlord_tips_topic.setText(tipsList.get(i).getTopic());
-        TextView landlord_tips_title = view.findViewById(R.id.landlord_tips_tipstitle);
+        TextView landlord_tips_title = view.findViewById(R.id.Content_title);
         landlord_tips_title.setText(tipsList.get(i).getTitle());
-        ImageView landlord_tips_thumbnail = view.findViewById(R.id.landlord_tips_thumbnail);
+        ImageView landlord_tips_thumbnail = view.findViewById(R.id.Content_pic);
         landlord_tips_thumbnail.setImageBitmap(tipsList.get(i).getThumbnail());
-        TextView landlord_tips_text = view.findViewById(R.id.tv_tips_text);
-        landlord_tips_text.setText(tipsList.get(i).getText());
-        TextView landlord_tips_like = view.findViewById(R.id.landlord_like);
-        landlord_tips_like.setText(tipsList.get(i).getLikes());
-        TextView landlord_tips_comment = view.findViewById(R.id.landlord_comment);
-        landlord_tips_comment.setText(tipsList.get(i).getComments());
-        TextView landlord_tips_forward = view.findViewById(R.id.landlord_forward);
-        landlord_tips_forward.setText(tipsList.get(i).getForwards());
+        ImageView lv_one = view.findViewById(R.id.img_one);
+        lv_one.setImageResource(R.drawable.like1);
+        TextView landlord_tips_like = view.findViewById(R.id.tv_one);
+        landlord_tips_like.setText(tipsList.get(i).getLikes()+"");
+        ImageView lv_two = view.findViewById(R.id.img_two);
+        lv_two.setImageResource(R.drawable.comment);
+        TextView landlord_tips_comment = view.findViewById(R.id.tv_two);
+        landlord_tips_comment.setText(tipsList.get(i).getComments()+"");
         return view;
     }
 }

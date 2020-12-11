@@ -40,6 +40,7 @@ public class RecyAdapter extends RecyclerView.Adapter<RecyAdapter.MyHolder> {
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_listview_item,parent,false);
+        Log.e("----------------------", tipsList.toString());
         MyHolder myHolder = new MyHolder(view);
         return myHolder;
     }

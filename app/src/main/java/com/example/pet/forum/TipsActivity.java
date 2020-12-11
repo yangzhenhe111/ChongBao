@@ -78,10 +78,10 @@ public class TipsActivity extends Activity {
                 case 3:
                     initimg((ArrayList)message.obj);
                 case 4:
-                    Toast.makeText(TipsActivity.this,"上传成功",Toast.LENGTH_LONG);
+                    Toast.makeText(TipsActivity.this,"上传成功",Toast.LENGTH_LONG).show();
                     break;
                 case 5:
-                    Toast.makeText(TipsActivity.this,"上传失败",Toast.LENGTH_LONG);
+                    Toast.makeText(TipsActivity.this,"上传失败",Toast.LENGTH_LONG).show();
                     break;
             }
         }
