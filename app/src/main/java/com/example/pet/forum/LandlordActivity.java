@@ -52,6 +52,7 @@ public class LandlordActivity extends AppCompatActivity {
     private ListView lv_landlord;
     private RoundImageView iv_head;
     private Button btn_follow;
+    private Button btn_private_letter;
     private Map<String,Object> maps = new HashMap<>();
 
     private Handler handler = new Handler(){
@@ -74,6 +75,14 @@ public class LandlordActivity extends AppCompatActivity {
                 case 5:
                     Toast.makeText(LandlordActivity.this,"取关失败!",Toast.LENGTH_SHORT).show();
                     break;
+                case 6:
+                    btn_follow.setText("☰已关注");
+                    btn_follow.setBackgroundColor(getResources().getColor(R.color.followGray));
+                    break;
+                case 7:
+                    btn_follow.setText("＋关注");
+                    btn_follow.setBackgroundColor(getResources().getColor(R.color.followBlue));
+                    break;
             }
         }
     };
@@ -91,7 +100,6 @@ public class LandlordActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(LandlordActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
         tv_name = findViewById(R.id.landlordname);
@@ -100,6 +108,7 @@ public class LandlordActivity extends AppCompatActivity {
         iv_head.setImageResource(R.drawable.kobe);
 //        iv_head.setImageBitmap((Bitmap) maps.get("head_image"));
         btn_follow = findViewById(R.id.btn_follow);
+        searchFollow();
         btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,6 +121,16 @@ public class LandlordActivity extends AppCompatActivity {
                     btn_follow.setBackgroundColor(getResources().getColor(R.color.followBlue));
                     deleteFollow();
                 }
+            }
+        });
+        btn_private_letter = findViewById(R.id.btn_private_letter);
+        btn_private_letter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent();
+//                intent.setClass(LandlordActivity.this,);
+//                intent.putExtra("userPhone",Cache.userPhone);
+//                startActivity(intent);
             }
         });
         lv_landlord = findViewById(R.id.lv_landlord);
@@ -242,7 +261,7 @@ public class LandlordActivity extends AppCompatActivity {
             public void run() {
                 try {
                     int follow_id = Integer.parseInt(getIntent().getStringExtra("user_id"));
-                    int user_id = 1;
+                    int user_id = Cache.user.getUserId();
                     URL url = new URL(Cache.MY_URL + "AddFollowServlet?user_id="+user_id+"&follow_id="+follow_id);
                     InputStream inputStream = url.openStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
@@ -273,7 +292,7 @@ public class LandlordActivity extends AppCompatActivity {
             public void run() {
                 try {
                     int follow_id = Integer.parseInt(getIntent().getStringExtra("user_id"));
-                    int user_id = 1;
+                    int user_id = Cache.user.getUserId();
                     URL url = new URL(Cache.MY_URL + "DeleteFollowServlet?user_id="+user_id+"&follow_id="+follow_id);
                     InputStream inputStream = url.openStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
@@ -285,6 +304,37 @@ public class LandlordActivity extends AppCompatActivity {
                     }else{
                         Message message = handler.obtainMessage();
                         message.what = 5;
+                        handler.sendMessage(message);
+                    }
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    public void searchFollow(){
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    int follow_id = Integer.parseInt(getIntent().getStringExtra("user_id"));
+                    int user_id = Cache.user.getUserId();
+                    URL url = new URL(Cache.MY_URL + "SearchFollowServlet?user_id="+user_id+"&follow_id="+follow_id);
+                    InputStream inputStream = url.openStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
+                    String isPublish = bufferedReader.readLine();
+                    if (isPublish.equals("true")){
+                        Message message = handler.obtainMessage();
+                        message.what = 6;
+                        handler.sendMessage(message);
+                    }else{
+                        Message message = handler.obtainMessage();
+                        message.what = 7;
                         handler.sendMessage(message);
                     }
                 } catch (MalformedURLException e) {

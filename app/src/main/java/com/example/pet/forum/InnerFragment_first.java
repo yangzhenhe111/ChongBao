@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.pet.R;
+import com.example.pet.my.Login;
+import com.example.pet.my.Post;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Tips;
 import com.rohit.recycleritemclicksupport.RecyclerItemClickSupport;
@@ -122,6 +124,7 @@ public class InnerFragment_first extends Fragment {
                     int count_likes = jsonObject.getInt("likes");
                     int count_comments = jsonObject.getInt("comments");
                     String img_path = jsonObject.getString("picture_path");
+                    int user_id = jsonObject.getInt("user_id");
                     Tips tips = new Tips();
                     tips.setId(post_id);
                     tips.setTitle(post_title);
@@ -129,6 +132,7 @@ public class InnerFragment_first extends Fragment {
                     tips.setLikes(count_likes);
                     tips.setComments(count_comments);
                     tips.setImagepath(img_path);
+                    tips.setUserId(user_id);
                     tipsArrayList.add(tips);
                 }
                 Message message = handler.obtainMessage();

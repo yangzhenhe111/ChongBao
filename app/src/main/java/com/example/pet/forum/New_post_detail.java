@@ -22,8 +22,10 @@ import android.widget.Toast;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
+import com.example.pet.my.Post;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Comment;
+import com.example.pet.other.entity.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -121,12 +123,24 @@ public class New_post_detail extends Activity {
         iv_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(New_post_detail.this,LandlordActivity.class);
-                intent.putExtra("name", String.valueOf(maps.get("username")));
-                intent.putExtra("user_id", String.valueOf(maps.get("user_id")));
-                intent.putExtra("head_path",maps.get("head_img_path").toString());
-                startActivity(intent);
+                if (Cache.user.getUserId() == Integer.parseInt(String.valueOf(maps.get("user_id")))){
+                    Intent intent = new Intent();
+                    intent.setClass(New_post_detail.this, Post.class);
+                    startActivity(intent);
+                }
+//                else if(Cache.user.getUserId() == 0){
+//                    Intent intent = new Intent();
+//                    intent.setClass(getActivity(), Login.class);
+//                    startActivity(intent);
+//                }
+                else{
+                    Intent intent = new Intent();
+                    intent.setClass(New_post_detail.this,LandlordActivity.class);
+                    intent.putExtra("name", String.valueOf(maps.get("username")));
+                    intent.putExtra("user_id", String.valueOf(maps.get("user_id")));
+                    intent.putExtra("head_path",maps.get("head_img_path").toString());
+                    startActivity(intent);
+                }
             }
         });
         enter_comment = findViewById(R.id.enter_comment);

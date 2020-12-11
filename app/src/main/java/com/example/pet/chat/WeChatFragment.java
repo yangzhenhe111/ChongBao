@@ -35,7 +35,7 @@ public class WeChatFragment extends Fragment {
                                             ContextMenu.ContextMenuInfo menuInfo) {
                       menu.add(0, 0, 0, "标为未读");
                       menu.add(0, 1, 0, "置顶聊天");
-                      menu.add(0,2,0,"删除聊天");
+                      menu.add(0, 2, 0, "删除聊天");
             }
         });
           listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
