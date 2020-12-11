@@ -70,6 +70,7 @@ public class StartActivity extends AppCompatActivity {
                     case R.id.yes:
                         btnsure.setEnabled(true);
                         //上传数据库位置信息
+
                         break;
                     case R.id.no:
                         btnsure.setEnabled(true);

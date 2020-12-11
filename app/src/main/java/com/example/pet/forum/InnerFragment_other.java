@@ -51,6 +51,9 @@ public class InnerFragment_other extends Fragment {
         this.title = title;
     }
 
+    public InnerFragment_other() {
+    }
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message message) {

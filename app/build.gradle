@@ -35,7 +35,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
-    compile 'com.rohit.recycleritemclicksupport:recycleritemclicksupport:1.0.1'
+    implementation 'com.rohit.recycleritemclicksupport:recycleritemclicksupport:1.0.1'
 
     //noinspection GradleCompatible
     implementation 'com.android.support:design:26.1.0'
@@ -49,6 +49,7 @@ dependencies {
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.0'
+//    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'

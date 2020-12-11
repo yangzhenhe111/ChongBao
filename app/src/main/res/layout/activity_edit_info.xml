@@ -130,7 +130,7 @@
                         android:id="@+id/edit_info_sex"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="完善性别信息"
+                        android:hint="完善性别信息"
                         android:textSize="14sp"
                         android:gravity="center_vertical"/>
                 </LinearLayout>
@@ -159,7 +159,7 @@
                         android:id="@+id/upBrithday"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="完善生日信息"
+                        android:hint="完善生日信息"
                         android:textSize="14sp"
                         android:gravity="center_vertical"/>
                 </LinearLayout>

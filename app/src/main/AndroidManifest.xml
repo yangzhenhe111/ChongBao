@@ -35,11 +35,14 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@drawable/lastlogo"
         android:supportsRtl="true"
+        android:sharedUserId="android.uid.system"
+        android:largeHeap="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".my.NewPet">
 
         </activity>
+
         <activity android:name=".my.AcountSecurity" />
         <activity android:name=".my.ConnectUs" />
         <activity android:name=".my.order.MyOrderActivity" />
@@ -56,7 +59,7 @@
         <activity android:name=".my.Update" />
         <activity android:name=".my.Check" />
         <activity android:name=".my.Login" />
-        <activity android:name=".my.Pet" />
+        <activity android:name=".my.PetActivity" />
         <activity android:name=".my.History" />
         <activity android:name=".my.AboutUs" />
         <activity android:name=".my.Setting" />
@@ -83,10 +86,10 @@
         <activity android:name=".MainActivity">
 
         </activity>
-
+<activity android:name=".my.AcountManage"/>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="X9PswedQCXVcGIkb8FR9u0oWpOE72WB5" />
+            android:value="Gy6t4iVa5bjCYSlblHYFLNKNCFmABmH3" />
 
         <service
             android:name="com.baidu.location.f"
@@ -105,7 +108,7 @@
         <!-- android:resource="" /> -->
         <!-- </provider> -->
         <activity
-            android:name=".StartActivity"
+            android:name=".Start1Activity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
             <action android:name="android.intent.action.MAIN" />

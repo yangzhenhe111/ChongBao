@@ -12,7 +12,25 @@ public class Pet implements Serializable {
     private int petAge;
     private String petWeight;
     private int userId;
-        private String petAutograph;
+    private String petAutograph;
+    private String picturePath;
+//    private String phone;
+//
+//    public String getPhone() {
+//        return phone;
+//    }
+//
+//    public void setPhone(String phone) {
+//        this.phone = phone;
+//    }
+
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
+    }
 
     public String getPetAutograph() {
         return petAutograph;
@@ -81,17 +99,18 @@ public class Pet implements Serializable {
         this.userId = userId;
     }
 
+
     @Override
     public String toString() {
         return "Pet{" +
                 "petId=" + petId +
-                ", picture=" + picture +
                 ", petName='" + petName + '\'' +
                 ", petType='" + petType + '\'' +
                 ", petAge=" + petAge +
                 ", petWeight='" + petWeight + '\'' +
                 ", userId=" + userId +
                 ", petAutograph='" + petAutograph + '\'' +
+                ", picturePath='" + picturePath + '\'' +
                 '}';
     }
 }

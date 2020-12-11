@@ -43,6 +43,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.example.pet.R;
+import com.example.pet.my.PetActivity;
 import com.example.pet.my.SetPassword;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.User;
@@ -56,6 +57,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -109,6 +112,11 @@ public class EditInfo extends AppCompatActivity {
                 Log.e("up","6b");
                 Toast.makeText(EditInfo.this,"上传失败了",Toast.LENGTH_SHORT);
             }else if(msg.what == 3){
+                Cache.user.setPicturePath(Cache.userPhone + ".jpg");
+                Cache.user.setUserBrithday(upBrithday.getText().toString());
+                Cache.user.setUserSex(upSex.getText().toString());
+                Cache.user.setUserName(upName.getText().toString());
+                Cache.user.setUserAutograph(etInput.getText().toString());
                 Toast.makeText(EditInfo.this,"上传成功",Toast.LENGTH_SHORT);
                 EditInfo.this.finish();
             }else {
@@ -131,6 +139,53 @@ public class EditInfo extends AppCompatActivity {
 //        }
         //设置控件内容
         setView();
+        initData();
+        //加载数据
+        upSex();
+        upBri();
+        countWords();
+    }
+
+    private void initData() {
+        cardItem.add("未知");
+        cardItem.add("男");
+        cardItem.add("女");
+        Log.e("initData","start");
+        if(Cache.user.getPicturePath() != null){
+            upPhoto.setImageBitmap(Cache.user.getPhoto());
+        }
+        if(Cache.user.getUserName() != null){
+            upName.setText(Cache.user.getUserName());
+        }
+        if(Cache.user.getUserSex() != null){
+            upSex.setText(Cache.user.getUserSex());
+        }
+        if(Cache.user.getUserBrithday() != null){
+            upBrithday.setText(Cache.user.getUserBrithday());
+        }
+        if(Cache.user.getUserAutograph() != null){
+            etInput.setText(Cache.user.getUserAutograph());
+        }
+        Log.e("initData","over");
+    }
+
+    private void setView() {
+        upSex = findViewById(R.id.edit_info_sex);
+        toolbar = findViewById(R.id.edit_toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditInfo.this.finish();
+            }
+        });
+        upBrithday = findViewById(R.id.upBrithday);
+        upName = findViewById(R.id.upName);
+        upPhoto = findViewById(R.id.upPhoto);
+        etInput = findViewById(R.id.et_input);
+        tvInput = findViewById(R.id.tv_input);
+
+
+
     }
 
     public void onClicked(View view) {
@@ -149,7 +204,11 @@ public class EditInfo extends AppCompatActivity {
                 break;
             case R.id.tv_save:
                 //保存信息
-                upPhoto(image_path);
+                if(image_path == null){
+                    upData();
+                }else {
+                    upPhoto(image_path);
+                }
                 break;
         }
     }
@@ -163,7 +222,7 @@ public class EditInfo extends AppCompatActivity {
                //返回的分别是三个级别的选中位置
                 String tx = cardItem.get(options1);
                 upSex.setText(tx);
-                Cache.user.setUserSex(tx);
+//                Cache.user.setUserSex(tx);
                 user.setUserSex(tx);
             }
         })
@@ -173,6 +232,8 @@ public class EditInfo extends AppCompatActivity {
                         //自定义布局中的控件初始化及事件处理
                         final TextView tvSubmit = v.findViewById(R.id.tv_finish);
                         TextView tvCancel = v.findViewById(R.id.tv_cancel);
+                        TextView tyTitle = v.findViewById(R.id.tv_title);
+                        tyTitle.setText("性别");
                         tvSubmit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -189,6 +250,8 @@ public class EditInfo extends AppCompatActivity {
 
                     }
                 })
+                .setLineSpacingMultiplier(1.5f)//滚轮字体间距
+                .setContentTextSize(22)//字体大小
                 .setOutSideCancelable(true)
                 .build();
         pvCustomOptions.setPicker(cardItem);//添加数据
@@ -203,7 +266,7 @@ public class EditInfo extends AppCompatActivity {
             @Override
             public void onTimeSelect(Date date, View v) {
                 upBrithday.setText(getTimes(date));
-                Cache.user.setUserBrithday(getTimes(date));
+//                Cache.user.setUserBrithday(getTimes(date));
                 user.setUserBrithday(getTimes(date));
             }
         })
@@ -229,11 +292,11 @@ public class EditInfo extends AppCompatActivity {
                         });
                     }
                 })
+                .setContentTextSize(22)//字体大小
                 .setOutSideCancelable(true)
-                .setContentTextSize(18)
                 .setType(new boolean[]{true, true, true, false, false, false})
                 .setLabel("年", "月", "日", "时", "分", "秒")
-                .setLineSpacingMultiplier(1.2f)
+                .setLineSpacingMultiplier(1.5f)
                 .setTextXOffset(0, 0, 0, 40, 0, -40)
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
                 .setDividerColor(0xFF24AD9D)
@@ -246,6 +309,11 @@ public class EditInfo extends AppCompatActivity {
         return format.format(date);
     }
 
+    /**
+     * 隐藏键盘
+     * @param ev
+     * @return
+     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
@@ -295,31 +363,7 @@ public class EditInfo extends AppCompatActivity {
         }
     }
 
-    private void setView() {
-        upSex = findViewById(R.id.edit_info_sex);
-        toolbar = findViewById(R.id.edit_toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditInfo.this.finish();
-            }
-        });
-        upBrithday = findViewById(R.id.upBrithday);
-        upName = findViewById(R.id.upName);
-        upPhoto = findViewById(R.id.upPhoto);
-        etInput = findViewById(R.id.et_input);
-        tvInput = findViewById(R.id.tv_input);
-        cardItem.add("未知");
-        cardItem.add("男");
-        cardItem.add("女");
-        //加载数据
-        upSex();
-        upBri();
-        countWords();
 
-
-
-    }
 
     /**
      * 记录字数和限制最大输入字数
@@ -333,6 +377,16 @@ public class EditInfo extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+                wordNum = s;
+                //判断大于最大值
+                if (wordNum.length() > mMaxNum) {
+                    int tempSelection = selectionEnd;
+                    etInput.setText(s);
+                    etInput.setSelection(tempSelection);//设置光标在最后
+                    //吐司最多输入300字
+                    Toast.makeText(EditInfo.this, "最多输入"+mMaxNum+"字", Toast.LENGTH_SHORT).show();
+
+                }
             }
 
             @Override
@@ -343,8 +397,6 @@ public class EditInfo extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
-                Cache.user.setUserAutograph(Cache.user.getUserAutograph() + s);
                 int number = num + s.length();
                 //TextView显示剩余字数
                 tvInput.setText("" + number+"/" + mMaxNum);
@@ -387,6 +439,7 @@ public class EditInfo extends AppCompatActivity {
                 .compressSavePath(Const.getImgPath())//压缩图片保存地址
                 .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
                 .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
+                .synOrAsy(false)
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 
@@ -401,7 +454,7 @@ public class EditInfo extends AppCompatActivity {
                     image_path = selectList.get(0).getCompressPath();
                     upPhoto.setImageURI(Uri.parse(image_path));
                     //上传图片
-                    Cache.user.setPicturePath(image_path);
+//                    Cache.user.setPicturePath(image_path);
                     user.setPicturePath(image_path);
                     break;
             }
@@ -413,7 +466,7 @@ public class EditInfo extends AppCompatActivity {
      * 未测试
      */
     public void upPhoto(String path){
-        Cache.user.setUserName(upName.getText().toString());
+//        Cache.user.setUserName(upName.getText().toString());
         Log.e("name",upName.getText().toString());
         Log.e("up","1");
         File file = new File(path);
@@ -481,9 +534,38 @@ public class EditInfo extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         //创建请求体对象
         user.setUserPhone(Cache.userPhone);
-        user.setUserName(upName.getText().toString());
-        user.setUserAutograph(etInput.getText().toString());
-        user.setPicturePath(Cache.userPhone + ".jpg");
+        String name = upName.getText().toString();
+        if(name == null){
+            user.setUserName("");
+        }else {
+            user.setUserName(name);
+        }
+        String autograph = etInput.getText().toString();
+        if(autograph == null){
+            user.setUserAutograph("");
+        }else {
+            user.setUserAutograph(autograph);
+        }
+        String path = Cache.user.getPicturePath();
+        if(path == null){
+            user.setPicturePath("");
+        }else {
+            user.setPicturePath(path);
+        }
+        String sex = upSex.getText().toString();
+        if(sex == null){
+            user.setUserSex("未知");
+        }else {
+            user.setUserSex(sex);
+        }
+        String brithday = upBrithday.getText().toString();
+        if(brithday == null){
+            Calendar selectedDate = Calendar.getInstance();//系统当前时间
+            user.setUserBrithday(getTimes(selectedDate.getTime()));
+        }else {
+            user.setUserBrithday(brithday);
+        }
+
         RequestBody requestBody = RequestBody.create(MediaType.parse(
                 "text/plain;charset=UTF-8"),new Gson().toJson(user));
         //3.创建请求对象
@@ -541,7 +623,4 @@ public class EditInfo extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
-
 }

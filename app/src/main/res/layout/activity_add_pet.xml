@@ -1,50 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:paddingTop="30dp"
+    android:orientation="vertical">
+    <!--顶栏-->
+    <LinearLayout
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="30dp"
-        android:orientation="vertical">
-        <!--顶栏-->
-        <LinearLayout
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/btn_close_add_pet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClicked"
+            android:src="@drawable/shutdown"
+            android:background="@drawable/bg_circle"/>
+    </LinearLayout>
+    <RelativeLayout
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="close"
-                android:src="@drawable/shutdown" />
-        </LinearLayout>
-        <LinearLayout
-
+        <Button
+            android:id="@+id/pet_add"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp">
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/edit"
+            android:onClick="onClicked"
+            android:text="添加"
+            android:textColor="@color/red" />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/pet_add">
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp">
 
                 <ImageView
-                    android:id="@+id/pet_photo"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:id="@+id/pet_photo1"
+                    android:onClick="onClicked"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="21dp"
-                    android:background="@drawable/hashiqi" />
+                    android:background="@drawable/bg_circle"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="50dp"
+                    android:background="#fff"
                     >
 
                     <TextView
@@ -63,13 +75,12 @@
                         android:orientation="vertical">
 
                         <EditText
-                            android:id="@+id/pet_name"
+                            android:id="@+id/pet_name1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@null"
                             android:gravity="center_vertical"
-                            android:onClick="onClicked"
-                            android:text="有光"
+                            android:hint="有光"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -79,6 +90,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:background="#fff"
                     >
 
                     <TextView
@@ -91,19 +103,20 @@
                         android:textSize="12sp" />
 
                     <LinearLayout
+                        android:id="@+id/ll_pet_type1"
+                        android:onClick="onClicked"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/bg_myinfo"
                         android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/pet_type"
+                        <TextView
+                            android:id="@+id/pet_type1"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@null"
                             android:gravity="center_vertical"
-                            android:onClick="onClicked"
-                            android:text="哈士奇"
+                            android:hint="哈士奇"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -114,6 +127,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:background="#fff"
                     >
 
                     <TextView
@@ -126,31 +140,30 @@
                         android:textSize="12sp" />
 
                     <LinearLayout
+                        android:id="@+id/ll_pet_age1"
+                        android:onClick="onClicked"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/bg_myinfo"
                         android:orientation="vertical">
 
                         <EditText
-                            android:id="@+id/pet_age"
+                            android:id="@+id/pet_age1"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:background="@null"
                             android:gravity="center_vertical"
-                            android:onClick="onClicked"
-                            android:text="4岁"
+                            android:hint="4岁"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:background="@drawable/bg_myinfo"
                     android:orientation="vertical">
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -160,15 +173,14 @@
                         android:text="宠物简介"
                         android:textColor="#000"
                         android:textSize="12sp" />
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_marginBottom="30dp"
                         android:background="@drawable/bg_myinfo"
                         android:layout_width="match_parent"
                         android:layout_height="100dp">
 
                         <EditText
-                            android:id="@+id/pet_autograph"
+                            android:id="@+id/pet_autograph1"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:background="@null"
@@ -180,18 +192,20 @@
                             android:minLines="6"
                             android:scrollbars="vertical"
                             android:textSize="12sp" />
-                    </LinearLayout>
-                    <Button
-                        android:textColor="@color/red"
-                        android:id="@+id/pet_update"
-                        android:background="@drawable/edit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="添加宠物" />
+                        <TextView
+                            android:id="@+id/tv_input1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="10dp"
+                            android:text="0/200"/>
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
 
 
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>
