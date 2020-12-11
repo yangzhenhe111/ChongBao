@@ -51,6 +51,7 @@ public class MyUserService extends IntentService {
             }
             in.close();
             Cache.user = new Gson().fromJson(str.toString(), User.class);
+//            Log.e("user",Cache.user.toString());
 
             if (Cache.user.getPicturePath() != null && Cache.user.getPicturePath().length() != 0) {
                 URL url1 = new URL(Cache.MY_URL + "img/" + Cache.user.getPicturePath());
@@ -58,6 +59,9 @@ public class MyUserService extends IntentService {
                 Bitmap bitmap = BitmapFactory.decodeStream(in1);
                 Cache.user.setPhoto(bitmap);
             }
+
+
+
             Cache.userHashSet.add(Cache.user);
             Log.e("MyUserService", Cache.userHashSet.size()+"");
         } catch (MalformedURLException e) {
