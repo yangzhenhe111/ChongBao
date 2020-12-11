@@ -79,6 +79,7 @@
         <activity android:name=".nursing.NeworderActivity" />
         <activity android:name=".nursing.CostActivity" />
         <activity android:name=".forum.SearchResult"/>
+        <activity android:name=".forum.New_post_detail"/>
         <activity android:name=".MainActivity">
 
         </activity>

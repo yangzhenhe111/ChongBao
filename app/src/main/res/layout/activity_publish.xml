@@ -133,10 +133,21 @@
                                 android:background="@drawable/border_search"/>
                         </RelativeLayout>
                         <RelativeLayout
+                            android:layout_alignParentRight="true"
+                            android:layout_width="250dp"
+                            android:layout_height="200dp">
+                            <ImageView
+                                android:layout_centerInParent="true"
+                                android:id="@+id/img_upload"
+                                android:layout_width="250dp"
+                                android:layout_height="200dp"/>
+                        </RelativeLayout>
+                        <RelativeLayout
                             android:layout_width="140dp"
                             android:layout_height="match_parent"
                             android:layout_below="@+id/add_image">
-                            <TextView
+                            <Button
+                                android:onClick="upload"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="上传图片"
