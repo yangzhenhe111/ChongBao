@@ -50,7 +50,6 @@
         <activity
             android:name=".my.editinfo.EditInfo"
             android:windowSoftInputMode="adjustPan|adjustUnspecified|stateHidden" />
-        <activity android:name=".my.SetPassword" />
         <activity android:name=".my.FunIntroduction" />
         <activity android:name=".my.AboutUsLaw" />
         <activity android:name=".my.Agreement" />
