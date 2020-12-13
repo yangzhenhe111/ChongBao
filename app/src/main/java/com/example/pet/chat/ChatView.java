@@ -1,75 +1,185 @@
 package com.example.pet.chat;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.example.pet.R;
 
-import static android.view.View.GONE;
+import cn.jiguang.imui.chatinput.ChatInputView;
+import cn.jiguang.imui.chatinput.listener.OnCameraCallbackListener;
+import cn.jiguang.imui.chatinput.listener.OnClickEditTextListener;
+import cn.jiguang.imui.chatinput.listener.OnMenuClickListener;
+import cn.jiguang.imui.chatinput.listener.RecordVoiceListener;
+import cn.jiguang.imui.chatinput.record.RecordVoiceButton;
+import cn.jiguang.imui.messages.MessageList;
+import cn.jiguang.imui.messages.MsgListAdapter;
 
-public class ChatView extends AppCompatActivity {
+
+public class ChatView extends RelativeLayout {
+
+    private TextView mTitle;
+    private MessageList mMsgList;
+    private ChatInputView mChatInput;
+    private LinearLayout mMenuLl;
+    private RecordVoiceButton mRecordVoiceBtn;
+
+    private boolean mHasInit;
+    private boolean mHasKeyboard;
+    private int mHeight;
+
+    private OnKeyboardChangedListener mKeyboardListener;
+    private OnSizeChangedListener mSizeChangedListener;
+
+    public ChatView(Context context) {
+        super(context);
+    }
+
+    public ChatView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public ChatView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    public void initModule() {
+        mTitle = (TextView) findViewById(R.id.title_bar_title);
+        mMsgList = (MessageList) findViewById(R.id.msg_list);
+        mMenuLl = (LinearLayout) findViewById(R.id.aurora_ll_menuitem_container);
+        mChatInput = (ChatInputView) findViewById(R.id.chat_input);
+
+        mRecordVoiceBtn = mChatInput.getRecordVoiceButton();
+
+        mMsgList = (MessageList) findViewById(R.id.msg_list);
+        mMsgList.setHasFixedSize(true);
+//        mMsgList.setShowReceiverDisplayName(0);
+//        mMsgList.setShowSenderDisplayName(1);
+    }
+
+    public void setTitle(String title) {
+        mTitle.setText(title);
+    }
+
+    public void setMenuClickListener(OnMenuClickListener listener) {
+        mChatInput.setMenuClickListener(listener);
+    }
+
+    public void setAdapter(MsgListAdapter adapter) {
+        mMsgList.setAdapter(adapter);
+    }
+
+    public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
+        mMsgList.setLayoutManager(layoutManager);
+    }
+
+    public void setRecordVoiceFile(String path, String fileName) {
+        mRecordVoiceBtn.setVoiceFilePath(path, fileName);
+    }
+
+    public void setCameraCaptureFile(String path, String fileName) {
+        mChatInput.setCameraCaptureFile(path, fileName);
+    }
+
+    public void setRecordVoiceListener(RecordVoiceListener listener) {
+        mRecordVoiceBtn.setRecordVoiceListener(listener);
+    }
+
+    public void setOnCameraCallbackListener(OnCameraCallbackListener listener) {
+        mChatInput.setOnCameraCallbackListener(listener);
+    }
+
+    public void setKeyboardChangedListener(OnKeyboardChangedListener listener) {
+        mKeyboardListener = listener;
+    }
+
+    public void setOnSizeChangedListener(OnSizeChangedListener listener) {
+        mSizeChangedListener = listener;
+    }
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.chat_view);
-      TextView textView=(TextView)findViewById(R.id.chat_view_text);
-      Intent intent=getIntent();
-      String name=intent.getStringExtra("username");
-      textView.setText(name);
+    public void setOnTouchListener(OnTouchListener listener) {
+        mMsgList.setOnTouchListener(listener);
+    }
 
-       //沉浸式
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;//因为背景为浅色，设置通知栏字体颜色为深色
-            decorView.setSystemUiVisibility(option);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+    public void setOnTouchEditTextListener(OnClickEditTextListener listener) {
+        mChatInput.setOnClickEditTextListener(listener);
+    }
+
+    @Override
+    public boolean performClick() {
+        super.performClick();
+        return true;
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        if (mSizeChangedListener != null) {
+            mSizeChangedListener.onSizeChanged(w, h, oldw, oldh);
         }
-        //返回按钮事件
-        ImageButton imageButton=(ImageButton)findViewById(R.id.chat_return);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        if (!mHasInit) {
+            mHasInit = true;
+            mHeight = b;
+            if (null != mKeyboardListener) {
+//                mKeyboardListener.onKeyBoardStateChanged(KEYBOARD_STATE_INIT);
             }
-        });
-        //发送按钮的隐藏与显示
-        Button button=(Button)findViewById(R.id.send);
-        button.setVisibility(GONE);
-        EditText editText=(EditText)findViewById(R.id.chat_edit);
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                Button button=(Button)findViewById(R.id.send);
-                button.setVisibility(View.VISIBLE);
+        } else {
+            if (null != mKeyboardListener) {
+//                mKeyboardListener.onKeyBoardStateChanged(KEYBOARD_STATE_INIT);
             }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(count>0) {
-                    Button button = (Button) findViewById(R.id.send);
-                    button.setVisibility(View.VISIBLE);
-                }
+            mHeight = mHeight < b ? b : mHeight;
         }
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(s.toString().length()==0){
-                    Button button=(Button)findViewById(R.id.send);
-                    button.setVisibility(GONE);
-                }
+        if (mHasInit && mHeight > b) {
+            mHasKeyboard = true;
+            if (null != mKeyboardListener) {
+//                mKeyboardListener.onKeyBoardStateChanged(KEYBOARD_STATE_SHOW);
             }
-        });
+        }
+        if (mHasInit && mHasKeyboard && mHeight == b) {
+            mHasKeyboard = false;
+            if (null != mKeyboardListener) {
+//                mKeyboardListener.onKeyBoardStateChanged(KEYBOARD_STATE_HIDE);
+            }
+        }
+    }
+
+    public ChatInputView getChatInputView() {
+        return mChatInput;
+    }
+
+    public MessageList getMessageListView() {
+        return mMsgList;
+    }
+
+    public void setMenuHeight(int height) {
+        mChatInput.setMenuContainerHeight(height);
+    }
+
+    /**
+     * Keyboard status changed will invoke onKeyBoardStateChanged
+     */
+    public interface OnKeyboardChangedListener {
+
+        /**
+         * Soft keyboard status changed will invoke this callback, use this callback to do you logic.
+         *
+         * @param state Three states: init, show, hide.
+         */
+        public void onKeyBoardStateChanged(int state);
+    }
+
+    public interface OnSizeChangedListener {
+        void onSizeChanged(int w, int h, int oldw, int oldh);
     }
 }

@@ -36,7 +36,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginRight="10dp"
             android:gravity="center"
             android:layout_weight="1">
             <ImageView
@@ -51,13 +50,20 @@
                 android:gravity="center_horizontal"
                 android:text="@string/tabs_nursing"/>
         </LinearLayout>
-        <ImageView
-            android:onClick="pop"
-            android:layout_width="40dp"
-            android:layout_marginRight="15dp"
-            android:layout_gravity="center"
-            android:background="@drawable/jia"
-            android:layout_height="40dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageView
+                android:onClick="pop"
+                android:layout_width="40dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center"
+                android:background="@drawable/jia"
+                android:layout_height="40dp" />
+
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_chat"
             android:layout_width="wrap_content"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
@@ -29,7 +29,7 @@
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:layout_gravity="center"
-                android:text="关注" />
+                android:text="关注和粉丝" />
         </LinearLayout>
             <LinearLayout
                 android:layout_centerHorizontal="true"
@@ -65,21 +65,123 @@
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:layout_gravity="center"
-                android:text="粉丝"
+                android:text="宠物圈友"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
     </RelativeLayout>
-    <ListView
-
-        android:fastScrollEnabled="false"
-        android:scrollbars="none"
-        android:background="@color/list_background"
-        android:dividerHeight="0.5dp"
-        android:divider="@drawable/chat_listview_divier"
-        android:layout_marginTop="15dp"
-        android:id="@+id/chat_listview"
+    <RelativeLayout
+        android:layout_marginTop="-50dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/fragment_main_rf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/fragment_main_none"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:text="没有会话消息！"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/fragment_main_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader
+                    android:id="@+id/fragment_main_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <RelativeLayout
+                            android:id="@+id/fragment_main_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="15dp"
+                                android:paddingTop="10dp">
+
+                                <RelativeLayout
+                                    android:layout_width="48dp"
+                                    android:layout_height="48dp">
+
+                                    <com.example.pet.chat.CircleImageView
+                                        android:id="@+id/item_main_img"
+                                        android:layout_width="50dp"
+                                        android:layout_height="50dp"
+                                        android:scaleType="centerCrop" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:paddingRight="15dp"
+                                    android:paddingTop="3dp"
+                                    android:paddingBottom="3dp"
+                                    android:layout_height="match_parent">
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:orientation="vertical"
+                                        android:paddingLeft="8dp"
+                                        android:layout_height="match_parent">
+                                        <TextView
+                                            android:id="@+id/item_main_username"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="0dp"
+                                            android:textSize="16sp"
+                                            android:textColor="#000000"
+                                            android:gravity="center_vertical"
+                                            android:layout_weight="1"/>
+                                        <TextView
+                                            android:id="@+id/item_main_content"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="0dp"
+                                            android:textSize="14sp"
+                                            android:textColor="#66000000"
+                                            android:gravity="center_vertical"
+                                            android:layout_weight="1"/>
+                                    </LinearLayout>
+
+                                    <TextView
+                                        android:id="@+id/item_main_time"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="#66000000"
+                                        android:textSize="12sp"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_alignParentRight="true"/>
+
+                                    <Button
+                                        android:id="@+id/item_main_bt"
+                                        android:layout_width="17dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginEnd="358dp"
+                                        android:layout_marginRight="358dp"
+                                        android:background="@drawable/shape_button_lines"
+                                        android:textColor="@android:color/black"
+                                        android:visibility="gone" />
+                                </RelativeLayout>
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader>
+            </RelativeLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </RelativeLayout>
 </LinearLayout>
