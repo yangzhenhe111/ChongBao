@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.example.pet.R;
+import com.example.pet.forum.LandlordActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -55,6 +58,7 @@ public class WeChatFragment extends Fragment {
     SwipeRefreshLayout mFragmentMainRf;
     private List<MessageBean> data = new ArrayList<>();
     private List<Conversation> list=new ArrayList<>();
+
     Conversation conversation;
     @BindView(R.id.fragment_main_rv)
     RecyclerView mFragmentMainRv;

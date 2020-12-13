@@ -150,8 +150,14 @@ public class MyFragment extends Fragment {
                             showLoginToast();
                             break;
                         case 1:
-                            Intent intent1 = new Intent(getContext(), AboutUs.class);
-                            startActivity(intent1);
+                            JMessageClient.logout();
+                            helper.setUserPW("");
+                            helper.setNakeName("");
+                            Intent intent2 = new Intent("android.intent.action.CART_BROADCAST");
+                            intent2.putExtra("data","finish");
+                            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent2);
+                            getActivity().sendBroadcast(intent2);
+                            Intent intent1 = new Intent(getActivity(),Login.class);
                             getActivity().finish();
                             break;
                     }
