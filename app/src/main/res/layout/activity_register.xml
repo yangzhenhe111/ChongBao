@@ -43,7 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="15dp"
             android:background="@drawable/edit"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -59,19 +58,59 @@
 
             <EditText
                 android:id="@+id/et_phone"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="手机号" />
         </LinearLayout>
-
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:background="@drawable/edit"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <EditText
+                android:id="@+id/et_yan"
+                android:layout_weight="1"
+                android:hint="请输入验证"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_getYan"
+                android:onClick="onClicked"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="获取验证码"
+                android:background="@drawable/edit"
+                android:textSize="20sp"/>
+        </LinearLayout>
+        <EditText
+            android:layout_marginTop="30dp"
+            android:id="@+id/et_password"
+            android:hint="请设置密码（6-20位英文或数字）"
+            android:background="@drawable/edit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="textPassword"/>
+        <EditText
+            android:layout_marginTop="30dp"
+            android:id="@+id/et_password1"
+            android:hint="请确认密码（6-20位英文或数字）"
+            android:background="@drawable/edit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:inputType="textPassword"/>
         <Button
-            android:id="@+id/btn_next1"
+            android:id="@+id/btn_register"
             android:onClick="onClicked"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/shape"
             android:gravity="center"
-            android:text="下一步"
+            android:text="注册"
             android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold" />

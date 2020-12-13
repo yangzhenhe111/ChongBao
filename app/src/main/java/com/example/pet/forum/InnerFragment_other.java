@@ -94,10 +94,6 @@ public class InnerFragment_other extends Fragment {
         linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyAdapter);
-//        Log.e("-------------->", title);
-//        Tips tes = new Tips();
-//        tes.setTitle(title);
-//        tipsList.add(tes);
     }
 
     public void getAllPost(ArrayList arrayList){

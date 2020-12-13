@@ -62,7 +62,6 @@
         <activity
             android:name=".my.editinfo.EditInfo"
             android:windowSoftInputMode="adjustPan|adjustUnspecified|stateHidden" />
-        <activity android:name=".my.SetPassword" />
         <activity android:name=".my.FunIntroduction" />
         <activity android:name=".my.AboutUsLaw" />
         <activity android:name=".my.Agreement" />
@@ -99,6 +98,7 @@
         <activity android:name=".nursing.NeworderActivity" />
         <activity android:name=".nursing.CostActivity" />
         <activity android:name=".forum.SearchResult"/>
+        <activity android:name=".forum.New_post_detail"/>
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".my.AcountManage"/>
