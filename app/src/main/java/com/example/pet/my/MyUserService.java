@@ -54,7 +54,7 @@ public class MyUserService extends IntentService {
 //            Log.e("user",Cache.user.toString());
 
             if (Cache.user.getPicturePath() != null && Cache.user.getPicturePath().length() != 0) {
-                URL url1 = new URL(Cache.MY_URL + "img/" + Cache.user.getPicturePath());
+                URL url1 = new URL(Cache.MY_URL +"img/"+ Cache.user.getPicturePath());
                 InputStream in1 = url1.openStream();
                 Bitmap bitmap = BitmapFactory.decodeStream(in1);
                 Cache.user.setPhoto(bitmap);

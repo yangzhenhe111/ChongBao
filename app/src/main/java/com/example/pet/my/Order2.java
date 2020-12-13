@@ -70,8 +70,8 @@ public class Order2 extends AppCompatActivity {
 
         setView();
         Intent intent = getIntent();
-        int index = intent.getIntExtra("index",0);
-        order = Cache.myOrderList.get(index);
+
+        order = (Order) intent.getSerializableExtra("index");
         Log.e("order", "4");
 //        order = new Order();
 //        order.setOrderState("待接单");

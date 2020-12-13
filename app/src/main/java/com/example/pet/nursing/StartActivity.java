@@ -22,7 +22,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.pet.R;
+import com.example.pet.other.Cache;
+import com.example.pet.other.entity.Address;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,24 +155,53 @@ public class StartActivity extends AppCompatActivity {
                     URLConnection con = url.openConnection();
                     InputStream in = con.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));*/
-                    String str = AddressInfo.START + "!"+ AddressInfo.STARTPE + "!" + AddressInfo.STARTTEL +"!4#";
+                   // String str = AddressInfo.START + "!"+ AddressInfo.STARTPE + "!" + AddressInfo.STARTTEL +"!4#";
                     /*reader.close();
                     in.close();*/
-                    if (str != null) {
-                        String[] infos = str.split("#"); //分割字符串获取数据
-                        for (int i = 0; i < infos.length; i++) {
-                            String[] finfos = infos[i].split("!"); //分割字符串获取数据
-                            String add = finfos[0];
-                            String name = finfos[1];
-                            String tel = finfos[2];
-                            int id = Integer.parseInt(finfos[3]);
-                            HisAddress ha = new HisAddress(add,name,tel,id);
-                            addlist.add(ha);
-                        }
-                        Message msg = new Message();
-                        handler.sendMessage(msg);
+//                    if (str != null) {
+//                        String[] infos = str.split("#"); //分割字符串获取数据
+//                        for (int i = 0; i < infos.length; i++) {
+//                            String[] finfos = infos[i].split("!"); //分割字符串获取数据
+//                            String add = finfos[0];
+//                            String name = finfos[1];
+//                            String tel = finfos[2];
+//                            int id = Integer.parseInt(finfos[3]);
+//                            HisAddress ha = new HisAddress(add,name,tel,id);
+//                            addlist.add(ha);
+//                        }
+//                        Message msg = new Message();
+//                        handler.sendMessage(msg);
+//                    }
+                try {
+                    URL url = new URL(Cache.MY_URL+"MyAddress?ispost=1&userId="+Cache.user.getUserId());
+                    InputStream in = url.openStream();
+                    byte[] bytes = new byte[256];
+                    StringBuilder builder = new StringBuilder();
+                    int len =0;
+                    while ((len=in.read(bytes))!=-1){
+                        builder.append(new String(bytes,0,len,"utf-8"));
                     }
-                } /*catch (MalformedURLException e) {
+                    Log.e("StartActivity",builder.toString());
+                    JSONArray array = new JSONArray(builder.toString());
+                    for(int i=0;i<array.length();i++){
+                        JSONObject object = array.getJSONObject(i);
+                        String  add = object.getString("address");
+                        String name = object.getString("people");
+                        String tel = object.getString("tel");
+                        HisAddress address =new HisAddress(add,name,tel,4);
+                        addlist.add(address);
+                    }
+                    Message msg = new Message();
+                        handler.sendMessage(msg);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            } /*catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();

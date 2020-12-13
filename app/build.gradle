@@ -36,7 +36,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
     implementation 'com.rohit.recycleritemclicksupport:recycleritemclicksupport:1.0.1'
-
     //noinspection GradleCompatible
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'

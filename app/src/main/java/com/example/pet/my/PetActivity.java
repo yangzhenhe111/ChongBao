@@ -110,7 +110,7 @@ public class PetActivity extends AppCompatActivity {
                 Log.e("up","6b");
                 Toast.makeText(PetActivity.this,"上传失败了",Toast.LENGTH_SHORT);
             }else if(msg.what == 3){
-                pet.setPicture(bitmap);
+              //  pet.setPicture(bitmap);
                 Cache.myPetList.add(pet);
                 Toast.makeText(PetActivity.this,"上传成功",Toast.LENGTH_SHORT);
             }else if(msg.what == 4) {

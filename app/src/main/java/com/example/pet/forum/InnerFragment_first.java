@@ -85,12 +85,12 @@ public class InnerFragment_first extends Fragment {
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
                 Intent intent = new Intent(getActivity(),New_post_detail.class);
                 intent.putExtra("id",tipsArrayList.get(i).getId());
+                Cache.myPostSet.add(tipsArrayList.get(i));
                 startActivity(intent);
             }
         });
         return view;
     }
-
     public void getAllPost(ArrayList arrayList){
         new Thread(){
             @Override

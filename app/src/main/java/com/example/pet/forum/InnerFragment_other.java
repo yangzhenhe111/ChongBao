@@ -77,6 +77,7 @@ public class InnerFragment_other extends Fragment {
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
                 Intent intent = new Intent(getActivity(),New_post_detail.class);
                 intent.putExtra("id",tipsList.get(i).getId());
+                Cache.myPostSet.add(tipsList.get(i));
                 startActivity(intent);
             }
         });
