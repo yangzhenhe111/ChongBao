@@ -134,21 +134,19 @@ public class Login extends BaseActivity {
                         sharedPrefHelper.setUserPW(passWord);
                         LoginEvent event = new LoginEvent("userName", true);
                         JAnalyticsInterface.onEvent(getContext(),event);
-                        inputAnimator(mInputLayout, mWidth, mHeight,type);
                         JMessageClient.getUserInfo(userName, new GetUserInfoCallback() {
                             @Override
                             public void gotResult(int i, String s, UserInfo userInfo) {
                                 if (i==0) {
                                     mName.setVisibility(View.INVISIBLE);
                                     mPsw.setVisibility(View.INVISIBLE);
+                                    inputAnimator(mInputLayout, mWidth, mHeight,type);
                                     Cache.userPhone = userName;
                                     Intent intent2 = new Intent(Login.this, MyUserService.class);
                                     startService(intent2);
                                     progress.setVisibility(View.VISIBLE);
                                     progressAnimator(progress);
                                     mInputLayout.setVisibility(View.INVISIBLE);
-                                    Intent intent1 = new Intent(Login.this, MyDataService.class);
-                                    startService(intent1);
                                 }
                             }
                         });
@@ -194,6 +192,8 @@ public class Login extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
+                Intent intent1 = new Intent(Login.this, MyDataService.class);
+                startService(intent1);
                 Intent intent = new Intent(Login.this, MainActivity.class);
                 intent.putExtra("LOGINTYPE", type);
                 startActivity(intent);
