@@ -24,8 +24,10 @@ import android.widget.Toast;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
+import com.example.pet.my.Post;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Comment;
+import com.example.pet.other.entity.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -123,9 +125,24 @@ public class New_post_detail extends Activity {
         iv_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(New_post_detail.this,LandlordActivity.class);
-                startActivity(intent);
+                if (Cache.user.getUserId() == Integer.parseInt(String.valueOf(maps.get("user_id")))){
+                    Intent intent = new Intent();
+                    intent.setClass(New_post_detail.this, Post.class);
+                    startActivity(intent);
+                }
+//                else if(Cache.user.getUserId() == 0){
+//                    Intent intent = new Intent();
+//                    intent.setClass(getActivity(), Login.class);
+//                    startActivity(intent);
+//                }
+                else{
+                    Intent intent = new Intent();
+                    intent.setClass(New_post_detail.this,LandlordActivity.class);
+                    intent.putExtra("name", String.valueOf(maps.get("username")));
+                    intent.putExtra("user_id", String.valueOf(maps.get("user_id")));
+                    intent.putExtra("head_path",maps.get("head_img_path").toString());
+                    startActivity(intent);
+                }
             }
         });
         enter_comment = findViewById(R.id.enter_comment);
@@ -142,9 +159,7 @@ public class New_post_detail extends Activity {
 
 
     public void init(){
-        Log.e("map", maps.toString());
         getImages(maps.get("img_path").toString());
-        Log.e("bitmap",maps.get("img_path").toString());
         getHeadImages(maps.get("head_img_path").toString());
     }
 
@@ -240,12 +255,12 @@ public class New_post_detail extends Activity {
                     String post_text = jsonObject.getString("post_text");
                     String topic = jsonObject.getString("post_topic");
                     String user_name = jsonObject.getString("user_name");
+                    int user_id = jsonObject.getInt("user_id");
                     int count_likes = jsonObject.getInt("likes");
                     int count_comments = jsonObject.getInt("comments");
                     int count_forwards = jsonObject.getInt("forwards");
                     String img_path = jsonObject.getString("img_path");
                     String head_img_path = jsonObject.getString("user_picture_path");
-                    Log.e("img_path", head_img_path);
 
                     maps.put("post_title",post_title);
                     maps.put("post_time",post_time);
@@ -257,7 +272,7 @@ public class New_post_detail extends Activity {
                     maps.put("count_forwards",count_forwards);
                     maps.put("img_path",img_path);
                     maps.put("head_img_path",head_img_path);
-                    Log.e("map0", maps.toString());
+                    maps.put("user_id",user_id);
 
                     Message message = handler.obtainMessage();
                     message.what = 1;
