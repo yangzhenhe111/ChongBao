@@ -1,65 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    android:versionName="1.0.2"
+    android:versionName="1.0.0"
     android:versionCode="3"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pet">
     <permission android:protectionLevel="signature"
         android:name="com.example.pet.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR"/>
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <!-- Optional. Required for location feature -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
     <!-- Required -->
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- Optional. Required for location feature -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="com.example.liaotian.permission.JPUSH_MESSAGE"/>
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <!-- Required for jmrtc -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-    <!-- Optional. Required for location feature -->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <permission
-        android:name="${applicationId}.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
-
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission
-        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".other.DebugApp"
+        android:name=".chat.BaseApplication"
         android:allowBackup="true"
         android:icon="@drawable/lastlogo"
         android:label="@string/app_name"
@@ -73,7 +54,7 @@
         <activity android:name=".my.NewPet">
 
         </activity>
-
+        <activity android:name=".Start1Activity"/>
         <activity android:name=".my.AcountSecurity" />
         <activity android:name=".my.ConnectUs" />
         <activity android:name=".my.order.MyOrderActivity" />
@@ -97,10 +78,15 @@
         <activity android:name=".my.Post" />
         <activity android:name=".forum.LandlordActivity" />
         <activity android:name=".forum.TipsActivity" />
-        <activity android:name=".forum.ClassifiedForumActivity" />
         <activity android:name=".forum.TopicActivity" />
-        <activity android:name=".chat.ChatView" />
         <activity android:name=".chat.Booking" />
+        <activity android:name=".chat.ChatMsgActivity" />
+        <activity android:name=".chat.AddFriendMsgActivity" />
+        <activity android:name=".chat.BaseActivity" />
+        <activity android:name=".chat.MsgVideoActivity" />
+        <activity android:name=".chat.UserActivty" />
+        <activity android:name=".chat.UserInfoActivity" />
+        <activity android:name=".chat.UserInfoOptionsActivity" />
         <activity android:name=".forum.PublishActivity" />
         <activity android:name=".nursing.CancelActivity" />
         <activity android:name=".nursing.JiedanActivity" />
@@ -114,13 +100,11 @@
         <activity android:name=".nursing.CostActivity" />
         <activity android:name=".forum.SearchResult"/>
         <activity android:name=".MainActivity">
-
         </activity>
-<activity android:name=".my.AcountManage"/>
+        <activity android:name=".my.AcountManage"/>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="Gy6t4iVa5bjCYSlblHYFLNKNCFmABmH3" />
-
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
@@ -128,17 +112,21 @@
             <intent-filter>
                 <action android:name="com.baidu.location.service_v5.0.0" />
             </intent-filter>
-        </service> <!-- <provider -->
-        <!-- android:name="androidx.core.content.FileProvider" -->
-        <!-- android:authorities="${applicationId}.provider" -->
-        <!-- android:exported="false" -->
-        <!-- android:grantUriPermissions="true"> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
-        <!-- android:resource="" /> -->
-        <!-- </provider> -->
+        </service>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false"
+            android:authorities="com.example.pet.fileProvider">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/provider_paths"/>
+        </provider>
+        <provider android:name="cn.jpush.im.android.helpers.ipc.IMProvider"
+            android:exported="false"
+            android:authorities="com.example.pet.jpushim.IMProvider"/>
         <activity
-            android:name=".Start1Activity"
+            android:name=".LoadingActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -158,17 +146,6 @@
                 <category android:name="${applicationId}" />
             </intent-filter>
         </activity> <!-- Required SDK 核心功能 -->
-        <!-- 可配置android:process参数将PushService放在其他进程中 -->
-        <service
-            android:name="cn.jpush.android.service.PushService"
-            android:process=":pushcore">
-            <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTER" />
-                <action android:name="cn.jpush.android.intent.REPORT" />
-                <action android:name="cn.jpush.android.intent.PushService" />
-                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
-            </intent-filter>
-        </service> <!-- since 3.0.9 Required SDK 核心功能 -->
         <provider
             android:name="cn.jpush.android.service.DataProvider"
             android:authorities="${applicationId}.DataProvider"
@@ -197,7 +174,8 @@
         </receiver> <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.AlarmReceiver"
-            android:exported="false" /> <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
+            android:exported="false" />
+        <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->
         <!-- since 3.3.0 接收JPush相关事件 -->
         <receiver
             android:name=".other.JpushReceiver"
@@ -230,12 +208,13 @@
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>
         </service>
+        <receiver android:name="cn.jpush.im.android.helpers.IMReceiver" android:exported="false" android:enabled="true"/>
         <service android:name=".my.MyDataService" />
         <!-- Required SDK 核心功能-->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <meta-data
             android:name="JPUSH_CHANNEL"
-            android:value="jpush_channel" />
+            android:value="developer-default" />
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="7153b7916be94ab289793e76" />

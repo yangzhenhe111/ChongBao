@@ -16,21 +16,25 @@ import android.widget.ListView;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
+import com.example.pet.chat.SharedPrefHelper;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.User;
 
 import java.util.ArrayList;
+
+import cn.jpush.im.android.api.JMessageClient;
 
 public class AcountManage extends AppCompatActivity {
     private ListView lvAcount;
     private ArrayList<User> list = new ArrayList<>();
     private AcountAdapter adapter;
     private LinearLayout addUser;
-
+    private SharedPrefHelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acount_manage);
+        helper = SharedPrefHelper.getInstance();
         initData();
         setView();
 
@@ -85,8 +89,10 @@ public class AcountManage extends AppCompatActivity {
                 break;
             case R.id.acount_manage_loginout:
                 Cache.user = null;
-
-                Intent intent1 = new Intent(AcountManage.this, MainActivity.class);
+                JMessageClient.logout();
+                helper.setUserPW("");
+                helper.setNakeName("");
+                Intent intent1 = new Intent(AcountManage.this,Login.class);
                 startActivity(intent1);
                 AcountManage.this.finish();
                 break;
