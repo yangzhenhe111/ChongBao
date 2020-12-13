@@ -71,7 +71,7 @@
         </LinearLayout>
     </RelativeLayout>
     <RelativeLayout
-        android:layout_marginTop="-50dp"
+        android:layout_marginTop="-20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">

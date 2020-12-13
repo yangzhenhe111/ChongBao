@@ -36,6 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
 import cn.jpush.im.android.api.content.PromptContent;
 import cn.jpush.im.android.api.content.TextContent;
 import cn.jpush.im.android.api.enums.ContentType;
@@ -66,16 +67,10 @@ public class WeChatFragment extends Fragment {
     MessageRecyclerAdapter adapter;
     @BindView(R.id.fragment_main_header)
     RecyclerViewHeader mFragmentMainHeader;
-    @BindView(R.id.item_main_img)
-    ImageView mItemMainImg;
-    @BindView(R.id.item_main_username)
-    TextView mItemMainUsername;
-    @BindView(R.id.item_main_content)
-    TextView mItemMainContent;
-    @BindView(R.id.item_main_time)
-    TextView mItemMainTime;
     private int groupID = 0;
     MessageBean bean;
+    @BindView(R.id.ll_fre)
+    LinearLayout btn_private_letter;
     //接收撤回的消息
     private Message retractMsg;
     Handler handler = new Handler();
@@ -101,6 +96,33 @@ public class WeChatFragment extends Fragment {
         JMessageClient.registerEventReceiver(this);
         list= JMessageClient.getConversationList();
         initView();
+        btn_private_letter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Conversation conv = JMessageClient.getSingleConversation("1883333340", "7153b7916be94ab289793e76");
+                Log.e("msg",SharedPrefHelper.getInstance().getAppKey());
+                if (conv == null) {
+                    Conversation.createSingleConversation("1883333340", "7153b7916be94ab289793e76");
+                }
+                JMessageClient.getConversationList().add(conv);
+                JMessageClient.getUserInfo("1883333340", new GetUserInfoCallback() {
+                    @Override
+                    public void gotResult(int i, String s, UserInfo userInfo) {
+                        if (i == 0) {
+                            Intent intent = new Intent(getActivity(), ChatMsgActivity.class);
+                            if (userInfo.getNickname()!=null) {
+                                intent.putExtra("NAKENAME", userInfo.getNickname());
+                            }
+                            if (userInfo.getAvatarFile() != null) {
+                                intent.putExtra("ICON", userInfo.getAvatarFile().toURI().toString());
+                            }
+                            intent.putExtra("USERNAME", "1883333340");
+                            startActivity(intent);
+                        }
+                    }
+                });
+            }
+        });
         return view;
     }
 
@@ -276,7 +298,6 @@ public class WeChatFragment extends Fragment {
                     }
                 } catch (Exception e) {
                     bean.setContent("最近没有消息！");
-                    Log.e("Exception:MessageFM", e.getMessage());
                 }
                 bean.setMsgID(list.get(i).getId());
                 bean.setUserName(((UserInfo) list.get(i).getTargetInfo()).getUserName());
