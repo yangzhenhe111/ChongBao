@@ -22,8 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
-import com.example.pet.chat.ChatMsgActivity;
-import com.example.pet.chat.SharedPrefHelper;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Tips;
 import com.rohit.recycleritemclicksupport.RecyclerItemClickSupport;
@@ -45,9 +43,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.model.Conversation;
 
 public class LandlordActivity extends AppCompatActivity {
 
@@ -111,6 +106,7 @@ public class LandlordActivity extends AppCompatActivity {
         tv_name.setText(getIntent().getStringExtra("name"));
         iv_head = findViewById(R.id.iv_head);
         iv_head.setImageResource(R.drawable.kobe);
+//        iv_head.setImageBitmap((Bitmap) maps.get("head_image"));
         btn_follow = findViewById(R.id.btn_follow);
         searchFollow();
         btn_follow.setOnClickListener(new View.OnClickListener() {
@@ -131,14 +127,10 @@ public class LandlordActivity extends AppCompatActivity {
         btn_private_letter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Conversation conv = JMessageClient.getSingleConversation(getIntent().getStringExtra("USERNAME"), SharedPrefHelper.getInstance().getAppKey());
-                if (conv == null) {
-                    Conversation.createSingleConversation(getIntent().getStringExtra("USERNAME"), SharedPrefHelper.getInstance().getAppKey());
-                }
-                JMessageClient.getConversationList().add(conv);
-                Intent intent = new Intent(LandlordActivity.this, ChatMsgActivity.class);
-                intent.putExtra("USERNAME", getIntent().getStringExtra("USERNAME"));
-                startActivity(intent);
+//                Intent intent = new Intent();
+//                intent.setClass(LandlordActivity.this,);
+//                intent.putExtra("landlordPhone",getIntent().getStringExtra("phone"));
+//                startActivity(intent);
             }
         });
         lv_landlord = findViewById(R.id.lv_landlord);
