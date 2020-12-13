@@ -129,7 +129,7 @@ public class LandlordActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                Intent intent = new Intent();
 //                intent.setClass(LandlordActivity.this,);
-//                intent.putExtra("userPhone",Cache.userPhone);
+//                intent.putExtra("landlordPhone",getIntent().getStringExtra("phone"));
 //                startActivity(intent);
             }
         });

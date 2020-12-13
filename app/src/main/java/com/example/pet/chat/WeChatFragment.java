@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,6 +85,15 @@ public class WeChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = View.inflate(getActivity(), R.layout.wechat_fragment, null);
+        LinearLayout ll_follow = view.findViewById(R.id.ll_follow);
+        ll_follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(),MyFollowActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
         unbinder = ButterKnife.bind(this, view);
         JMessageClient.registerEventReceiver(this);
         list= JMessageClient.getConversationList();

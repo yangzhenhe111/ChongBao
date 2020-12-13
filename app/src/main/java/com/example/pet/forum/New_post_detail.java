@@ -141,6 +141,7 @@ public class New_post_detail extends Activity {
                     intent.putExtra("name", String.valueOf(maps.get("username")));
                     intent.putExtra("user_id", String.valueOf(maps.get("user_id")));
                     intent.putExtra("head_path",maps.get("head_img_path").toString());
+                    intent.putExtra("phone", String.valueOf(maps.get("phone")));
                     startActivity(intent);
                 }
             }
@@ -261,7 +262,9 @@ public class New_post_detail extends Activity {
                     int count_forwards = jsonObject.getInt("forwards");
                     String img_path = jsonObject.getString("img_path");
                     String head_img_path = jsonObject.getString("user_picture_path");
+                    String phone = jsonObject.getString("phone");
 
+                    maps.put("phone",phone);
                     maps.put("post_title",post_title);
                     maps.put("post_time",post_time);
                     maps.put("post_text",post_text);
