@@ -3,6 +3,7 @@ package com.example.pet.my;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -83,15 +84,17 @@ public class AcountManage extends AppCompatActivity {
     public void onClicked(View view) {
         switch (view.getId()) {
             case R.id.acount_manage_adduser:
-
                 Intent intent = new Intent(AcountManage.this, Login.class);
                 startActivity(intent);
                 break;
             case R.id.acount_manage_loginout:
-                Cache.user = null;
                 JMessageClient.logout();
                 helper.setUserPW("");
                 helper.setNakeName("");
+                Intent intent2 = new Intent("android.intent.action.CART_BROADCAST");
+                intent2.putExtra("data","finish");
+                LocalBroadcastManager.getInstance(AcountManage.this).sendBroadcast(intent2);
+                AcountManage.this.sendBroadcast(intent2);
                 Intent intent1 = new Intent(AcountManage.this,Login.class);
                 startActivity(intent1);
                 AcountManage.this.finish();

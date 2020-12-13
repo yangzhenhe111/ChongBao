@@ -33,6 +33,10 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+import cn.jiguang.analytics.android.api.RegisterEvent;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import okhttp3.Call;
@@ -65,10 +69,40 @@ public class Register extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             if(msg.what == CODE_TRUE){
-                Intent intent = new Intent();
-                intent.setClass(Register.this,Login.class);
-                startActivity(intent);
-                Register.this.finish();
+                Log.e("msg",etPhone.getText().toString());
+                JMessageClient.register(etPhone.getText().toString(), etPass.getText().toString(), new BasicCallback() {
+                    @Override
+                    public void gotResult(int i, String s) {
+                        switch (i) {
+                            case 0:
+                                Toast toast=Toast.makeText(Register.this,"注册成功",Toast.LENGTH_SHORT);
+                                toast.show();
+                                RegisterEvent event = new RegisterEvent("userName", true);
+                                JAnalyticsInterface.onEvent(Register.this,event);
+                                Intent intent = new Intent();
+                                intent.setClass(Register.this,Login.class);
+                                startActivity(intent);
+                                Register.this.finish();
+                                break;
+                            case 898001:
+                                Toast toast2=Toast.makeText(Register.this,"用户名已存在",Toast.LENGTH_SHORT);
+                                toast2.show();
+                                break;
+                            case 871301:
+                                Toast toast3=Toast.makeText(Register.this,"密码格式错误",Toast.LENGTH_SHORT);
+                                toast3.show();
+                                break;
+                            case 871304:
+                                Toast toast4=Toast.makeText(Register.this,"密码错误",Toast.LENGTH_SHORT);
+                                toast4.show();
+                                break;
+                            default:
+                                Toast toast5=Toast.makeText(Register.this,s,Toast.LENGTH_SHORT);
+                                toast5.show();
+                                break;
+                        }
+                    }
+                });
             }else if(msg.what == CODE_FALSE){
                 Log.e("register","6");
                 Log.e("6",msg.obj.toString());
@@ -97,6 +131,7 @@ public class Register extends AppCompatActivity {
         //注册回调监听接口
         SMSSDK.registerEventHandler(eventHandler);
     }
+
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
         public void handleMessage(Message msg) {
