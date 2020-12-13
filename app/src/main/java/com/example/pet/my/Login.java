@@ -142,13 +142,13 @@ public class Login extends BaseActivity {
                                     mName.setVisibility(View.INVISIBLE);
                                     mPsw.setVisibility(View.INVISIBLE);
                                     Cache.userPhone = userName;
-                                    /*Intent intent2 = new Intent(Login.this, MyUserService.class);
-                                    startService(intent2);*/
+                                    Intent intent2 = new Intent(Login.this, MyUserService.class);
+                                    startService(intent2);
                                     progress.setVisibility(View.VISIBLE);
                                     progressAnimator(progress);
                                     mInputLayout.setVisibility(View.INVISIBLE);
-                                    /*Intent intent1 = new Intent(Login.this, MyDataService.class);
-                                    startService(intent1);*/
+                                    Intent intent1 = new Intent(Login.this, MyDataService.class);
+                                    startService(intent1);
                                 }
                             }
                         });
@@ -217,8 +217,6 @@ public class Login extends BaseActivity {
     }
 
     public void back(View view) {
-        Intent i = new Intent(getContext(), MainActivity.class);
-        startActivity(i);
         this.finish();
     }
 }
