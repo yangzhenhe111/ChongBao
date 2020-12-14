@@ -4,15 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_marginTop="70dp"
-        android:orientation="horizontal"
+    <ScrollView
+        android:id="@+id/act_solution_4_sv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <cn.smssdk.ui.companent.CircleImageView
-            android:id="@+id/user_photo"
-            android:layout_marginLeft="25dp"
-            android:src="@drawable/user"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_marginTop="70dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <cn.smssdk.ui.companent.CircleImageView
+                    android:id="@+id/user_photo"
+                    android:layout_marginLeft="25dp"
+                    android:src="@drawable/user"
 
             android:layout_width="92dp"
             android:layout_height="92dp" />
@@ -86,4 +96,86 @@
         android:background="@color/contact_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+                    android:layout_width="92dp"
+                    android:layout_height="92dp" />
+                <LinearLayout
+                    android:paddingTop="13dp"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textColor="@color/titleText"
+                        android:textStyle="bold"
+                        android:id="@+id/fragment_login"
+                        android:layout_marginLeft="20dp"
+                        android:textSize="19sp"
+                        android:text="立即登录"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textColor="@color/user_num"
+                            android:textSize="15sp"
+                            android:text="账号："
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/fragment_count"
+                            android:textColor="@color/user_num"
+                            android:textSize="14sp"
+                            android:text=" "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <ImageView
+                android:layout_marginTop="35dp"
+                android:background="@color/contact_background"
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <com.example.pet.forum.MyListView
+                android:background="@color/list_background"
+                android:dividerHeight="0.5dp"
+                android:divider="@drawable/discover_divier"
+                android:id="@+id/my_listview1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.example.pet.forum.MyListView>
+            <ImageView
+                android:background="@color/contact_background"
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <com.example.pet.forum.MyListView
+                android:background="@color/list_background"
+                android:dividerHeight="0.5dp"
+                android:divider="@drawable/discover_divier"
+                android:id="@+id/my_listview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.example.pet.forum.MyListView>
+            <ImageView
+                android:background="@color/contact_background"
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <com.example.pet.forum.MyListView
+                android:background="@color/list_background"
+                android:dividerHeight="0.5dp"
+                android:divider="@drawable/discover_divier"
+                android:id="@+id/my_listview3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.example.pet.forum.MyListView>
+            <ImageView
+                android:background="@color/contact_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

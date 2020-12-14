@@ -90,6 +90,7 @@ public class InnerFragment_other extends Fragment {
     }
 
     public void initAdapter(){
+        Log.e("----------------------", tipsList.toString());
         recyAdapter = new RecyAdapter(getContext(),tipsList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);

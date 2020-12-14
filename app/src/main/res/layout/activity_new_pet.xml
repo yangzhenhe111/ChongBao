@@ -39,8 +39,7 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pet_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"></androidx.viewpager.widget.ViewPager>
+            android:layout_height="match_parent"></androidx.viewpager.widget.ViewPager>
         <LinearLayout
             android:id="@+id/pet_indicators"
             android:layout_width="wrap_content"

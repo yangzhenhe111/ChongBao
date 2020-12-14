@@ -13,14 +13,20 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.pet.MainActivity;
 import com.example.pet.R;
+import com.example.pet.chat.SharedPrefHelper;
 import com.example.pet.my.editinfo.EditInfo;
 import com.example.pet.my.order.MyOrderActivity;
+import com.example.pet.nursing.AddressInfo;
+import com.example.pet.nursing.StartActivity;
 import com.example.pet.other.Cache;
 
 import java.io.File;
@@ -28,6 +34,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.im.android.api.JMessageClient;
 import cn.smssdk.ui.companent.CircleImageView;
 
 public class MyFragment extends Fragment {
@@ -38,20 +45,21 @@ public class MyFragment extends Fragment {
 
     private List<My> myList2 = new ArrayList<>();
     private List<My> myList3 = new ArrayList<>();
-
+    private SharedPrefHelper helper;
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my, container, false);
+        helper = SharedPrefHelper.getInstance();
         login = view.findViewById(R.id.fragment_login);
         count = view.findViewById(R.id.fragment_count);
         photo = view.findViewById(R.id.user_photo);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Login.class);
-                startActivity(intent);
+        if (Cache.user != null) {
+            login.setText(Cache.user.getUserName());
+            count.setText(Cache.user.getUserPhone());
+            if(Cache.user.getPhoto()!=null){
+                photo.setImageBitmap(Cache.user.getPhoto());
             }
-        });
+        }
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,19 +163,6 @@ public class MyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-    }
-
-    //通过生命周期方法 获得当前用户数据
-    @Override
-    public void onStart() {
-        if (Cache.user != null) {
-            login.setText(Cache.user.getUserName());
-            count.setText(Cache.user.getUserPhone());
-            if(Cache.user.getPhoto()!=null){
-            photo.setImageBitmap(Cache.user.getPhoto());
-            }
-        }
-        super.onStart();
     }
 
     public void showLoginToast() {

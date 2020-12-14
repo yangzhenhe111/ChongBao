@@ -35,6 +35,8 @@ public class Setting extends AppCompatActivity {
     private void initData() {
         My my1 = new My(R.drawable.acount, "账号管理", R.drawable.next);
         myList1.add(my1);
+        My my4 = new My(R.drawable.updatepassword, "修改密码", R.drawable.next);
+        myList1.add(my4);
         My my2 = new My(R.drawable.address, "地址管理", R.drawable.next);
         myList2.add(my2);
         My my3 = new My(R.drawable.pay, "支付设置", R.drawable.next);
@@ -67,6 +69,22 @@ public class Setting extends AppCompatActivity {
         MyAdapter myAdapter3 = new MyAdapter(this, R.layout.my_listview, myList3);
         ListView listView3 = (ListView) findViewById(R.id.setting_listview3);
         listView3.setAdapter(myAdapter3);
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        Intent intent = new Intent(Setting.this,AcountManage.class);
+                        startActivity(intent);
+                        break;
+                    case 1:
+                        Intent intent1 = new Intent(Setting.this,Update.class);
+                        intent1.putExtra("title","修改密码");
+                        startActivity(intent1);
+                        break;
+                }
+            }
+        });
         //账号管理
 listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
     @Override

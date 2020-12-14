@@ -109,13 +109,29 @@ public class PageFragment extends Fragment {
             } else if (msg.what == 5) {
                 Uri uri = Uri.parse(msg.obj.toString());
                 bitmap = BitmapFactory.decodeFile(image_path);
-                petPhoto.setImageBitmap(bitmap);
+//                petPhoto.setImageBitmap(bitmap);
+                Glide.with(getContext())
+                        .load(uri)
+                        .into(petPhoto);
+
                 //                petPhoto.setImageURI(uri);
             } else if (msg.what == 6) {
                 Log.e("up", "6b");
                 Toast.makeText(getContext(), "上传失败了", Toast.LENGTH_SHORT);
             } else if (msg.what == 7) {
                 petPhoto.setImageBitmap(bitmap);
+            }else if(msg.what == 6) {
+                Log.e("up","6b");
+                Toast.makeText(getContext(),"上传失败了",Toast.LENGTH_SHORT);
+            }else if(msg.what == 7){
+                Cache.myPetList.remove(index);
+                Log.e("delete::::::::::::","true");
+                Toast.makeText(getActivity(),"删除成功",Toast.LENGTH_SHORT);
+                Intent intent = new Intent();
+                intent.setClass(getContext(),NewPet.class);
+                startActivity(intent);
+            }else if(msg.what == 8){
+                Toast.makeText(getActivity(),"删除失败",Toast.LENGTH_SHORT);
             }
         }
     };
@@ -201,6 +217,9 @@ public class PageFragment extends Fragment {
         LinearLayout llType = view.findViewById(R.id.ll_pet_type);
         llType.setOnClickListener(myListener);
         Log.e("upAge", "绑定成功");
+        ImageView delete = view.findViewById(R.id.delete_pet);
+        delete.setOnClickListener(myListener);
+        Log.e("upAge","绑定成功");
         petPhoto = view.findViewById(R.id.pet_photo);
         petPhoto.setOnClickListener(myListener);
         petName = view.findViewById(R.id.pet_name);
@@ -352,8 +371,39 @@ public class PageFragment extends Fragment {
                 case R.id.pet_photo:
                     upPic();
                     break;
+                case R.id.delete_pet:
+                    Toast.makeText(getContext(),"开始删除",Toast.LENGTH_SHORT);
+                    deletePet();
+                    break;
             }
         }
+
+    }
+
+    private void deletePet() {
+        Log.e("delete","start");
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(Cache.MY_URL + "DeletePetServlet?petid=" + Cache.myPetList.get(index).getPetId())
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //失败
+                Log.e("delete","22222222");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //成功
+                Log.e("delete:::::","1111");
+                String str = response.body().string();
+                Message msg = new Message();
+                msg.what = Integer.valueOf(str);
+                hd.sendMessage(msg);
+            }
+        });
     }
 
     private void upType() {
@@ -531,10 +581,10 @@ public class PageFragment extends Fragment {
                 .isCamera(true)// 是否显示拍照按钮 true or false
                 .imageFormat(PictureMimeType.JPEG)// 拍照保存图片格式后缀,默认jpeg
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
-                .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填
+//                .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填
                 .isEnableCrop(true)// 是否裁剪 true or false
                 .isCompress(true)// 是否压缩 true or false
-                .compressSavePath(Const.getImgPath())//压缩图片保存地址
+//                .compressSavePath(Const.getImgPath())//压缩图片保存地址
                 .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
                 .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
                 .synOrAsy(false)
@@ -549,7 +599,12 @@ public class PageFragment extends Fragment {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    image_path = selectList.get(0).getCompressPath();
+                    LocalMedia localMedia = selectList.get(0);
+                    if (localMedia.isCompressed()){
+                        image_path = localMedia.getCompressPath();
+                    }else {
+                        image_path = localMedia.getPath();
+                    }
                     Message msg = new Message();
                     msg.what = 5;
                     msg.obj = image_path;
