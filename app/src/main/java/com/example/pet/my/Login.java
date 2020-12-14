@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -131,6 +132,8 @@ public class Login extends BaseActivity {
                                     progressAnimator(progress);
                                     mInputLayout.setVisibility(View.INVISIBLE);
                                     Cache.userPhone = userName;
+                                    Log.e("Cache.phone:::::",Cache.userPhone);
+
                                     Intent intent2 = new Intent(Login.this, MyUserService.class);
                                     startService(intent2);
                                 }
@@ -163,7 +166,7 @@ public class Login extends BaseActivity {
             }
         });
         ObjectAnimator animator2 = ObjectAnimator.ofFloat(mInputLayout, "scaleX", 1f, 0.5f);
-        set.setDuration(0);
+        set.setDuration(1500);
         set.setInterpolator(new AccelerateDecelerateInterpolator());
         set.playTogether(animator, animator2);
         set.start();
