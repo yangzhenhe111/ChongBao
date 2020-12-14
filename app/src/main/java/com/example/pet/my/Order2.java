@@ -214,11 +214,7 @@ public class Order2 extends AppCompatActivity {
             }
         }.start();
         order.setOrderState("已取消");
-        for (int i=0;i<Cache.myOrderList.size();i++){
-            if(Cache.myOrderList.get(i).getOrderId()==order.getOrderId()){
-                Cache.myOrderList.get(i).setOrderState("已取消");
-            }
-        }
+
         EventBus.getDefault().post("更新");
         changeView();
     }

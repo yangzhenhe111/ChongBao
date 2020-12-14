@@ -15,12 +15,9 @@ public class Cache {
      */
     public static User user;
     public static String userPhone;
-    public static final String MY_URL = "http://10.7.89.93:8080/ChongBaoService/";//我的URL
+    public static final String MY_URL = "http://10.7.90.249:8080/ChongBaoService/";//我的URL
     public static String url = "http://10.7.89.96:8080/ChongBao_war_exploded/";
     public static int user_id = 1;
-    public static List<Order> myOrderList;//我的订单数据
-
-    public static List<Pet> myPetList;//我的宠物数据
     public static HashSet<Tips> myPostSet =new HashSet<>();//浏览历史数据
     public static HashSet<User> userHashSet = new HashSet<>();//用户列表
 }

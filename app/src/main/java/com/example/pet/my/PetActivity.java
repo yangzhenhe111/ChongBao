@@ -111,7 +111,7 @@ public class PetActivity extends AppCompatActivity {
                 Toast.makeText(PetActivity.this,"上传失败了",Toast.LENGTH_SHORT);
             }else if(msg.what == 3){
               //  pet.setPicture(bitmap);
-                Cache.myPetList.add(pet);
+
                 Toast.makeText(PetActivity.this,"上传成功",Toast.LENGTH_SHORT);
             }else if(msg.what == 4) {
                 Log.e("up","6b");
@@ -250,7 +250,7 @@ public class PetActivity extends AppCompatActivity {
             RequestBody requestBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("file",
-                            Cache.userPhone +"" + Cache.myPetList.size() + ".jpg",
+                            Cache.userPhone +"" + pet.getPetId() + ".jpg",
                             RequestBody.create(MediaType.parse("image/png"), file))
                     .build();
             Request request = new Request.Builder()
@@ -310,7 +310,7 @@ public class PetActivity extends AppCompatActivity {
         if(image_path != null &&  type != null && agex != 0 && autograph != null && name != null){
             //发送
 //            pet.setPetId(Cache.myPetList.get(index).getPetId());
-            pet.setPicturePath(Cache.userPhone +""+ Cache.myPetList.size()+ ".jpg");
+            pet.setPicturePath(Cache.userPhone +""+pet.getPetId()+ ".jpg");
             pet.setPetType(type);
             pet.setPetAutograph(autograph);
             pet.setPetName(name);
@@ -579,7 +579,7 @@ public class PetActivity extends AppCompatActivity {
                     hd.sendMessage(msg);
                     Log.e("image_path",image_path);
                     //上传图片
-                    Cache.myPetList.get(index).setPicturePath(image_path);
+                //    Cache.myPetList.get(index).setPicturePath(image_path);
 //                    Cache.user.setPicturePath(image_path);
                     break;
             }
