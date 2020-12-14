@@ -1,6 +1,8 @@
 package com.example.pet.nursing;
 
-public class HisAddress {
+import java.io.Serializable;
+
+public class HisAddress  implements Serializable {
     private String add;
     private String name;
     private String tel;

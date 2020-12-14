@@ -1,0 +1,289 @@
+Index: app/src/main/java/com/example/pet/my/MyDataService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.my;\r\n\r\nimport android.app.IntentService;\r\nimport android.content.Intent;\r\nimport android.util.Log;\r\n\r\nimport androidx.annotation.Nullable;\r\n\r\nimport com.example.pet.other.Cache;\r\nimport com.example.pet.other.entity.Order;\r\nimport  com.example.pet.other.entity.Pet;\r\n\r\n\r\nimport org.json.JSONArray;\r\nimport org.json.JSONException;\r\nimport org.json.JSONObject;\r\n\r\nimport java.io.IOException;\r\nimport java.io.InputStream;\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\n\r\npublic class MyDataService extends IntentService {\r\n    /**\r\n     * Creates an IntentService.  Invoked by your subclass's constructor.\r\n     *\r\n     * @param name Used to name the worker thread, important only for debugging.\r\n     */\r\n    public MyDataService(String name) {\r\n        super(name);\r\n    }\r\n\r\n    public MyDataService() {\r\n        super(\"MyDataService\");\r\n    }\r\n\r\n    @Override\r\n    protected void onHandleIntent(@Nullable Intent intent) {\r\n        //宠物数据下载\r\n\r\n            try{\r\n                if(Cache.myPetList!=null){\r\n                    Cache.myPetList.clear();\r\n                }else{\r\n                    Cache.myPetList = new ArrayList<>();\r\n                }\r\n\r\n                URL url = new URL(Cache.MY_URL+\"MyPet?userId=\"+Cache.user.getUserId());\r\n                InputStream in = url.openStream();\r\n                StringBuilder str = new StringBuilder();\r\n                byte[] bytes = new byte[256];\r\n                int len =0;\r\n                while ((len=in.read(bytes))!=-1){\r\n                    str.append(new String(bytes,0,len,\"utf-8\"));\r\n                }\r\n\r\n                in.close();\r\n                JSONArray jsonArray = new JSONArray(str.toString());\r\n\r\n                for(int i=0;i<jsonArray.length();i++){\r\n                    JSONObject rs = jsonArray.getJSONObject(i);\r\n\r\n                   Pet pet= new Pet();\r\n                    pet.setPetId(rs.getInt(\"petId\"));\r\n                    pet.setPicturePath(rs.getString(\"picturePath\"));\r\n                    pet.setPetName(rs.getString(\"petName\"));\r\n                    pet.setPetType(rs.getString(\"petType\"));\r\n                    pet.setPetAge(rs.getInt(\"petAge\"));\r\n                    pet.setPetWeight(rs.getString(\"petWeight\"));\r\n                    pet.setUserId(rs.getInt(\"userId\"));\r\n                    Log.e(\"MyDataService\",pet.toString());\r\n                    Cache.myPetList.add(pet);\r\n                }\r\n\r\n            }catch(IOException | JSONException e) {\r\n                e.printStackTrace();\r\n            }\r\n\r\n            try {\r\n\r\n                URL url  = new URL(Cache.MY_URL +\"MyOrder?userId=\"+Cache.user.getUserId());\r\n                InputStream in  = url.openStream();\r\n                StringBuilder str= new StringBuilder();\r\n                byte[] bytes = new byte[256];\r\n                int len =0;\r\n                while ((len = in.read(bytes))!=-1){\r\n                    str.append(new String(bytes,0,len,\"utf-8\"));\r\n\r\n                }\r\n\r\n                in.close();\r\n                JSONArray jsonArray = new JSONArray(str.toString());\r\n                Log.e(\"\",jsonArray.toString());\r\n                Cache.myOrderList = new ArrayList();\r\n                for (int i = 0; i < jsonArray.length(); i++) {\r\n                    JSONObject rs = jsonArray.getJSONObject(i);\r\n                    Order order = new Order();\r\n                    order.setOrderId(rs.getInt(\"orderId\"));\r\n                    order.setOrderStart(rs.getString(\"orderStart\"));\r\n                    order.setOrderEnd(rs.getString(\"orderEnd\"));\r\n                    int id = rs.getInt(\"petId\");\r\n                    for(int j=0;j<Cache.myPetList.size();j++){\r\n                        if(Cache.myPetList.get(j).getPetId() == id){\r\n                            order.setPet(Cache.myPetList.get(j));\r\n                            Log.e(\"MyDataService\",id+ \"gggg\");\r\n\r\n                        }\r\n                    }\r\n                    //设置\r\n                    order.setAddresser(rs.getString(\"addresser\"));\r\n                    order.setAddressee(rs.getString(\"addressee\"));\r\n                    order.setPetShopContact(rs.getString(\"petShopContact\"));\r\n                    order.setRemarks(rs.getString(\"remarks\"));\r\n                    order.setOrderAmount(rs.getString(\"orderAmount\"));\r\n                    order.setClientContact(rs.getString(\"clientContact\"));\r\n                    order.setRunnerContact(rs.getString(\"runnerContact\"));\r\n                    order.setRunnerName(rs.getString(\"runnerName\"));\r\n                    order.setOrderTime(rs.getString(\"orderTime\"));\r\n                    order.setKilometers(rs.getString(\"kilometers\"));\r\n                    order.setOrderState(rs.getString(\"orderState\"));\r\n                    order.setUserId(rs.getInt(\"userId\"));\r\n                    order.setAddresseeContact(rs.getString(\"addresseeContact\"));\r\nLog.e(\"MyDataService\",order.toString());\r\n                    Cache.myOrderList.add(order);\r\n                }\r\n            } catch (IOException | JSONException e) {\r\n                e.printStackTrace();\r\n            }\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/my/MyDataService.java	(revision 9e1cdbf66ba0470da0ff8b3c93a62ce41f44fa0f)
++++ app/src/main/java/com/example/pet/my/MyDataService.java	(date 1607301675137)
+@@ -120,7 +120,7 @@
+                     order.setOrderState(rs.getString("orderState"));
+                     order.setUserId(rs.getInt("userId"));
+                     order.setAddresseeContact(rs.getString("addresseeContact"));
+-Log.e("MyDataService",order.toString());
++                    Log.e("MyDataService",order.toString());
+                     Cache.myOrderList.add(order);
+                 }
+             } catch (IOException | JSONException e) {
+Index: app/src/main/java/com/example/pet/other/Cache.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.other;\r\n\r\nimport com.example.pet.other.entity.Order;\r\nimport com.example.pet.other.entity.Pet;\r\nimport com.example.pet.other.entity.User;\r\n\r\nimport java.util.List;\r\n\r\npublic class Cache {\r\n    /**\r\n     * 存储一些全局信息\r\n     */\r\npublic static  User user;\r\npublic static final String MY_URL=\"http://192.168.43.202:8080/ChongBaoService_war_exploded/\";//我的URL\r\npublic static String url = \"http://10.7.89.96:8080/ChongBao_war_exploded/\";\r\n\r\npublic static int user_id = 1;\r\n\r\npublic static List<Order> myOrderList ;//我的订单数据\r\npublic static List<Pet> myPetList;//我的宠物数据\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/other/Cache.java	(revision 9e1cdbf66ba0470da0ff8b3c93a62ce41f44fa0f)
++++ app/src/main/java/com/example/pet/other/Cache.java	(date 1607301675148)
+@@ -10,12 +10,13 @@
+     /**
+      * 存储一些全局信息
+      */
+-public static  User user;
+-public static final String MY_URL="http://192.168.43.202:8080/ChongBaoService_war_exploded/";//我的URL
+-public static String url = "http://10.7.89.96:8080/ChongBao_war_exploded/";
++    public static String userPhone;
++    public static User user;
++    public static final String MY_URL = "http://192.168.43.202:8080/ChongBaoService_war_exploded/";//我的URL
++    public static String url = "http://10.7.89.96:8080/ChongBao_war_exploded/";
+ 
+-public static int user_id = 1;
++    public static int user_id = 1;
+ 
+-public static List<Order> myOrderList ;//我的订单数据
+-public static List<Pet> myPetList;//我的宠物数据
++    public static List<Order> myOrderList;//我的订单数据
++    public static List<Pet> myPetList;//我的宠物数据
+ }
+Index: app/src/main/java/com/example/pet/my/Login.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.my;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.animation.Animator;\r\nimport android.animation.AnimatorSet;\r\nimport android.animation.ObjectAnimator;\r\nimport android.animation.PropertyValuesHolder;\r\nimport android.animation.ValueAnimator;\r\nimport android.content.Intent;\r\nimport android.graphics.Color;\r\nimport android.os.Build;\r\nimport android.os.Bundle;\r\nimport android.os.Handler;\r\nimport android.os.Message;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.view.animation.AccelerateDecelerateInterpolator;\r\nimport android.widget.EditText;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport com.example.pet.MainActivity;\r\nimport com.example.pet.R;\r\nimport com.example.pet.other.Cache;\r\n\r\nimport java.io.IOException;\r\nimport java.io.InputStream;\r\nimport java.net.MalformedURLException;\r\nimport java.net.URL;\r\n\r\npublic class Login extends AppCompatActivity {\r\n    private String phone ;\r\n    private View progress;\r\n    private View mInputLayout;\r\n    private TextView login;\r\n    private float mWidth, mHeight;\r\n    private LinearLayout mName, mPsw;\r\n    private EditText etName;\r\n    private EditText etPassword;\r\n    private Handler handler = new Handler( ){\r\n        @Override\r\n        public void handleMessage(@NonNull Message msg) {\r\n           switch (msg.what){\r\n               case 1:\r\n                   mName.setVisibility(View.INVISIBLE);\r\n                   mPsw.setVisibility(View.INVISIBLE);\r\n                   inputAnimator(mInputLayout, mWidth, mHeight);\r\n                    Cache.userPhone = phone;\r\n                    Log.e(\"Login\",\"登录成功\"+Cache.userPhone);\r\n                    Intent intent2 = new Intent(Login.this,MyUserService.class);\r\n                    startService(intent2);\r\n\r\n\r\n                   break;\r\n               case 0:\r\n                   Toast.makeText(Login.this,\"密码有误，请重试\",Toast.LENGTH_LONG).show();\r\n                   break;\r\n           }\r\n        }\r\n    };\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_login);\r\n        if (Build.VERSION.SDK_INT >= 21) {   //只有5.0及以上系统才支持，因此这里先进行了一层if判断\r\n            View decorView = getWindow().getDecorView();\r\n            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN\r\n                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE    //设置为全屏显示，必须这两行代码一起才能生效\r\n                    |View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色\r\n            decorView.setSystemUiVisibility(option);\r\n            getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明\r\n        }\r\n        initView();\r\n    }\r\n\r\n    private void initView() {\r\n        login = (TextView) findViewById(R.id.login_btn);\r\n        progress = findViewById(R.id.layout_progress);\r\n        mInputLayout = findViewById(R.id.input_layout);\r\n        mName = (LinearLayout) findViewById(R.id.input_layout_name);\r\n        mPsw = (LinearLayout) findViewById(R.id.input_layout_psw);\r\n        etName = findViewById(R.id.login_et_username);\r\n        etPassword = findViewById(R.id.login_et_password);\r\n    }\r\n\r\n    public void onClicked(View view) {\r\n        switch (view.getId()){\r\n            case R.id.login_btn:\r\n                mWidth = login.getMeasuredWidth();\r\n                mHeight = login.getMeasuredHeight();\r\n\r\n                loginService();\r\n\r\n                break;\r\n            case R.id.login_register:\r\n                Intent intent = new Intent(this,Register.class);\r\n                startActivity(intent);\r\n                break;\r\n            case R.id.login_update:\r\n                Intent intent1 = new Intent(this,Update.class);\r\n                startActivity(intent1);\r\n                break;\r\n\r\n        }\r\n    }\r\n\r\n    private void loginService() {\r\n        phone = etName.getText().toString();\r\n\r\n        String pwd = etPassword.getText().toString();\r\n        if(phone.length() ==11 && pwd.length()!=0){\r\n            new Thread(){\r\n                @Override\r\n                public void run() {\r\n                    try {\r\n                        URL url = new URL(Cache.MY_URL+\"LoginServlet?num=\"+phone+\"&pwd=\"+pwd);\r\n                        InputStream in = url.openStream();\r\n                        int num = in.read();\r\n                        Message message = new Message();\r\n                        message.what = num;\r\n                        handler.sendMessage(message);\r\n                        in.close();\r\n                    } catch (MalformedURLException e) {\r\n                        e.printStackTrace();\r\n                    } catch (IOException e) {\r\n                        e.printStackTrace();\r\n                    }\r\n\r\n                }\r\n            }.start();\r\n        }else{\r\n            Toast.makeText(this,\"输入格式有误\",Toast.LENGTH_LONG).show();\r\n        }\r\n    }\r\n\r\n    private void inputAnimator(final View view, float w, float h) {\r\n        AnimatorSet set = new AnimatorSet();\r\n        ValueAnimator animator = ValueAnimator.ofFloat(0, w);\r\n        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {\r\n            @Override\r\n            public void onAnimationUpdate(ValueAnimator animation) {\r\n                float value = (Float) animation.getAnimatedValue();\r\n                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view\r\n                        .getLayoutParams();\r\n                params.leftMargin = (int) value;\r\n                params.rightMargin = (int) value;\r\n                view.setLayoutParams(params);\r\n            }\r\n        });\r\n        ObjectAnimator animator2 = ObjectAnimator.ofFloat(mInputLayout, \"scaleX\", 1f, 0.5f);\r\n        set.setDuration(1500);\r\n        set.setInterpolator(new AccelerateDecelerateInterpolator());\r\n        set.playTogether(animator, animator2);\r\n        set.start();\r\n        set.addListener(new Animator.AnimatorListener() {\r\n            @Override\r\n            public void onAnimationStart(Animator animation) {\r\n\r\n            }\r\n            @Override\r\n            public void onAnimationRepeat(Animator animation) {\r\n                // TODO Auto-generated method stub\r\n\r\n            }\r\n            @Override\r\n            public void onAnimationEnd(Animator animation) {\r\n                progress.setVisibility(View.VISIBLE);\r\n                progressAnimator(progress);\r\n                mInputLayout.setVisibility(View.INVISIBLE);\r\n                Intent intent1 = new Intent(Login.this,MyDataService.class);\r\n                startService(intent1);\r\n                Intent intent = new Intent(Login.this,MainActivity.class);\r\n                startActivity(intent);\r\n            }\r\n            @Override\r\n            public void onAnimationCancel(Animator animation) {\r\n                // TODO Auto-generated method stub\r\n            }\r\n        });\r\n    }\r\n    private void progressAnimator(final View view) {\r\n        PropertyValuesHolder animator = PropertyValuesHolder.ofFloat(\"scaleX\", 0.5f, 1f);\r\n        PropertyValuesHolder animator2 = PropertyValuesHolder.ofFloat(\"scaleY\", 0.5f, 1f);\r\n        ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(view, animator, animator2);\r\n        animator3.setDuration(1500);\r\n        animator3.setInterpolator(new JellyInterpolator());\r\n        animator3.start();\r\n    }\r\n\r\n    public void back(View view) {\r\n        Intent intent = new Intent(Login.this,MainActivity.class);\r\n        startActivity(intent);\r\n        this.finish();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/my/Login.java	(revision 9e1cdbf66ba0470da0ff8b3c93a62ce41f44fa0f)
++++ app/src/main/java/com/example/pet/my/Login.java	(date 1607301691571)
+@@ -54,7 +54,6 @@
+                     Intent intent2 = new Intent(Login.this,MyUserService.class);
+                     startService(intent2);
+ 
+-
+                    break;
+                case 0:
+                    Toast.makeText(Login.this,"密码有误，请重试",Toast.LENGTH_LONG).show();
+@@ -92,9 +91,7 @@
+             case R.id.login_btn:
+                 mWidth = login.getMeasuredWidth();
+                 mHeight = login.getMeasuredHeight();
+-
+                 loginService();
+-
+                 break;
+             case R.id.login_register:
+                 Intent intent = new Intent(this,Register.class);
+@@ -110,7 +107,7 @@
+ 
+     private void loginService() {
+         phone = etName.getText().toString();
+-
++Cache.userPhone = etName.getText().toString();
+         String pwd = etPassword.getText().toString();
+         if(phone.length() ==11 && pwd.length()!=0){
+             new Thread(){
+Index: app/src/main/res/layout/activity_new_pet.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_new_pet.xml	(date 1607262039037)
++++ app/src/main/res/layout/activity_new_pet.xml	(date 1607262039037)
+@@ -0,0 +1,22 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto">
++    <androidx.viewpager.widget.ViewPager
++        android:id="@+id/container"
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
++        <com.google.android.material.tabs.TabLayout
++            android:id="@+id/tab_layout"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            app:tabIndicatorColor="@color/colorAccent"
++            app:tabIndicatorHeight="2dp"
++            app:tabBackground="@android:color/white"
++            app:tabTextColor="@android:color/black"
++            app:tabSelectedTextColor="@android:color/holo_blue_light"/>
++
++    </androidx.viewpager.widget.ViewPager>
++</LinearLayout>
+Index: app/src/main/java/com/example/pet/my/NewPet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/my/NewPet.java	(date 1607260781909)
++++ app/src/main/java/com/example/pet/my/NewPet.java	(date 1607260781909)
+@@ -0,0 +1,16 @@
++package com.example.pet.my;
++
++import androidx.appcompat.app.AppCompatActivity;
++
++import android.os.Bundle;
++
++import com.example.pet.R;
++
++public class NewPet extends AppCompatActivity {
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_new_pet);
++    }
++}
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.example.pet\">\r\n\r\n    <permission\r\n        android:name=\"${applicationId}.permission.JPUSH_MESSAGE\"\r\n        android:protectionLevel=\"signature\" />\r\n    <uses-permission android:name=\"com.android.launcher.permission.READ_SETTINGS\" />\r\n    <uses-permission android:name=\"${applicationId}.permission.JPUSH_MESSAGE\" />\r\n    <uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\" />\r\n    <uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />\r\n    <uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"\r\n        tools:ignore=\"ProtectedPermissions\" />\r\n    <uses-permission android:name=\"android.permission.CAMERA\"/>\r\n    <uses-permission android:name=\"com.android.launcher.permission.READ_SETTINGS\" />\r\n    <uses-permission android:name=\"android.permission.WAKE_LOCK\" />\r\n    <uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />\r\n    <uses-permission android:name=\"android.permission.FOREGROUND_SERVICE\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\r\n\r\n    <application\r\n        android:name=\".other.DebugApp\"\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@drawable/lastlogo\"\r\n        android:label=\"@string/app_name\"\r\n        android:networkSecurityConfig=\"@xml/network_security_config\"\r\n        android:roundIcon=\"@drawable/lastlogo\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/AppTheme\"\r\n        android:usesCleartextTraffic=\"true\">\r\n        <activity android:name=\".my.AcountSecurity\"></activity>\r\n        <activity android:name=\".my.ConnectUs\" />\r\n        <activity android:name=\".my.order.MyOrderActivity\" />\r\n        <activity android:name=\".my.OrderComplete\" />\r\n        <activity android:name=\".my.editinfo.EditInfo\"\r\n            android:windowSoftInputMode=\"adjustPan|adjustUnspecified|stateHidden\"/>\r\n        <activity android:name=\".my.SetPassword\" />\r\n        <activity android:name=\".my.FunIntroduction\" />\r\n        <activity android:name=\".my.AboutUsLaw\" />\r\n        <activity android:name=\".my.Agreement\" />\r\n        <activity android:name=\".my.Order2\" />\r\n        <activity android:name=\".my.Register\" />\r\n        <activity android:name=\".my.Update\" />\r\n        <activity android:name=\".my.Check\" />\r\n        <activity android:name=\".my.Login\" />\r\n        <activity android:name=\".my.Pet\" />\r\n        <activity android:name=\".my.History\" />\r\n        <activity android:name=\".my.AboutUs\" />\r\n        <activity android:name=\".my.Setting\" />\r\n        <activity android:name=\".my.Post\" />\r\n        <activity android:name=\".forum.LandlordActivity\" />\r\n        <activity android:name=\".forum.TipsActivity\" />\r\n        <activity android:name=\".forum.ClassifiedForumActivity\" />\r\n        <activity android:name=\".forum.TopicActivity\" />\r\n        <activity android:name=\".chat.ChatView\" />\r\n        <activity android:name=\".chat.Booking\" />\r\n        <activity android:name=\".forum.PublishActivity\" />\r\n        <activity android:name=\".nursing.CancelActivity\" />\r\n        <activity android:name=\".nursing.JiedanActivity\" />\r\n        <activity android:name=\".nursing.ChoiceActivity\" />\r\n        <activity android:name=\".nursing.XuzhiActivity\" />\r\n        <activity android:name=\".nursing.Choice2Activity\" />\r\n        <activity android:name=\".nursing.ChangehisActivity\" />\r\n        <activity android:name=\".nursing.EndActivity\" />\r\n        <activity android:name=\".nursing.StartActivity\" />\r\n        <activity android:name=\".nursing.NeworderActivity\" />\r\n        <activity android:name=\".nursing.CostActivity\" />\r\n        <activity android:name=\".StartActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n\r\n        <meta-data\r\n            android:name=\"com.baidu.lbsapi.API_KEY\"\r\n            android:value=\"X9PswedQCXVcGIkb8FR9u0oWpOE72WB5\" />\r\n\r\n        <service\r\n            android:name=\"com.baidu.location.f\"\r\n            android:enabled=\"true\"\r\n            android:process=\":remote\">\r\n            <intent-filter>\r\n                <action android:name=\"com.baidu.location.service_v5.0.0\" />\r\n            </intent-filter>\r\n        </service>\r\n\r\n<!--        <provider-->\r\n<!--            android:name=\"androidx.core.content.FileProvider\"-->\r\n<!--            android:authorities=\"${applicationId}.provider\"-->\r\n<!--            android:exported=\"false\"-->\r\n<!--            android:grantUriPermissions=\"true\">-->\r\n<!--            <meta-data-->\r\n<!--                android:name=\"android.support.FILE_PROVIDER_PATHS\"-->\r\n<!--                android:resource=\"\" />-->\r\n<!--        </provider>-->\r\n\r\n        <activity\r\n            android:name=\".MainActivity\"\r\n            android:windowSoftInputMode=\"adjustPan\">\r\n        </activity>\r\n        <activity\r\n            android:name=\"cn.jpush.android.ui.PushActivity\"\r\n            android:configChanges=\"orientation|keyboardHidden\"\r\n            android:exported=\"false\"\r\n            android:theme=\"@android:style/Theme.NoTitleBar\">\r\n            <intent-filter>\r\n                <action android:name=\"cn.jpush.android.ui.PushActivity\" />\r\n\r\n                <category android:name=\"android.intent.category.DEFAULT\" />\r\n                <category android:name=\"${applicationId}\" />\r\n            </intent-filter>\r\n        </activity> <!-- Required SDK 核心功能 -->\r\n        <!-- 可配置android:process参数将PushService放在其他进程中 -->\r\n        <service\r\n            android:name=\"cn.jpush.android.service.PushService\"\r\n            android:process=\":pushcore\">\r\n            <intent-filter>\r\n                <action android:name=\"cn.jpush.android.intent.REGISTER\" />\r\n                <action android:name=\"cn.jpush.android.intent.REPORT\" />\r\n                <action android:name=\"cn.jpush.android.intent.PushService\" />\r\n                <action android:name=\"cn.jpush.android.intent.PUSH_TIME\" />\r\n            </intent-filter>\r\n        </service> <!-- since 3.0.9 Required SDK 核心功能 -->\r\n        <provider\r\n            android:name=\"cn.jpush.android.service.DataProvider\"\r\n            android:authorities=\"${applicationId}.DataProvider\"\r\n            android:exported=\"false\"\r\n            android:process=\":pushcore\" /> <!-- Required SDK核心功能 -->\r\n        <service android:name=\".my.MyUserService\"/>\r\n        <receiver\r\n            android:name=\"cn.jpush.android.service.PushReceiver\"\r\n            android:enabled=\"true\">\r\n            <intent-filter android:priority=\"1000\">\r\n                <action android:name=\"cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY\" /> <!-- Required  显示通知栏 -->\r\n                <category android:name=\"${applicationId}\" />\r\n            </intent-filter>\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.USER_PRESENT\" />\r\n                <action android:name=\"android.net.conn.CONNECTIVITY_CHANGE\" />\r\n            </intent-filter>\r\n            <!-- Optional -->\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.PACKAGE_ADDED\" />\r\n                <action android:name=\"android.intent.action.PACKAGE_REMOVED\" />\r\n\r\n                <data android:scheme=\"package\" />\r\n            </intent-filter>\r\n        </receiver> <!-- Required SDK核心功能 -->\r\n        <receiver\r\n            android:name=\"cn.jpush.android.service.AlarmReceiver\"\r\n            android:exported=\"false\" /> <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->\r\n        <!-- since 3.3.0 接收JPush相关事件 -->\r\n        <receiver\r\n            android:name=\".other.JpushReceiver\"\r\n            android:enabled=\"true\"\r\n            android:exported=\"false\">\r\n            <intent-filter>\r\n\r\n                <!--\r\n                <action android:name=\"cn.jpush.android.intent.REGISTRATION\" />\r\n                <action android:name=\"cn.jpush.android.intent.MESSAGE RECEIVED\"/>\r\n                <action android:name=\"cn.jpush.android.intent.NOTIFICATION_RECEIVED\"/>\r\n                <action android:name=\"cn.jpush.android.intent.NOTIFICATION_OPENED\" />\r\n                <action android:name=\"cn.jpush.android.intent.CONNECTION\"/>\r\n                -->\r\n\r\n                <action android:name=\"cn.jpush.android.intent.RECEIVE_MESSAGE\" />\r\n\r\n                <category android:name=\"${applicationId}\" />\r\n            </intent-filter>\r\n        </receiver> <!-- since 3.3.0 Required SDK核心功能 -->\r\n        <activity\r\n            android:name=\"cn.jpush.android.service.JNotifyActivity\"\r\n            android:exported=\"false\"\r\n            android:taskAffinity=\"jpush.custom\"\r\n            android:theme=\"@android:style/Theme.Translucent.NoTitleBar\">\r\n            <intent-filter>\r\n                <action android:name=\"cn.jpush.android.intent.JNotifyActivity\" />\r\n\r\n                <category android:name=\"${applicationId}\" />\r\n            </intent-filter>\r\n        </activity> <!-- since 3.3.0 Required SDK 核心功能 -->\r\n        <!-- 可配置android:process参数将PushService放在其他进程中 -->\r\n        <!-- User defined.  For test only 继承自cn.jpush.android.service.JCommonService -->\r\n        <service\r\n            android:name=\".other.JpushService\"\r\n            android:process=\":pushcore\">\r\n            <intent-filter>\r\n                <action android:name=\"cn.jiguang.user.service.action\" />\r\n            </intent-filter>\r\n        </service>\r\n        <service android:name=\".my.MyDataService\" />\r\n\r\n        <meta-data\r\n            android:name=\"JPUSH_CHANNEL\"\r\n            android:value=\"jpush_channel\" />\r\n        <meta-data\r\n            android:name=\"JPUSH_APPKEY\"\r\n            android:value=\"7153b7916be94ab289793e76\" />\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 9e1cdbf66ba0470da0ff8b3c93a62ce41f44fa0f)
++++ app/src/main/AndroidManifest.xml	(date 1607300842968)
+@@ -6,15 +6,17 @@
+     <permission
+         android:name="${applicationId}.permission.JPUSH_MESSAGE"
+         android:protectionLevel="signature" />
++
+     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+     <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
+     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+     <uses-permission android:name="android.permission.INTERNET" />
+     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
++    <uses-permission
++        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+         tools:ignore="ProtectedPermissions" />
+-    <uses-permission android:name="android.permission.CAMERA"/>
++    <uses-permission android:name="android.permission.CAMERA" />
+     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+     <uses-permission android:name="android.permission.WAKE_LOCK" />
+     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+@@ -35,12 +37,16 @@
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme"
+         android:usesCleartextTraffic="true">
+-        <activity android:name=".my.AcountSecurity"></activity>
++        <activity android:name=".my.NewPet">
++
++        </activity>
++        <activity android:name=".my.AcountSecurity" />
+         <activity android:name=".my.ConnectUs" />
+         <activity android:name=".my.order.MyOrderActivity" />
+         <activity android:name=".my.OrderComplete" />
+-        <activity android:name=".my.editinfo.EditInfo"
+-            android:windowSoftInputMode="adjustPan|adjustUnspecified|stateHidden"/>
++        <activity
++            android:name=".my.editinfo.EditInfo"
++            android:windowSoftInputMode="adjustPan|adjustUnspecified|stateHidden" />
+         <activity android:name=".my.SetPassword" />
+         <activity android:name=".my.FunIntroduction" />
+         <activity android:name=".my.AboutUsLaw" />
+@@ -73,11 +79,7 @@
+         <activity android:name=".nursing.NeworderActivity" />
+         <activity android:name=".nursing.CostActivity" />
+         <activity android:name=".StartActivity">
+-            <intent-filter>
+-                <action android:name="android.intent.action.MAIN" />
+ 
+-                <category android:name="android.intent.category.LAUNCHER" />
+-            </intent-filter>
+         </activity>
+ 
+         <meta-data
+@@ -91,22 +93,22 @@
+             <intent-filter>
+                 <action android:name="com.baidu.location.service_v5.0.0" />
+             </intent-filter>
+-        </service>
+-
+-<!--        <provider-->
+-<!--            android:name="androidx.core.content.FileProvider"-->
+-<!--            android:authorities="${applicationId}.provider"-->
+-<!--            android:exported="false"-->
+-<!--            android:grantUriPermissions="true">-->
+-<!--            <meta-data-->
+-<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
+-<!--                android:resource="" />-->
+-<!--        </provider>-->
+-
++        </service> <!-- <provider -->
++        <!-- android:name="androidx.core.content.FileProvider" -->
++        <!-- android:authorities="${applicationId}.provider" -->
++        <!-- android:exported="false" -->
++        <!-- android:grantUriPermissions="true"> -->
++        <!-- <meta-data -->
++        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
++        <!-- android:resource="" /> -->
++        <!-- </provider> -->
+         <activity
+             android:name=".MainActivity"
+-            android:windowSoftInputMode="adjustPan">
+-        </activity>
++            android:windowSoftInputMode="adjustPan"> <intent-filter>
++            <action android:name="android.intent.action.MAIN" />
++
++            <category android:name="android.intent.category.LAUNCHER" />
++        </intent-filter></activity>
+         <activity
+             android:name="cn.jpush.android.ui.PushActivity"
+             android:configChanges="orientation|keyboardHidden"
+@@ -135,7 +137,8 @@
+             android:authorities="${applicationId}.DataProvider"
+             android:exported="false"
+             android:process=":pushcore" /> <!-- Required SDK核心功能 -->
+-        <service android:name=".my.MyUserService"/>
++        <service android:name=".my.MyUserService" />
++
+         <receiver
+             android:name="cn.jpush.android.service.PushReceiver"
+             android:enabled="true">
+Index: app/src/main/java/com/example/pet/my/Pet.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.my;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\n\r\nimport android.graphics.Color;\r\nimport android.os.Build;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.AdapterView;\r\nimport android.widget.ArrayAdapter;\r\nimport android.widget.Spinner;\r\n\r\nimport com.example.pet.R;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class Pet extends AppCompatActivity {\r\n    private List<String> list = new ArrayList<String>();\r\n\r\n    private Spinner spinner;\r\n    private ArrayAdapter<String> adapter;\r\n    private Toolbar toolbar;\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_pet);\r\n        if (Build.VERSION.SDK_INT >= 21) {   //只有5.0及以上系统才支持，因此这里先进行了一层if判断\r\n            View decorView = getWindow().getDecorView();\r\n            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN\r\n                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE    //设置为全屏显示，必须这两行代码一起才能生效\r\n                    |View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色\r\n            decorView.setSystemUiVisibility(option);\r\n            getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明\r\n        }\r\n        list.add(\"蓝色精灵\");\r\n        list.add(\"格斗小五\");\r\n        list.add(\"麋鹿\");\r\n        list.add(\"冰龙王\");\r\n        spinner = findViewById(R.id.spinner_pet);\r\n        //定义适配器\r\n        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);\r\n        //设置下拉菜单元样式\r\n        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);\r\n        //将适配器添加到下拉列表上\r\n        spinner.setAdapter(adapter);\r\n        //添加监听器\r\n        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {\r\n            @Override\r\n            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {\r\n\r\n            }\r\n\r\n            @Override\r\n            public void onNothingSelected(AdapterView<?> parent) {\r\n\r\n            }\r\n        });\r\n        toolbar = findViewById(R.id.pet_toolbar);\r\n        toolbar.setNavigationOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Pet.this.finish();\r\n            }\r\n        });\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/my/Pet.java	(revision 9e1cdbf66ba0470da0ff8b3c93a62ce41f44fa0f)
++++ app/src/main/java/com/example/pet/my/Pet.java	(date 1607260533215)
+@@ -18,7 +18,6 @@
+ 
+ public class Pet extends AppCompatActivity {
+     private List<String> list = new ArrayList<String>();
+-
+     private Spinner spinner;
+     private ArrayAdapter<String> adapter;
+     private Toolbar toolbar;
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\r\napply plugin: 'com.mob.sdk'\r\nMobSDK {\r\n    appKey \"31a0f08bbf072\"\r\n    appSecret \"a79d0868be86ae529a738c482cad4829\"\r\n    SMSSDK {}\r\n    fp true //严格模式\r\n}\r\nandroid {\r\n    sourceSets {\r\n        main {\r\n            jniLibs.srcDirs = ['libs']\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility 1.8\r\n        targetCompatibility 1.8\r\n    }\r\n    compileSdkVersion 30\r\n    buildToolsVersion \"30.0.2\"\r\n    defaultConfig {\r\n        applicationId \"com.example.pet\"\r\n        minSdkVersion 19\r\n        targetSdkVersion 30\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n        multiDexEnabled true\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'\r\n    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12'\r\n    implementation 'org.greenrobot:eventbus:3.1.1'\r\n    //时间选择器\r\n    implementation 'com.contrarywind:Android-PickerView:4.1.9'\r\n    implementation 'com.android.support:multidex:1.0.3'\r\n    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.0'\r\n    implementation 'com.google.code.gson:gson:2.8.5'\r\n    implementation 'com.squareup.okhttp3:okhttp:3.10.0'\r\n    implementation 'com.github.zcweng:switch-button:0.0.3@aar'\r\n    implementation 'com.zhy:percent-support-extends:1.1.1'\r\n    implementation 'com.youth.banner:banner:1.4.10'\r\n    implementation 'com.github.bumptech.glide:glide:4.11.0'\r\n    implementation 'androidx.recyclerview:recyclerview:1.1.0'\r\n    implementation 'androidx.cardview:cardview:1.0.0'\r\n    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'\r\n    implementation 'de.hdodenhof:circleimageview:3.1.0'\r\n    implementation 'com.youth.banner:banner:1.4.10'\r\n    implementation fileTree(dir: 'libs', include: ['*.jar'])\r\n    implementation 'androidx.appcompat:appcompat:1.0.2'\r\n    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'\r\n    implementation 'androidx.legacy:legacy-support-v4:1.0.0'\r\n    testImplementation 'junit:junit:4.12'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.0'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'\r\n    implementation files('libs\\\\BaiduLBS_Android.jar')\r\n    implementation files('libs\\\\jcore-android-2.4.0.jar')\r\n    implementation files('libs\\\\jpush-android-3.6.8.jar')\r\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\r\n    implementation 'androidx.appcompat:appcompat:1.2.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'\r\n    testImplementation 'junit:junit:4.12'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.2'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 9e1cdbf66ba0470da0ff8b3c93a62ce41f44fa0f)
++++ app/build.gradle	(date 1607261340013)
+@@ -30,6 +30,8 @@
+ }
+ 
+ dependencies {
++    implementation 'com.android.support:design:26.1.0'
++    implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
+     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
+     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12'
+     implementation 'org.greenrobot:eventbus:3.1.1'
+@@ -45,6 +47,7 @@
+     implementation 'com.github.bumptech.glide:glide:4.11.0'
+     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+     implementation 'androidx.cardview:cardview:1.0.0'
++    implementation 'com.google.android.material:material:1.1.0'
+     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+     implementation 'de.hdodenhof:circleimageview:3.1.0'
+     implementation 'com.youth.banner:banner:1.4.10'
