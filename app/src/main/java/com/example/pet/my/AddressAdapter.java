@@ -66,7 +66,7 @@ public class AddressAdapter extends BaseAdapter {
         //设置内容
         String str = list.get(position).getAdd();
         int index = str.indexOf("市");
-        holder.city.setText(str.substring(0,index));
+        holder.city.setText(str.substring(0,index+1));
         holder.town.setText(str.substring(index+1));
         holder.phone.setText(list.get(position).getName()+"    "+list.get(position).getTel());
         holder.imageView.setOnClickListener(new View.OnClickListener() {

@@ -61,11 +61,17 @@ public class MyFragment extends Fragment {
                 photo.setImageBitmap(Cache.user.getPhoto());
             }
         }
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),Login.class);
+                startActivity(intent);
+            }
+        });
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Cache.user !=null){
-
                     Intent intent = new Intent(getContext(), EditInfo.class);
                     startActivity(intent);}
                 else {

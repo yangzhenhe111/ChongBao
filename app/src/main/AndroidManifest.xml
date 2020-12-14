@@ -52,7 +52,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".other.MainActivity"></activity>
+
         <activity
             android:name=".my.editinfo.EditInfo"
             tools:ignore="MissingClass" />
