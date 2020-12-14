@@ -1,7 +1,6 @@
 package com.example.pet.forum;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -27,7 +26,6 @@ import com.example.pet.R;
 import com.example.pet.my.Post;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Comment;
-import com.example.pet.other.entity.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;

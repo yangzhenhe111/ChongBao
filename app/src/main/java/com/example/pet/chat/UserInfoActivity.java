@@ -99,9 +99,7 @@ public class UserInfoActivity extends BaseActivity {
         JMessageClient.getUserInfo(userName, new GetUserInfoCallback() {
             @Override
             public void gotResult(int i, String s, UserInfo userInfo) {
-//                Log.e("iiiiiiiii", getIntent().getStringExtra("USERNAME")+"\n"+getUserName+"\n"+userName+"\n" + userInfo);
                 if (i == 0) {
-//                    avtar = userInfo.getAvatarFile().toURI().toString();
                     Picasso.with(com.example.pet.chat.UserInfoActivity.this)
                             .load(userInfo.getAvatarFile())
                             .placeholder(R.mipmap.icon_user)
@@ -179,8 +177,6 @@ public class UserInfoActivity extends BaseActivity {
                 Intent intent = new Intent(com.example.pet.chat.UserInfoActivity.this, ChatMsgActivity.class);
                 intent.putExtra("USERNAME", getIntent().getStringExtra("USERNAME"));
                 startActivity(intent);
-
-
                 break;
             default:
                 break;

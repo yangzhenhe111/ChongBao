@@ -64,12 +64,8 @@ import static cn.jiguang.imui.commons.models.IMessage.MessageType.SEND_TEXT;
 import static cn.jiguang.imui.commons.models.IMessage.MessageType.SEND_VIDEO;
 import static cn.jpush.im.android.api.enums.ContentType.prompt;
 
-/**
- * Created by wapchief on 2017/7/19.
- */
 
-public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChangedListener,
-        View.OnTouchListener {
+public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChangedListener, View.OnTouchListener {
     @BindView(R.id.title_bar_back)
     ImageView mTitleBarBack;
     @BindView(R.id.title_bar_title)
@@ -113,6 +109,7 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
     @Override
     protected int setContentView() {
         return R.layout.activity_chat;
+
     }
 
     @Override
@@ -125,7 +122,7 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
         //注册接收者
         JMessageClient.registerEventReceiver(this);
         conversations = JMessageClient.getConversationList();
-        userName = getIntent().getStringExtra("USERNAME");
+        userName = getIntent().getStringExtra("NAKENAME");
         //消息界面关闭通知
         JMessageClient.enterSingleConversation(userName);
         msgID = getIntent().getStringExtra("MSGID");
@@ -173,14 +170,12 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
                 if (screenHeight - r.bottom > 0) {
                     heightDifference = screenHeight - r.bottom;
                 }
-//                LogUtils.e(heightDifference + "");
             }
         });
     }
 
     /*输入框操作*/
     private void initInputView() {
-
         mChatInput.setMenuClickListener(new OnMenuClickListener() {
             @Override
             public boolean onSendTextMessage(CharSequence charSequence) {
@@ -229,27 +224,22 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
 
                 } else {
                     message = new MyMessage(((TextContent) conversation.getAllMessage().get(i).getContent()).getText(), SEND_TEXT);
-
                 }
-                Log.e("conversationT", ":" + conversation.getAllMessage().get(i).getContent().getContentType());
                 message.setUserInfo(new DefaultUser(userName, "IronMan", (StringUtils.isNull(imgSend)) ? "R.drawable.ironman" : imgSend));
             } else {
                 //判断消息是否撤回
                 if (conversation.getAllMessage().get(i).getContent().getContentType().equals(prompt)) {
                     message = new MyMessage(((PromptContent) conversation.getAllMessage().get(i).getContent()).getPromptText(), IMessage.MessageType.RECEIVE_TEXT);
-
                 } else {
                     message = new MyMessage(((TextContent) conversation.getAllMessage().get(i).getContent()).getText(), IMessage.MessageType.RECEIVE_TEXT);
                 }
                 message.setUserInfo(new DefaultUser(JMessageClient.getMyInfo().getUserName(), "DeadPool", (StringUtils.isNull(imgRecrive)) ? "R.drawable.ironman" : imgRecrive));
-
             }
             message.setPosition(i);
             message.setMessage(conversation.getAllMessage().get(i));
             message.setMsgID(conversation.getAllMessage().get(i).getServerMessageId());
             message.setTimeString(TimeUtils.ms2date("MM-dd HH:mm", conversation.getAllMessage().get(i).getCreateTime()));
             list.add(message);
-
         }
         Collections.reverse(list);
         conversation.resetUnreadCount();
@@ -265,7 +255,6 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
     /*接收到的消息*/
     public void onEvent(MessageEvent event) {
         final Message message = event.getMessage();
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -276,7 +265,6 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
                 myMessage.setText(((TextContent) message.getContent()).getText() + "");
                 myMessage.setTimeString(TimeUtils.ms2date("MM-dd HH:mm", message.getCreateTime()));
                 myMessage.setUserInfo(new DefaultUser(JMessageClient.getMyInfo().getUserName(), "DeadPool", imgRecrive));
-
                 if (message.getContentType() == ContentType.text || message.getContentType().equals("text")) {
                     mAdapter.addToStart(myMessage, true);
                     mAdapter.notifyDataSetChanged();
@@ -284,10 +272,7 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
                 //收到消息时，添加到集合
                 list.add(myMessage);
             }
-
         });
-
-        //do your own business
     }
 
     /*接收到撤回的消息*/
@@ -296,7 +281,6 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.e("dataSize", mData.size() + "," + list.size());
                 for (int i = 0; i <= list.size(); i++) {
                     Log.e("messageRetract", "message:" + message + "\nMymessage:" + list.get(i));
                     if (list.get(i).getMsgID() == message.getServerMessageId()) {
@@ -308,9 +292,7 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
                     }
                 }
             }
-
         });
-
     }
 
     @Override
@@ -354,9 +336,6 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
          * 3、ImageLoader 的实例，用来展示头像。如果为空，将会隐藏头像。
          */
         final MsgListAdapter.HoldersConfig holdersConfig = new MsgListAdapter.HoldersConfig();
-//
-//        holdersConfig.setSenderTxtMsg(MyTexViewHolder.class,R.layout.item_msglist_send);
-//        holdersConfig.setReceiverTxtMsg(MyTexViewHolder.class,R.layout.item_msglist_send);
         mAdapter = new MsgListAdapter<MyMessage>(helper.getUserId(), holdersConfig, imageLoader);
         //单击消息事件，可以选择查看大图或者播放视频
         mAdapter.setOnMsgClickListener(new MsgListAdapter.OnMsgClickListener<MyMessage>() {
@@ -471,18 +450,9 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
                     intent = new Intent(mContext, UserInfoActivity.class);
                     intent.putExtra("USERNAME", userName);
                 }
-                Log.e("userName", userInfo + "\n" + userName);
                 startActivity(intent);
             }
         });
-
-        //重新发送
-        /*mAdapter.setMsgResendListener(new MsgListAdapter.OnMsgResendListener<MyMessage>() {
-            @Override
-            public void onMessageResend(MyMessage message) {
-                // resend message here
-            }
-        });*/
 
         MyMessage message = new MyMessage("Hello World", IMessage.MessageType.RECEIVE_TEXT);
         message.setUserInfo(new DefaultUser("0", "Deadpool", "R.drawable.deadpool"));
@@ -492,7 +462,6 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
             public void onLoadMore(int page, int totalCount) {
                 if (totalCount <= mData.size()) {
                     Log.i("MessageListActivity", "Loading next page");
-//                    loadNextPage();
                 }
             }
         });
@@ -501,22 +470,11 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
         mAdapter.getLayoutManager().scrollToPosition(0);
     }
 
-    /*加载更多*/
-    private void loadNextPage() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.addToEnd(mData);
-            }
-        }, 1000);
-    }
-
 
     @Override
     public void onSizeChanged(int w, int h, int oldw, int oldh) {
         if (oldh - h > 300) {
-//            mChatInput.setMenuContainerHeight(oldh - h);
-//            mChatView.setMenuHeight(oldh - h);
+
         }
         scrollToBottom();
     }
@@ -546,9 +504,9 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
     /*标题栏*/
     private void initTitleBar() {
         mTitleBarBack.setVisibility(View.INVISIBLE);
-        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.mipmap.icon_back));
-        mTitleOptionsImg.setVisibility(View.GONE);
-        mTitleOptionsTv.setVisibility(View.VISIBLE);
+        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.drawable.back1));
+        mTitleOptionsImg.setImageDrawable(getResources().getDrawable(R.drawable.slh));
+        mTitleOptionsImg.setVisibility(View.VISIBLE);
         mTitleBarTitle.setText(userName);
     }
 
@@ -564,19 +522,18 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.title_bar_back, R.id.title_bar_title, R.id.title_options_tv})
+    @OnClick({R.id.title_bar_back, R.id.title_bar_title, R.id.title_options_img})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_bar_title:
                 Intent intent = new Intent(mContext, UserInfoActivity.class);
-                intent.putExtra("USERNAME", userName);
+                intent.putExtra("USERNAME", getIntent().getStringExtra("USERNAME"));
                 break;
             case R.id.title_bar_back:
                 finish();
-                //重置会话未读
                 conversation.resetUnreadCount();
                 break;
-            case R.id.title_options_tv:
+            case R.id.title_options_img:
                 //
                 MyAlertDialog dialog = new MyAlertDialog(this, new String[]{"清空聊天记录", "清空并删除会话"}, new DialogInterface.OnClickListener() {
                     @Override
@@ -590,7 +547,6 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
                                     mAdapter.notifyDataSetChanged();
                                     dismissProgressDialog();
                                 }
-
                                 break;
                             case 1:
                                 showProgressDialog("正在删除");
@@ -605,7 +561,6 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
                 });
                 dialog.initDialog(Gravity.RIGHT | Gravity.TOP);
                 dialog.dialogSize(200, 0, 0, 55);
-
                 break;
             default:
                 break;
@@ -620,7 +575,6 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
         myMessage.setMessage(message1);
         myMessage.setTimeString(TimeUtils.ms2date("MM-dd HH:mm", message1.getCreateTime()));
         myMessage.setUserInfo(new DefaultUser(JMessageClient.getMyInfo().getUserName(), "DeadPool", imgSend));
-
         message1.setOnSendCompleteCallback(new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
@@ -631,7 +585,7 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
                     mChatInput.dismissEmojiLayout();
                     mChatInput.dismissPhotoLayout();
                     mChatInput.dismissRecordVoiceLayout();
-                    onHideKeyboard();
+                    //onHideKeyboard();
                 } else {
                     Log.e("发送失败？", s);
                 }
@@ -647,7 +601,7 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
     String state;
 
     public void friendState() {
-        NetWorkManager.isFriendState(userName, new Callback<UserStateBean>() {
+        NetWorkManager.isFriendState(getIntent().getStringExtra("USERNAME"), new Callback<UserStateBean>() {
             @Override
             public void onResponse(Call<UserStateBean> call, Response<UserStateBean> response) {
                 if (response.code() == 200) {
@@ -664,7 +618,6 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
 
             @Override
             public void onFailure(Call<UserStateBean> call, Throwable throwable) {
-//                LogUtils.e(throwable.getMessage()+".");
             }
         });
 

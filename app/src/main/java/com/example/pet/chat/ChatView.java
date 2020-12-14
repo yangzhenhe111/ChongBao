@@ -26,7 +26,6 @@ public class ChatView extends RelativeLayout {
     private TextView mTitle;
     private MessageList mMsgList;
     private ChatInputView mChatInput;
-    private LinearLayout mMenuLl;
     private RecordVoiceButton mRecordVoiceBtn;
 
     private boolean mHasInit;
@@ -51,15 +50,10 @@ public class ChatView extends RelativeLayout {
     public void initModule() {
         mTitle = (TextView) findViewById(R.id.title_bar_title);
         mMsgList = (MessageList) findViewById(R.id.msg_list);
-        mMenuLl = (LinearLayout) findViewById(R.id.aurora_ll_menuitem_container);
         mChatInput = (ChatInputView) findViewById(R.id.chat_input);
-
         mRecordVoiceBtn = mChatInput.getRecordVoiceButton();
-
         mMsgList = (MessageList) findViewById(R.id.msg_list);
         mMsgList.setHasFixedSize(true);
-//        mMsgList.setShowReceiverDisplayName(0);
-//        mMsgList.setShowSenderDisplayName(1);
     }
 
     public void setTitle(String title) {

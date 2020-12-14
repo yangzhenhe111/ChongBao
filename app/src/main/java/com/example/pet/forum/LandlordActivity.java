@@ -10,21 +10,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
+import com.example.pet.chat.ChatMsgActivity;
+import com.example.pet.chat.SharedPrefHelper;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Tips;
-import com.rohit.recycleritemclicksupport.RecyclerItemClickSupport;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +41,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.model.Conversation;
+import cn.jpush.im.android.api.model.UserInfo;
 
 public class LandlordActivity extends AppCompatActivity {
 
@@ -127,10 +130,28 @@ public class LandlordActivity extends AppCompatActivity {
         btn_private_letter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setClass(LandlordActivity.this,);
-//                intent.putExtra("landlordPhone",getIntent().getStringExtra("phone"));
-//                startActivity(intent);
+                    Conversation conv = JMessageClient.getSingleConversation(getIntent().getStringExtra("phone"), "7153b7916be94ab289793e76");
+                    Log.e("msg", SharedPrefHelper.getInstance().getAppKey());
+                    if (conv == null) {
+                        Conversation.createSingleConversation(getIntent().getStringExtra("phone"), "7153b7916be94ab289793e76");
+                    }
+                    JMessageClient.getConversationList().add(conv);
+                    JMessageClient.getUserInfo(getIntent().getStringExtra("phone"), new GetUserInfoCallback() {
+                        @Override
+                        public void gotResult(int i, String s, UserInfo userInfo) {
+                            if (i == 0) {
+                                Intent intent = new Intent(LandlordActivity.this, ChatMsgActivity.class);
+                                if (userInfo.getNickname()!=null) {
+                                    intent.putExtra("NAKENAME", userInfo.getNickname());
+                                }
+                                if (userInfo.getAvatarFile() != null) {
+                                    intent.putExtra("ICON", userInfo.getAvatarFile().toURI().toString());
+                                }
+                                intent.putExtra("USERNAME", getIntent().getStringExtra("phone"));
+                                startActivity(intent);
+                            }
+                        }
+                    });
             }
         });
         lv_landlord = findViewById(R.id.lv_landlord);

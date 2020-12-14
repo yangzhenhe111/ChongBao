@@ -43,8 +43,6 @@ public class NetWorkManager {
                         .addHeader("Content-Type", "application/json; charset=utf-8")
                         .addHeader("Authorization", "Basic " + base64_auth_string)
                         .build();
-                Log.d("onrequest", "request:" + request.toString());
-                Log.d("onrequestHeader", "request headers:" + request.headers().toString());
                 return chain.proceed(request);
             }
         });
@@ -54,16 +52,10 @@ public class NetWorkManager {
     /*判断好友在线状态*/
     public static void isFriendState(String userName, Callback<UserStateBean> callback){
         headers();
-        Log.e("base64_auth_string", base64_auth_string);
         OkHttpClient client=httpClient.build();
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(Url.JPUSH_ROOT)
-                .client(client)
-                .build();
+        Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(Url.JPUSH_ROOT).client(client).build();
         Api aPi = retrofit.create(Api.class);
-        Call<UserStateBean> call = aPi.isFriendState(
-                userName);
+        Call<UserStateBean> call = aPi.isFriendState(userName);
         call.enqueue(callback);
 
     }

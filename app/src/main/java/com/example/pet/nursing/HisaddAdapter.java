@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.pet.R;
+import com.example.pet.other.Cache;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,6 +30,7 @@ import java.util.List;
 
 public class HisaddAdapter extends BaseAdapter {
     private viewHolder vh;
+    private int id;
     private Context mContext;
     private int itemLayoutId;
     private List<HisAddress> adds = new ArrayList<>();
@@ -41,7 +44,8 @@ public class HisaddAdapter extends BaseAdapter {
                     builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            remove((String)msg.obj);
+                            remove(id);
+                            Log.e("HisaddAdapter",id+"");
                             dialog.dismiss();
                         }
                     });
@@ -139,19 +143,19 @@ public class HisaddAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Message msg = new Message();
                 msg.what = 1;
-                msg.obj = add.getId();
+                id = add.getId();
+
                 handler.sendMessage(msg);
             }
         });
         return convertView;
     }
 
-    private void remove(final String s) {
+    private void remove(final int s) {
         new Thread() {
             public void run() {
                 try {
-                    URL url = new URL("Removecar" + s);
-                    url.openStream();
+                    URL url = new URL(Cache.MY_URL+"DeleteAddress?id="+s);
                     URLConnection con = url.openConnection();
                     InputStream in = con.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/page4"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
         <RelativeLayout
@@ -20,7 +21,7 @@
                         android:id="@+id/btn_landlord_back"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/back"/>
+                        android:src="@drawable/back1"/>
                     <Button
                         android:id="@+id/btn_follow"
                         android:layout_width="120dp"
@@ -33,12 +34,18 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="177dp"
+                        android:scaleType="fitXY"
+                        android:background="@drawable/lz"/>
                     <com.example.pet.forum.RoundImageView
                         android:id="@+id/iv_head"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_gravity="center"
-                        android:layout_centerHorizontal="true"/>
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:src="@mipmap/icon_user"/>
                     <Button
                         android:id="@+id/btn_private_letter"
                         android:layout_width="wrap_content"
@@ -58,7 +65,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="他/她发布的贴子"
+                    android:text="TA发布的贴子"
+                    android:textColor="#000000"
                     android:textSize="28dp"
                     android:layout_marginTop="30dp"
                     android:layout_gravity="center"/>

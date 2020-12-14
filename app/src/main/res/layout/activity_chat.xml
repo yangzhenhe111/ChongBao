@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-    <include layout="@layout/title_bar"/>
+    <include layout="@layout/title_bar" />
 
     <LinearLayout
         android:id="@+id/ll"

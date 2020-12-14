@@ -18,13 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Comment;
-import com.example.pet.other.entity.Tips;
 
 import org.json.JSONArray;
 import org.json.JSONException;
