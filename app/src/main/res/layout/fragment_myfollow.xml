@@ -4,13 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".chat.MyFollow">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_no_follow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="您还没有关注其他人快去关注一下吧!"
+            android:textSize="42sp"
+            android:gravity="center"/>
         <ListView
             android:id="@+id/lv_myfollow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </LinearLayout>
+    </RelativeLayout>
 </FrameLayout>
