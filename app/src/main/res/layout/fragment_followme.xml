@@ -8,6 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_no_follow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="您还没有粉丝，快去发帖涨粉吧!"
+            android:textSize="42sp"
+            android:gravity="center"/>
         <ListView
             android:id="@+id/lv_followme"
             android:layout_width="match_parent"

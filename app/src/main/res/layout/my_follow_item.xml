@@ -5,25 +5,45 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/follow_me_head"
-            android:layout_width="66dp"
-            android:layout_height="66dp"/>
+        <cn.jiguang.imui.view.CircleImageView
+            android:id="@+id/follow_head"
+            android:layout_width="52dp"
+            android:layout_height="52dp"/>
+
         <TextView
-            android:id="@+id/follow_me_name"
+            android:id="@+id/follow_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="28sp"
-            android:layout_toRightOf="@+id/my_follow_head"/>
+            android:layout_toRightOf="@+id/follow_head"
+            android:textSize="22sp" />
+<!--        android:text="我叫秦始皇哈快给..."-->
+
         <TextView
-            android:id="@+id/follow_me_autograph"
+            android:id="@+id/follow_autograph"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_toRightOf="@id/follow_me_head"
-            android:layout_marginTop="38dp"/>
+            android:textSize="16sp"
+            android:layout_toRightOf="@id/follow_head"
+            android:layout_marginTop="30dp"/>
+<!--        android:text="我封你为百万将领的头子..."-->
+
+        <Button
+            android:id="@+id/btn_pri_letter"
+            android:layout_width="50dp"
+            android:layout_height="52dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/love"/>
+        <Button
+            android:id="@+id/btn_follow_item"
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:text="☰已关注"
+            android:textSize="24sp"
+            android:background="@color/followGray"
+            android:layout_toLeftOf="@+id/btn_pri_letter"/>
     </RelativeLayout>
 </LinearLayout>

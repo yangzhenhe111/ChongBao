@@ -33,8 +33,8 @@ public class MyFollowActivity extends AppCompatActivity {
         list.clear();
         titles.add("关注");
         titles.add("粉丝");
-        list.add(new FollowMe("关注"));
-        list.add(new MyFollow("粉丝"));
+        list.add(new MyFollow("关注"));
+        list.add(new FollowMe("粉丝"));
 
 
         //放在fragment里用getFragmentManager()
