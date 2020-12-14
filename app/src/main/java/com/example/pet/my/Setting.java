@@ -33,7 +33,7 @@ public class Setting extends AppCompatActivity {
     private void initData() {
         My my1 = new My(R.drawable.acount, "账号管理", R.drawable.next);
         myList1.add(my1);
-        My my4 = new My(R.drawable.acount, "修改密码", R.drawable.next);
+        My my4 = new My(R.drawable.updatepassword, "修改密码", R.drawable.next);
         myList1.add(my4);
         My my2 = new My(R.drawable.address, "地址管理", R.drawable.next);
         myList2.add(my2);
@@ -71,6 +71,7 @@ public class Setting extends AppCompatActivity {
                         break;
                     case 1:
                         Intent intent1 = new Intent(Setting.this,Update.class);
+                        intent1.putExtra("title","修改密码");
                         startActivity(intent1);
                         break;
                 }

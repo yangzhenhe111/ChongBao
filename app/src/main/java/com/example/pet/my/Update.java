@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pet.R;
@@ -45,6 +46,7 @@ public class Update extends AppCompatActivity {
 
     private String phone;
     private String password;
+    private String title;
 
     private int time = 60;
     private static final int CODE_TRUE = 2; //修改成功
@@ -56,7 +58,11 @@ public class Update extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if(msg.what == CODE_TRUE){
                 Intent intent = new Intent();
-                intent.setClass(Update.this,Login.class);
+                if (title != null){
+                    intent.setClass(Update.this,Setting.class);
+                }else {
+                    intent.setClass(Update.this,Login.class);
+                }
                 startActivity(intent);
                 Update.this.finish();
             }else if(msg.what == CODE_FALSE){
@@ -147,6 +153,12 @@ public class Update extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find);
+        Intent intent = getIntent();
+        title = intent.getStringExtra("title");
+        TextView tvTitle = findViewById(R.id.tv_title);
+        if(title != null){
+            tvTitle.setText(title);
+        }
         setView();
     }
 

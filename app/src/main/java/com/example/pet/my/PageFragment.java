@@ -116,6 +116,15 @@ public class PageFragment extends Fragment {
             }else if(msg.what == 6) {
                 Log.e("up","6b");
                 Toast.makeText(getContext(),"上传失败了",Toast.LENGTH_SHORT);
+            }else if(msg.what == 7){
+                Cache.myPetList.remove(index);
+                Log.e("delete::::::::::::","true");
+                Toast.makeText(getActivity(),"删除成功",Toast.LENGTH_SHORT);
+                Intent intent = new Intent();
+                intent.setClass(getContext(),NewPet.class);
+                startActivity(intent);
+            }else if(msg.what == 8){
+                Toast.makeText(getActivity(),"删除失败",Toast.LENGTH_SHORT);
             }
         }
     };
@@ -200,6 +209,8 @@ public class PageFragment extends Fragment {
         llAge.setOnClickListener(myListener);
         LinearLayout llType = view.findViewById(R.id.ll_pet_type);
         llType.setOnClickListener(myListener);
+        ImageView delete = view.findViewById(R.id.delete_pet);
+        delete.setOnClickListener(myListener);
         Log.e("upAge","绑定成功");
         petPhoto = view.findViewById(R.id.pet_photo);
         petPhoto.setOnClickListener(myListener);
@@ -332,8 +343,39 @@ public class PageFragment extends Fragment {
                 case R.id.pet_photo:
                     upPic();
                     break;
+                case R.id.delete_pet:
+                    Toast.makeText(getContext(),"开始删除",Toast.LENGTH_SHORT);
+                    deletePet();
+                    break;
             }
         }
+
+    }
+
+    private void deletePet() {
+        Log.e("delete","start");
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(Cache.MY_URL + "DeletePetServlet?petid=" + Cache.myPetList.get(index).getPetId())
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //失败
+                Log.e("delete","22222222");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //成功
+                Log.e("delete:::::","1111");
+                String str = response.body().string();
+                Message msg = new Message();
+                msg.what = Integer.valueOf(str);
+                hd.sendMessage(msg);
+            }
+        });
     }
 
     private void upType() {
