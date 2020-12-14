@@ -30,7 +30,6 @@
     <application
         android:name=".other.DebugApp"
         android:allowBackup="true"
-
         android:label="@string/app_name"
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -39,8 +38,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".my.AddressManage"></activity>
-        <activity android:name=".my.NewPet"></activity>
+        <activity android:name=".my.editinfo.AddAddress"></activity>
+        <activity android:name=".my.editinfo.EditAddress" />
+        <activity android:name=".my.AddressManage" />
+        <activity android:name=".my.NewPet" />
         <activity android:name=".my.AcountSecurity" />
         <activity android:name=".my.ConnectUs" />
         <activity android:name=".my.order.MyOrderActivity" />
@@ -80,8 +81,7 @@
         <activity android:name=".nursing.CostActivity" />
         <activity android:name=".forum.SearchResult" />
         <activity android:name=".forum.New_post_detail" />
-        <activity android:name=".MainActivity"></activity>
-
+        <activity android:name=".MainActivity" />
         <activity android:name=".my.AcountManage" />
 
         <meta-data
