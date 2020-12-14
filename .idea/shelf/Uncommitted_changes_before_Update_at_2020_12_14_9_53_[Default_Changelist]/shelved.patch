@@ -1,0 +1,17 @@
+Index: app/src/main/res/layout/activity_address_manage.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout\r\n    android:orientation=\"vertical\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\">\r\n    <androidx.appcompat.widget.Toolbar\r\n        android:id=\"@+id/address_manage_toolbar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:background=\"@color/page4\"\r\n        android:layout_height=\"wrap_content\"\r\n        app:navigationIcon=\"@drawable/nav\">\r\n\r\n        <TextView\r\n            android:layout_width=\"250dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:gravity=\"center\"\r\n            android:text=\"地址管理\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"20sp\"/>\r\n    </androidx.appcompat.widget.Toolbar>\r\n    <LinearLayout android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n        android:orientation=\"vertical\"\r\n        xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n        <com.google.android.material.tabs.TabLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:id=\"@+id/tab_layout\"\r\n            app:tabMode=\"scrollable\"/>\r\n        <androidx.viewpager.widget.ViewPager\r\n            android:id=\"@+id/view_page\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\">\r\n        </androidx.viewpager.widget.ViewPager>\r\n    </LinearLayout>\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_address_manage.xml	(revision 43ef4412b4e9d39416c9041913a9120606c2d950)
++++ app/src/main/res/layout/activity_address_manage.xml	(date 1607910770693)
+@@ -11,7 +11,6 @@
+         android:background="@color/page4"
+         android:layout_height="wrap_content"
+         app:navigationIcon="@drawable/nav">
+-
+         <TextView
+             android:layout_width="250dp"
+             android:layout_height="match_parent"
