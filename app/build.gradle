@@ -23,33 +23,35 @@ android {
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "7153b7916be94ab289793e76",
+                JPUSH_CHANNEL: "developer-default",
+        ]
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-
-    //TabHost相关
+    implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-
+    implementation 'com.bigkoo:svprogresshud:1.0.6'
     implementation 'com.rohit.recycleritemclicksupport:recycleritemclicksupport:1.0.1'
-
     //noinspection GradleCompatible
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12'
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
-
     implementation 'org.greenrobot:eventbus:3.1.1'
-    //时间选择器
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
-    implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.0'
-//    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
@@ -59,25 +61,38 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.viewpager:viewpager:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation files('libs\\jsms_android-1.2.2.jar')
+    implementation files('libs\\janalytics-android-1.2.2.jar')
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'com.youth.banner:banner:1.4.10'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation files('libs\\BaiduLBS_Android.jar')
     implementation files('libs\\jcore-android-2.4.0.jar')
     implementation files('libs\\jpush-android-3.6.8.jar')
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
+    implementation 'cn.jiguang.imui:messagelist:0.4.3'
+    implementation 'cn.jiguang.imui:chatinput:0.10.0'
+    implementation 'org.greenrobot:greendao:3.2.0'
+    implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v1.4.0'
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.0@aar'
+    implementation 'com.bartoszlipinski:recyclerviewheader2:2.0.1'
+    implementation 'in.srain.cube:ultra-ptr:1.0.11'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.kyleduo.switchbutton:library:1.4.6'
+    implementation 'com.airbnb.android:lottie:2.2.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.github.w446108264:XhsEmoticonsKeyboard:2.0.4'
+    implementation 'com.blankj:utilcode:1.13.4'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.44'
+    implementation 'jp.wasabeef:glide-transformations:3.0.1'
+    implementation 'com.github.w446108264:AndroidEmoji:1.3'
 }

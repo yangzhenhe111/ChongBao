@@ -10,6 +10,7 @@
 
         android:id="@+id/acount_manage_toolbar"
         android:layout_width="match_parent"
+        android:background="@color/page4"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/nav">
 

@@ -66,7 +66,6 @@ listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             case 0:
                 Intent intent = new Intent(Setting.this,AcountManage.class);
                 startActivity(intent);
-
                 break;
         }
 
