@@ -61,6 +61,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import retrofit2.http.PATCH;
 
 public class PetActivity extends AppCompatActivity {
     private Uri imageUri;
@@ -110,10 +111,9 @@ public class PetActivity extends AppCompatActivity {
                 Log.e("up","6b");
                 Toast.makeText(PetActivity.this,"上传失败了",Toast.LENGTH_SHORT);
             }else if(msg.what == 3){
-
                 Intent intent = new Intent();
                 intent.setClass(PetActivity.this,NewPet.class);
-                startActivity(intent);
+                setResult(1,intent);
                 PetActivity.this.finish();
               //  pet.setPicture(bitmap);
 
@@ -132,6 +132,9 @@ public class PetActivity extends AppCompatActivity {
             }
         }
     };
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

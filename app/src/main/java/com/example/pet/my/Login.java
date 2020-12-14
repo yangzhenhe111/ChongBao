@@ -182,8 +182,8 @@ public class Login extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                Intent intent1 = new Intent(Login.this, MyDataService.class);
-                startService(intent1);
+//                Intent intent1 = new Intent(Login.this, MyDataService.class);
+//                startService(intent1);
                 Intent intent = new Intent(Login.this, MainActivity.class);
                 intent.putExtra("LOGINTYPE", type);
                 startActivity(intent);

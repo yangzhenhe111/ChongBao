@@ -1,7 +1,5 @@
 package com.example.pet.other;
 
-import com.example.pet.other.entity.Order;
-import com.example.pet.other.entity.Pet;
 import com.example.pet.other.entity.Tips;
 import com.example.pet.other.entity.User;
 
@@ -15,7 +13,7 @@ public class Cache {
      */
     public static User user;
     public static String userPhone;
-    public static final String MY_URL = "http://10.7.90.249:8080/ChongBaoService/";//我的URL
+    public static final String MY_URL = "http://10.7.90.171:8080/";//我的URL
     public static String url = "http://10.7.89.96:8080/ChongBao_war_exploded/";
     public static int user_id = 1;
     public static HashSet<Tips> myPostSet =new HashSet<>();//浏览历史数据
