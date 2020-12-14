@@ -107,6 +107,7 @@ public class AddressFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AddAddress.class);
+                intent.putExtra("isPost",isPost);
                 startActivity(intent);
             }
         });
