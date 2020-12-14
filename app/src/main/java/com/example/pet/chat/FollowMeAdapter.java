@@ -16,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.pet.R;
-import com.example.pet.forum.LandlordActivity;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.User;
 
@@ -28,18 +27,19 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
-public class MyFollowAdapter extends BaseAdapter {
-
+public class FollowMeAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<User> userArrayList = new ArrayList<>();
+    private ArrayList<com.example.pet.other.entity.User> userArrayList = new ArrayList<>();
     private int itemLayoutRes;
 
-
-    public MyFollowAdapter(Context context, ArrayList<User> userArrayList, int itemLayoutRes) {
+    public FollowMeAdapter(Context context, ArrayList<User> userArrayList, int itemLayoutRes) {
         this.context = context;
         this.userArrayList = userArrayList;
         this.itemLayoutRes = itemLayoutRes;
+
     }
 
     @Override
@@ -65,19 +65,23 @@ public class MyFollowAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Log.e("asdasdasdasdasd",userArrayList.toString());
         LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(itemLayoutRes, null);
         ImageView iv_head = view.findViewById(R.id.follow_head);
         iv_head.setImageBitmap(userArrayList.get(i).getPhoto());
-        Log.e("123","userArrayList.toString()");
         TextView tv_name = view.findViewById(R.id.follow_name);
         tv_name.setText(userArrayList.get(i).getUserName());
-        Log.e("456","userArrayList.toString()");
         TextView tv_autograph = view.findViewById(R.id.follow_autograph);
         tv_autograph.setText(userArrayList.get(i).getUserAutograph());
-        Log.e("789","userArrayList.toString()");
         Button btn_follow = view.findViewById(R.id.btn_follow_item);
+        String str = userArrayList.get(i).getIsFollow();
+        if (str.equals("true")){
+            btn_follow.setText("☰已关注");
+            btn_follow.setBackgroundColor(context.getResources().getColor(R.color.followGray));
+        }else{
+            btn_follow.setText("＋关注");
+            btn_follow.setBackgroundColor(context.getResources().getColor(R.color.followBlue));
+        }
         btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,7 +119,7 @@ public class MyFollowAdapter extends BaseAdapter {
                     URL url = new URL(Cache.MY_URL + "AddFollowServlet?user_id="+user_id+"&follow_id="+follow_id);
                     InputStream inputStream = url.openStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
-                    String isPublish = bufferedReader.readLine();
+                    String a = bufferedReader.readLine();
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
@@ -137,7 +141,7 @@ public class MyFollowAdapter extends BaseAdapter {
                     URL url = new URL(Cache.MY_URL + "DeleteFollowServlet?user_id="+user_id+"&follow_id="+follow_id);
                     InputStream inputStream = url.openStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
-                    String isPublish = bufferedReader.readLine();
+                    String b = bufferedReader.readLine();
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
@@ -148,4 +152,6 @@ public class MyFollowAdapter extends BaseAdapter {
             }
         }.start();
     }
+
+
 }

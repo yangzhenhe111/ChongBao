@@ -30,9 +30,10 @@
             android:id="@+id/tab_layout"
             app:tabMode="scrollable"/>
         <androidx.viewpager.widget.ViewPager
+
             android:id="@+id/view_page"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
         </androidx.viewpager.widget.ViewPager>
     </LinearLayout>
 </LinearLayout>

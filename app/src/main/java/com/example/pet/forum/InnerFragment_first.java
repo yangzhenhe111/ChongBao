@@ -153,7 +153,7 @@ public class InnerFragment_first extends Fragment {
     }
 
     public void init(ArrayList arrayList){
-        getImages(arrayList);
+            getImages(arrayList);
     }
 
     public void getImages(final ArrayList<Tips> arrayList) {
