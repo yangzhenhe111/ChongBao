@@ -11,6 +11,7 @@
         android:background="@color/page4"
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/nav">
+
         <TextView
             android:layout_width="250dp"
             android:layout_height="match_parent"
