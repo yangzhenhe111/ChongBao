@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pet.R;
-import com.example.pet.my.editinfo.EditInfo;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.User;
 import com.google.gson.Gson;

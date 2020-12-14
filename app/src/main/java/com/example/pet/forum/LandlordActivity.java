@@ -10,15 +10,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
@@ -26,7 +23,6 @@ import com.example.pet.chat.ChatMsgActivity;
 import com.example.pet.chat.SharedPrefHelper;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Tips;
-import com.rohit.recycleritemclicksupport.RecyclerItemClickSupport;
 
 import org.json.JSONArray;
 import org.json.JSONException;

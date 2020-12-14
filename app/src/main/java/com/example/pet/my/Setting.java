@@ -57,6 +57,13 @@ public class Setting extends AppCompatActivity {
         MyAdapter myAdapter2 = new MyAdapter(this, R.layout.my_listview, myList2);
         ListView listView2 = (ListView) findViewById(R.id.setting_listview2);
         listView2.setAdapter(myAdapter2);
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Setting.this,AddressManage.class);
+                startActivity(intent);
+            }
+        });
         //适配第三个listView
         MyAdapter myAdapter3 = new MyAdapter(this, R.layout.my_listview, myList3);
         ListView listView3 = (ListView) findViewById(R.id.setting_listview3);
@@ -77,5 +84,6 @@ public class Setting extends AppCompatActivity {
                 }
             }
         });
+
     }
 }

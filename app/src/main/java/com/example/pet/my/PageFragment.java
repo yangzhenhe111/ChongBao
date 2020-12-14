@@ -34,7 +34,6 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bumptech.glide.Glide;
 import com.example.pet.R;
 import com.example.pet.my.editinfo.Const;
-import com.example.pet.my.editinfo.EditInfo;
 import com.example.pet.my.editinfo.GlideEngine;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Pet;
