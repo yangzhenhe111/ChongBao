@@ -112,6 +112,10 @@ public class PetActivity extends AppCompatActivity {
             }else if(msg.what == 3){
                 pet.setPicture(bitmap);
                 Cache.myPetList.add(pet);
+                Intent intent = new Intent();
+                intent.setClass(PetActivity.this,NewPet.class);
+                startActivity(intent);
+                PetActivity.this.finish();
                 Toast.makeText(PetActivity.this,"上传成功",Toast.LENGTH_SHORT);
             }else if(msg.what == 4) {
                 Log.e("up","6b");
@@ -394,9 +398,7 @@ public class PetActivity extends AppCompatActivity {
                 Log.e("name:",name);
                 if(image_path != null){
                     upPhoto(image_path);
-                }/*else {
-                    upData();
-                }*/
+                }
                 break;
 
 
@@ -446,51 +448,6 @@ public class PetActivity extends AppCompatActivity {
                 .build();
         pvTypeOptions.setPicker(typeItem);//添加数据
     }
-
-//    private void upType() {
-//        // 注意：自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针
-//        // 具体可参考demo 里面的两个自定义布局
-//        Log.e("upAge","start");
-//        pvTypeOptions = new OptionsPickerBuilder(PetActivity.this, new OnOptionsSelectListener() {
-//            @Override
-//            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-//                //返回的分别是三个级别的选中位置
-//                String tx = typeItem.get(options1);
-//                petType.setText(tx);
-//                Log.e("type:::::::::::::",tx);
-//            }
-//        })
-//                .setLayoutRes(R.layout.picker_sex_bg, new CustomListener() {
-//                    @Override
-//                    public void customLayout(View v) {
-//                        //自定义布局中的控件初始化及事件处理
-//                        final TextView tvSubmit = v.findViewById(R.id.tv_finish);
-//                        TextView tvCancel = v.findViewById(R.id.tv_cancel);
-//                        TextView tyTitle = v.findViewById(R.id.tv_title);
-//                        tyTitle.setText("宠物种类");
-//                        tvSubmit.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                pvTypeOptions.returnData();
-//                                pvTypeOptions.dismiss();
-//                            }
-//                        });
-//                        tvCancel.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                pvTypeOptions.dismiss();
-//                            }
-//                        });
-//
-//                    }
-//                })
-//                .setLineSpacingMultiplier(1.5f)//滚轮字体间距
-//                .setContentTextSize(22)//字体大小
-//                .setOutSideCancelable(true)
-//                .build();
-//        pvTypeOptions.setPicker(typeItem);//添加数据
-//    }
-
     private void upAge() {
         // 注意：自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针
         // 具体可参考demo 里面的两个自定义布局
@@ -554,10 +511,10 @@ public class PetActivity extends AppCompatActivity {
                 .isCamera(true)// 是否显示拍照按钮 true or false
                 .imageFormat(PictureMimeType.JPEG)// 拍照保存图片格式后缀,默认jpeg
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
-                .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填
+//                .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填
                 .isEnableCrop(true)// 是否裁剪 true or false
                 .isCompress(true)// 是否压缩 true or false
-                .compressSavePath(Const.getImgPath())//压缩图片保存地址
+//                .compressSavePath(Const.getImgPath())//压缩图片保存地址
                 .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
                 .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
                 .synOrAsy(false)
@@ -572,7 +529,12 @@ public class PetActivity extends AppCompatActivity {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    image_path = selectList.get(0).getCompressPath();
+                    LocalMedia localMedia = selectList.get(0);
+                    if (localMedia.isCompressed()){
+                        image_path = localMedia.getCompressPath();
+                    }else {
+                        image_path = localMedia.getPath();
+                    }
                     Message msg = new Message();
                     msg.what = 5;
                     msg.obj = image_path;

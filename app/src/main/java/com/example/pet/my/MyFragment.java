@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +71,10 @@ public class MyFragment extends Fragment {
                 }
             }
         });
+
+        ScrollView sv = (ScrollView) view.findViewById(R.id.act_solution_4_sv);
+        sv.smoothScrollTo(0, 0);
+
         //适配第一个listView
         MyAdapter myAdapter1 = new MyAdapter(view.getContext(), R.layout.my_listview, myList1);
         ListView listView1 = (ListView) view.findViewById(R.id.my_listview1);

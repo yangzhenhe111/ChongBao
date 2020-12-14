@@ -107,7 +107,11 @@ public class PageFragment extends Fragment {
             }else if(msg.what == 5){
                 Uri uri = Uri.parse(msg.obj.toString());
                 bitmap = BitmapFactory.decodeFile(image_path);
-                petPhoto.setImageBitmap(bitmap);
+//                petPhoto.setImageBitmap(bitmap);
+                Glide.with(getContext())
+                        .load(uri)
+                        .into(petPhoto);
+
                 //                petPhoto.setImageURI(uri);
             }else if(msg.what == 6) {
                 Log.e("up","6b");
@@ -504,10 +508,10 @@ public class PageFragment extends Fragment {
                 .isCamera(true)// 是否显示拍照按钮 true or false
                 .imageFormat(PictureMimeType.JPEG)// 拍照保存图片格式后缀,默认jpeg
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
-                .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填
+//                .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填
                 .isEnableCrop(true)// 是否裁剪 true or false
                 .isCompress(true)// 是否压缩 true or false
-                .compressSavePath(Const.getImgPath())//压缩图片保存地址
+//                .compressSavePath(Const.getImgPath())//压缩图片保存地址
                 .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
                 .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
                 .synOrAsy(false)
@@ -522,7 +526,12 @@ public class PageFragment extends Fragment {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    image_path = selectList.get(0).getCompressPath();
+                    LocalMedia localMedia = selectList.get(0);
+                    if (localMedia.isCompressed()){
+                        image_path = localMedia.getCompressPath();
+                    }else {
+                        image_path = localMedia.getPath();
+                    }
                     Message msg = new Message();
                     msg.what = 5;
                     msg.obj = image_path;

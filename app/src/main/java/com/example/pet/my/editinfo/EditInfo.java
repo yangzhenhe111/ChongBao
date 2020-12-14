@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -98,6 +100,8 @@ public class EditInfo extends AppCompatActivity {
                 Cache.user.setUserSex(upSex.getText().toString());
                 Cache.user.setUserName(upName.getText().toString());
                 Cache.user.setUserAutograph(etInput.getText().toString());
+                Bitmap bitmap = BitmapFactory.decodeFile(image_path);
+                Cache.user.setPhoto(bitmap);
                 Toast.makeText(EditInfo.this,"上传成功",Toast.LENGTH_SHORT);
                 EditInfo.this.finish();
             }else {
@@ -414,10 +418,10 @@ public class EditInfo extends AppCompatActivity {
                 .isCamera(true)// 是否显示拍照按钮 true or false
                 .imageFormat(PictureMimeType.JPEG)// 拍照保存图片格式后缀,默认jpeg
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
-                .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填
+//                .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填
                 .isEnableCrop(true)// 是否裁剪 true or false
                 .isCompress(true)// 是否压缩 true or false
-                .compressSavePath(Const.getImgPath())//压缩图片保存地址
+//                .compressSavePath(Const.getImgPath())//压缩图片保存地址
                 .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
                 .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
                 .synOrAsy(false)
@@ -432,7 +436,12 @@ public class EditInfo extends AppCompatActivity {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    image_path = selectList.get(0).getCompressPath();
+                    LocalMedia localMedia = selectList.get(0);
+                    if (localMedia.isCompressed()){
+                        image_path = localMedia.getCompressPath();
+                    }else {
+                        image_path = localMedia.getPath();
+                    }
                     upPhoto.setImageURI(Uri.parse(image_path));
                     //上传图片
 //                    Cache.user.setPicturePath(image_path);
