@@ -10,8 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.pet.R;
-import com.example.pet.my.editinfo.EditInfo;
-import com.example.pet.other.Cache;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,7 @@ public class Setting extends AppCompatActivity {
     private List<My> myList1 = new ArrayList<>();
     private List<My> myList2 = new ArrayList<>();
     private List<My> myList3 = new ArrayList<>();
-    private List<My> myList4 = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +39,6 @@ public class Setting extends AppCompatActivity {
         myList2.add(my2);
         My my3 = new My(R.drawable.pay, "支付设置", R.drawable.next);
         myList3.add(my3);
-        My my4 = new My(R.drawable.bianji, "修改信息", R.drawable.next);
-        myList4.add(my4);
     }
 
     private void setView() {
@@ -53,10 +49,6 @@ public class Setting extends AppCompatActivity {
                 Setting.this.finish();
             }
         });
-        //适配第四个listView
-        MyAdapter myAdapter4 = new MyAdapter(this, R.layout.my_listview, myList4);
-        ListView listView4 = (ListView)findViewById(R.id.my_listview4);
-        listView4.setAdapter(myAdapter4);
         //适配第一个listView
         MyAdapter myAdapter1 = new MyAdapter(this, R.layout.my_listview, myList1);
         ListView listView1 = (ListView) findViewById(R.id.setting_listview1);
@@ -85,47 +77,5 @@ public class Setting extends AppCompatActivity {
                 }
             }
         });
-        //账号管理
-listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (position){
-            case 0:
-                Intent intent = new Intent(Setting.this,AcountManage.class);
-                startActivity(intent);
-
-                break;
-        }
-
     }
-});
-//修改信息
-        listView4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    switch (position) {
-                        case 0:
-                            Intent intent2 = new Intent(Setting.this, EditInfo.class);
-                            startActivity(intent2);
-                            break;
-                        default:
-                            break;
-                    }
-
-            }
-        });
-        //地址管理
-        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(Setting.this,AddressManage.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-
-
-
 }

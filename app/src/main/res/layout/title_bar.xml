@@ -20,13 +20,6 @@
             android:layout_weight="1">
 
             <ImageView
-                android:paddingLeft="10dp"
-                android:id="@+id/title_bar_back"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:paddingBottom="7dp"
-                android:paddingTop="7dp"
-                android:layout_centerVertical="true"
                 android:id="@+id/title_bar_back"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
@@ -46,12 +39,6 @@
                 android:id="@+id/title_bar_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:gravity="center"
-                android:text="消息"
-                android:textColor="@android:color/white"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:gravity="center"
@@ -62,16 +49,6 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/title_bar_right"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@drawable/shape_titlebar2">
-
-        <TextView
-            android:id="@+id/title_options_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
         android:background="@color/page4"
         android:id="@+id/title_bar_right"
         android:layout_width="0dp"
@@ -90,7 +67,6 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="8dp"
-            android:text="选项"
             android:text="+"
             android:textColor="@android:color/white"
             android:textSize="16sp"

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -42,7 +43,7 @@ public class MyFragment extends Fragment {
     private TextView login;
     private TextView count;
     private CircleImageView photo;
-
+    private List<My> myList1 = new ArrayList<>();
     private List<My> myList2 = new ArrayList<>();
     private List<My> myList3 = new ArrayList<>();
     private SharedPrefHelper helper;
@@ -64,14 +65,21 @@ public class MyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(Cache.user !=null){
-                Intent intent = new Intent(getContext(),EditInfo.class);
-                startActivity(intent);}
+                    Intent intent = new Intent(getContext(), EditInfo.class);
+                    startActivity(intent);}
                 else {
                     showLoginToast();
                 }
             }
         });
 
+        ScrollView sv = (ScrollView) view.findViewById(R.id.act_solution_4_sv);
+        sv.smoothScrollTo(0, 0);
+
+        //适配第一个listView
+        MyAdapter myAdapter1 = new MyAdapter(view.getContext(), R.layout.my_listview, myList1);
+        ListView listView1 = (ListView) view.findViewById(R.id.my_listview1);
+        listView1.setAdapter(myAdapter1);
         //适配第二个listView
         MyAdapter myAdapter2 = new MyAdapter(view.getContext(), R.layout.my_listview, myList2);
         ListView listView2 = (ListView) view.findViewById(R.id.my_listview2);
@@ -80,7 +88,24 @@ public class MyFragment extends Fragment {
         MyAdapter myAdapter3 = new MyAdapter(view.getContext(), R.layout.my_listview, myList3);
         ListView listView3 = (ListView) view.findViewById(R.id.my_listview3);
         listView3.setAdapter(myAdapter3);
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                if (Cache.user != null) {
+                    switch (position) {
+                        case 0:
+                            Intent intent2 = new Intent(getContext(), EditInfo.class);
+                            startActivity(intent2);
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    showLoginToast();
+                }
+            }
+        });
         listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -131,7 +156,7 @@ public class MyFragment extends Fragment {
                             showLoginToast();
                             break;
                         case 1:
-                            Intent intent1 = new Intent(getContext(), AboutUs.class);
+                            Intent intent1 = new Intent(getActivity(),AcountManage.class);
                             startActivity(intent1);
                             break;
                     }
@@ -143,7 +168,8 @@ public class MyFragment extends Fragment {
 
     //初始化数据
     private void init() {
-
+        My my1 = new My(R.drawable.bianji, "修改信息", R.drawable.next);
+        myList1.add(my1);
         My my2 = new My(R.drawable.mytie, "我的帖子", R.drawable.next);
         myList2.add(my2);
         My my3 = new My(R.drawable.myorder, "我的订单", R.drawable.next);

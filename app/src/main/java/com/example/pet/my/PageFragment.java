@@ -124,7 +124,7 @@ public class PageFragment extends Fragment {
                 Log.e("up","6b");
                 Toast.makeText(getContext(),"上传失败了",Toast.LENGTH_SHORT);
             }else if(msg.what == 7){
-                Cache.myPetList.remove(index);
+//                Cache.myPetList.remove(index);
                 Log.e("delete::::::::::::","true");
                 Toast.makeText(getActivity(),"删除成功",Toast.LENGTH_SHORT);
                 Intent intent = new Intent();
@@ -384,7 +384,7 @@ public class PageFragment extends Fragment {
         Log.e("delete","start");
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(Cache.MY_URL + "DeletePetServlet?petid=" + Cache.myPetList.get(index).getPetId())
+                .url(Cache.MY_URL + "DeletePetServlet?petid=" + pet.getPetId())
                 .build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
