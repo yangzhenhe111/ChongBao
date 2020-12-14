@@ -67,7 +67,6 @@ public class UserInfoOptionsActivity extends BaseActivity {
             @Override
             public void gotResult(int i, String s, UserInfo userInfo) {
                 info = userInfo;
-//                Log.e("userinfooptions", ""+userInfo);
             }
         });
     }
@@ -99,12 +98,7 @@ public class UserInfoOptionsActivity extends BaseActivity {
                                     public void gotResult(int i, String s) {
                                         if (i==0){
                                             showToast(com.example.pet.chat.UserInfoOptionsActivity.this,"删除成功");
-                                            //同时删除会话
                                             JMessageClient.deleteSingleConversation(info.getUserName());
-                                            /*Intent intent=new Intent(com.example.pet.chat.UserInfoOptionsActivity.this, MainActivity.class);
-                                            intent.putExtra("REMOVEID", info.getUserName());
-                                            startActivity(intent);*/
-
                                         }else {
                                             showToast(com.example.pet.chat.UserInfoOptionsActivity.this,"删除失败"+s);
                                         }

@@ -1,7 +1,5 @@
 package com.example.pet.my;
 
-import androidx.annotation.NonNull;
-
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -12,27 +10,18 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
-import com.example.pet.Start1Activity;
 import com.example.pet.chat.BaseActivity;
 import com.example.pet.chat.SharedPrefHelper;
 import com.example.pet.other.Cache;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,7 +56,6 @@ public class Login extends BaseActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
         }
         ButterKnife.bind(this);
-
         initView();
     }
 
@@ -133,19 +121,22 @@ public class Login extends BaseActivity {
                         sharedPrefHelper.setUserPW(passWord);
                         LoginEvent event = new LoginEvent("userName", true);
                         JAnalyticsInterface.onEvent(getContext(),event);
-                        showToast(Login.this, "登录成功");
                         JMessageClient.getUserInfo(userName, new GetUserInfoCallback() {
                             @Override
                             public void gotResult(int i, String s, UserInfo userInfo) {
                                 if (i==0) {
                                     mPsw.setVisibility(View.INVISIBLE);
                                     inputAnimator(mInputLayout, mWidth, mHeight,type);
+                                    progress.setVisibility(View.VISIBLE);
+                                    progressAnimator(progress);
+                                    mInputLayout.setVisibility(View.INVISIBLE);
                                     Cache.userPhone = userName;
                                     Intent intent2 = new Intent(Login.this, MyUserService.class);
                                     startService(intent2);
                                 }
                             }
                         });
+                        showToast(Login.this, "登录成功");
                 }
             }
         });
@@ -156,7 +147,7 @@ public class Login extends BaseActivity {
             public void run() {
                 initLogin(etName.getText().toString(),etPassword.getText().toString(),0);
             }
-        }, 0);
+        }, 1800);
     }
     private void inputAnimator(final View view, float w, float h,int type) {
         AnimatorSet set = new AnimatorSet();
@@ -172,7 +163,7 @@ public class Login extends BaseActivity {
             }
         });
         ObjectAnimator animator2 = ObjectAnimator.ofFloat(mInputLayout, "scaleX", 1f, 0.5f);
-        set.setDuration(2000);
+        set.setDuration(0);
         set.setInterpolator(new AccelerateDecelerateInterpolator());
         set.playTogether(animator, animator2);
         set.start();
@@ -188,9 +179,6 @@ public class Login extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                progress.setVisibility(View.VISIBLE);
-                progressAnimator(progress);
-                mInputLayout.setVisibility(View.INVISIBLE);
                 Intent intent1 = new Intent(Login.this, MyDataService.class);
                 startService(intent1);
                 Intent intent = new Intent(Login.this, MainActivity.class);
@@ -210,7 +198,7 @@ public class Login extends BaseActivity {
         PropertyValuesHolder animator = PropertyValuesHolder.ofFloat("scaleX", 0.5f, 1f);
         PropertyValuesHolder animator2 = PropertyValuesHolder.ofFloat("scaleY", 0.5f, 1f);
         ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(view, animator, animator2);
-        animator3.setDuration(2000);
+        animator3.setDuration(1800);
         animator3.setInterpolator(new JellyInterpolator());
         animator3.start();
     }

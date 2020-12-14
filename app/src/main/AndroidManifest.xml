@@ -53,9 +53,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".chat.MyFollowActivity"></activity>
+        <activity android:name=".chat.Friends"></activity>
+        <activity android:name=".chat.MyFollowActivity" />
         <activity android:name=".my.NewPet" />
-        <activity android:name=".Start1Activity" />
+        <activity android:name=".LoadingActivity" />
         <activity android:name=".my.AcountSecurity" />
         <activity android:name=".my.ConnectUs" />
         <activity android:name=".my.order.MyOrderActivity" />
@@ -131,7 +132,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".LoadingActivity"
+            android:name=".Start1Activity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -78,8 +78,7 @@ public class UserActivty extends BaseActivity {
 
     private void initBar() {
         mTitleBarTitle.setText("个人资料");
-        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.mipmap.icon_back));
-
+        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.drawable.back1));
         mBottomBarLeft.setVisibility(View.GONE);
         mBottomBarTv2.setText("编辑个人资料");
     }

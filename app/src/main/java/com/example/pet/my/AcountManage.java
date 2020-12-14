@@ -56,7 +56,6 @@ public class AcountManage extends AppCompatActivity {
         for (User u : Cache.userHashSet) {
             list.add(u);
         }
-        Log.e("AcountManage", list.size() + "");
     }
 
     private void setView() {
@@ -68,9 +67,9 @@ public class AcountManage extends AppCompatActivity {
             }
 
         });
-        lvAcount = findViewById(R.id.acount_manage_listview);
+        //lvAcount = findViewById(R.id.acount_manage_listview);
         adapter = new AcountAdapter(list, this, R.layout.acount_item);
-        lvAcount.setAdapter(adapter);
+        /*lvAcount.setAdapter(adapter);
         lvAcount.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -81,7 +80,7 @@ public class AcountManage extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
 
-        });
+        });*/
     }
 
     @Override

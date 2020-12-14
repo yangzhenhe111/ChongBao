@@ -64,12 +64,8 @@ import static cn.jiguang.imui.commons.models.IMessage.MessageType.SEND_TEXT;
 import static cn.jiguang.imui.commons.models.IMessage.MessageType.SEND_VIDEO;
 import static cn.jpush.im.android.api.enums.ContentType.prompt;
 
-/**
- * Created by wapchief on 2017/7/19.
- */
 
-public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChangedListener,
-        View.OnTouchListener {
+public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChangedListener, View.OnTouchListener {
     @BindView(R.id.title_bar_back)
     ImageView mTitleBarBack;
     @BindView(R.id.title_bar_title)
@@ -113,6 +109,7 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
     @Override
     protected int setContentView() {
         return R.layout.activity_chat;
+
     }
 
     @Override
@@ -453,11 +450,9 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
                     intent = new Intent(mContext, UserInfoActivity.class);
                     intent.putExtra("USERNAME", userName);
                 }
-                Log.e("userName", userInfo + "\n" + userName);
                 startActivity(intent);
             }
         });
-
 
         MyMessage message = new MyMessage("Hello World", IMessage.MessageType.RECEIVE_TEXT);
         message.setUserInfo(new DefaultUser("0", "Deadpool", "R.drawable.deadpool"));
@@ -473,16 +468,6 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
 
         mMsgList.setAdapter(mAdapter);
         mAdapter.getLayoutManager().scrollToPosition(0);
-    }
-
-    /*加载更多*/
-    private void loadNextPage() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.addToEnd(mData);
-            }
-        }, 1000);
     }
 
 
@@ -519,9 +504,9 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
     /*标题栏*/
     private void initTitleBar() {
         mTitleBarBack.setVisibility(View.INVISIBLE);
-        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.mipmap.icon_back));
-        mTitleOptionsImg.setVisibility(View.GONE);
-        mTitleOptionsTv.setVisibility(View.VISIBLE);
+        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.drawable.back1));
+        mTitleOptionsImg.setImageDrawable(getResources().getDrawable(R.drawable.slh));
+        mTitleOptionsImg.setVisibility(View.VISIBLE);
         mTitleBarTitle.setText(userName);
     }
 
@@ -537,7 +522,7 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.title_bar_back, R.id.title_bar_title, R.id.title_options_tv})
+    @OnClick({R.id.title_bar_back, R.id.title_bar_title, R.id.title_options_img})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.title_bar_title:
@@ -546,10 +531,9 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
                 break;
             case R.id.title_bar_back:
                 finish();
-                //重置会话未读
                 conversation.resetUnreadCount();
                 break;
-            case R.id.title_options_tv:
+            case R.id.title_options_img:
                 //
                 MyAlertDialog dialog = new MyAlertDialog(this, new String[]{"清空聊天记录", "清空并删除会话"}, new DialogInterface.OnClickListener() {
                     @Override
@@ -563,7 +547,6 @@ public class ChatMsgActivity extends BaseActivity implements ChatView.OnSizeChan
                                     mAdapter.notifyDataSetChanged();
                                     dismissProgressDialog();
                                 }
-
                                 break;
                             case 1:
                                 showProgressDialog("正在删除");

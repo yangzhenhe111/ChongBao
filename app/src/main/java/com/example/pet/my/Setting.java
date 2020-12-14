@@ -59,19 +59,16 @@ public class Setting extends AppCompatActivity {
         MyAdapter myAdapter3 = new MyAdapter(this, R.layout.my_listview, myList3);
         ListView listView3 = (ListView) findViewById(R.id.setting_listview3);
         listView3.setAdapter(myAdapter3);
-listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (position){
-            case 0:
-                Intent intent = new Intent(Setting.this,AcountManage.class);
-                startActivity(intent);
-                break;
-        }
-
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        Intent intent = new Intent(Setting.this,AcountManage.class);
+                        startActivity(intent);
+                        break;
+                }
+            }
+        });
     }
-});
-    }
-
-
 }
