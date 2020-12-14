@@ -1,0 +1,54 @@
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Sat Dec 05 11:37:57 CST 2020\r\ndistributionBase=GRADLE_USER_HOME\r\ndistributionPath=wrapper/dists\r\nzipStoreBase=GRADLE_USER_HOME\r\ndistributionUrl=file:///D:/work/gradle-6.5-bin/6nifqtx7604sqp1q6g8wikw7p/gradle-6.5-bin.zip\r\nzipStorePath=wrapper/dists\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>GBK
+===================================================================
+--- gradle/wrapper/gradle-wrapper.properties	(revision 1d475cee36b45ce01a7ab38ab486fbfd11a0407a)
++++ gradle/wrapper/gradle-wrapper.properties	(date 1607905079666)
+@@ -2,5 +2,5 @@
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME
+-distributionUrl=file:///D:/work/gradle-6.5-bin/6nifqtx7604sqp1q6g8wikw7p/gradle-6.5-bin.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-6.5-bin.zip
+ zipStorePath=wrapper/dists
+Index: app/src/main/res/layout/activity_setting.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:orientation=\"vertical\">\r\n    <androidx.appcompat.widget.Toolbar\r\n        android:background=\"@color/colorTheme\"\r\n        android:id=\"@+id/setting_toolbar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        app:navigationIcon=\"@drawable/nav\">\r\n        <TextView\r\n            android:layout_width=\"250dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:gravity=\"center\"\r\n            android:text=\"设置\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"20sp\"/>\r\n    </androidx.appcompat.widget.Toolbar>\r\n    <ImageView\r\n        android:layout_marginTop=\"35dp\"\r\n\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"10dp\" />\r\n    <ListView\r\n        android:background=\"@color/list_background\"\r\n        android:dividerHeight=\"0.5dp\"\r\n        android:divider=\"@drawable/discover_divier\"\r\n        android:id=\"@+id/setting_listview1\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\">\r\n    </ListView>\r\n    <ImageView\r\n        android:background=\"@color/contact_background\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"10dp\" />\r\n    <ListView\r\n        android:background=\"@color/list_background\"\r\n        android:dividerHeight=\"0.5dp\"\r\n        android:divider=\"@drawable/discover_divier\"\r\n        android:id=\"@+id/setting_listview2\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\">\r\n    </ListView>\r\n    <ImageView\r\n        android:background=\"@color/contact_background\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"10dp\" />\r\n    <ListView\r\n        android:background=\"@color/list_background\"\r\n        android:dividerHeight=\"0.5dp\"\r\n        android:divider=\"@drawable/discover_divier\"\r\n        android:id=\"@+id/setting_listview3\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\">\r\n    </ListView>\r\n    <ImageView\r\n        android:background=\"@color/contact_background\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\" />\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_setting.xml	(revision 1d475cee36b45ce01a7ab38ab486fbfd11a0407a)
++++ app/src/main/res/layout/activity_setting.xml	(date 1607906878373)
+@@ -25,8 +25,8 @@
+         android:layout_height="10dp" />
+     <ListView
+         android:background="@color/list_background"
+-        android:dividerHeight="0.5dp"
+-        android:divider="@drawable/discover_divier"
++        android:dividerHeight="10dp"
++        android:divider="@color/chat_divier"
+         android:id="@+id/setting_listview1"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+Index: app/src/main/java/com/example/pet/my/Setting.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.my;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.AdapterView;\r\nimport android.widget.ListView;\r\n\r\nimport com.example.pet.R;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class Setting extends AppCompatActivity {\r\n    private Toolbar toolbar;\r\n    private List<My> myList1 = new ArrayList<>();\r\n    private List<My> myList2 = new ArrayList<>();\r\n    private List<My> myList3 = new ArrayList<>();\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_setting);\r\n        //获得控件\r\n        setView();\r\n        //生成数据\r\n        initData();\r\n    }\r\n\r\n    private void initData() {\r\n        My my1 = new My(R.drawable.acount, \"账号管理\", R.drawable.next);\r\n        myList1.add(my1);\r\n        My my2 = new My(R.drawable.address, \"地址管理\", R.drawable.next);\r\n        myList2.add(my2);\r\n        My my3 = new My(R.drawable.pay, \"支付设置\", R.drawable.next);\r\n        myList3.add(my3);\r\n    }\r\n\r\n    private void setView() {\r\n        toolbar = findViewById(R.id.setting_toolbar);\r\n        toolbar.setNavigationOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Setting.this.finish();\r\n            }\r\n        });\r\n        //适配第一个listView\r\n        MyAdapter myAdapter1 = new MyAdapter(this, R.layout.my_listview, myList1);\r\n        ListView listView1 = (ListView) findViewById(R.id.setting_listview1);\r\n        listView1.setAdapter(myAdapter1);\r\n        //适配第二个listView\r\n        MyAdapter myAdapter2 = new MyAdapter(this, R.layout.my_listview, myList2);\r\n        ListView listView2 = (ListView) findViewById(R.id.setting_listview2);\r\n        listView2.setAdapter(myAdapter2);\r\n        //适配第三个listView\r\n        MyAdapter myAdapter3 = new MyAdapter(this, R.layout.my_listview, myList3);\r\n        ListView listView3 = (ListView) findViewById(R.id.setting_listview3);\r\n        listView3.setAdapter(myAdapter3);\r\nlistView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {\r\n    @Override\r\n    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {\r\n        switch (position){\r\n            case 0:\r\n                Intent intent = new Intent(Setting.this,AcountManage.class);\r\n                startActivity(intent);\r\n                break;\r\n        }\r\n\r\n    }\r\n});\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/my/Setting.java	(revision 1d475cee36b45ce01a7ab38ab486fbfd11a0407a)
++++ app/src/main/java/com/example/pet/my/Setting.java	(date 1607906878369)
+@@ -33,6 +33,8 @@
+     private void initData() {
+         My my1 = new My(R.drawable.acount, "账号管理", R.drawable.next);
+         myList1.add(my1);
++        My my4 = new My(R.drawable.acount, "修改密码", R.drawable.next);
++        myList1.add(my4);
+         My my2 = new My(R.drawable.address, "地址管理", R.drawable.next);
+         myList2.add(my2);
+         My my3 = new My(R.drawable.pay, "支付设置", R.drawable.next);

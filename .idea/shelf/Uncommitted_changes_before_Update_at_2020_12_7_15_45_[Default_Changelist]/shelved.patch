@@ -1,0 +1,709 @@
+Index: app/src/main/java/com/example/pet/other/Cache.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.other;\r\n\r\nimport com.example.pet.other.entity.Order;\r\nimport com.example.pet.other.entity.Pet;\r\nimport com.example.pet.other.entity.User;\r\n\r\nimport java.util.List;\r\n\r\npublic class Cache {\r\n    /**\r\n     * 存储一些全局信息\r\n     */\r\npublic static  User user;\r\npublic static final String MY_URL=\"http://192.168.43.202:8080/ChongBaoService_war_exploded/\";//我的URL\r\npublic static String url = \"http://10.7.89.96:8080/ChongBao_war_exploded/\";\r\n\r\npublic static int user_id = 1;\r\n\r\npublic static List<Order> myOrderList ;//我的订单数据\r\npublic static List<Pet> myPetList;//我的宠物数据\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/other/Cache.java	(revision 33d9f7bc69aa63b6c9076b13147eba54cfbbc242)
++++ app/src/main/java/com/example/pet/other/Cache.java	(date 1607312059737)
+@@ -10,8 +10,9 @@
+     /**
+      * 存储一些全局信息
+      */
+-public static  User user;
+-public static final String MY_URL="http://192.168.43.202:8080/ChongBaoService_war_exploded/";//我的URL
++public static  User user = new User();
++public static String userPhone = "15731962958";
++public static final String MY_URL="http://10.7.90.171:8080/";//我的URL
+ public static String url = "http://10.7.89.96:8080/ChongBao_war_exploded/";
+ 
+ public static int user_id = 1;
+Index: app/src/main/res/layout/activity_edit_info.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:id=\"@+id/edit_info_root\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\">\r\n    <androidx.appcompat.widget.Toolbar\r\n       android:id=\"@+id/edit_toolbar\"\r\n        android:onClick=\"onClicked\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        app:navigationIcon=\"@drawable/nav\">\r\n\r\n        <TextView\r\n            android:layout_width=\"240dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:gravity=\"center\"\r\n            android:text=\"个人信息\"\r\n            android:textSize=\"18sp\"\r\n            android:textColor=\"@color/black\"/>\r\n        <TextView\r\n            android:id=\"@+id/tv_save\"\r\n            android:textColor=\"@color/colorTheme\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:gravity=\"center\"\r\n            android:text=\"保存\"/>\r\n    </androidx.appcompat.widget.Toolbar>\r\n\r\n    <RelativeLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n\r\n        <Button\r\n            android:id=\"@+id/btn_toMy\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"查看我的个人主页\"\r\n            android:layout_alignParentBottom=\"true\"\r\n            android:background=\"@color/white\"/>\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:orientation=\"vertical\"\r\n            android:paddingLeft=\"15dp\"\r\n            android:paddingRight=\"15dp\"\r\n            android:background=\"@drawable/bg_myinfo\"\r\n            android:layout_above=\"@id/btn_toMy\">\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:paddingTop=\"20dp\"\r\n                android:paddingBottom=\"10dp\">\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:text=\"头像\"\r\n                    android:textSize=\"14sp\"\r\n                    android:gravity=\"center_vertical\"\r\n                    android:layout_marginRight=\"25sp\"\r\n                    android:textColor=\"#000\"/>\r\n                <LinearLayout\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:orientation=\"vertical\">\r\n                    <de.hdodenhof.circleimageview.CircleImageView\r\n                        android:id=\"@+id/upPhoto\"\r\n                        android:onClick=\"onClicked\"\r\n                        android:layout_width=\"50dp\"\r\n                        android:layout_height=\"50dp\"\r\n                        android:src=\"@drawable/head\"/>\r\n                </LinearLayout>\r\n\r\n\r\n            </LinearLayout>\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"50dp\">\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:text=\"昵称\"\r\n                    android:textSize=\"14sp\"\r\n                    android:gravity=\"center_vertical\"\r\n                    android:layout_marginRight=\"25sp\"\r\n                    android:textColor=\"#000\"/>\r\n                <LinearLayout\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:orientation=\"vertical\"\r\n                    android:background=\"@drawable/bg_myinfo\">\r\n                    <EditText\r\n                        android:id=\"@+id/upName\"\r\n                        android:onClick=\"onClicked\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"match_parent\"\r\n                        android:text=\"有光\"\r\n                        android:textSize=\"14sp\"\r\n                        android:background=\"@null\"\r\n                        android:gravity=\"center_vertical\"/>\r\n                </LinearLayout>\r\n\r\n\r\n            </LinearLayout>\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"50dp\">\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:text=\"性别\"\r\n                    android:textSize=\"14sp\"\r\n                    android:gravity=\"center_vertical\"\r\n                    android:layout_marginRight=\"25sp\"\r\n                    android:textColor=\"#000\"/>\r\n                <LinearLayout\r\n                    android:id=\"@+id/ll_upSex\"\r\n                    android:onClick=\"onClicked\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:orientation=\"vertical\"\r\n                    android:background=\"@drawable/bg_myinfo\">\r\n                    <TextView\r\n                        android:id=\"@+id/edit_info_sex\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"match_parent\"\r\n                        android:text=\"完善性别信息\"\r\n                        android:textSize=\"14sp\"\r\n                        android:gravity=\"center_vertical\"/>\r\n                </LinearLayout>\r\n\r\n\r\n            </LinearLayout>\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"50dp\">\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:text=\"生日\"\r\n                    android:textSize=\"12sp\"\r\n                    android:gravity=\"center_vertical\"\r\n                    android:layout_marginRight=\"25sp\"\r\n                    android:textColor=\"#000\"/>\r\n                <LinearLayout\r\n                    android:id=\"@+id/ll_upBrithday\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:orientation=\"vertical\"\r\n                    android:background=\"@drawable/bg_myinfo\">\r\n                    <TextView\r\n                        android:onClick=\"onClicked\"\r\n                        android:id=\"@+id/upBrithday\"\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"match_parent\"\r\n                        android:text=\"完善生日信息\"\r\n                        android:textSize=\"12sp\"\r\n                        android:gravity=\"center_vertical\"/>\r\n                </LinearLayout>\r\n            </LinearLayout>\r\n            <LinearLayout\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:background=\"@drawable/bg_myinfo\"\r\n                android:orientation=\"vertical\">\r\n                <TextView\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"个人简介\"\r\n                    android:textSize=\"12sp\"\r\n                    android:gravity=\"center_vertical\"\r\n                    android:layout_marginTop=\"25sp\"\r\n                    android:textColor=\"#000\"\r\n                    android:layout_marginBottom=\"20dp\"/>\r\n\r\n                <RelativeLayout\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"100dp\">\r\n                    <EditText\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"100dp\"\r\n                        android:enabled=\"true\"\r\n                        android:gravity=\"start\"\r\n                        android:inputType=\"textMultiLine\"\r\n                        android:minLines=\"6\"\r\n                        android:maxLines=\"6\"\r\n                        android:scrollbars=\"vertical\"\r\n                        android:hint=\"还差一句简介，有趣的灵魂就会被发现呦~\"\r\n                        android:textSize=\"12sp\"\r\n                        android:background=\"@null\"\r\n                        />\r\n                    <TextView\r\n                        android:layout_width=\"wrap_content\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:layout_alignParentBottom=\"true\"\r\n                        android:layout_alignParentRight=\"true\"\r\n                        android:layout_marginRight=\"10dp\"\r\n                        android:text=\"0/200\"/>\r\n                </RelativeLayout>\r\n\r\n\r\n            </LinearLayout>\r\n        </LinearLayout>\r\n    </RelativeLayout>\r\n\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_edit_info.xml	(revision 33d9f7bc69aa63b6c9076b13147eba54cfbbc242)
++++ app/src/main/res/layout/activity_edit_info.xml	(date 1607313190495)
+@@ -21,11 +21,13 @@
+             android:textColor="@color/black"/>
+         <TextView
+             android:id="@+id/tv_save"
++            android:onClick="onClicked"
+             android:textColor="@color/colorTheme"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:gravity="center"
+-            android:text="保存"/>
++            android:text="保存"
++            android:layout_marginRight="15dp"/>
+     </androidx.appcompat.widget.Toolbar>
+ 
+     <RelativeLayout
+@@ -69,7 +71,7 @@
+                         android:onClick="onClicked"
+                         android:layout_width="50dp"
+                         android:layout_height="50dp"
+-                        android:src="@drawable/head"/>
++                        android:src="@drawable/addimage"/>
+                 </LinearLayout>
+ 
+ 
+@@ -95,7 +97,7 @@
+                         android:onClick="onClicked"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+-                        android:text="有光"
++                        android:hint="有光"
+                         android:textSize="14sp"
+                         android:background="@null"
+                         android:gravity="center_vertical"/>
+@@ -123,7 +125,7 @@
+                     android:background="@drawable/bg_myinfo">
+                     <TextView
+                         android:id="@+id/edit_info_sex"
+-                        android:layout_width="wrap_content"
++                        android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:text="完善性别信息"
+                         android:textSize="14sp"
+@@ -139,23 +141,23 @@
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:text="生日"
+-                    android:textSize="12sp"
++                    android:textSize="14sp"
+                     android:gravity="center_vertical"
+                     android:layout_marginRight="25sp"
+                     android:textColor="#000"/>
+                 <LinearLayout
+                     android:id="@+id/ll_upBrithday"
++                    android:onClick="onClicked"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:orientation="vertical"
+                     android:background="@drawable/bg_myinfo">
+                     <TextView
+-                        android:onClick="onClicked"
+                         android:id="@+id/upBrithday"
+                         android:layout_width="wrap_content"
+                         android:layout_height="match_parent"
+                         android:text="完善生日信息"
+-                        android:textSize="12sp"
++                        android:textSize="14sp"
+                         android:gravity="center_vertical"/>
+                 </LinearLayout>
+             </LinearLayout>
+@@ -168,7 +170,7 @@
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:text="个人简介"
+-                    android:textSize="12sp"
++                    android:textSize="14sp"
+                     android:gravity="center_vertical"
+                     android:layout_marginTop="25sp"
+                     android:textColor="#000"
+@@ -178,6 +180,7 @@
+                     android:layout_width="match_parent"
+                     android:layout_height="100dp">
+                     <EditText
++                        android:id="@+id/et_input"
+                         android:layout_width="match_parent"
+                         android:layout_height="100dp"
+                         android:enabled="true"
+@@ -187,10 +190,11 @@
+                         android:maxLines="6"
+                         android:scrollbars="vertical"
+                         android:hint="还差一句简介，有趣的灵魂就会被发现呦~"
+-                        android:textSize="12sp"
++                        android:textSize="14sp"
+                         android:background="@null"
+                         />
+                     <TextView
++                        android:id="@+id/tv_input"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_alignParentBottom="true"
+Index: app/src/main/java/com/example/pet/other/entity/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.other.entity;\r\n\r\npublic class User {\r\n    private int userId;//用户ID\r\n    private String userName;//用户姓名\r\n    private String accountNumber;//账号\r\n    private double accountAmount;//账户金额\r\n    private String picturePath;//图片路径\r\n    private String userPassword;//用户密码\r\n    private String userPhone;//用户手机号\r\n    private String userEmail;//用户邮箱\r\n    private String userAutograph;//个性签名\r\n    public User() {\r\n    }\r\n\r\n    public User(int userId, String userName, String accountNumber, double accountAmount, String picturePath, String userPassword, String userPhone, String userEmail, String userAutograph) {\r\n        this.userId = userId;\r\n        this.userName = userName;\r\n        this.accountNumber = accountNumber;\r\n        this.accountAmount = accountAmount;\r\n        this.picturePath = picturePath;\r\n        this.userPassword = userPassword;\r\n        this.userPhone = userPhone;\r\n        this.userEmail = userEmail;\r\n        this.userAutograph = userAutograph;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"User{\" +\r\n                \"userId=\" + userId +\r\n                \", userName='\" + userName + '\\'' +\r\n                \", accountNumber='\" + accountNumber + '\\'' +\r\n                \", accountAmount=\" + accountAmount +\r\n                \", picturePath='\" + picturePath + '\\'' +\r\n                \", userPassword='\" + userPassword + '\\'' +\r\n                \", userPhone='\" + userPhone + '\\'' +\r\n                \", userEmail='\" + userEmail + '\\'' +\r\n                \", userAutograph='\" + userAutograph + '\\'' +\r\n                '}';\r\n    }\r\n\r\n    public double getAccountAmount() {\r\n        return accountAmount;\r\n    }\r\n\r\n    public void setAccountAmount(double accountAmount) {\r\n        this.accountAmount = accountAmount;\r\n    }\r\n\r\n    public int getUserId() {\r\n        return userId;\r\n    }\r\n\r\n    public void setUserId(int userId) {\r\n        this.userId = userId;\r\n    }\r\n\r\n    public String getUserName() {\r\n        return userName;\r\n    }\r\n\r\n    public void setUserName(String userName) {\r\n        this.userName = userName;\r\n    }\r\n\r\n    public String getAccountNumber() {\r\n        return accountNumber;\r\n    }\r\n\r\n    public void setAccountNumber(String accountNumber) {\r\n        this.accountNumber = accountNumber;\r\n    }\r\n\r\n    public String getPicturePath() {\r\n        return picturePath;\r\n    }\r\n\r\n    public void setPicturePath(String picturePath) {\r\n        this.picturePath = picturePath;\r\n    }\r\n\r\n    public String getUserPassword() {\r\n        return userPassword;\r\n    }\r\n\r\n    public void setUserPassword(String userPassword) {\r\n        this.userPassword = userPassword;\r\n    }\r\n\r\n    public String getUserPhone() {\r\n        return userPhone;\r\n    }\r\n\r\n    public void setUserPhone(String userPhone) {\r\n        this.userPhone = userPhone;\r\n    }\r\n\r\n    public String getUserEmail() {\r\n        return userEmail;\r\n    }\r\n\r\n    public void setUserEmail(String userEmail) {\r\n        this.userEmail = userEmail;\r\n    }\r\n\r\n    public String getUserAutograph() {\r\n        return userAutograph;\r\n    }\r\n\r\n    public void setUserAutograph(String userAutograph) {\r\n        this.userAutograph = userAutograph;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/other/entity/User.java	(revision 33d9f7bc69aa63b6c9076b13147eba54cfbbc242)
++++ app/src/main/java/com/example/pet/other/entity/User.java	(date 1607305195308)
+@@ -3,25 +3,28 @@
+ public class User {
+     private int userId;//用户ID
+     private String userName;//用户姓名
++    private String userSex;//用户性别
+     private String accountNumber;//账号
+     private double accountAmount;//账户金额
+     private String picturePath;//图片路径
+     private String userPassword;//用户密码
+     private String userPhone;//用户手机号
+-    private String userEmail;//用户邮箱
++    private String userBrithday;//用户邮箱
+     private String userAutograph;//个性签名
++
+     public User() {
+     }
+ 
+-    public User(int userId, String userName, String accountNumber, double accountAmount, String picturePath, String userPassword, String userPhone, String userEmail, String userAutograph) {
++    public User(int userId, String userName, String userSex, String accountNumber, double accountAmount, String picturePath, String userPassword, String userPhone, String userBrithday, String userAutograph) {
+         this.userId = userId;
+         this.userName = userName;
++        this.userSex = userSex;
+         this.accountNumber = accountNumber;
+         this.accountAmount = accountAmount;
+         this.picturePath = picturePath;
+         this.userPassword = userPassword;
+         this.userPhone = userPhone;
+-        this.userEmail = userEmail;
++        this.userBrithday = userBrithday;
+         this.userAutograph = userAutograph;
+     }
+ 
+@@ -30,16 +33,25 @@
+         return "User{" +
+                 "userId=" + userId +
+                 ", userName='" + userName + '\'' +
++                ", userSex='" + userSex + '\'' +
+                 ", accountNumber='" + accountNumber + '\'' +
+                 ", accountAmount=" + accountAmount +
+                 ", picturePath='" + picturePath + '\'' +
+                 ", userPassword='" + userPassword + '\'' +
+                 ", userPhone='" + userPhone + '\'' +
+-                ", userEmail='" + userEmail + '\'' +
++                ", userBrithday='" + userBrithday + '\'' +
+                 ", userAutograph='" + userAutograph + '\'' +
+                 '}';
+     }
+ 
++    public String getUserSex() {
++        return userSex;
++    }
++
++    public void setUserSex(String userSex) {
++        this.userSex = userSex;
++    }
++
+     public double getAccountAmount() {
+         return accountAmount;
+     }
+@@ -96,12 +108,12 @@
+         this.userPhone = userPhone;
+     }
+ 
+-    public String getUserEmail() {
+-        return userEmail;
++    public String getUserBrithday() {
++        return userBrithday;
+     }
+ 
+-    public void setUserEmail(String userEmail) {
+-        this.userEmail = userEmail;
++    public void setUserBrithday(String userBrithday) {
++        this.userBrithday = userBrithday;
+     }
+ 
+     public String getUserAutograph() {
+Index: app/src/main/java/com/example/pet/my/MyFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.my;\r\n\r\nimport android.content.Intent;\r\nimport android.net.Uri;\r\nimport android.os.Bundle;\r\nimport android.provider.MediaStore;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.AdapterView;\r\nimport android.widget.EditText;\r\nimport android.widget.ImageButton;\r\nimport android.widget.ListView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.pet.R;\r\nimport com.example.pet.my.editinfo.EditInfo;\r\nimport com.example.pet.my.order.MyOrderActivity;\r\nimport com.example.pet.other.Cache;\r\n\r\nimport java.io.File;\r\nimport java.io.IOException;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class MyFragment extends Fragment {\r\n    private View view;\r\n    private TextView login;\r\nprivate  TextView count;\r\n    private List<My> myList1 = new ArrayList<>();\r\n    private List<My> myList2 = new ArrayList<>();\r\n    private List<My> myList3 = new ArrayList<>();\r\n    private Uri imageUri;\r\n    public static final int TAKE_PHOTO=1;\r\n    @Override\r\n    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {\r\n        view = inflater.inflate(R.layout.fragment_my, container, false);\r\n        login = view.findViewById(R.id.fragment_login);\r\n        count = view.findViewById(R.id.fragment_count);\r\n\r\n        login.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent=new Intent(getContext(),Login.class);\r\n                startActivity(intent);\r\n            }\r\n        });\r\n        //适配第一个listView\r\n        MyAdapter myAdapter1 = new MyAdapter(view.getContext(), R.layout.my_listview, myList1);\r\n        ListView listView1 = (ListView) view.findViewById(R.id.my_listview1);\r\n        listView1.setAdapter(myAdapter1);\r\n        //适配第二个listView\r\n        MyAdapter myAdapter2 = new MyAdapter(view.getContext(), R.layout.my_listview, myList2);\r\n        ListView listView2 = (ListView) view.findViewById(R.id.my_listview2);\r\n        listView2.setAdapter(myAdapter2);\r\n        //适配第三个listView\r\n        MyAdapter myAdapter3 = new MyAdapter(view.getContext(), R.layout.my_listview, myList3);\r\n        ListView listView3 = (ListView) view.findViewById(R.id.my_listview3);\r\n        listView3.setAdapter(myAdapter3);\r\n        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {\r\n            @Override\r\n            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {\r\n                if(Cache.user !=null){\r\n                switch (position) {\r\n                    case 0:\r\n                        Intent intent2 = new Intent(getContext(), EditInfo.class);\r\n                        startActivity(intent2);\r\n                        break;\r\n                    default:\r\n                        break;\r\n                }}else{\r\n                    showLoginToast();\r\n                }\r\n            }\r\n        });\r\n        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {\r\n            @Override\r\n            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {\r\n                if(Cache.user != null){\r\n                switch (position) {\r\n                    case 0:\r\n                        Intent intent = new Intent(getContext(), Post.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                    case 1:\r\n                        Intent intent1 = new Intent(getContext(), MyOrderActivity.class);\r\n                        startActivity(intent1);\r\n                        break;\r\n                    case 2:\r\n                        Intent intent3 = new Intent(getContext(), History.class);\r\n                        startActivity(intent3);\r\n                        break;\r\n                    case 3:\r\n                        Intent intent4 = new Intent(getContext(), Pet.class);\r\n                        startActivity(intent4);\r\n                        break;\r\n                    default:\r\n                        break;\r\n                }}else {\r\n                    showLoginToast();\r\n                }\r\n            }\r\n        });\r\n        listView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {\r\n            @Override\r\n            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {\r\n                switch (position) {\r\n                    case 0:\r\n                        Intent intent = new Intent(getContext(), Post.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                    case 1:\r\n                        Intent intent1 = new Intent(getContext(), AboutUs.class);\r\n                        startActivity(intent1);\r\n                        break;\r\n                    default:\r\n                        break;\r\n                }\r\n            }\r\n        });\r\n        //调用摄像头\r\n        ImageButton camera=(ImageButton) view.findViewById(R.id.mycamera);\r\n        camera.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent=new Intent(\"android.media.action.IMAGE_CAPTURE\");\r\n                intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);\r\n                startActivityForResult(intent,TAKE_PHOTO);\r\n            }\r\n        });\r\n        return view;\r\n    }\r\n    //初始化数据\r\n    private void init() {\r\n        My my1=new My(R.drawable.bianji,\"修改信息\",R.drawable.next);\r\n        myList1.add(my1);\r\n        My my2=new My(R.drawable.mytie,\"我的帖子\",R.drawable.next);\r\n        myList2.add(my2);\r\n        My my3=new My(R.drawable.myorder,\"我的订单\",R.drawable.next);\r\n        myList2.add(my3);\r\n        My my4=new My(R.drawable.liulan,\"浏览记录\",R.drawable.next);\r\n        myList2.add(my4);\r\n        My my5=new My(R.drawable.petlogo,\"我的宠物\",R.drawable.next);\r\n        myList2.add(my5);\r\n        My my6=new My(R.drawable.setting,\"个人设置\",R.drawable.next);\r\n        myList3.add(my6);\r\n        My my7=new My(R.drawable.we,\"关于我们\",R.drawable.next);\r\n        myList3.add(my7);\r\n    }\r\n    //加载数据，根据生命周期\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        init();\r\n    }\r\n//通过生命周期方法 获得当前用户数据\r\n    @Override\r\n    public void onStart() {\r\n        if(Cache.user !=null){\r\n            login.setText(Cache.user.getUserName());\r\n            count.setText(Cache.user.getUserPhone());\r\n        }\r\n        super.onStart();\r\n        Log.e(\"MyFragemnt\",\"onStart\");\r\n      //  Log.e(\"MyFragemnt\",Cache.user.getUserName());\r\n\r\n    }\r\n    public void showLoginToast(){\r\n        Toast.makeText(getContext(),\"请先登录\",Toast.LENGTH_LONG).show();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/my/MyFragment.java	(revision 33d9f7bc69aa63b6c9076b13147eba54cfbbc242)
++++ app/src/main/java/com/example/pet/my/MyFragment.java	(date 1607312330473)
+@@ -64,6 +64,9 @@
+         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+             @Override
+             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
++                /**
++                 * 暂时修改
++                 */
+                 if(Cache.user !=null){
+                 switch (position) {
+                     case 0:
+Index: app/src/main/java/com/example/pet/my/SetPassword.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.my;\r\n\r\nimport androidx.appcompat.app.AlertDialog;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\n\r\nimport android.content.DialogInterface;\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.os.Handler;\r\nimport android.os.Looper;\r\nimport android.os.Message;\r\nimport android.text.TextUtils;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport com.example.pet.R;\r\nimport com.example.pet.other.Cache;\r\nimport com.example.pet.other.entity.User;\r\nimport com.google.gson.Gson;\r\nimport com.google.gson.GsonBuilder;\r\n\r\nimport org.json.JSONObject;\r\n\r\nimport java.io.IOException;\r\nimport java.net.HttpURLConnection;\r\nimport java.net.MalformedURLException;\r\nimport java.net.URL;\r\nimport java.util.Timer;\r\nimport java.util.TimerTask;\r\nimport java.util.regex.Matcher;\r\nimport java.util.regex.Pattern;\r\n\r\nimport cn.smssdk.EventHandler;\r\nimport cn.smssdk.SMSSDK;\r\nimport okhttp3.Call;\r\nimport okhttp3.Callback;\r\nimport okhttp3.FormBody;\r\nimport okhttp3.MediaType;\r\nimport okhttp3.OkHttpClient;\r\nimport okhttp3.Request;\r\nimport okhttp3.RequestBody;\r\nimport okhttp3.Response;\r\nimport okhttp3.ResponseBody;\r\n\r\npublic class SetPassword extends AppCompatActivity {\r\n    private Toolbar toolbar;\r\n    private String phone;\r\n    private EditText etPass;\r\n    private TextView tvLogin;\r\n\r\n    private TimerTask tt;\r\n    private Timer tm;\r\n    private Button btnCheck;\r\n    private EditText etCheckecode;\r\n    private int TIME = 60;//倒计时60s这里应该多设置些因为mob后台需要60s,我们前端会有差异的建议设置90，100或者120\r\n    public String country=\"86\";//这是中国区号，如果需要其他国家列表，可以使用getSupportedCountries();获得国家区号\r\n\r\n    private static final int CODE_REPEAT = 1; //重新发送\r\n    private static final int CODE_TRUE = 2; //注册成功\r\n    private static final int CODE_FALSE = 3; //已存在\r\n    private static final int CODE_FALSE1 = 4; //未知原因错误\r\n\r\n    Handler hd = new Handler() {\r\n        @Override\r\n        public void handleMessage(Message msg) {\r\n            if (msg.what == CODE_REPEAT) {\r\n                btnCheck.setEnabled(true);\r\n                tm.cancel();//取消任务\r\n                tt.cancel();//取消任务\r\n                TIME = 60;//时间重置\r\n                btnCheck.setText(\"重新发送验证码\");\r\n            }else if(msg.what == CODE_TRUE){\r\n                Intent intent = new Intent();\r\n                intent.setClass(SetPassword.this,Login.class);\r\n                startActivity(intent);\r\n                SetPassword.this.finish();\r\n            }else if(msg.what == CODE_FALSE){\r\n                Log.e(\"register\",\"6\");\r\n                Log.e(\"6\",msg.obj.toString());\r\n                toast(msg.obj.toString());\r\n            }else if(msg.what == CODE_FALSE1){\r\n                toast(\"后台服务繁忙，请1分钟后再次申请注册！\");\r\n            }else{\r\n                btnCheck.setText(TIME + \"重新发送验证码\");\r\n            }\r\n\r\n        }\r\n    };\r\n\r\n    //回调\r\n    EventHandler eh=new EventHandler(){\r\n        @Override\r\n        public void afterEvent(int event, int result, Object data) {\r\n            if (result == SMSSDK.RESULT_COMPLETE) {\r\n                if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {\r\n                    toast(\"验证成功，密码是：\"+etPass.getText().toString());\r\n//                    insert();\r\n                }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){        //获取验证码成功\r\n                    toast(\"获取验证码成功\");\r\n                }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){//如果你调用了获取国家区号类表会在这里回调\r\n                    //返回支持发送验证码的国家列表\r\n                }\r\n            }else{//错误等在这里（包括验证失败）\r\n                //错误码请参照http://wiki.mob.com/android-api-错误码参考/这里我就不再继续写了\r\n                ((Throwable)data).printStackTrace();\r\n                String str = data.toString();\r\n                toast(str);\r\n            }\r\n        }\r\n    };\r\n\r\n    /**\r\n     * 上传服务端\r\n     */\r\n    private void insert() {\r\n        //发送数据\r\n        Log.e(\"register\",\"1\");\r\n        OkHttpClient okHttpClient = new OkHttpClient();\r\n        Gson gson = new GsonBuilder()\r\n                .serializeNulls()//序列化空值\r\n                .create();\r\n        User user = new User();\r\n        user.setUserPassword(etPass.getText().toString());\r\n        user.setUserPhone(phone);\r\n        String str = gson.toJson(user);\r\n        Log.e(\"register\",\"2   \" + str);\r\n        RequestBody requestBody = RequestBody.create(MediaType.parse(\r\n                \"text/plain;charset=UTF-8\"),str);\r\n        Request request = new Request.Builder()\r\n                .post(requestBody)\r\n                .url(Cache.MY_URL + \"RegisterServlet\")\r\n                .build();\r\n        Log.e(\"register\",request.toString());\r\n        Call call = okHttpClient.newCall(request);\r\n\r\n        call.enqueue(new Callback() {\r\n            @Override\r\n            public void onFailure(Call call, IOException e) {\r\n                //请求失败\r\n                toast(\"注册失败，原因不明！\");\r\n                e.printStackTrace();\r\n            }\r\n\r\n            @Override\r\n            public void onResponse(Call call, Response response) throws IOException {\r\n                //请求成功\r\n                Log.e(\"register\",\"4\");\r\n                //使用HandlerMessage修改用户界面\r\n                Message msg = new Message();\r\n                String str = response.body().string();\r\n                if(str.equals(\"true\")){\r\n                    msg.what = CODE_TRUE;\r\n                }else if(str.equals(\"false\")){\r\n                    msg.what = CODE_FALSE1;\r\n                }else{\r\n                    msg.what = CODE_FALSE;\r\n                }\r\n                msg.obj = str;\r\n                hd.sendMessage(msg);\r\n                Log.e(\"register\",\"5\");\r\n            }\r\n        });\r\n\r\n    }\r\n\r\n    private void toast(final String str) {\r\n        runOnUiThread(new Runnable() {\r\n            @Override\r\n            public void run() {\r\n                Toast.makeText(SetPassword.this, str, Toast.LENGTH_SHORT).show();\r\n            }\r\n        });\r\n    }\r\n\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_set_password);\r\n        Intent intent = getIntent();\r\n        phone = intent.getStringExtra(\"phone\");\r\n        setView();\r\n        //注册一个事件回调监听，用于处理SMSSDK接口请求的结果\r\n        SMSSDK.registerEventHandler(eh);//注册短信回调（记得销毁，避免泄露内存）\r\n    }\r\n    private void setView() {\r\n        toolbar = findViewById(R.id.set_password_toolbar);\r\n        toolbar.setNavigationOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                SetPassword.this.finish();\r\n            }\r\n        });\r\n        etCheckecode = findViewById(R.id.et_yan);\r\n        btnCheck = findViewById(R.id.btn_getYan);\r\n        etPass = findViewById(R.id.et_password);\r\n        tvLogin = findViewById(R.id.set_password_login);\r\n    }\r\n\r\n    public void onClicked(View view) {\r\n        switch (view.getId()){\r\n            case R.id.btn_getYan:\r\n                //获取验证码\r\n                alterWarning();\r\n                break;\r\n            case R.id.btn_submit1:\r\n                insert();\r\n//                //获得用户输入的验证码\r\n//                String code = etCheckecode.getText().toString().replaceAll(\"/s\",\"\");\r\n//                if (!TextUtils.isEmpty(code)) {//判断验证码是否为空\r\n//                    //验证\r\n//                    SMSSDK.submitVerificationCode( country,  phone,  code);\r\n//                }else{//如果用户输入的内容为空，提醒用户\r\n//                    toast(\"请输入验证码后再提交\");\r\n//                }\r\n                break;\r\n            case R.id.set_password_login:\r\n                Intent intent = new Intent(this,Login.class);\r\n                startActivity(intent);\r\n                break;\r\n        }\r\n    }\r\n\r\n    //弹窗确认下发\r\n    private void alterWarning() {\r\n        // 2. 通过sdk发送短信验证\r\n        AlertDialog.Builder builder = new AlertDialog.Builder(this);  //先得到构造器\r\n        builder.setTitle(\"提示\"); //设置标题\r\n        builder.setMessage(\"我们将要发送到\" + phone + \"验证\"); //设置内容\r\n        builder.setIcon(R.mipmap.ic_launcher);//设置图标，图片id即可\r\n        builder.setPositiveButton(\"确定\", new DialogInterface.OnClickListener() {\r\n            //设置确定按钮\r\n            @Override\r\n            public void onClick(DialogInterface dialog, int which) {\r\n                dialog.dismiss(); //关闭dialog\r\n                // 2. 通过sdk发送短信验证（请求获取短信验证码，在监听（eh）中返回）\r\n                SMSSDK.getVerificationCode(country, phone);\r\n                //做倒计时操作\r\n                Toast.makeText(SetPassword.this, \"已发送\" + which, Toast.LENGTH_SHORT).show();\r\n                btnCheck.setEnabled(false);\r\n                tm = new Timer();\r\n                tt = new TimerTask() {\r\n                    @Override\r\n                    public void run() {\r\n                        hd.sendEmptyMessage(TIME--);\r\n                    }\r\n                };\r\n                tm.schedule(tt,0,1000);\r\n            }\r\n        });\r\n        builder.setNegativeButton(\"取消\", new DialogInterface.OnClickListener() { //设置取消按钮\r\n            @Override\r\n            public void onClick(DialogInterface dialog, int which) {\r\n                dialog.dismiss();\r\n                Toast.makeText(SetPassword.this, \"已取消\" + which, Toast.LENGTH_SHORT).show();\r\n            }\r\n        });\r\n        //参数都设置完成了，创建并显示出来\r\n        builder.create().show();\r\n    }\r\n\r\n    // 使用完EventHandler需注销，否则可能出现内存泄漏\r\n    protected void onDestroy() {\r\n        super.onDestroy();\r\n        SMSSDK.unregisterEventHandler(eh);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/my/SetPassword.java	(revision 33d9f7bc69aa63b6c9076b13147eba54cfbbc242)
++++ app/src/main/java/com/example/pet/my/SetPassword.java	(date 1607309359254)
+@@ -99,7 +99,7 @@
+             if (result == SMSSDK.RESULT_COMPLETE) {
+                 if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                     toast("验证成功，密码是："+etPass.getText().toString());
+-//                    insert();
++                    insert();
+                 }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){        //获取验证码成功
+                     toast("获取验证码成功");
+                 }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){//如果你调用了获取国家区号类表会在这里回调
+@@ -209,15 +209,15 @@
+                 alterWarning();
+                 break;
+             case R.id.btn_submit1:
+-                insert();
+-//                //获得用户输入的验证码
+-//                String code = etCheckecode.getText().toString().replaceAll("/s","");
+-//                if (!TextUtils.isEmpty(code)) {//判断验证码是否为空
+-//                    //验证
+-//                    SMSSDK.submitVerificationCode( country,  phone,  code);
+-//                }else{//如果用户输入的内容为空，提醒用户
+-//                    toast("请输入验证码后再提交");
+-//                }
++//                insert();
++                //获得用户输入的验证码
++                String code = etCheckecode.getText().toString().replaceAll("/s","");
++                if (!TextUtils.isEmpty(code)) {//判断验证码是否为空
++                    //验证
++                    SMSSDK.submitVerificationCode( country,  phone,  code);
++                }else{//如果用户输入的内容为空，提醒用户
++                    toast("请输入验证码后再提交");
++                }
+                 break;
+             case R.id.set_password_login:
+                 Intent intent = new Intent(this,Login.class);
+Index: app/src/main/java/com/example/pet/my/editinfo/EditInfo.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.my.editinfo;\r\n\r\nimport androidx.annotation.Nullable;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\nimport androidx.core.app.ActivityCompat;\r\n\r\nimport android.app.Activity;\r\nimport android.content.Context;\r\nimport android.content.Intent;\r\nimport android.content.pm.PackageManager;\r\nimport android.graphics.Rect;\r\nimport android.net.Uri;\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.Gravity;\r\nimport android.view.MotionEvent;\r\nimport android.view.View;\r\nimport android.view.inputmethod.InputMethodManager;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.PopupWindow;\r\nimport android.widget.TextView;\r\n\r\nimport com.bigkoo.pickerview.builder.OptionsPickerBuilder;\r\nimport com.bigkoo.pickerview.builder.TimePickerBuilder;\r\nimport com.bigkoo.pickerview.listener.CustomListener;\r\nimport com.bigkoo.pickerview.listener.OnOptionsSelectListener;\r\nimport com.bigkoo.pickerview.listener.OnTimeSelectListener;\r\nimport com.bigkoo.pickerview.view.OptionsPickerView;\r\nimport com.bigkoo.pickerview.view.TimePickerView;\r\nimport com.example.pet.R;\r\nimport com.luck.picture.lib.PictureSelector;\r\nimport com.luck.picture.lib.config.PictureConfig;\r\nimport com.luck.picture.lib.config.PictureMimeType;\r\nimport com.luck.picture.lib.entity.LocalMedia;\r\n\r\nimport java.io.File;\r\nimport java.io.IOException;\r\nimport java.text.SimpleDateFormat;\r\nimport java.util.ArrayList;\r\nimport java.util.Calendar;\r\nimport java.util.Date;\r\nimport java.util.List;\r\n\r\nimport de.hdodenhof.circleimageview.CircleImageView;\r\nimport okhttp3.MediaType;\r\nimport okhttp3.MultipartBody;\r\nimport okhttp3.OkHttpClient;\r\nimport okhttp3.Request;\r\nimport okhttp3.RequestBody;\r\nimport okhttp3.Response;\r\n\r\npublic class EditInfo extends AppCompatActivity {\r\n    private TextView upSex;\r\n    private PopupWindow popupWindow;\r\n    private Toolbar toolbar;\r\n    private CircleImageView upPhoto;\r\n    private TextView upBrithday;\r\n    private TextView upName;\r\n    private TimePickerView pvTime;\r\n    private OptionsPickerView pvCustomOptions;\r\n    private ArrayList<String> cardItem = new ArrayList<>();\r\n\r\n\r\n    private static final int REQUEST_EXTERNAL_STORAGE = 1;\r\n\r\n    private static String[] PERMISSIONS_STORAGE = {\r\n            \"android.permission.READ_EXTERNAL_STORAGE\",\r\n            \"android.permission.WRITE_EXTERNAL_STORAGE\",\r\n            \"android.permission.CAMER\"};\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_edit_info);\r\n//        if (Build.VERSION.SDK_INT >= 21) {   //只有5.0及以上系统才支持，因此这里先进行了一层if判断\r\n//            View decorView = getWindow().getDecorView();\r\n//            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN\r\n//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE    //设置为全屏显示，必须这两行代码一起才能生效\r\n//                    |View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色\r\n//            decorView.setSystemUiVisibility(option);\r\n//            getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明\r\n//        }\r\n        //设置控件内容\r\n        setView();\r\n    }\r\n\r\n    public void onClicked(View view) {\r\n        switch(view.getId()){\r\n            case R.id.upPhoto:\r\n                //上传头像\r\n                upPic();\r\n                break;\r\n            case R.id.upName:\r\n                break;\r\n            case R.id.ll_upSex:\r\n                pvCustomOptions.show();\r\n                break;\r\n            case R.id.ll_upBrithday:\r\n                pvTime.show();\r\n                break;\r\n        }\r\n    }\r\n\r\n    private void upSex() {\r\n        // 注意：自定义布局中，id为 optionspicker 或者 timepicker 的布局以及其子控件必须要有，否则会报空指针\r\n        // 具体可参考demo 里面的两个自定义布局\r\n        pvCustomOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {\r\n            @Override\r\n            public void onOptionsSelect(int options1, int options2, int options3, View v) {\r\n               //返回的分别是三个级别的选中位置\r\n                String tx = cardItem.get(options1);\r\n                upSex.setText(tx);\r\n            }\r\n        })\r\n                .setLayoutRes(R.layout.picker_sex_bg, new CustomListener() {\r\n                    @Override\r\n                    public void customLayout(View v) {\r\n                        //自定义布局中的控件初始化及事件处理\r\n                        final TextView tvSubmit = v.findViewById(R.id.tv_finish);\r\n                        TextView tvCancel = v.findViewById(R.id.tv_cancel);\r\n                        tvSubmit.setOnClickListener(new View.OnClickListener() {\r\n                            @Override\r\n                            public void onClick(View v) {\r\n                                pvCustomOptions.returnData();\r\n                                pvCustomOptions.dismiss();\r\n                            }\r\n                        });\r\n                        tvCancel.setOnClickListener(new View.OnClickListener() {\r\n                            @Override\r\n                            public void onClick(View v) {\r\n                                pvCustomOptions.dismiss();\r\n                            }\r\n                        });\r\n\r\n                    }\r\n                })\r\n                .setOutSideCancelable(true)\r\n                .build();\r\n        pvCustomOptions.setPicker(cardItem);//添加数据\r\n    }\r\n\r\n    private void upBri() {\r\n        Calendar selectedDate = Calendar.getInstance();//系统当前时间\r\n        Calendar startDate = Calendar.getInstance();\r\n        startDate.set(1900, 1, 1);\r\n        Calendar endDate = Calendar.getInstance();\r\n        pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {\r\n            @Override\r\n            public void onTimeSelect(Date date, View v) {\r\n                upBrithday.setText(getTimes(date));\r\n            }\r\n        })\r\n                .setDate(selectedDate)\r\n                .setRangDate(startDate,endDate)\r\n                .setLayoutRes(R.layout.picker_time_bg, new CustomListener() {\r\n                    @Override\r\n                    public void customLayout(View v) {\r\n                        TextView tvSubmit = v.findViewById(R.id.tv_finish);\r\n                        TextView tvCannel = v.findViewById(R.id.tv_cancel);\r\n                        tvSubmit.setOnClickListener(new View.OnClickListener() {\r\n                            @Override\r\n                            public void onClick(View v) {\r\n                                pvTime.returnData();\r\n                                pvTime.dismiss();\r\n                            }\r\n                        });\r\n                        tvCannel.setOnClickListener(new View.OnClickListener() {\r\n                            @Override\r\n                            public void onClick(View v) {\r\n                                pvTime.dismiss();\r\n                            }\r\n                        });\r\n                    }\r\n                })\r\n                .setOutSideCancelable(true)\r\n                .setContentTextSize(18)\r\n                .setType(new boolean[]{true, true, true, false, false, false})\r\n                .setLabel(\"年\", \"月\", \"日\", \"时\", \"分\", \"秒\")\r\n                .setLineSpacingMultiplier(1.2f)\r\n                .setTextXOffset(0, 0, 0, 40, 0, -40)\r\n                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。\r\n                .setDividerColor(0xFF24AD9D)\r\n                .build();\r\n    }\r\n\r\n    //格式化时间\r\n    private String getTimes(Date date) {\r\n        SimpleDateFormat format = new SimpleDateFormat(\"yyyy-MM-dd\");\r\n        return format.format(date);\r\n    }\r\n\r\n\r\n\r\n    private void setView() {\r\n        upSex = findViewById(R.id.edit_info_sex);\r\n        toolbar = findViewById(R.id.edit_toolbar);\r\n        toolbar.setNavigationOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                EditInfo.this.finish();\r\n            }\r\n        });\r\n        upBrithday = findViewById(R.id.upBrithday);\r\n        upName = findViewById(R.id.upName);\r\n        upPhoto = findViewById(R.id.upPhoto);\r\n        cardItem.add(\"未知\");\r\n        cardItem.add(\"男\");\r\n        cardItem.add(\"女\");\r\n        //加载数据\r\n        upSex();\r\n        upBri();\r\n\r\n\r\n\r\n    }\r\n\r\n\r\n    private void upPic() {\r\n        //动态申请权限\r\n        verifyStoragePermissions(this);\r\n        PictureSelector.create(this)\r\n                .openGallery(PictureConfig.TYPE_IMAGE)\r\n                .imageEngine(GlideEngine.createGlideEngine())\r\n                .imageSpanCount(4)// 每行显示个数 int\r\n                .maxSelectNum(1)\r\n                .isWeChatStyle(true)\r\n                .selectionMode(PictureConfig.SINGLE)// 多选 or 单选 PictureConfig.MULTIPLE or PictureConfig.SINGLE\r\n                .isSingleDirectReturn(true)//PictureConfig.SINGLE模式下是否直接返回\r\n                .isPreviewImage(true)// 是否可预览图片 true or false\r\n                .isCamera(true)// 是否显示拍照按钮 true or false\r\n                .imageFormat(PictureMimeType.JPEG)// 拍照保存图片格式后缀,默认jpeg\r\n                .isZoomAnim(true)// 图片列表点击 缩放效果 默认true\r\n                .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填\r\n                .isEnableCrop(true)// 是否裁剪 true or false\r\n                .isCompress(true)// 是否压缩 true or false\r\n                .compressSavePath(Const.getImgPath())//压缩图片保存地址\r\n                .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false\r\n                .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false\r\n                .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code\r\n    }\r\n\r\n    //接受回调\r\n    @Override\r\n    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {\r\n        super.onActivityResult(requestCode, resultCode, data);\r\n        if (resultCode == -1 && data != null) {\r\n            switch (requestCode) {\r\n                case PictureConfig.CHOOSE_REQUEST:\r\n                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);\r\n                    Log.e(\"地址：\",selectList.get(0).getCompressPath());\r\n                    upPhoto.setImageURI(Uri.parse(selectList.get(0).getCompressPath()));\r\n                    //上传图片\r\n//                    setPicture(selectList.get(0).getCompressPath());\r\n                    break;\r\n            }\r\n        }\r\n    }\r\n    /**\r\n     * 上传图片\r\n     * 未测试\r\n     */\r\n    public static void setPicture(String path){\r\n        RequestBody requestBody=RequestBody.create(MediaType.parse(\"image/jpeg\"),new File(path));\r\n        MultipartBody body=new MultipartBody.Builder()\r\n                .setType(MultipartBody.FORM)//上传图片格式一般都是这个格式MediaType.parse(\"multipart/form-data\")\r\n                .addFormDataPart(\"name\",\"nate\")//除了图片在上传一些东西\r\n                .addFormDataPart(\"filename\",\"grile.jpg\",requestBody).build();//图片服务器定义名字，\r\n        OkHttpClient okHttpClient=new OkHttpClient();\r\n        Request request=new Request.Builder().url(\"\").post(body).build();\r\n        try {\r\n            Response response=okHttpClient.newCall(request).execute();\r\n            if (response.isSuccessful()){\r\n                Log.e(\"response\",response.body().toString());\r\n            }\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n    //然后通过一个函数来申请权限\r\n    public static void verifyStoragePermissions(Activity activity) {\r\n        try {\r\n            //检测是否有写的权限\r\n            int permission = ActivityCompat.checkSelfPermission(activity,\r\n                    \"android.permission.WRITE_EXTERNAL_STORAGE\");\r\n            if (permission != PackageManager.PERMISSION_GRANTED) {\r\n                // 没有写的权限，去申请写的权限，会弹出对话框\r\n                ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,REQUEST_EXTERNAL_STORAGE);\r\n            }\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/my/editinfo/EditInfo.java	(revision 33d9f7bc69aa63b6c9076b13147eba54cfbbc242)
++++ app/src/main/java/com/example/pet/my/editinfo/EditInfo.java	(date 1607326187669)
+@@ -6,12 +6,23 @@
+ import androidx.core.app.ActivityCompat;
+ 
+ import android.app.Activity;
++import android.content.ContentResolver;
+ import android.content.Context;
+ import android.content.Intent;
+ import android.content.pm.PackageManager;
++import android.graphics.Bitmap;
++import android.graphics.BitmapFactory;
+ import android.graphics.Rect;
+ import android.net.Uri;
+ import android.os.Bundle;
++import android.os.Environment;
++import android.os.Handler;
++import android.os.IBinder;
++import android.os.Looper;
++import android.os.Message;
++import android.provider.MediaStore;
++import android.text.Editable;
++import android.text.TextWatcher;
+ import android.util.Log;
+ import android.view.Gravity;
+ import android.view.MotionEvent;
+@@ -22,6 +33,7 @@
+ import android.widget.LinearLayout;
+ import android.widget.PopupWindow;
+ import android.widget.TextView;
++import android.widget.Toast;
+ 
+ import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+ import com.bigkoo.pickerview.builder.TimePickerBuilder;
+@@ -31,20 +43,29 @@
+ import com.bigkoo.pickerview.view.OptionsPickerView;
+ import com.bigkoo.pickerview.view.TimePickerView;
+ import com.example.pet.R;
++import com.example.pet.my.SetPassword;
++import com.example.pet.other.Cache;
++import com.example.pet.other.entity.User;
++import com.google.gson.Gson;
+ import com.luck.picture.lib.PictureSelector;
+ import com.luck.picture.lib.config.PictureConfig;
+ import com.luck.picture.lib.config.PictureMimeType;
+ import com.luck.picture.lib.entity.LocalMedia;
+ 
++import java.io.ByteArrayOutputStream;
+ import java.io.File;
+ import java.io.IOException;
++import java.io.InputStream;
+ import java.text.SimpleDateFormat;
+ import java.util.ArrayList;
+ import java.util.Calendar;
+ import java.util.Date;
+ import java.util.List;
+ 
++import cn.jiguang.net.HttpUtils;
+ import de.hdodenhof.circleimageview.CircleImageView;
++import okhttp3.Call;
++import okhttp3.Callback;
+ import okhttp3.MediaType;
+ import okhttp3.MultipartBody;
+ import okhttp3.OkHttpClient;
+@@ -52,24 +73,50 @@
+ import okhttp3.RequestBody;
+ import okhttp3.Response;
+ 
++import static com.luck.picture.lib.config.PictureConfig.REQUEST_CAMERA;
++
+ public class EditInfo extends AppCompatActivity {
++    private User user = new User();
+     private TextView upSex;
+     private PopupWindow popupWindow;
+     private Toolbar toolbar;
+     private CircleImageView upPhoto;
+     private TextView upBrithday;
+-    private TextView upName;
++    private EditText upName;
+     private TimePickerView pvTime;
+     private OptionsPickerView pvCustomOptions;
+     private ArrayList<String> cardItem = new ArrayList<>();
+-
+-
++    //输入框初始值
++    private int num = 0;
++    //输入框最大值
++    public int mMaxNum=200;
++    public EditText etInput;
++    private TextView tvInput;
++    private String image_path;
+     private static final int REQUEST_EXTERNAL_STORAGE = 1;
+-
+     private static String[] PERMISSIONS_STORAGE = {
+             "android.permission.READ_EXTERNAL_STORAGE",
+             "android.permission.WRITE_EXTERNAL_STORAGE",
+             "android.permission.CAMER"};
++
++    Handler hd = new Handler() {
++        @Override
++        public void handleMessage(Message msg) {
++            if(msg.what == 1){
++                Toast.makeText(EditInfo.this,"上传成功",Toast.LENGTH_SHORT);
++                upData();
++            }else if(msg.what == 2){
++                Log.e("up","6b");
++                Toast.makeText(EditInfo.this,"上传失败了",Toast.LENGTH_SHORT);
++            }else if(msg.what == 3){
++                Toast.makeText(EditInfo.this,"上传成功",Toast.LENGTH_SHORT);
++                EditInfo.this.finish();
++            }else {
++                Log.e("up","6b");
++                Toast.makeText(EditInfo.this,"上传失败了",Toast.LENGTH_SHORT);
++            }
++        }
++    };
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+@@ -100,6 +147,10 @@
+             case R.id.ll_upBrithday:
+                 pvTime.show();
+                 break;
++            case R.id.tv_save:
++                //保存信息
++                upPhoto(image_path);
++                break;
+         }
+     }
+ 
+@@ -112,6 +163,8 @@
+                //返回的分别是三个级别的选中位置
+                 String tx = cardItem.get(options1);
+                 upSex.setText(tx);
++                Cache.user.setUserSex(tx);
++                user.setUserSex(tx);
+             }
+         })
+                 .setLayoutRes(R.layout.picker_sex_bg, new CustomListener() {
+@@ -150,6 +203,8 @@
+             @Override
+             public void onTimeSelect(Date date, View v) {
+                 upBrithday.setText(getTimes(date));
++                Cache.user.setUserBrithday(getTimes(date));
++                user.setUserBrithday(getTimes(date));
+             }
+         })
+                 .setDate(selectedDate)
+@@ -191,7 +246,54 @@
+         return format.format(date);
+     }
+ 
++    @Override
++    public boolean dispatchTouchEvent(MotionEvent ev) {
++        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
++            View v = getCurrentFocus();
++            if (isShouldHideKeyboard(v, ev)) {
++                hideKeyboard(v.getWindowToken());
++            }
++        }
++        return super.dispatchTouchEvent(ev);
++    }
+ 
++    /**
++     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
++     *
++     * @param v
++     * @param event
++     * @return
++     */
++    private boolean isShouldHideKeyboard(View v, MotionEvent event) {
++        if (v != null && (v instanceof EditText)) {
++            int[] l = {0, 0};
++            v.getLocationInWindow(l);
++            int left = l[0],
++                    top = l[1],
++                    bottom = top + v.getHeight(),
++                    right = left + v.getWidth();
++            if (event.getX() > left && event.getX() < right
++                    && event.getY() > top && event.getY() < bottom) {
++                // 点击EditText的事件，忽略它。
++                return false;
++            } else {
++                return true;
++            }
++        }
++        // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditText上，和用户用轨迹球选择其他的焦点
++        return false;
++    }
++
++    /**
++     * 获取InputMethodManager，隐藏软键盘
++     * @param token
++     */
++    private void hideKeyboard(IBinder token) {
++        if (token != null) {
++            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
++            im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
++        }
++    }
+ 
+     private void setView() {
+         upSex = findViewById(R.id.edit_info_sex);
+@@ -205,15 +307,62 @@
+         upBrithday = findViewById(R.id.upBrithday);
+         upName = findViewById(R.id.upName);
+         upPhoto = findViewById(R.id.upPhoto);
++        etInput = findViewById(R.id.et_input);
++        tvInput = findViewById(R.id.tv_input);
+         cardItem.add("未知");
+         cardItem.add("男");
+         cardItem.add("女");
+         //加载数据
+         upSex();
+         upBri();
++        countWords();
++
++
++
++    }
++
++    /**
++     * 记录字数和限制最大输入字数
++     */
++    private void countWords() {
++        etInput.addTextChangedListener(new TextWatcher() {
++            //记录输入的字数
++            private CharSequence wordNum;
++            private int selectionStart;
++            private int selectionEnd;
++            @Override
++            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+ 
++            }
+ 
++            @Override
++            public void onTextChanged(CharSequence s, int start, int before, int count) {
++                //实时记录输入的字数
++                wordNum= s;
++            }
+ 
++            @Override
++            public void afterTextChanged(Editable s) {
++
++                Cache.user.setUserAutograph(Cache.user.getUserAutograph() + s);
++                int number = num + s.length();
++                //TextView显示剩余字数
++                tvInput.setText("" + number+"/" + mMaxNum);
++                selectionStart=etInput.getSelectionStart();
++                selectionEnd = etInput.getSelectionEnd();
++                //判断大于最大值
++                if (wordNum.length() > mMaxNum) {
++                    //删除多余输入的字（不会显示出来）
++                    s.delete(selectionStart - 1, selectionEnd);
++                    int tempSelection = selectionEnd;
++                    etInput.setText(s);
++                    etInput.setSelection(tempSelection);//设置光标在最后
++                    //吐司最多输入300字
++                    Toast.makeText(EditInfo.this, "最多输入"+mMaxNum+"字", Toast.LENGTH_SHORT).show();
++
++                }
++            }
++        });
+     }
+ 
+ 
+@@ -249,34 +398,133 @@
+             switch (requestCode) {
+                 case PictureConfig.CHOOSE_REQUEST:
+                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+-                    Log.e("地址：",selectList.get(0).getCompressPath());
+-                    upPhoto.setImageURI(Uri.parse(selectList.get(0).getCompressPath()));
++                    image_path = selectList.get(0).getCompressPath();
++                    upPhoto.setImageURI(Uri.parse(image_path));
+                     //上传图片
+-//                    setPicture(selectList.get(0).getCompressPath());
++                    Cache.user.setPicturePath(image_path);
++                    user.setPicturePath(image_path);
+                     break;
+             }
+         }
+     }
++
+     /**
+      * 上传图片
+      * 未测试
+      */
+-    public static void setPicture(String path){
+-        RequestBody requestBody=RequestBody.create(MediaType.parse("image/jpeg"),new File(path));
+-        MultipartBody body=new MultipartBody.Builder()
+-                .setType(MultipartBody.FORM)//上传图片格式一般都是这个格式MediaType.parse("multipart/form-data")
+-                .addFormDataPart("name","nate")//除了图片在上传一些东西
+-                .addFormDataPart("filename","grile.jpg",requestBody).build();//图片服务器定义名字，
+-        OkHttpClient okHttpClient=new OkHttpClient();
+-        Request request=new Request.Builder().url("").post(body).build();
+-        try {
+-            Response response=okHttpClient.newCall(request).execute();
+-            if (response.isSuccessful()){
+-                Log.e("response",response.body().toString());
+-            }
+-        } catch (IOException e) {
+-            e.printStackTrace();
+-        }
++    public void upPhoto(String path){
++        Cache.user.setUserName(upName.getText().toString());
++        Log.e("name",upName.getText().toString());
++        Log.e("up","1");
++        File file = new File(path);
++        Log.e("up","2");
++        String url = Cache.MY_URL + "UpdataUserInfoServlet";
++        OkHttpClient okHttpClient = new OkHttpClient();
++        if(file != null && file.exists()){
++            RequestBody requestBody = new MultipartBody.Builder()
++                    .setType(MultipartBody.FORM)
++                    .addFormDataPart("file",
++                            Cache.userPhone + ".jpg",
++                            RequestBody.create(MediaType.parse("image/png"),file))
++                    .addFormDataPart("phone",Cache.userPhone)
++                    .build();
++            Request request = new Request.Builder()
++                    .url(url)
++                    .post(requestBody)
++                    .build();
++            Call call = okHttpClient.newCall(request);
++
++            Log.e("up","3");
++            call.enqueue(new Callback() {
++                @Override
++                public void onFailure(Call call, IOException e) {
++                    //失败
++                    Log.e("up","4b");
++                    Message msg = new Message();
++                    msg.what = 2;
++                    msg.obj = 1;
++                    Log.e("up","5b");
++                    hd.sendMessage(msg);
++                    Log.e("up","6b");
++                    e.printStackTrace();
++                }
++
++                @Override
++                public void onResponse(Call call, Response response) throws IOException {
++                    //上传成功
++                    Log.e("up","4a");
++                    Message msg = new Message();
++                    String res = response.body().string();
++                    if(res.equals("true")){
++                        msg.what = 1;
++                        msg.obj = 1;
++                        Log.e("updata",res);
++                    }else {
++                        msg.what = 2;
++                        msg.obj = 1;
++                        Log.e("updata",res);
++                    }
++                    hd.sendMessage(msg);
++
++                }
++            });
++
++        }else {
++            Toast.makeText(EditInfo.this,"请添加头像",Toast.LENGTH_SHORT);
++        }
++    }
++
++    /**
++     * 上传数据
++     */
++    public void upData(){
++        OkHttpClient okHttpClient = new OkHttpClient();
++        //创建请求体对象
++        user.setUserPhone(Cache.userPhone);
++        user.setUserName(upName.getText().toString());
++        user.setUserAutograph(etInput.getText().toString());
++        user.setPicturePath(Cache.userPhone + ".jpg");
++        RequestBody requestBody = RequestBody.create(MediaType.parse(
++                "text/plain;charset=UTF-8"),new Gson().toJson(user));
++        //3.创建请求对象
++        Request request = new Request.Builder()
++                .post(requestBody)
++                .url(Cache.MY_URL + "UpDataUserInfo2Servlet")
++                .build();
++        //3.创建Call对象，发送请求，并接受响应
++        Call call = okHttpClient.newCall(request);
++        //异步网络请求（无需手动使用子线程）
++        call.enqueue(new Callback() {
++            @Override
++            public void onFailure(Call call, IOException e) {
++                //失败
++                Message msg = new Message();
++                msg.what = 4;
++                msg.obj = 3;
++                Log.e("up","5b");
++                hd.sendMessage(msg);
++                Log.e("up","6b");
++                e.printStackTrace();
++            }
++
++            @Override
++            public void onResponse(Call call, Response response) throws IOException {
++                //上传成功
++                Message msg = new Message();
++                String res = response.body().string();
++                if(res.equals("true")){
++                    msg.what = 3;
++                    msg.obj = 1;
++                    Log.e("updata",res);
++                }else {
++                    msg.what = 2;
++                    msg.obj = 1;
++                    Log.e("updata",res);
++                }
++                hd.sendMessage(msg);
++
++            }
++        });
+     }
+ 
+     //然后通过一个函数来申请权限
+@@ -295,4 +543,5 @@
+     }
+ 
+ 
++
+ }
+\ No newline at end of file
