@@ -21,6 +21,7 @@ public class AddressManage extends AppCompatActivity {
     private ViewPager viewPager;
     private List<Fragment> list = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +37,7 @@ public class AddressManage extends AppCompatActivity {
                 AddressManage.this.finish();
             }
         });
-        tabLayout =  findViewById(R.id.tab_layout);
+        tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_page);
         titles.clear();
         list.clear();
@@ -44,16 +45,16 @@ public class AddressManage extends AppCompatActivity {
         titles.add("终点");
         AddressFragment fragment1 = new AddressFragment();
         Bundle bundle1 = new Bundle();
-        bundle1.putInt("isPost",1);
+        bundle1.putInt("isPost", 1);
         fragment1.setArguments(bundle1);
 
         AddressFragment fragment2 = new AddressFragment();
         Bundle bundle2 = new Bundle();
-        bundle2.putInt("isPost",0);
+        bundle2.putInt("isPost", 0);
         fragment2.setArguments(bundle2);
         list.add(fragment1);
         list.add(fragment2);
-        com.example.pet.forum.MyAdapter myAdapter = new MyAdapter(getSupportFragmentManager(),list,titles);
+        com.example.pet.forum.MyAdapter myAdapter = new MyAdapter(getSupportFragmentManager(), list, titles);
         //设置适配器
         viewPager.setAdapter(myAdapter);
         //绑定显示效果

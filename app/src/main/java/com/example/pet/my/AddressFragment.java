@@ -111,10 +111,17 @@ public class AddressFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        listView.setAdapter(adapter);
     }
 
     private void setViewContent() {
-        listView.setAdapter(adapter);
+       adapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initData(isPost);
     }
 }

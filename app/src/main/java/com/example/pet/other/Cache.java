@@ -1,5 +1,7 @@
 package com.example.pet.other;
 
+import android.app.Application;
+
 import com.example.pet.other.entity.Order;
 import com.example.pet.other.entity.Pet;
 import com.example.pet.other.entity.Tips;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class Cache {
+public class Cache extends Application {
     /**
      * 存储一些全局信息
      */

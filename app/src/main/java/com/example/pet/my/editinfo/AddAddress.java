@@ -43,7 +43,8 @@ private int isPost;
         setContentView(R.layout.activity_add_address);
         Intent intent = getIntent();
         isPost = intent.getIntExtra("isPost",1);
-//        AddressSelector selector = (AddressSelector) findViewById(R.id.address_select);
+        setView();
+        //        AddressSelector selector = (AddressSelector) findViewById(R.id.address_select);
 //        selector.setTabAmount(3);
 //        selector.setOnItemClickListener(new OnItemClickListener() {
 //            @Override
@@ -62,7 +63,6 @@ private int isPost;
 //
 //            }
 //        });
-        setView();
     }
 
     private void setView() {
@@ -107,6 +107,7 @@ private int isPost;
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+
                 Log.e("StartActivity","上传地址失败");
             }
 

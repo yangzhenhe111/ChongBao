@@ -49,7 +49,7 @@
                     android:id="@+id/address_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="边晨广"
+                    android:hint="边晨广"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -70,7 +70,7 @@
                     android:id="@+id/address_phone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="13703368742"
+                    android:hint="13703368742"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -91,7 +91,7 @@
                     android:id="@+id/address_city"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="河北张家口市崇礼区西湾子街道"
+                    android:hint="河北张家口市崇礼区西湾子街道"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -112,7 +112,7 @@
                     android:id="@+id/address_detail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="君悦酒店对面八方名烟名酒"
+                    android:hint="君悦酒店对面八方名烟名酒"
                     android:textSize="20sp" />
             </LinearLayout>
 
