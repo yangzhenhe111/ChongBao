@@ -16,12 +16,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.pet.R;
 import com.example.pet.forum.MainForumTipsAdapter;
 import com.example.pet.forum.New_post_detail;
 import com.example.pet.forum.RecyAdapter;
+import com.example.pet.my.editinfo.EditAddress;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Article;
 import com.example.pet.other.entity.Tips;
@@ -48,6 +51,7 @@ import java.util.List;
 
 public class Post extends AppCompatActivity {
     private Toolbar toolbar;
+    private EditText etContent;
     private ArrayList<Tips> myPostList;
     private RecyclerView recyclerView;
     private RecyAdapter recyAdapter;
@@ -65,7 +69,7 @@ public class Post extends AppCompatActivity {
                     smartRefreshLayout.finishLoadMore();
                     break;
                 case 3:
-                    recyAdapter = new RecyAdapter(Post.this,myPostList);
+                    recyAdapter = new RecyAdapter(Post.this, myPostList);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Post.this);
                     linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
                     recyclerView.setLayoutManager(linearLayoutManager);
@@ -93,7 +97,7 @@ public class Post extends AppCompatActivity {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
                 Intent intent = new Intent(Post.this, New_post_detail.class);
-                intent.putExtra("id",myPostList.get(i).getId());
+                intent.putExtra("id", myPostList.get(i).getId());
                 startActivity(intent);
             }
         });
@@ -182,7 +186,7 @@ public class Post extends AppCompatActivity {
         recyclerView = findViewById(R.id.lv_article);
         smartRefreshLayout = findViewById(R.id.srl);
         toolbar = findViewById(R.id.post_toolbar);
-
+        etContent = findViewById(R.id.search_content);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -200,17 +204,41 @@ public class Post extends AppCompatActivity {
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
                 Message message = new Message();
                 message.what = 1;
                 handler.sendMessage(message);
             }
         });
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         initData();
+    }
+
+    public void onClicked(View view) {
+        if (myPostList != null) {
+            if (etContent.getText().toString() != null) {
+                if (etContent.getText().toString().length() != 0) {
+                    ArrayList<Tips> arrayList = new ArrayList<>();
+                    String str = etContent.getText().toString();
+                    for (int i = 0; i < myPostList.size(); i++) {
+                        if (myPostList.get(i).getTitle().contains(str)) {
+                            arrayList.add(myPostList.get(i));
+                        }
+                    }
+                    recyAdapter = new RecyAdapter(Post.this, arrayList);
+                    recyclerView.setAdapter(recyAdapter);
+                } else {
+                    recyAdapter = new RecyAdapter(Post.this, myPostList);
+                    recyclerView.setAdapter(recyAdapter);
+                }
+
+            }
+        } else {
+            Toast.makeText(Post.this, "快去发表帖子吧", Toast.LENGTH_LONG).show();
+        }
     }
 }
