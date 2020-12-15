@@ -43,7 +43,6 @@ public class PublishActivity extends AppCompatActivity {
     private TextView tv_add_topic;
     private Button btn_topic;
     private ImageView upload;
-    private Button oneeee;
 
     private Handler handler = new Handler(){
         @Override
@@ -64,13 +63,6 @@ public class PublishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
         btn_back = findViewById(R.id.btn_publish_back);
-        oneeee = findViewById(R.id.one);
-        oneeee.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

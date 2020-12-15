@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:text="私信"
-                        android:background="@color/Beige"
+                        android:background="#FFC0CB"
                         android:textSize="20dp"
                         android:layout_marginTop="20dp"/>
                 </RelativeLayout>

@@ -33,7 +33,7 @@ public class ShowPhoto extends AppCompatActivity {
             public void onClick(View view) {
                 PictureSelector.create(ShowPhoto.this)
                         .openGallery(PictureMimeType.ofImage())
-                        .loadImageEngine(GlideEngine.createGlideEngine()) // 请参考Demo GlideEngine.java
+                        .loadImageEngine(GlideEngine.createGlideEngine())
                         .forResult(PictureConfig.CHOOSE_REQUEST);
             }
         });
