@@ -52,7 +52,6 @@ public class Start1Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Start1Activity.this, Login.class);
-                i.putExtra("back",0);
                 startActivity(i);
                 finish();
             }
@@ -60,14 +59,12 @@ public class Start1Activity extends AppCompatActivity {
         vip_anfi_functions.setOnPageChangeListener(new PageChangeListener());
         vip_anfi_functions.setAdapter(new NewFunctionIntroductionAdapter(this));
         isFirst = getIntent().getBooleanExtra("isFirst", false);
-        //mAdvertInfo = getIntent().getParcelableExtra(SplashActivity.INTENT_KEY_ADVINFO);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean flag = super.onCreateOptionsMenu(menu);
-        //getTitleBar().setVisibility(View.GONE);
         return flag;
     }
 

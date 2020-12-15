@@ -2,6 +2,8 @@ package com.example.pet.other.entity;
 
 import android.graphics.Bitmap;
 
+import java.util.Objects;
+
 public class Tips {
     private int id;
     private int userId;
@@ -150,16 +152,40 @@ public class Tips {
                 "id=" + id +
                 ", userId=" + userId +
                 ", userName='" + userName + '\'' +
-                ", userHead=" + userHead +
+
                 ", time='" + time + '\'' +
                 ", topic='" + topic + '\'' +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
-                ", thumbnail=" + thumbnail +
+
                 ", likes=" + likes +
                 ", comments=" + comments +
                 ", forwards=" + forwards +
                 ", imagepath='" + imagepath + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tips tips = (Tips) o;
+        return id == tips.id &&
+                userId == tips.userId &&
+                likes == tips.likes &&
+                comments == tips.comments &&
+                forwards == tips.forwards &&
+                Objects.equals(userName, tips.userName) &&
+                Objects.equals(time, tips.time) &&
+                Objects.equals(topic, tips.topic) &&
+                Objects.equals(title, tips.title) &&
+                Objects.equals(text, tips.text) &&
+                Objects.equals(imagepath, tips.imagepath) &&
+                Objects.equals(headImagepath, tips.headImagepath);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userId, userName, userHead, time, topic, title, text, thumbnail, likes, comments, forwards, imagepath, headImagepath);
     }
 }

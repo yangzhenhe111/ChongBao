@@ -1,79 +1,327 @@
 package com.example.pet.chat;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.ContextMenu;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import android.widget.Toast;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import com.bartoszlipinski.recyclerviewheader2.RecyclerViewHeader;
 import com.example.pet.R;
+import com.example.pet.forum.LandlordActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.content.PromptContent;
+import cn.jpush.im.android.api.content.TextContent;
+import cn.jpush.im.android.api.enums.ContentType;
+import cn.jpush.im.android.api.event.ConversationRefreshEvent;
+import cn.jpush.im.android.api.event.MessageEvent;
+import cn.jpush.im.android.api.event.MessageRetractEvent;
+import cn.jpush.im.android.api.event.OfflineMessageEvent;
+import cn.jpush.im.android.api.model.Conversation;
+import cn.jpush.im.android.api.model.Message;
+import cn.jpush.im.android.api.model.UserInfo;
+
 
 public class WeChatFragment extends Fragment {
-    private List<Chat> chatList=new ArrayList<>();//存放Chat对象
-    private View view;
+
+    @BindView(R.id.fragment_main_group)
+    RelativeLayout mFragmentMainGroup;
+    @BindView(R.id.fragment_main_none)
+    TextView mFragmentMainNone;
+    @BindView(R.id.fragment_main_rf)
+    SwipeRefreshLayout mFragmentMainRf;
+    private List<MessageBean> data = new ArrayList<>();
+    private List<Conversation> list=new ArrayList<>();
+
+    Conversation conversation;
+    @BindView(R.id.fragment_main_rv)
+    RecyclerView mFragmentMainRv;
+    Unbinder unbinder;
+    MessageRecyclerAdapter adapter;
+    @BindView(R.id.fragment_main_header)
+    RecyclerViewHeader mFragmentMainHeader;
+    private int groupID = 0;
+    MessageBean bean;
+    @BindView(R.id.ll_fre)
+    LinearLayout btn_private_letter;
+    //接收撤回的消息
+    private Message retractMsg;
+    Handler handler = new Handler();
+    //漫游
+    HandlerThread mThread;
+    private static final int REFRESH_CONVERSATION_LIST = 0x3000;
+    private static final int DISMISS_REFRESH_HEADER = 0x3001;
+    private static final int ROAM_COMPLETED = 0x3002;
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.wechat_fragment, container, false);
-        //聊天对话框列表的适配
-        ChatAdapter adapter=new ChatAdapter(view.getContext(),R.layout.wechat_listview,chatList);//实例化适配器
-        final ListView listView=(ListView)view.findViewById(R.id.chat_listview);//获取ListView
-        listView.setAdapter(adapter);//适配
-        //为ListView添加上下文菜单
-        listView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View view = View.inflate(getActivity(), R.layout.wechat_fragment, null);
+        LinearLayout ll_follow = view.findViewById(R.id.ll_follow);
+        ll_follow.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCreateContextMenu(ContextMenu menu, View v,
-                                            ContextMenu.ContextMenuInfo menuInfo) {
-                      menu.add(0, 0, 0, "标为未读");
-                      menu.add(0, 1, 0, "置顶聊天");
-                      menu.add(0,2,0,"删除聊天");
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(),MyFollowActivity.class);
+                getContext().startActivity(intent);
             }
         });
-          listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-              @Override
-              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                  LinearLayout layout = (LinearLayout) listView.getChildAt(position);
-                  TextView textView = (TextView) layout.findViewById(R.id.chat_name);//获取ListView中显示姓名的TextView
-                  String s = textView.getText().toString();//获取TextView的值
-                  Intent intent = new Intent(view.getContext(), ChatView.class);//启动聊天界面
-                  intent.putExtra("username", s);//将TextView的值传递给聊天界面
-                  startActivity(intent);
-              }
-          });
+        unbinder = ButterKnife.bind(this, view);
+        JMessageClient.registerEventReceiver(this);
+        list= JMessageClient.getConversationList();
+        initView();
+        btn_private_letter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(),Friends.class);
+                startActivity(i);
+            }
+        });
         return view;
     }
-    //初始化参数
-    private void init(){
-        Chat one=new Chat(R.drawable.tyronn,"Tyronn Lue","世间所有的相遇都是久别重逢","1.03");
-        chatList.add(one);
-        Chat zc=new Chat(R.drawable.zc,"陈展翅","6月22号交Android课设","1.27");
-        chatList.add(zc);
-        Chat kobe=new Chat(R.drawable.kobe,"Kobe Bryant","凌晨四点见","4.00");
-        chatList.add(kobe);
-        Chat kun=new Chat(R.drawable.kun ,"kun","我喜欢唱，跳，rap，篮球","7.30");
-        chatList.add(kun);
-        Chat van=new Chat(R.drawable.van, "VanVleet","排队给我道歉","8.30");
-        chatList.add(van);
-        Chat pony=new Chat(R.drawable.pony ,"Pony","该充钱了","8.52");
-        chatList.add(pony);
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        init();
+
+    private void initView() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                updataData();
+            }
+        }, 2000);
+        initRefresh();
+        initData();
+        onClickItem();
     }
 
+    /*下拉刷新*/
+    private void initRefresh() {
+        mFragmentMainRf.setColorSchemeResources(
+                R.color.oriange
+                , R.color.color_shape_right
+                , R.color.aurora_msg_receive_bubble_default_color
+                , R.color.oriange);
+        //开启一个刷新的线程
+        mFragmentMainRf.post(new Runnable() {
+            @Override
+            public void run() {
+                //开始
+                mFragmentMainRf.setRefreshing(true);
+            }
+        });
+        //监听刷新状态操作
+        mFragmentMainRf.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //刷新数据
+                        updataData();
+                    }
+                }, 1000);
+            }
+        });
+    }
+    private void updataData(){
+        data.clear();
+        adapter.clear();
+        initDataBean();
+    }
+
+    @Override
+    public void onResume() {
+        updataData();
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        JMessageClient.unRegisterEventReceiver(this);
+        super.onDestroy();
+    }
+
+    /*接收消息*/
+    public void onEvent(final MessageEvent event) {
+        final Message msg = event.getMessage();
+        this.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (JMessageClient.getMyInfo().getUserName() == "1006" || JMessageClient.getMyInfo().getUserName().equals("1006")) {
+                    final Message message1 = JMessageClient.createSingleTextMessage(((UserInfo)msg.getTargetInfo()).getUserName(), SharedPrefHelper.getInstance().getAppKey(), "[自动回复]你好，我是机器人");
+                    JMessageClient.sendMessage(message1);
+                }
+                updataData();
+            }
+        });
+
+    }
+
+    /*接收撤回消息*/
+    public void onEvent(MessageRetractEvent event) {
+        retractMsg = event.getRetractedMessage();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                updataData();
+            }
+        },300);
+    }
+    /**
+     * @param event 离线消息事件
+     */
+    public void onEvent(OfflineMessageEvent event) {
+        Conversation conv = event.getConversation();
+        Log.e("refreshOffline=====", ":" + conv);
+        updataData();
+    }
+    /**
+     * @param event 漫游完成后， 刷新会话事件
+     */
+    public void onEvent(ConversationRefreshEvent event) {
+        final Conversation conv = event.getConversation();
+        this.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.e("refresh", "漫游："+conv);
+                updataData();
+            }
+        });
+    }
+
+    /*监听item*/
+    private void onClickItem() {
+        adapter.setOnItemClickListener(new MessageRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                if (view != null) {
+                    Intent intent = new Intent(getActivity(), ChatMsgActivity.class);
+                    intent.putExtra("USERNAME", data.get(position).getUserName());
+                    intent.putExtra("NAKENAME", data.get(position).getTitle());
+                    intent.putExtra("MSGID", data.get(position).getMsgID());
+                    intent.putExtra("AVATAR",data.get(position).getImg());
+                    intent.putExtra("position", position);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onItemLongClick(View view, final int position) {
+                String[] strings = {"删除会话"};
+                MyAlertDialog dialog = new MyAlertDialog(getActivity(), strings,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if (i == 0) {
+                                    JMessageClient.deleteSingleConversation(data.get(position).getUserName());
+                                    data.remove(position);
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(getActivity(), "删除成功", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                dialog.initDialog();
+            }
+        });
+    }
+
+
+    private void initData() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        mFragmentMainRv.setLayoutManager(layoutManager);
+        adapter = new MessageRecyclerAdapter(data, getActivity());
+        //分割线
+        mFragmentMainRv.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        mFragmentMainRv.setAdapter(adapter);
+        mFragmentMainHeader.attachTo(mFragmentMainRv);
+    }
+
+    private void initDataBean() {
+        list= JMessageClient.getConversationList();
+        if (list.size() <= 0) {
+            mFragmentMainNone.setVisibility(View.VISIBLE);
+            mFragmentMainRv.setVisibility(View.GONE);
+        } else {
+            mFragmentMainNone.setVisibility(View.GONE);
+            mFragmentMainRv.setVisibility(View.VISIBLE);
+            for (int i = 0; i < list.size(); i++) {
+                bean = new MessageBean();
+                try {
+                    if (list.get(i).getLatestMessage().getContent().getContentType()== ContentType.prompt) {
+                        bean.setContent(((PromptContent) (list.get(i).getLatestMessage()).getContent()).getPromptText());
+                    }else {
+                        bean.setContent(((TextContent) (list.get(i).getLatestMessage()).getContent()).getText());
+                    }
+                } catch (Exception e) {
+                    bean.setContent("最近没有消息！");
+                }
+                bean.setMsgID(list.get(i).getId());
+                bean.setUserName(((UserInfo) list.get(i).getTargetInfo()).getUserName());
+                bean.setTitle(list.get(i).getTitle());
+                bean.setTime(list.get(i).getUnReadMsgCnt() + "");
+                bean.setConversation(list.get(i));
+                try {
+                    bean.setImg(list.get(i).getAvatarFile().toURI() + "");
+                } catch (Exception e) {
+                }
+                data.add(bean);
+            }
+        }
+        mFragmentMainRf.setRefreshing(false);
+        adapter.notifyDataSetChanged();
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(getActivity());
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.intent.action.CART_BROADCAST");
+        BroadcastReceiver mItemViewListClickReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent){
+                String msg = intent.getStringExtra("finish");
+                if("refresh".equals(msg)){
+                    getActivity().finish();
+                }
+            }
+        };
+        broadcastManager.registerReceiver(mItemViewListClickReceiver, intentFilter);
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick({R.id.fragment_main_group})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fragment_main_group:
+                break;
+        }
+    }
 }

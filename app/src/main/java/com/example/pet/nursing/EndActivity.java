@@ -21,9 +21,28 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.pet.R;
+import com.example.pet.other.Cache;
+import com.example.pet.other.entity.Address;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class EndActivity extends AppCompatActivity {
     private ListView addlv;
@@ -43,6 +62,7 @@ public class EndActivity extends AppCompatActivity {
             findViews();
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +71,7 @@ public class EndActivity extends AppCompatActivity {
             View decorView = getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE    //设置为全屏显示，必须这两行代码一起才能生效
-                    |View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色
+                    | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
         }
@@ -62,7 +82,7 @@ public class EndActivity extends AppCompatActivity {
         yesno.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.yes:
                         btnsure.setEnabled(true);
                         //上传数据库位置信息
@@ -90,58 +110,85 @@ public class EndActivity extends AppCompatActivity {
     }
 
     public void sureadd(View view) {
-        if(add.getText().toString().equals("") || men.getText().toString().equals("") || peo.getText().toString().equals("") || tel.getText().toString().equals("")) {
+        if (add.getText().toString().equals("") || men.getText().toString().equals("") || peo.getText().toString().equals("") || tel.getText().toString().equals("")) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("提示");//标题
             builder.setMessage("信息填写不全");//显示的提示内容
             builder.setPositiveButton("确定", null);
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
-        }
-        else{
-            Log.e("msg",add.getText().toString()+men.getText().toString()+peo.getText().toString()+tel.getText().toString());
+        } else {
+            Log.e("msg", add.getText().toString() + men.getText().toString() + peo.getText().toString() + tel.getText().toString());
             AddressInfo.END = add.getText().toString() + men.getText().toString();
-            AddressInfo.ENDPE= peo.getText().toString();
+            AddressInfo.ENDPE = peo.getText().toString();
             AddressInfo.ENDTEL = tel.getText().toString();
+            AddAddress();
             Intent intent = new Intent("android.intent.action.CART_BROADCAST");
-            intent.putExtra("data","refresh");
+            intent.putExtra("data", "refresh");
             LocalBroadcastManager.getInstance(EndActivity.this).sendBroadcast(intent);
             sendBroadcast(intent);
             finish();
         }
     }
+
+    private void AddAddress() {
+        Address address = new Address();
+        address.setAddress(add.getText().toString() + men.getText().toString());
+        address.setPeople(peo.getText().toString());
+        address.setTel(tel.getText().toString());
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain;charset=utf-8"), new Gson().toJson(address));
+        Request request = new Request.Builder().post(requestBody).url(Cache.MY_URL + "AddAddress?isPost=0&userId=" + Cache.user.getUserId()).build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("StartActivity", "上传地址失败");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.e("StartActivity", "上传地址成功");
+            }
+        });
+
+    }
+
     public void initData(final String s) {
         new Thread() {
+            @Override
             public void run() {
-                //try {
-                    /*URL url = new URL( s);
-                    url.openStream();
-                    URLConnection con = url.openConnection();
-                    InputStream in = con.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));*/
-                String str = AddressInfo.END + "!"+ AddressInfo.ENDPE + "!" + AddressInfo.ENDTEL +"!4#";
-                    /*reader.close();
-                    in.close();*/
-                if (str != null) {
-                    String[] infos = str.split("#"); //分割字符串获取数据
-                    for (int i = 0; i < infos.length; i++) {
-                        String[] finfos = infos[i].split("!"); //分割字符串获取数据
-                        String add = finfos[0];
-                        String name = finfos[1];
-                        String tel = finfos[2];
-                        int id = Integer.parseInt(finfos[3]);
-                        HisAddress ha = new HisAddress(add,name,tel,id);
-                        addlist.add(ha);
+                super.run();
+                try {
+                    URL url = new URL(Cache.MY_URL + "MyAddress?isPost=0&userId=" + Cache.user.getUserId());
+                    InputStream in = url.openStream();
+                    byte[] bytes = new byte[256];
+                    StringBuilder builder = new StringBuilder();
+                    int len = 0;
+                    while ((len = in.read(bytes)) != -1) {
+                        builder.append(new String(bytes, 0, len, "utf-8"));
+                    }
+                    Log.e("StartActivity", builder.toString());
+                    JSONArray array = new JSONArray(builder.toString());
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject object = array.getJSONObject(i);
+                        String add = object.getString("address");
+                        String name = object.getString("people");
+                        String tel = object.getString("tel");
+                        int id = object.getInt("id");
+                        HisAddress address = new HisAddress(add, name, tel, id);
+                        addlist.add(address);
                     }
                     Message msg = new Message();
                     handler.sendMessage(msg);
-                }
-            } /*catch (MalformedURLException e) {
+                } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
-                }*/
-            //}
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         }.start();
     }
 
@@ -159,6 +206,7 @@ public class EndActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -168,16 +216,17 @@ public class EndActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
         startActivity(intent);
     }
+
     public void back(View view) {
         Intent intent = new Intent("android.intent.action.CART_BROADCAST");
-        intent.putExtra("data","refresh");
+        intent.putExtra("data", "refresh");
         LocalBroadcastManager.getInstance(EndActivity.this).sendBroadcast(intent);
         sendBroadcast(intent);
         finish();
     }
 
     public void choice(View view) {
-        Intent i = new Intent(this,Choice2Activity.class);
+        Intent i = new Intent(this, Choice2Activity.class);
         startActivity(i);
     }
 }

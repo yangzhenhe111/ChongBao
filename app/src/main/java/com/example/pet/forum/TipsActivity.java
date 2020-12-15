@@ -18,13 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Comment;
-import com.example.pet.other.entity.Tips;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,10 +76,10 @@ public class TipsActivity extends Activity {
                 case 3:
                     initimg((ArrayList)message.obj);
                 case 4:
-                    Toast.makeText(TipsActivity.this,"上传成功",Toast.LENGTH_LONG);
+                    Toast.makeText(TipsActivity.this,"上传成功",Toast.LENGTH_LONG).show();
                     break;
                 case 5:
-                    Toast.makeText(TipsActivity.this,"上传失败",Toast.LENGTH_LONG);
+                    Toast.makeText(TipsActivity.this,"上传失败",Toast.LENGTH_LONG).show();
                     break;
             }
         }
@@ -128,9 +126,7 @@ public class TipsActivity extends Activity {
     }
 
     public void init(){
-        Log.e("map", maps.toString());
         getImages(maps.get("img_path").toString());
-        Log.e("bitmap",maps.get("img_path").toString());
         getHeadImages(maps.get("head_img_path").toString());
     }
 
@@ -243,7 +239,6 @@ public class TipsActivity extends Activity {
                     maps.put("count_forwards",count_forwards);
                     maps.put("img_path",img_path);
                     maps.put("head_img_path",head_img_path);
-                    Log.e("map0", maps.toString());
 
                     Message message = handler.obtainMessage();
                     message.what = 1;

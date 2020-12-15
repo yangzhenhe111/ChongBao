@@ -3,6 +3,8 @@ package com.example.pet.my;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,9 +20,12 @@ import android.widget.ListView;
 
 import com.example.pet.R;
 import com.example.pet.forum.MainForumTipsAdapter;
+import com.example.pet.forum.New_post_detail;
+import com.example.pet.forum.RecyAdapter;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Article;
 import com.example.pet.other.entity.Tips;
+import com.rohit.recycleritemclicksupport.RecyclerItemClickSupport;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -42,27 +47,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Post extends AppCompatActivity {
-    private List<Article> list;
-    private ListView listView;
     private Toolbar toolbar;
-    //private ArrayList<Tips> arrayList = new ArrayList<>();
-    private MainForumTipsAdapter mainForumTipsAdapter;
+    private ArrayList<Tips> myPostList;
+    private RecyclerView recyclerView;
+    private RecyAdapter recyAdapter;
     private SmartRefreshLayout smartRefreshLayout;
-private Handler handler = new Handler(){
-    @Override
-    public void handleMessage(@NonNull Message msg) {
-        switch (msg.what){
-            case 1:
-                mainForumTipsAdapter.notifyDataSetChanged();
-                smartRefreshLayout.finishRefresh();
-                break;
-            case 2:
-                mainForumTipsAdapter.notifyDataSetChanged();
-                smartRefreshLayout.finishLoadMore();
-                break;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 1:
+                    recyAdapter.notifyDataSetChanged();
+                    smartRefreshLayout.finishRefresh();
+                    break;
+                case 2:
+                    recyAdapter.notifyDataSetChanged();
+                    smartRefreshLayout.finishLoadMore();
+                    break;
+                case 3:
+                    recyAdapter = new RecyAdapter(Post.this,myPostList);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Post.this);
+                    linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    recyclerView.setAdapter(recyAdapter);
+                    break;
+            }
         }
-    }
-};
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,31 +87,102 @@ private Handler handler = new Handler(){
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
         }
-       // initData();
+        initData();
         setView();
-
+        RecyclerItemClickSupport.addTo(recyclerView).setOnItemClickListener(new RecyclerItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int i, View view) {
+                Intent intent = new Intent(Post.this, New_post_detail.class);
+                intent.putExtra("id",myPostList.get(i).getId());
+                startActivity(intent);
+            }
+        });
     }
 
-  /*  private void initData() {
+    private void initData() {
         new Thread() {
             @Override
             public void run() {
+                try {
+                    if (myPostList != null) {
+                        myPostList.clear();
+                    } else {
+                        myPostList = new ArrayList<>();
+                    }
+                    URL url = new URL(Cache.MY_URL + "MyTip?userId=" + Cache.user.getUserId());
+                    InputStream in = url.openStream();
+                    StringBuilder str = new StringBuilder();
+                    byte[] bytes = new byte[256];
+                    int len = 0;
+                    while ((len = in.read(bytes)) != -1) {
+                        str.append(new String(bytes, 0, len, "utf-8"));
+                    }
 
+                    in.close();
+                    JSONArray jsonArray = new JSONArray(str.toString());
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        int post_id = jsonObject.getInt("post_id");
+                        String post_title = jsonObject.getString("post_title");
+                        String post_time = jsonObject.getString("post_time");
+                        String post_text = jsonObject.getString("post_text");
+                        String topic = jsonObject.getString("post_topic");
+                        String user_name = jsonObject.getString("user_name");
+                        int count_likes = jsonObject.getInt("likes");
+                        int count_comments = jsonObject.getInt("comments");
+                        int count_forwards = jsonObject.getInt("forwards");
+                        String img_path = jsonObject.getString("picture_path");
+                        String head_img_path = jsonObject.getString("user_picture_path");
+                        Tips tips = new Tips();
+                        tips.setId(post_id);
+                        tips.setTitle(post_title);
+                        tips.setText(post_text);
+                        tips.setTime(post_time);
+                        tips.setUserName(user_name);
+                        tips.setTopic(topic);
+                        tips.setLikes(count_likes);
+                        tips.setComments(count_comments);
+                        tips.setForwards(count_forwards);
+                        tips.setImagepath(img_path);
+                        tips.setHeadImagepath(head_img_path);
+                        URL url1 = new URL(Cache.MY_URL + "img/" + img_path);
+                        InputStream in1 = url1.openStream();
+                        Bitmap bitmap = BitmapFactory.decodeStream(in1);
+                        tips.setThumbnail(bitmap);
+                        URL url2 = new URL(Cache.MY_URL + "img/" + head_img_path);
+                        InputStream in2 = url2.openStream();
+                        Bitmap bitmap1 = BitmapFactory.decodeStream(in2);
+                        tips.setUserHead(bitmap1);
+
+                        in1.close();
+                        in2.close();
+                        myPostList.add(tips);
+
+                    }
+                    Message message = new Message();
+                    message.what = 3;
+                    handler.sendMessage(message);
+                    Log.e("Post", "initData");
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         }.start();
-    }*/
-
-
-
+    }
 
     private void setView() {
-       // arrayList.add(new Tips());
-        listView = findViewById(R.id.lv_article);
+        Log.e("Post", "setView");
+        // arrayList.add(new Tips());
+        recyclerView = findViewById(R.id.lv_article);
         smartRefreshLayout = findViewById(R.id.srl);
         toolbar = findViewById(R.id.post_toolbar);
-        mainForumTipsAdapter = new MainForumTipsAdapter(this, Cache.myPostList, R.layout.forum_tips_item);
-        listView.setAdapter(mainForumTipsAdapter);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,20 +192,15 @@ private Handler handler = new Handler(){
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-               // initData();
-                Intent intent = new Intent(Post.this,MyDataService.class);
-                startService(intent);
-               Message message = new Message();
-               message.what = 1;
-               handler.sendMessage(message);
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
             }
         });
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                //initData();
-                Intent intent = new Intent(Post.this,MyDataService.class);
-                startService(intent);
+
                 Message message = new Message();
                 message.what = 1;
                 handler.sendMessage(message);
@@ -130,5 +208,9 @@ private Handler handler = new Handler(){
         });
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initData();
+    }
 }

@@ -79,13 +79,11 @@ public class AcountManage extends AppCompatActivity {
     public void onClicked(View view) {
         switch (view.getId()) {
             case R.id.acount_manage_adduser:
-
                 Intent intent = new Intent(AcountManage.this, Login.class);
                 startActivity(intent);
                 break;
             case R.id.acount_manage_loginout:
                 Cache.user = null;
-
                 Intent intent1 = new Intent(AcountManage.this, MainActivity.class);
                 startActivity(intent1);
                 AcountManage.this.finish();

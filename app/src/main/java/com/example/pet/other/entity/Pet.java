@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class Pet implements Serializable {
     private int  petId;
-    private Bitmap picture;
+
     private String petName;
     private String petType;
     private int petAge;
@@ -51,13 +51,7 @@ public class Pet implements Serializable {
         this.petId = petId;
     }
 
-    public Bitmap getPicture() {
-        return picture;
-    }
 
-    public void setPicture(Bitmap picture) {
-        this.picture = picture;
-    }
 
     public String getPetName() {
         return petName;

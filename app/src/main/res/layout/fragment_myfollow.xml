@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".chat.MyFollow">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_no_follow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="您还没有关注其他人快去关注一下吧!"
+            android:textSize="42sp"
+            android:gravity="center"/>
+        <ListView
+            android:id="@+id/lv_myfollow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+</FrameLayout>

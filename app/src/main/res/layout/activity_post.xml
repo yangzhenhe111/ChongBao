@@ -49,10 +49,10 @@
         <com.scwang.smartrefresh.layout.header.BezierRadarHeader
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lv_article"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"/>
          <com.scwang.smartrefresh.layout.footer.BallPulseFooter
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
