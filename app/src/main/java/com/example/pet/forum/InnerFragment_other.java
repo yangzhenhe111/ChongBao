@@ -6,9 +6,11 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pet.R;
@@ -42,49 +45,97 @@ import java.util.concurrent.CountDownLatch;
 
 public class InnerFragment_other extends Fragment {
 
+
     private ArrayList<Tips> tipsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyAdapter recyAdapter;
     private String title;
+    private View view;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    public InnerFragment_other(){}
 
     public InnerFragment_other(String title) {
-        this.title = title;
+        this.title=title;
     }
 
-    public InnerFragment_other() {
-    }
+
+
 
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message message) {
             switch (message.what){
                 case 1:
-                    init((ArrayList) message.obj);
+                    initimg((ArrayList) message.obj);
                     break;
             }
         }
     };
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_inner_other, container, false);
-        recyclerView = view.findViewById(R.id.recyclerView);
-        getAllPost(tipsList);
-        init(tipsList);
+        if (view==null){
+            view = inflater.inflate(R.layout.fragment_inner_other, container, false);
+            recyclerView = view.findViewById(R.id.recyclerView);
+            mSwipeRefreshLayout = view.findViewById(R.id.refresh_layout);
+            mSwipeRefreshLayout.setRefreshing(true);
+            //被刷新时的操作
+            getAllPost(tipsList);
+            initimg(tipsList);
+            //更新UI
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //更新成功后设置UI，停止更新
+                    initAdapter();
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
+            },1000);
+            handleDownPullUpdate();
 
-        RecyclerItemClickSupport.addTo(recyclerView).setOnItemClickListener(new RecyclerItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int i, View view) {
-                Intent intent = new Intent(getActivity(),New_post_detail.class);
-                intent.putExtra("id",tipsList.get(i).getId());
-                startActivity(intent);
-            }
-        });
-
+            RecyclerItemClickSupport.addTo(recyclerView).setOnItemClickListener(new RecyclerItemClickSupport.OnItemClickListener() {
+                @Override
+                public void onItemClicked(RecyclerView recyclerView, int i, View view) {
+                    Intent intent = new Intent(getActivity(),New_post_detail.class);
+                    intent.putExtra("id",tipsList.get(i).getId());
+                    startActivity(intent);
+                }
+            });
+        }
+        ViewGroup parent = (ViewGroup) view.getParent();
+        if (parent != null) {
+            parent.removeView(view);
+        }
         return view;
     }
 
-    public void init(ArrayList arrayList){
+    private void handleDownPullUpdate() {
+        mSwipeRefreshLayout.setEnabled(true);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,R.color.colorPrimary);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSwipeRefreshLayout.setRefreshing(true);
+                //被刷新时的操作
+                getAllPost(tipsList);
+                initimg(tipsList);
+                //更新UI
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //更新成功后设置UI，停止更新
+                        initAdapter();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                },1000);
+            }
+        });
+    }
+
+    public void initimg(ArrayList arrayList){
         getImages(arrayList);
     }
 
@@ -176,7 +227,6 @@ public class InnerFragment_other extends Fragment {
         }
         try {
             latch.await();
-            initAdapter();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

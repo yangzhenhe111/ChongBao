@@ -4,7 +4,6 @@
     <color name="booking_backgound">#F0EFF4</color>
     <color name="green_dot">#07C160</color>
     <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
     <color name="bottom_text_press">#D2691E</color>
     <color name="bottom_text_normal">#181818</color>
     <color name="colorAccent">#D81B60</color>
@@ -22,7 +21,6 @@
     <color name="loginButtonBackgroundFouse">#07C160</color>
     <color name="Blue">#0B97FF</color>
     <color name="purse">#FFFFFF</color>
-    <color name="Beige">#FFFFE0</color>
     <color name="White">#FFFFFF</color>
     <color name="pay_background">#F7F7F7</color>
     <color name="chat_text">#999999</color>
@@ -35,9 +33,7 @@
     <color name="colorTheme">#0B97FF</color>
     <color name="red">#ff5555</color>
     <color name="black">#000000</color>
-    <color name="background">#20000000</color>
     <color name="gray61">#9C9C9C</color>
-    <color name="gray71">#B5B5B5</color>
     <color name="gray81">#CFCFCF</color>
     <color name="orange">#FFA500</color>
 </resources>
