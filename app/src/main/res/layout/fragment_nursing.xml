@@ -22,7 +22,6 @@
             android:text="当前位置"/>
     </FrameLayout>
     <LinearLayout
-        android:id="@+id/orderlin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -66,7 +66,6 @@
             android:orientation="vertical">
             <ImageView
                 android:layout_gravity="center"
-                android:id="@+id/photo"
                 android:background="@drawable/photo1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
