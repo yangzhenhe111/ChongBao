@@ -117,18 +117,13 @@ public class PageFragment extends Fragment {
             } else if (msg.what == 6) {
                 Log.e("up", "6b");
                 Toast.makeText(getContext(), "上传失败了", Toast.LENGTH_SHORT);
-            } else if (msg.what == 7) {
+            } else if (msg.what == 9) {
                 petPhoto.setImageBitmap(bitmap);
-            }else if(msg.what == 6) {
-                Log.e("up","6b");
-                Toast.makeText(getContext(),"上传失败了",Toast.LENGTH_SHORT);
             }else if(msg.what == 7){
 //                Cache.myPetList.remove(index);
                 Log.e("delete::::::::::::","true");
-                Toast.makeText(getActivity(),"删除成功",Toast.LENGTH_SHORT);
-                Intent intent = new Intent();
-                intent.setClass(getContext(),NewPet.class);
-                startActivity(intent);
+                Toast.makeText(getActivity(),"删除成功,点击刷新！",Toast.LENGTH_SHORT);
+                getActivity().finish();
             }else if(msg.what == 8){
                 Toast.makeText(getActivity(),"删除失败",Toast.LENGTH_SHORT);
             }
@@ -269,7 +264,7 @@ public class PageFragment extends Fragment {
                     e.printStackTrace();
                 }
                 Message message = new Message();
-                message.what = 7;
+                message.what = 9;
                 hd.sendMessage(message);
                 Log.e("MyDataService", pet.toString());
             }
@@ -399,7 +394,12 @@ public class PageFragment extends Fragment {
                 Log.e("delete:::::","1111");
                 String str = response.body().string();
                 Message msg = new Message();
-                msg.what = Integer.valueOf(str);
+                if(str.equals("true")){
+                    msg.what = 7;
+                }else {
+                    msg.what= 8;
+                }
+                msg.obj = str;
                 hd.sendMessage(msg);
             }
         });

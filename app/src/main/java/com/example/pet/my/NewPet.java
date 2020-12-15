@@ -1,6 +1,7 @@
 package com.example.pet.my;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -58,6 +59,7 @@ public class NewPet extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_pet);
         initData();
+
     }
 
     private void initData() {
@@ -107,8 +109,9 @@ public class NewPet extends AppCompatActivity {
         addPet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                index = null;
                 Intent intent = new Intent(NewPet.this, PetActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
         ViewPager pager = findViewById(R.id.pet_pager);
@@ -258,4 +261,15 @@ public class NewPet extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == 1){
+            myPetList = null;
+            index.removeAllViews();
+            indicaterViews = null;
+            initData();
+        }
+    }
 }
