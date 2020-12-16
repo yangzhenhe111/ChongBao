@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -43,12 +44,15 @@ public class Friends extends AppCompatActivity implements SwipeRefreshLayout.OnR
     @BindView(R.id.fm_contact_refresh)
     SwipeRefreshLayout mFmContactRefresh;
     private FriendsAdapter mFriendsAdapter;
-    private UserInfo info;
-    private String[] listUserName = new String[]{"1000", "1006"};
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
+        View decorView = getWindow().getDecorView();
+        int option = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色
+        decorView.setSystemUiVisibility(option);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
         unbinder = ButterKnife.bind(this);
         initView();
     }
@@ -58,11 +62,8 @@ public class Friends extends AppCompatActivity implements SwipeRefreshLayout.OnR
         mFmContactRv.setLayoutManager(layoutManager);
         mFriendsAdapter = new FriendsAdapter(FriendsAdapter.EnumMessageType.FRIENDS);
         mFriendsAdapter.setOnLoadMoreListener(this, mFmContactRv);
-//        mFriendsAdapter.
-        //分割线
         mFmContactRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mFmContactRv.setAdapter(mFriendsAdapter);
-//        initGetList();
         initItemOnClick();
         initGetList();
     }
@@ -74,6 +75,7 @@ public class Friends extends AppCompatActivity implements SwipeRefreshLayout.OnR
                 UserInfo userInfo = (UserInfo) mFriendsAdapter.getData().get(position);
                 Intent intent = new Intent(Friends.this, UserInfoActivity.class);
                 intent.putExtra("USERNAME", userInfo.getUserName());
+                intent.putExtra("NICKNAME", userInfo.getNickname());
                 startActivity(intent);
             }
         });
@@ -87,8 +89,6 @@ public class Friends extends AppCompatActivity implements SwipeRefreshLayout.OnR
             @Override
             public void gotResult(final int i, String s, List<UserInfo> list) {
                 if (i == 0) {
-                    LogUtils.e("Log:好友数" + list.size());
-                    info = list.get(i);
                     mFmContactNo.setVisibility(View.GONE);
                     mFmContactRv.setVisibility(View.VISIBLE);
                     if (list.size() <= 0) {
@@ -125,22 +125,18 @@ public class Friends extends AppCompatActivity implements SwipeRefreshLayout.OnR
 
     /*批量获取好友在线状态*/
     public void isFriendStateList(String[] listUserName) {
-
         NetWorkManager.isFriendStateList(listUserName, new Callback<UserStateListBean>() {
             @Override
             public void onResponse(Call<UserStateListBean> call, Response<UserStateListBean> response) {
             }
-
             @Override
             public void onFailure(Call<UserStateListBean> call, Throwable throwable) {
-
             }
         });
     }
 
     @Override
     public void onResume() {
-//        isFriendStateList(listUserName);
         super.onResume();
     }
     @Override
@@ -150,6 +146,9 @@ public class Friends extends AppCompatActivity implements SwipeRefreshLayout.OnR
 
     @Override
     public void onLoadMoreRequested() {
+    }
 
+    public void backk(View view) {
+        finish();
     }
 }

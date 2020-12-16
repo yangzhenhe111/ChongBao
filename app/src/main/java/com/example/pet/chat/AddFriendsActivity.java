@@ -29,8 +29,6 @@ import cn.jpush.im.android.api.model.UserInfo;
 
 
 public class AddFriendsActivity extends BaseActivity {
-    @BindView(R.id.add_tab)
-    SegmentTabLayout mAddTab;
     @BindView(R.id.title_bar_title)
     TextView mTitleBarTitle;
     @BindView(R.id.add_search)
@@ -45,8 +43,6 @@ public class AddFriendsActivity extends BaseActivity {
     ListView mAddLv;
     @BindView(R.id.add_del)
     Button mAddDel;
-    private String[] mTitles = {"加好友", "加群"};
-
     private GreenDaoHelper daoHelper;
     private SearchAddDao dao;
     private AddSearchAdapter adapter;
@@ -61,7 +57,7 @@ public class AddFriendsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.mipmap.icon_back));
+        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.drawable.back1));
         mTitleOptionsImg.setVisibility(View.GONE);
         helper = SharedPrefHelper.getInstance();
         initTab();
@@ -116,7 +112,6 @@ public class AddFriendsActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 name = editable.toString();
-                Log.e("name===", ":" + name);
             }
         });
 
@@ -179,36 +174,16 @@ public class AddFriendsActivity extends BaseActivity {
                 if (!name.equals(""))
                     dao.insert(new SearchAdd(null, name));
             }
-            //添加后更新列表
-//            initQuery();
+
             adapter.notifyDataSetChanged();
         } catch (Exception e) {
             Toast.makeText(this, "插入失败", Toast.LENGTH_SHORT).show();
         }
-
     }
 
-    /*tab*/
     private void initTab() {
-        mAddTab.setTabData(mTitles);
-        mTitleBarTitle.setText("加好友");
-        mAddTab.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int i) {
-                if (i == 0) {
-                    mTitleBarTitle.setText("加好友");
-                    mAddSearch.setHint("搜索好友");
-                } else {
-                    mTitleBarTitle.setText("加群");
-                    mAddSearch.setHint("搜索群");
-                }
-            }
-
-            @Override
-            public void onTabReselect(int i) {
-
-            }
-        });
+        mTitleBarTitle.setText("寻找圈友");
+        mAddSearch.setHint("搜索圈友");
     }
 
     @Override
@@ -235,7 +210,6 @@ public class AddFriendsActivity extends BaseActivity {
                     public void gotResult(int i, String s, UserInfo userInfo) {
                         if (i == 0) {
                             initInsert(name);
-                            Log.e("userinfo", s + "\n" + userInfo);
                             Intent intent = new Intent(com.example.pet.chat.AddFriendsActivity.this, AddFriendMsgActivity.class);
                             intent.putExtra("ID", name);
                             if (userInfo.getNickname()!=null) {

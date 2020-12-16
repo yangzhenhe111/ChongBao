@@ -24,18 +24,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserActivty extends BaseActivity {
 
     SharedPrefHelper helper;
-    @BindView(R.id.userinfo_avatar)
-    CircleImageView mUserinfoAvatar;
     @BindView(R.id.userinfo_nikename)
     TextView mUserinfoNikename;
-    @BindView(R.id.userinfo_signature)
-    TextView mUserinfoSignature;
     @BindView(R.id.userinfo_username)
     TextView mUserinfoUsername;
     @BindView(R.id.userinfo_gender)
     TextView mUserinfoGender;
-    @BindView(R.id.userinfo_birthday)
-    TextView mUserinfoBirthday;
     @BindView(R.id.userinfo_region)
     TextView mUserinfoRegion;
     @BindView(R.id.userinfo_mtime)
@@ -86,21 +80,13 @@ public class UserActivty extends BaseActivity {
     @Override
     protected void initData() {
         mUserinfoNikename.setText(JMessageClient.getMyInfo().getNickname() + "");
-        mUserinfoBirthday.setText(TimeUtils.ms2date("yyyy-MM-dd", JMessageClient.getMyInfo().getBirthday()));
         mUserinfoGender.setText(StringUtils.constant2String(JMessageClient.getMyInfo().getGender().name()));
-        if (StringUtils.isNull(JMessageClient.getMyInfo().getSignature())) {
-            mUserinfoSignature.setText("签名：暂未设置签名");
-        } else {
-            mUserinfoSignature.setText(JMessageClient.getMyInfo().getSignature() + "");
-        }
-//        Log.e("info====", JMessageClient.getMyInfo().getAddress() + "\nregion:" + info.getRegion());
         mUserinfoRegion.setText(JMessageClient.getMyInfo().getAddress() + "");
         mUserinfoUsername.setText(JMessageClient.getMyInfo().getUserName() + "");
-        mUserinfoMtime.setText("上次更新：" + TimeUtils.unix2Date("yyyy-MM-dd hh-mm", JMessageClient.getMyInfo().getmTime()));
+        mUserinfoMtime.setText("上次互动：" + TimeUtils.unix2Date("yyyy-MM-dd hh-mm", JMessageClient.getMyInfo().getmTime()));
         Picasso.with(this)
                 .load(JMessageClient.getMyInfo().getAvatarFile())
-                .placeholder(R.mipmap.icon_user)
-                .into(mUserinfoAvatar);
+                .placeholder(R.mipmap.icon_user);
 
     }
 

@@ -32,16 +32,14 @@ android:orientation="horizontal">
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:gravity="center"
-    android:paddingBottom="5dp"
     android:paddingLeft="8dp"
-    android:paddingRight="15dp"
-    android:paddingTop="5dp">
+    android:paddingRight="15dp">
 
     <TextView
         android:id="@+id/bottom_bar_tv2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/shape_button_lines2"
+        android:layout_height="wrap_content"
+        android:background="@drawable/position"
         android:gravity="center"
         android:text="发消息"
         android:textColor="@android:color/white"

@@ -3,10 +3,8 @@ package com.example.pet;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,10 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.example.pet.chat.SharedPrefHelper;
 import com.example.pet.chat.WeChatFragment;
 import com.example.pet.forum.ForumFragment;
-import com.example.pet.my.AcountManage;
 import com.example.pet.my.MyFragment;
 import com.example.pet.nursing.NursingFragment;
 import com.example.pet.other.myFragmentPagerAdapter;
@@ -31,11 +27,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.jpush.im.android.api.JMessageClient;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private ViewPager viewPager;
-    private SharedPrefHelper helper;
     private com.example.pet.other.myFragmentPagerAdapter myFragmentPagerAdapter;
     private List<Fragment> fragmentList; //保存界面的view
     private LinearLayout one,two,three,four,tab;
@@ -82,13 +75,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
 
         } else {
-            JMessageClient.logout();
-            helper.setUserPW("");
-            helper.setNakeName("");
-            Intent intent2 = new Intent("android.intent.action.CART_BROADCAST");
-            intent2.putExtra("data","finish");
-            LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(intent2);
-            MainActivity.this.sendBroadcast(intent2);
             finish();
             System.exit(0);
         }

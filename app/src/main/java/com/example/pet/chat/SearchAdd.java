@@ -5,7 +5,6 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
 /**
- * Created by wapchief on 2017/7/25.
  * 搜索好友历史
  */
 

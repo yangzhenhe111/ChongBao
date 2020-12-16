@@ -70,7 +70,7 @@ public class WeChatFragment extends Fragment {
     private int groupID = 0;
     MessageBean bean;
     @BindView(R.id.ll_fre)
-    LinearLayout btn_private_letter;
+    LinearLayout fre;
     //接收撤回的消息
     private Message retractMsg;
     Handler handler = new Handler();
@@ -96,7 +96,7 @@ public class WeChatFragment extends Fragment {
         JMessageClient.registerEventReceiver(this);
         list= JMessageClient.getConversationList();
         initView();
-        btn_private_letter.setOnClickListener(new View.OnClickListener() {
+        fre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(),Friends.class);
@@ -315,13 +315,5 @@ public class WeChatFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    @OnClick({R.id.fragment_main_group})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.fragment_main_group:
-                break;
-        }
     }
 }
