@@ -1,14 +1,17 @@
 package com.example.pet.forum;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -26,6 +29,7 @@ public class ForumFragment extends Fragment {
     private List<Fragment> list = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
     private View view;
+    private Toolbar toolbar;
 
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,6 +37,8 @@ public class ForumFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_forum, container, false);
             tabLayout=view.findViewById(R.id.tablayout);
             viewPager=view.findViewById(R.id.viewpage);
+            toolbar=view.findViewById(R.id.toolbar);
+            inittoolbar();
             init_tablayout();
         }
         ViewGroup parent = (ViewGroup) view.getParent();
@@ -40,6 +46,22 @@ public class ForumFragment extends Fragment {
             parent.removeView(view);
         }
         return view;
+    }
+
+    public void inittoolbar(){
+        toolbar.inflateMenu(R.menu.menu_toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.search_bar:
+                        Intent intent = new Intent(getContext(),SearchResult.class);
+                        startActivity(intent);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     public void init_tablayout(){

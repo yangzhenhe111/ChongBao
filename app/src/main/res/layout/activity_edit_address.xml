@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/edit_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:onClick="onClicked"
+            app:navigationIcon="@drawable/nav">
+
+            <TextView
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="编辑地址"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/address_delete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
+                android:gravity="center"
+                android:onClick="onClicked"
+                android:text="删除"
+                android:textColor="@color/colorTheme" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="收货人"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/address_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="边晨广"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="手机号码"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/address_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="13703368742"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="所在地区"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/address_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="河北张家口市崇礼区西湾子街道"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="详细地址"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/address_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="君悦酒店对面八方名烟名酒"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="center_vertical"
+                        android:text="设置默认地址"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:text="提醒：每次下单都会默认推荐使用该地址"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4">
+
+                    <com.kyleduo.switchbutton.SwitchButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/address_save"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/loginout"
+        android:gravity="center"
+        android:onClick="onClicked"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</RelativeLayout>

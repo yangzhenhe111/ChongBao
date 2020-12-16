@@ -2,9 +2,7 @@
     <string name="app_name">宠宝</string>
     <string name="tabs_my">我的</string>
     <string name="booking">订阅号消息(Fake)</string>
-    <string name="tabs_forum">论坛</string>
     <string name="tabs_nursing">宠物护理</string>
     <string name="booking_num">常读的订阅号</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
