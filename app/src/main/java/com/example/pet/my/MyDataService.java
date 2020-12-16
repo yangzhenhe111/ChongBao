@@ -187,11 +187,11 @@ public class MyDataService extends IntentService {
                 tips.setForwards(count_forwards);
                 tips.setImagepath(img_path);
                 tips.setHeadImagepath(head_img_path);
-                URL url1 = new URL(Cache.MY_URL +"img/" +img_path);
+                URL url1 = new URL(Cache.MY_URL +img_path);
                 InputStream in1 = url1.openStream();
                 Bitmap bitmap = BitmapFactory.decodeStream(in1);
                 tips.setThumbnail(bitmap);
-                URL url2 = new URL(Cache.MY_URL +"img/"+head_img_path);
+                URL url2 = new URL(Cache.MY_URL +head_img_path);
                 InputStream in2 = url2.openStream();
                 Bitmap bitmap1 = BitmapFactory.decodeStream(in2);
                 tips.setUserHead(bitmap1);

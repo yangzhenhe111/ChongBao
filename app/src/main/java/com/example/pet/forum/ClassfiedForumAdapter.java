@@ -18,6 +18,8 @@ import com.example.pet.other.entity.Tips;
 
 import java.util.ArrayList;
 
+import cn.smssdk.ui.companent.CircleImageView;
+
 public class ClassfiedForumAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<Tips> tipsArrayList = new ArrayList<>();
@@ -59,7 +61,7 @@ public class ClassfiedForumAdapter extends BaseAdapter {
         if (convertView == null){
             convertView = LayoutInflater.from(context).inflate(tipslayout,null);
         }
-        ImageView landlordhead = convertView.findViewById(R.id.iv_tips_landlordhead);
+        CircleImageView landlordhead = convertView.findViewById(R.id.iv_tips_landlordhead);
         landlordhead.setImageBitmap(tipsArrayList.get(position).getUserHead());
         TextView landlordname = convertView.findViewById(R.id.tv_tips_landlordname);
         landlordname.setText(tipsArrayList.get(position).getUserName());

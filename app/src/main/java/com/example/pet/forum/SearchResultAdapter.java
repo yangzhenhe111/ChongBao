@@ -27,6 +27,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import cn.smssdk.ui.companent.CircleImageView;
+
 public class SearchResultAdapter extends BaseAdapter {
 
     private Context context;
@@ -69,7 +71,7 @@ public class SearchResultAdapter extends BaseAdapter {
         if (view == null){
             view = LayoutInflater.from(context).inflate(searchLayout,null);
         }
-        ImageView landlordhead = view.findViewById(R.id.iv_tips_landlordhead);
+        CircleImageView landlordhead = view.findViewById(R.id.iv_tips_landlordhead);
         landlordhead.setImageBitmap(tipsArrayList.get(position).getUserHead());
         landlordhead.setOnClickListener(new View.OnClickListener() {
             @Override

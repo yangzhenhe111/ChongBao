@@ -44,7 +44,6 @@
             android:layout_marginLeft="130dp"/>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/landlord_tips_totips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -64,7 +63,6 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"/>
             <TextView
-                android:id="@+id/landlord_tips_text"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:text="正文选段"
@@ -82,12 +80,10 @@
             android:orientation="horizontal"
             android:layout_marginLeft="32dp">
             <ImageView
-                android:id="@+id/landlord_iv_like"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:src="@drawable/like1"/>
             <TextView
-                android:id="@+id/landlord_tv_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -106,7 +102,6 @@
                 android:layout_height="36dp"
                 android:src="@drawable/comment"/>
             <TextView
-                android:id="@+id/landlord_tv_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -121,12 +116,10 @@
             android:orientation="horizontal"
             android:layout_marginLeft="64dp">
             <ImageView
-                android:id="@+id/landlord_iv_forward"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:src="@drawable/forward1"/>
             <TextView
-                android:id="@+id/landlord_tv_forward"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"

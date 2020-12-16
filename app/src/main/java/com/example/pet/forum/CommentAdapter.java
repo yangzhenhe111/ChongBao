@@ -15,6 +15,8 @@ import com.example.pet.other.entity.Comment;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.smssdk.ui.companent.CircleImageView;
+
 public class CommentAdapter extends BaseAdapter {
     private Context context;
     private List<com.example.pet.other.entity.Comment> commentList = new ArrayList<>();
@@ -51,7 +53,7 @@ public class CommentAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(itemLayoutRes, null);
-        ImageView head = view.findViewById(R.id.comment_head);
+        CircleImageView head = view.findViewById(R.id.comment_head);
         head.setImageBitmap(commentList.get(position).getHead());
         TextView name = view.findViewById(R.id.comment_name);
         name.setText(commentList.get(position).getName());
