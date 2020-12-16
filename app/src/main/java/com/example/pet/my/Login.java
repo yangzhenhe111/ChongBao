@@ -1,5 +1,7 @@
 package com.example.pet.my;
 
+import androidx.annotation.NonNull;
+
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -10,18 +12,27 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
+import com.example.pet.Start1Activity;
 import com.example.pet.chat.BaseActivity;
 import com.example.pet.chat.SharedPrefHelper;
 import com.example.pet.other.Cache;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -179,8 +190,8 @@ public class Login extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                Intent intent1 = new Intent(Login.this, MyDataService.class);
-                startService(intent1);
+                /*Intent intent1 = new Intent(Login.this, MyDataService.class);
+                startService(intent1);*/
                 Intent intent = new Intent(Login.this, MainActivity.class);
                 intent.putExtra("LOGINTYPE", type);
                 startActivity(intent);
@@ -198,7 +209,7 @@ public class Login extends BaseActivity {
         PropertyValuesHolder animator = PropertyValuesHolder.ofFloat("scaleX", 0.5f, 1f);
         PropertyValuesHolder animator2 = PropertyValuesHolder.ofFloat("scaleY", 0.5f, 1f);
         ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(view, animator, animator2);
-        animator3.setDuration(1800);
+        animator3.setDuration(2000);
         animator3.setInterpolator(new JellyInterpolator());
         animator3.start();
     }

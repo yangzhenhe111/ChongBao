@@ -14,21 +14,41 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
+import com.example.pet.chat.BaseApplication;
 import com.example.pet.chat.SharedPrefHelper;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.User;
+import com.kyleduo.switchbutton.SwitchButton;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.IntegerCallback;
+import cn.jpush.im.api.BasicCallback;
+
+import static cn.jpush.im.android.api.JMessageClient.FLAG_NOTIFY_SILENCE;
+import static cn.jpush.im.android.api.JMessageClient.FLAG_NOTIFY_WITH_SOUND;
+import static cn.jpush.im.android.api.JMessageClient.FLAG_NOTIFY_WITH_VIBRATE;
 
 public class AcountManage extends AppCompatActivity {
     private ListView lvAcount;
+    @BindView(R.id.setting_noisy)
+    SwitchButton mSettingNoisy;
+    @BindView(R.id.setting_roaming)
+    SwitchButton mSettingRoaming;
+    @BindView(R.id.setting_push_vib)
+    SwitchButton mSettingPushVib;
+    @BindView(R.id.setting_push_music)
+    SwitchButton mSettingPushMusic;
+    @BindView(R.id.setting_push_led)
+    SwitchButton mSettingPushLed;
     private ArrayList<User> list = new ArrayList<>();
     private AcountAdapter adapter;
     private LinearLayout addUser;
@@ -48,9 +68,109 @@ public class AcountManage extends AppCompatActivity {
         helper = SharedPrefHelper.getInstance();
         initData();
         setView();
+        initSwitchOnClick();
+    }
+    private void initSwitchOnClick() {
 
+        /*免打扰*/
+        JMessageClient.getNoDisturbGlobal(new IntegerCallback() {
+            @Override
+            public void gotResult(int i, String s, Integer integer) {
+//                Log.e("disturb===", "" + i + "," + s + "," + integer);
+                if (integer == 1) {
+                    mSettingNoisy.setChecked(true);
+                } else {
+                    mSettingNoisy.setChecked(false);
+                }
+            }
+        });
+
+        mSettingNoisy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    disturbGlobal(1);
+                } else {
+                    disturbGlobal(0);
+                }
+            }
+        });
+
+        /*消息漫游,默认开启状态*/
+        mSettingRoaming.setChecked(helper.getRoaming());
+        mSettingRoaming.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    JMessageClient.init(BaseApplication.baseApplication, true);
+                } else {
+                    JMessageClient.init(BaseApplication.baseApplication, false);
+                }
+                helper.setRoaming(b);
+            }
+        });
+
+
+        pushMusic();
+        pushVib();
     }
 
+    /*提示音*/
+    private void pushMusic() {
+        mSettingPushMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    if (helper.getVib()) {
+                        JMessageClient.setNotificationFlag(FLAG_NOTIFY_SILENCE | FLAG_NOTIFY_WITH_SOUND | FLAG_NOTIFY_WITH_VIBRATE);
+                    } else {
+                        JMessageClient.setNotificationFlag(FLAG_NOTIFY_SILENCE | FLAG_NOTIFY_WITH_SOUND);
+                    }
+                    helper.setMusic(true);
+                } else {
+                    if (helper.getVib()) {
+                        JMessageClient.setNotificationFlag(FLAG_NOTIFY_SILENCE | FLAG_NOTIFY_WITH_VIBRATE);
+                    } else {
+                        JMessageClient.setNotificationFlag(FLAG_NOTIFY_SILENCE);
+                    }
+                    helper.setMusic(false);
+                }
+            }
+        });
+    }
+
+    /*震动*/
+    private void pushVib() {
+        mSettingPushVib.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    if (helper.getMusic()) {
+                        JMessageClient.setNotificationFlag(FLAG_NOTIFY_SILENCE | FLAG_NOTIFY_WITH_SOUND | FLAG_NOTIFY_WITH_VIBRATE);
+                    } else {
+                        JMessageClient.setNotificationFlag(FLAG_NOTIFY_SILENCE | FLAG_NOTIFY_WITH_VIBRATE);
+                    }
+                } else {
+                    if (helper.getMusic()) {
+                        JMessageClient.setNotificationFlag(FLAG_NOTIFY_SILENCE | FLAG_NOTIFY_WITH_SOUND);
+                    } else {
+                        JMessageClient.setNotificationFlag(FLAG_NOTIFY_SILENCE);
+                    }
+                }
+                helper.setVib(b);
+            }
+        });
+    }
+
+    /*全局免打扰*/
+    private void disturbGlobal(int i) {
+        JMessageClient.setNoDisturbGlobal(i, new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+
+            }
+        });
+    }
     private void initData() {
         list.clear();
         for (User u : Cache.userHashSet) {

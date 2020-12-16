@@ -5,28 +5,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-
 import com.example.pet.R;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.callback.GetUserInfoCallback;
-import cn.jpush.im.android.api.model.UserInfo;
-
 
 public class PullMsgListActivity extends BaseActivity {
-
     @BindView(R.id.title_bar_back)
     ImageView mTitleBarBack;
     @BindView(R.id.title_bar_title)
@@ -46,7 +36,6 @@ public class PullMsgListActivity extends BaseActivity {
     private int TYPE_BUTTON = 0;
     private MessageBean bean, bean1;
     private SharedPrefHelper helper;
-
     private GreenDaoHelper daoHelper;
     private RequestListDao dao;
     private List<RequestList> list = new ArrayList<>();
@@ -59,15 +48,13 @@ public class PullMsgListActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.mipmap.icon_back));
-        mTitleBarTitle.setText("新的好友");
-        mTitleOptionsTv.setText("添加");
+        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.drawable.back1));
+        mTitleBarTitle.setText("新圈友");
         mTitleOptionsTv.setVisibility(View.VISIBLE);
         helper = SharedPrefHelper.getInstance();
         adapter = new MessageRecyclerAdapter(list1, this);
         adapter2 = new MessageRecyclerAdapter(list2, this);
         initAdapter2();
-
     }
 
     @Override
@@ -86,7 +73,6 @@ public class PullMsgListActivity extends BaseActivity {
         mPullMsgRv2.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mPullMsgRv2.setAdapter(adapter2);
         final int[] id = {1000, 1001, 1006};
-        initDataAdapter(id);
         /*item监听事件*/
         adapter2.setOnItemClickListener(new MessageRecyclerAdapter.OnItemClickListener() {
             @Override
@@ -101,37 +87,6 @@ public class PullMsgListActivity extends BaseActivity {
         });
     }
 
-    private void initDataAdapter(int[] id) {
-        for (int i = 0; i < id.length; i++) {
-            dataAdapter2(id[i]);
-            Collections.reverse(list2);
-        }
-//        Log.e("list2=====", ""+list2);
-    }
-
-    /*加载推荐好友数据*/
-    private void dataAdapter2(final int id) {
-        JMessageClient.getUserInfo(id + "", "", new GetUserInfoCallback() {
-            @Override
-            public void gotResult(int i, String s, UserInfo userInfo) {
-                bean = new MessageBean();
-//                Log.e("userinfoMsg", ""+userInfo);
-                bean.setTitle(userInfo.getNickname());
-                bean.setContent(userInfo.getUserName() + "");
-                bean.setUserName(userInfo.getUserName());
-                bean.setType(1);
-                bean.setFriends(userInfo.isFriend());
-                bean.setImg(userInfo.getAvatarFile().toURI().toString());
-//                Log.e("bean1===", bean.getTitle() + "  ," + bean.getContent());
-                TYPE_BUTTON = 1;
-                list2.add(bean);
-                adapter2.notifyDataSetChanged();
-
-            }
-
-        });
-    }
-
     /*好友申请*/
     private void initAdapter() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -139,7 +94,6 @@ public class PullMsgListActivity extends BaseActivity {
         //分割线
         mPullMsgRv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mPullMsgRv.setAdapter(adapter);
-
         daoHelper = new GreenDaoHelper(this);
         dao = daoHelper.initDao().getRequestListDao();
         //查询所有

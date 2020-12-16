@@ -1,10 +1,14 @@
 package com.example.pet.chat;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.pet.R;
 import com.google.android.material.tabs.TabLayout;
@@ -19,10 +23,15 @@ public class MyFollowActivity extends AppCompatActivity {
     private List<Fragment> list = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_follow);
+        View decorView = getWindow().getDecorView();
+        int option = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色
+        decorView.setSystemUiVisibility(option);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
         init_tablayout();
     }
 

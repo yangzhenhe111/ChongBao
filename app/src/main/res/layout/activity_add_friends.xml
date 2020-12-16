@@ -2,21 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/page4"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
     android:layout_height="match_parent">
     <include layout="@layout/title_bar"/>
-    <com.flyco.tablayout.SegmentTabLayout
-        android:id="@+id/add_tab"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        tl:tl_bar_color="#ffffff"
-        tl:tl_indicator_color="@color/colorTheme"
-        tl:tl_indicator_corner_radius="5dp"
-        tl:tl_tab_width="80dp"/>
 
     <View
         android:layout_width="match_parent"
@@ -28,7 +18,7 @@
         android:layout_height="50dp"
         android:background="@android:color/white"
         android:gravity="center_vertical"
-        android:drawableLeft="@mipmap/icon_search"
+        android:drawableLeft="@drawable/search"
         android:hint="搜联系人"
         android:textSize="14sp"
         android:maxLines="1"
@@ -43,7 +33,7 @@
         android:layout_height="38dp"
         android:text="搜索"
         android:textColor="@color/white"
-        android:background="@drawable/shape_button_lines2"
+        android:background="@drawable/position"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"/>
     <TextView
@@ -53,7 +43,8 @@
         android:paddingTop="20dp"
         android:paddingLeft="15dp"
         android:text="搜索历史"
-        android:textSize="12sp"/>
+        android:textColor="#000000"
+        android:textSize="15sp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
@@ -68,9 +59,10 @@
     <Button
         android:id="@+id/add_del"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingLeft="8dp"
+        android:background="@drawable/cancelz"
         android:paddingRight="8dp"
         android:layout_gravity="center_horizontal"
         android:textSize="12sp"

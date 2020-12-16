@@ -7,14 +7,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 
 import com.example.pet.R;
+import com.example.pet.chat.BaseApplication;
+import com.example.pet.chat.SharedPrefHelper;
+import com.kyleduo.switchbutton.SwitchButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.IntegerCallback;
+import cn.jpush.im.api.BasicCallback;
+
+import static cn.jpush.im.android.api.JMessageClient.FLAG_NOTIFY_SILENCE;
+import static cn.jpush.im.android.api.JMessageClient.FLAG_NOTIFY_WITH_SOUND;
+import static cn.jpush.im.android.api.JMessageClient.FLAG_NOTIFY_WITH_VIBRATE;
+
 public class Setting extends AppCompatActivity {
+    private SharedPrefHelper helper;
     private Toolbar toolbar;
     private List<My> myList1 = new ArrayList<>();
     private List<My> myList2 = new ArrayList<>();

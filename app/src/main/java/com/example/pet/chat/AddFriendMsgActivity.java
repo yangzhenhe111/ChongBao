@@ -20,7 +20,6 @@ import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
 
 /**
- * Created by wapchief on 2017/7/25.
  * 发送申请请求
  */
 
@@ -37,7 +36,6 @@ public class AddFriendMsgActivity extends BaseActivity {
     TextView mAddMsgName;
     @BindView(R.id.add_msg_content)
     EditText mAddMsgContent;
-
     private String content;
     private SharedPrefHelper helper;
     @Override
@@ -67,17 +65,16 @@ public class AddFriendMsgActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 content = editable.toString();
-                Log.e("content", content);
             }
         });
     }
 
     private void initTitleBar() {
-        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.mipmap.icon_back));
-        mTitleBarTitle.setText("添加好友");
-        mTitleOptionsTv.setVisibility(View.VISIBLE);
         mTitleOptionsTv.setText("发送");
-
+        mTitleOptionsTv.setVisibility(View.VISIBLE);
+        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.drawable.back1));
+        mTitleBarBack.setVisibility(View.VISIBLE);
+        mTitleBarTitle.setText("添加好友");
     }
 
     @Override

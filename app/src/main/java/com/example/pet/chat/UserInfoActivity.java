@@ -53,29 +53,16 @@ public class UserInfoActivity extends BaseActivity {
     RelativeLayout mBottomBarRight;
     @BindView(R.id.title)
     LinearLayout mTitle;
-    @BindView(R.id.userinfo_avatar)
-    CircleImageView mUserinfoAvatar;
     @BindView(R.id.userinfo_nikename)
     TextView mUserinfoNikename;
-    @BindView(R.id.userinfo_signature)
-    TextView mUserinfoSignature;
     @BindView(R.id.userinfo_username)
     TextView mUserinfoUsername;
     @BindView(R.id.userinfo_gender)
     TextView mUserinfoGender;
-    @BindView(R.id.userinfo_birthday)
-    TextView mUserinfoBirthday;
-    @BindView(R.id.userinfo_region)
-    TextView mUserinfoRegion;
     @BindView(R.id.userinfo_mtime)
     TextView mUserinfoMtime;
-    @BindView(R.id.userinfo_fill)
-    ImageView mUserinfoFill;
-    private String userName;
     private SharedPrefHelper helper;
-    private String avtar = "";
     private String getUserName = "";
-    private UserInfo userInfo;
 
     @Override
     protected int setContentView() {
@@ -87,9 +74,6 @@ public class UserInfoActivity extends BaseActivity {
         getUserName = getIntent().getStringExtra("USERNAME");
         initBar();
         initUserInfo(getUserName);
-
-        mTitleBarLeft.setBackground(getResources().getDrawable(R.drawable.shape_titlebar));
-        mTitleBarRight.setBackground(getResources().getDrawable(R.drawable.shape_titlebar2));
         mTitleBarTitle.setText("个人资料");
         JAnalyticsInterface.onPageStart(this, this.getClass().getCanonicalName());
     }
@@ -102,19 +86,11 @@ public class UserInfoActivity extends BaseActivity {
                 if (i == 0) {
                     Picasso.with(com.example.pet.chat.UserInfoActivity.this)
                             .load(userInfo.getAvatarFile())
-                            .placeholder(R.mipmap.icon_user)
-                            .into(mUserinfoAvatar);
-                    mUserinfoBirthday.setText(TimeUtils.ms2date("yyyy-MM-dd", userInfo.getBirthday()));
+                            .placeholder(R.mipmap.icon_user);
                     mUserinfoGender.setText(StringUtils.constant2String(userInfo.getGender() + ""));
-                    mUserinfoMtime.setText("上次活动：" + TimeUtils.unix2Date("yyyy-MM-dd HH:mm", userInfo.getmTime()));
+                    mUserinfoMtime.setText("上次互动：" + TimeUtils.unix2Date("yyyy-MM-dd HH:mm", userInfo.getmTime()));
                     mUserinfoNikename.setText(userInfo.getNickname() + "");
                     mUserinfoUsername.setText(userInfo.getUserName() + "");
-                    if (userInfo.getSignature().equals("")) {
-                        mUserinfoSignature.setText("签名：说点儿什么吧～");
-                    } else {
-                        mUserinfoSignature.setText("签名：" + userInfo.getSignature());
-                    }
-                    mUserinfoRegion.setText(userInfo.getRegion() + "");
                     CountEvent cEvent = new CountEvent("event_userId_" + userInfo.getUserID());
                     JAnalyticsInterface.onEvent(getContext(), cEvent);
                 } else {
@@ -127,14 +103,9 @@ public class UserInfoActivity extends BaseActivity {
 
     private void initBar() {
         helper = SharedPrefHelper.getInstance();
-        mTitleBarLeft.setBackgroundColor(Color.parseColor("#00000000"));
-        mTitleBarRight.setBackgroundColor(Color.parseColor("#00000000"));
-        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.mipmap.icon_back));
-        mTitleOptionsTv.setText("更多");
-        mTitleOptionsTv.setVisibility(View.VISIBLE);
+        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.drawable.back1));
         mTitleBarTitle.setText("");
         mBottomBarLeft.setVisibility(View.GONE);
-        userName = getIntent().getStringExtra("USERNAME");
     }
 
     @Override
@@ -163,19 +134,19 @@ public class UserInfoActivity extends BaseActivity {
                 break;
             case R.id.title_options_tv:
                 Intent intent1 = new Intent(com.example.pet.chat.UserInfoActivity.this, UserInfoOptionsActivity.class);
-                intent1.putExtra("USERNAME", getIntent().getStringExtra("USERNAME"));
+                intent1.putExtra("NAKENAME", getIntent().getStringExtra("NICKNAME"));
                 startActivity(intent1);
                 break;
             case R.id.bottom_bar_tv2:
                 /*创建会话*/
-                Conversation conv = JMessageClient.getSingleConversation(getIntent().getStringExtra("USERNAME"), SharedPrefHelper.getInstance().getAppKey());
+                Conversation conv = JMessageClient.getSingleConversation(getIntent().getStringExtra("USERNAME"), "7153b7916be94ab289793e76");
                 //如果会话为空，使用EventBus通知会话列表添加新会话
                 if (conv == null) {
-                    Conversation.createSingleConversation(getIntent().getStringExtra("USERNAME"), SharedPrefHelper.getInstance().getAppKey());
+                    Conversation.createSingleConversation(getIntent().getStringExtra("USERNAME"), "7153b7916be94ab289793e76");
                 }
                 JMessageClient.getConversationList().add(conv);
                 Intent intent = new Intent(com.example.pet.chat.UserInfoActivity.this, ChatMsgActivity.class);
-                intent.putExtra("USERNAME", getIntent().getStringExtra("USERNAME"));
+                intent.putExtra("NAKENAME", getIntent().getStringExtra("NICKNAME"));
                 startActivity(intent);
                 break;
             default:

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/page4"
     android:orientation="vertical">
 
     <include layout="@layout/title_bar" />
@@ -12,8 +13,8 @@
         android:layout_height="30dp"
         android:gravity="center_vertical"
         android:paddingLeft="12dp"
-        android:text="好友通知"
-        android:textColor="@color/colorText"
+        android:text="圈友通知"
+        android:textColor="#000000"
         android:textSize="12sp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -40,16 +41,9 @@
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="12dp"
-        android:text="好友推荐"
-        android:textColor="@color/colorText"
-        android:textSize="12sp" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="20dp"
         android:id="@+id/pull_msg_rv2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

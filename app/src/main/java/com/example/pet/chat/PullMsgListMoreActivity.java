@@ -52,8 +52,8 @@ public class PullMsgListMoreActivity extends BaseActivity {
     }
 
     private void initBar() {
-        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.mipmap.icon_back));
-        mTitleBarTitle.setText("好友通知");
+        mTitleBarBack.setImageDrawable(getResources().getDrawable(R.drawable.back1));
+        mTitleBarTitle.setText("圈友通知");
     }
 
     @Override
