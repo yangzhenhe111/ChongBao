@@ -1,4 +1,4 @@
-package com.example.pet;
+package com.example.pet.other;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.example.pet.HintPopupWindow;
+import com.example.pet.R;
 import com.example.pet.chat.WeChatFragment;
 import com.example.pet.forum.ForumFragment;
 import com.example.pet.my.MyFragment;

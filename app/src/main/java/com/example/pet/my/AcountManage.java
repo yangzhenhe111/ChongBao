@@ -18,7 +18,6 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.example.pet.MainActivity;
 import com.example.pet.R;
 import com.example.pet.chat.BaseApplication;
 import com.example.pet.chat.SharedPrefHelper;
@@ -45,8 +44,6 @@ public class AcountManage extends AppCompatActivity {
     SwitchButton mSettingRoaming;
     @BindView(R.id.setting_push_vib)
     SwitchButton mSettingPushVib;
-    @BindView(R.id.setting_push_music)
-    SwitchButton mSettingPushMusic;
     @BindView(R.id.setting_push_led)
     SwitchButton mSettingPushLed;
     private ArrayList<User> list = new ArrayList<>();
@@ -71,7 +68,6 @@ public class AcountManage extends AppCompatActivity {
         initSwitchOnClick();
     }
     private void initSwitchOnClick() {
-
         /*免打扰*/
         JMessageClient.getNoDisturbGlobal(new IntegerCallback() {
             @Override
@@ -110,35 +106,8 @@ public class AcountManage extends AppCompatActivity {
             }
         });
 
-
-        pushMusic();
         pushVib();
     }
-
-    /*提示音*/
-    private void pushMusic() {
-        mSettingPushMusic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    if (helper.getVib()) {
-                        JMessageClient.setNotificationFlag(FLAG_NOTIFY_SILENCE | FLAG_NOTIFY_WITH_SOUND | FLAG_NOTIFY_WITH_VIBRATE);
-                    } else {
-                        JMessageClient.setNotificationFlag(FLAG_NOTIFY_SILENCE | FLAG_NOTIFY_WITH_SOUND);
-                    }
-                    helper.setMusic(true);
-                } else {
-                    if (helper.getVib()) {
-                        JMessageClient.setNotificationFlag(FLAG_NOTIFY_SILENCE | FLAG_NOTIFY_WITH_VIBRATE);
-                    } else {
-                        JMessageClient.setNotificationFlag(FLAG_NOTIFY_SILENCE);
-                    }
-                    helper.setMusic(false);
-                }
-            }
-        });
-    }
-
     /*震动*/
     private void pushVib() {
         mSettingPushVib.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

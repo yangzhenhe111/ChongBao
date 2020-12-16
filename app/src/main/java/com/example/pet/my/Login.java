@@ -25,7 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pet.MainActivity;
+import com.example.pet.other.MainActivity;
 import com.example.pet.R;
 import com.example.pet.Start1Activity;
 import com.example.pet.chat.BaseActivity;
@@ -147,8 +147,8 @@ public class Login extends BaseActivity {
                                     Cache.userPhone = userName;
                                     Log.e("Cache.phone:::::", Cache.userPhone);
 
-                                    Intent intent2 = new Intent(Login.this, MyUserService.class);
-                                    startService(intent2);
+                                    /*Intent intent2 = new Intent(Login.this, MyUserService.class);
+                                    startService(intent2);*/
                                 }
                             }
                         });

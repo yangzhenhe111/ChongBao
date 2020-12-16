@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.example.pet.chat.SharedPrefHelper;
 import com.example.pet.my.Login;
 import com.example.pet.nursing.StartActivity;
+import com.example.pet.other.MainActivity;
 
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 import cn.jpush.im.android.api.JMessageClient;

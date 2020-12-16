@@ -25,9 +25,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pet.MainActivity;
 import com.example.pet.R;
 import com.example.pet.other.Cache;
+import com.example.pet.other.MainActivity;
 import com.example.pet.other.entity.Comment;
 
 import org.json.JSONArray;
