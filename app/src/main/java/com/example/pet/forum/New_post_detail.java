@@ -25,9 +25,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pet.other.MainActivity;
 import com.example.pet.R;
 import com.example.pet.other.Cache;
-import com.example.pet.other.MainActivity;
 import com.example.pet.other.entity.Comment;
 
 import org.json.JSONArray;
@@ -50,6 +50,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
+import cn.smssdk.ui.companent.CircleImageView;
+
 public class New_post_detail extends Activity {
 
     private ListView listView;
@@ -61,7 +63,7 @@ public class New_post_detail extends Activity {
     private TextView tv_likes;
     private TextView tv_comments;
     private ImageView iv_pic;
-    private ImageView iv_head;
+    private CircleImageView iv_head;
     private EditText enter_comment;
     private Button publish_comment;
     private TextView tv_forwards;
@@ -103,7 +105,7 @@ public class New_post_detail extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post_detail);
-
+        initFinfById();
         id = getIntent().getIntExtra("id",0);
         mSwipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         scrollView = findViewById(R.id.scroll);
@@ -112,17 +114,17 @@ public class New_post_detail extends Activity {
         //被刷新时的操作
         getPost(id);
         getAllComments(id);
-
         //更新UI
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 //更新成功后设置UI，停止更新
-                generateUI();
                 initAdapter();
+                generateUI();
+
                 mSwipeRefreshLayout.setRefreshing(false);
             }
-        },1000);
+        },2000);
         handleDownPullUpdate();
 
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
@@ -142,6 +144,26 @@ public class New_post_detail extends Activity {
                 finish();
             }
         });
+
+        iv_head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(New_post_detail.this,LandlordActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        publish_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                publishComment(id);
+                refresh();
+            }
+        });
+    }
+
+    private void initFinfById() {
         listView = findViewById(R.id.lv_comment);
         tv_landlordname = findViewById(R.id.push_name);
         tv_time = findViewById(R.id.push_time);
@@ -152,24 +174,9 @@ public class New_post_detail extends Activity {
         tv_comments = findViewById(R.id.no_comment);
         iv_pic = findViewById(R.id.content_img);
         iv_head = findViewById(R.id.head);
-        iv_head.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(New_post_detail.this,LandlordActivity.class);
-                startActivity(intent);
-            }
-        });
         enter_comment = findViewById(R.id.enter_comment);
         publish_comment = findViewById(R.id.publish_comment);
         tv_forwards = findViewById(R.id.no_forward);
-        publish_comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                publishComment(id);
-                refresh();
-            }
-        });
     }
 
     public void handleDownPullUpdate() {
@@ -187,11 +194,12 @@ public class New_post_detail extends Activity {
                     @Override
                     public void run() {
                         //更新成功后设置UI，停止更新
-                        generateUI();
                         initAdapter();
+                        generateUI();
+
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
-                },1000);
+                },2000);
             }
         });
     }
@@ -211,7 +219,8 @@ public class New_post_detail extends Activity {
     }
 
     public void generateUI() {
-        tv_landlordname.setText((String)maps.get("username"));
+        String username = (String)maps.get("username");
+        tv_landlordname.setText(username);
         tv_time.setText((String)maps.get("post_time"));
         btn_topic.setText((String)maps.get("topic"));
         tv_title.setText((String)maps.get("post_title"));
@@ -302,6 +311,7 @@ public class New_post_detail extends Activity {
                     maps.put("post_text",post_text);
                     maps.put("topic",topic);
                     maps.put("username",user_name);
+                    Log.e("username:ge----->", (String)maps.get("username"));
                     maps.put("count_likes",count_likes+"");
                     maps.put("count_comments",count_comments+"");
                     maps.put("count_forwards",count_forwards+"");
@@ -382,6 +392,7 @@ public class New_post_detail extends Activity {
                 public void run() {
                     try {
                         String path = comment.getPath();
+                        Log.e("path",path);
                         URL url = new URL(Cache.MY_URL + "GetImageByPath?path=" + path);
                         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                         InputStream in = urlConnection.getInputStream();

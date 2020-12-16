@@ -44,6 +44,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
+import cn.smssdk.ui.companent.CircleImageView;
+
 public class TipsActivity extends Activity {
 
     private ArrayList<Comment> arrayList = new ArrayList<>();
@@ -58,7 +60,7 @@ public class TipsActivity extends Activity {
     private TextView tv_comments;
     private TextView tv_forwards;
     private ImageView iv_pic;
-    private ImageView iv_head;
+    private CircleImageView iv_head;
     private EditText enter_comment;
     private Button publish_comment;
     private Map<String,Object> maps = new HashMap<>();

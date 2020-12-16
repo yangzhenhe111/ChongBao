@@ -81,15 +81,6 @@ public class InnerFragment_first extends Fragment {
         if (view==null){
             view = inflater.inflate(R.layout.fragment_inner_first, container, false);
 
-            Button button = view.findViewById(R.id.more);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getContext(),ShowPhoto.class);
-                    startActivity(intent);
-                }
-            });
-
             recyclerView = view.findViewById(R.id.recyclerView);
             mSwipeRefreshLayout = view.findViewById(R.id.refresh_layoutzzz);
             recyclerView.setHasFixedSize(true);
