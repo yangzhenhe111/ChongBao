@@ -93,7 +93,7 @@ public class InnerFragment_other extends Fragment {
                     initAdapter();
                     mSwipeRefreshLayout.setRefreshing(false);
                 }
-            },1000);
+            },2000);
             handleDownPullUpdate();
 
             RecyclerItemClickSupport.addTo(recyclerView).setOnItemClickListener(new RecyclerItemClickSupport.OnItemClickListener() {

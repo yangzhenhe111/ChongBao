@@ -34,7 +34,7 @@ import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pet.MainActivity;
+import com.example.pet.other.MainActivity;
 import com.example.pet.R;
 
 import com.example.pet.other.Cache;
