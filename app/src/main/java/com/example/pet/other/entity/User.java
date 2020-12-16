@@ -1,6 +1,7 @@
 package com.example.pet.other.entity;
 
 import android.graphics.Bitmap;
+import android.widget.ListView;
 
 import java.util.Objects;
 
@@ -15,7 +16,9 @@ public class User {
     private String userPhone;//用户手机号
     private String userBrithday;//用户邮箱
     private String userAutograph;//个性签名
-private Bitmap photo;
+    private Bitmap photo;
+    private String isFollow;
+
     public User() {
     }
 
@@ -134,6 +137,14 @@ private Bitmap photo;
 
     public void setUserAutograph(String userAutograph) {
         this.userAutograph = userAutograph;
+    }
+
+    public String getIsFollow() {
+        return isFollow;
+    }
+
+    public void setIsFollow(String isFollow) {
+        this.isFollow = isFollow;
     }
 
     @Override

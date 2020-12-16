@@ -1,35 +1,33 @@
-package com.example.pet;
+package com.example.pet.other;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.example.pet.HintPopupWindow;
+import com.example.pet.R;
 import com.example.pet.chat.WeChatFragment;
 import com.example.pet.forum.ForumFragment;
-import com.example.pet.my.MyDataService;
 import com.example.pet.my.MyFragment;
 import com.example.pet.nursing.NursingFragment;
 import com.example.pet.other.myFragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-//import com.mob.MobSDK;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private ViewPager viewPager;
@@ -57,9 +55,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initEvents();
         ononeSelected();
     }
-    /**
-     * 初始化控件
-     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exitBy2Click();
+        }
+        return false;
+    }
+    private static Boolean isExit = false;
+    private void exitBy2Click() {
+        Timer tExit = null;
+        if (isExit == false) {
+            isExit = true; // 准备退出
+            ToastUtils.showShort("再按一次退出程序");
+            tExit = new Timer();
+            tExit.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit = false; // 取消退出
+                }
+            }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
+
+        } else {
+            finish();
+            System.exit(0);
+        }
+    }
     private void initViews() {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         //底部的布局

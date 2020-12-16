@@ -1,6 +1,7 @@
 package com.example.pet.my;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -9,8 +10,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,34 +28,90 @@ import android.widget.TextView;
 
 import com.example.pet.R;
 import com.example.pet.other.Cache;
+import com.example.pet.other.entity.Pet;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewPet extends AppCompatActivity {
-private LinearLayout index;
-
+    private LinearLayout index;
+    private List<Pet> myPetList;
     private ImageView[] indicaterViews;
     private final ViewGroup.LayoutParams params_WRAP_CONTENT = new ViewGroup.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            setView();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_pet);
-        setView();
+        initData();
 
+    }
+
+    private void initData() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    if (myPetList != null) {
+                        myPetList.clear();
+                    } else {
+                        myPetList = new ArrayList<>();
+                    }
+                    URL url = new URL(Cache.MY_URL + "MyPet?userId=" + Cache.user.getUserId());
+                    InputStream in = url.openStream();
+                    StringBuilder str = new StringBuilder();
+                    byte[] bytes = new byte[256];
+                    int len = 0;
+                    while ((len = in.read(bytes)) != -1) {
+                        str.append(new String(bytes, 0, len, "utf-8"));
+                    }
+                    in.close();
+                    JSONArray jsonArray = new JSONArray(str.toString());
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject rs = jsonArray.getJSONObject(i);
+                        Pet pet = new Gson().fromJson(rs.toString(), Pet.class);
+                        Log.e("pet", pet.toString());
+                        String path = rs.getString("picturePath");
+                        myPetList.add(pet);
+
+                    }
+                    Message message = new Message();
+                    handler.sendMessage(message);
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
 
     private void setView() {
 
         index = findViewById(R.id.pet_indicators);
-        TextView addPet= findViewById(R.id.add_new_pet);
+        TextView addPet = findViewById(R.id.add_new_pet);
         addPet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(NewPet.this, PetActivity.class);
-                startActivity(intent);
+//                index = null;
+                Intent intent = new Intent(NewPet.this, PetActivity.class);
+                startActivityForResult(intent,1);
             }
         });
         ViewPager pager = findViewById(R.id.pet_pager);
@@ -61,12 +122,12 @@ private LinearLayout index;
                 NewPet.this.finish();
             }
         });
-        initIndicaterDots(Cache.myPetList.size());
+        initIndicaterDots(myPetList.size());
         List<PageFragment> list = new ArrayList<>();
-        for(int i=0;i< Cache.myPetList.size();i++){
+        for (int i = 0; i < myPetList.size(); i++) {
             PageFragment fragment = new PageFragment();
             Bundle bundle = new Bundle();
-            bundle.putInt("index",i);
+            bundle.putSerializable("index", myPetList.get(i));
             fragment.setArguments(bundle);
             list.add(fragment);
         }
@@ -84,6 +145,7 @@ private LinearLayout index;
         });
         pager.setOnPageChangeListener(new PageChangeListener());
     }
+
     private void initIndicaterDots(int size) {
         // 初始化索引指示器的容器Layout
         indicaterViews = new ImageView[size];
@@ -100,6 +162,7 @@ private LinearLayout index;
         }
         if (indicaterViews.length > 0) indicaterViews[0].setEnabled(true);// 设置为白色，即选中状态
     }
+
     /**
      * 滑动横幅监听器
      */
@@ -107,7 +170,8 @@ private LinearLayout index;
 
         // 当当前页面被滑动时调用
         @Override
-        public void onPageScrolled(int i, float v, int i2) {}
+        public void onPageScrolled(int i, float v, int i2) {
+        }
 
         // 当新的页面被选中时调用
         @Override
@@ -118,8 +182,10 @@ private LinearLayout index;
 
         // 当滑动状态改变时调用
         @Override
-        public void onPageScrollStateChanged(int i) {}
+        public void onPageScrollStateChanged(int i) {
+        }
     }
+
     /**
      * 这只当前引导小点的选中
      */
@@ -141,6 +207,7 @@ private LinearLayout index;
 
     /**
      * 隐藏键盘
+     *
      * @param ev
      * @return
      */
@@ -184,6 +251,7 @@ private LinearLayout index;
 
     /**
      * 获取InputMethodManager，隐藏软键盘
+     *
      * @param token
      */
     private void hideKeyboard(IBinder token) {
@@ -193,4 +261,15 @@ private LinearLayout index;
         }
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == 1){
+            myPetList = null;
+            index.removeAllViews();
+            indicaterViews = null;
+            initData();
+        }
+    }
 }

@@ -42,7 +42,7 @@ public class MyDataService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         //宠物数据下载
-
+/*
             try{
                 if(Cache.myPetList!=null){
                     Cache.myPetList.clear();
@@ -144,7 +144,7 @@ public class MyDataService extends IntentService {
                 e.printStackTrace();
             }
 
-        try {
+     /*   try {
             if(Cache.myPostList!=null){
                 Cache.myPostList.clear();
             }else{
@@ -205,7 +205,7 @@ public class MyDataService extends IntentService {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 }

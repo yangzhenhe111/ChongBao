@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.pet.MainActivity;
+import com.example.pet.other.MainActivity;
 import com.example.pet.R;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Order;
@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
 public class Order2 extends AppCompatActivity {
@@ -70,8 +69,8 @@ public class Order2 extends AppCompatActivity {
 
         setView();
         Intent intent = getIntent();
-        int index = intent.getIntExtra("index",0);
-        order = Cache.myOrderList.get(index);
+
+        order = (Order) intent.getSerializableExtra("index");
         Log.e("order", "4");
 //        order = new Order();
 //        order.setOrderState("待接单");
@@ -214,11 +213,7 @@ public class Order2 extends AppCompatActivity {
             }
         }.start();
         order.setOrderState("已取消");
-        for (int i=0;i<Cache.myOrderList.size();i++){
-            if(Cache.myOrderList.get(i).getOrderId()==order.getOrderId()){
-                Cache.myOrderList.get(i).setOrderState("已取消");
-            }
-        }
+
         EventBus.getDefault().post("更新");
         changeView();
     }

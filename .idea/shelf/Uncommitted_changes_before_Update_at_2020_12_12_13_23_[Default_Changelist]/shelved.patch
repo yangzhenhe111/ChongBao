@@ -1,0 +1,1178 @@
+Index: app/src/main/java/com/example/pet/my/MyDataService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.my;\r\n\r\nimport android.app.IntentService;\r\nimport android.content.Intent;\r\nimport android.graphics.Bitmap;\r\nimport android.graphics.BitmapFactory;\r\nimport android.util.Log;\r\n\r\nimport androidx.annotation.Nullable;\r\n\r\nimport com.example.pet.other.Cache;\r\nimport com.example.pet.other.entity.Order;\r\nimport  com.example.pet.other.entity.Pet;\r\nimport com.example.pet.other.entity.Tips;\r\nimport com.google.gson.Gson;\r\n\r\n\r\nimport org.json.JSONArray;\r\nimport org.json.JSONException;\r\nimport org.json.JSONObject;\r\n\r\nimport java.io.IOException;\r\nimport java.io.InputStream;\r\nimport java.net.MalformedURLException;\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\n\r\npublic class MyDataService extends IntentService {\r\n    /**\r\n     * Creates an IntentService.  Invoked by your subclass's constructor.\r\n     *\r\n     * @param name Used to name the worker thread, important only for debugging.\r\n     */\r\n    public MyDataService(String name) {\r\n        super(name);\r\n    }\r\n\r\n    public MyDataService() {\r\n        super(\"MyDataService\");\r\n    }\r\n\r\n    @Override\r\n    protected void onHandleIntent(@Nullable Intent intent) {\r\n        //宠物数据下载\r\n\r\n            try{\r\n                if(Cache.myPetList!=null){\r\n                    Cache.myPetList.clear();\r\n                }else{\r\n                    Cache.myPetList = new ArrayList<>();\r\n                }\r\n\r\n                URL url = new URL(Cache.MY_URL+\"MyPet?userId=\"+Cache.user.getUserId());\r\n                InputStream in = url.openStream();\r\n                StringBuilder str = new StringBuilder();\r\n                byte[] bytes = new byte[256];\r\n                int len =0;\r\n                while ((len=in.read(bytes))!=-1){\r\n                    str.append(new String(bytes,0,len,\"utf-8\"));\r\n                }\r\n\r\n                in.close();\r\n                JSONArray jsonArray = new JSONArray(str.toString());\r\n\r\n                for(int i=0;i<jsonArray.length();i++){\r\n                    JSONObject rs = jsonArray.getJSONObject(i);\r\n                    Pet pet= new Gson().fromJson(rs.toString(),Pet.class);\r\n                    Log.e(\"pet\",pet.toString());\r\n//                    pet.setPetId(rs.getInt(\"petId\"));\r\n                    String path =rs.getString(\"picturePath\");\r\n                    URL url1 = new URL(Cache.MY_URL +\"img/\" +path);\r\n                    Log.e(\"url\",url1.toString());\r\n                    InputStream in1 = url1.openStream();\r\n                    Bitmap bitmap = BitmapFactory.decodeStream(in1);\r\n                    pet.setPicture(bitmap);\r\n//                    pet.setPetName(rs.getString(\"petName\"));\r\n//                    pet.setPetType(rs.getString(\"petType\"));\r\n//                    pet.setPetAge(rs.getInt(\"petAge\"));\r\n//                    pet.setPetWeight(rs.getString(\"petWeight\"));\r\n//                    pet.setUserId(rs.getInt(\"userId\"));\r\n//                    pet.setPetAutograph(rs.getString(\"petAutograph\"));\r\n                    Log.e(\"MyDataService\",pet.toString());\r\n                    Cache.myPetList.add(pet);\r\n                    Log.e(\"pet\",\"next\");\r\n                }\r\n\r\n            }catch(IOException | JSONException e) {\r\n                e.printStackTrace();\r\n            }\r\n\r\n            try {\r\n                if(Cache.myOrderList!=null){\r\n                    Cache.myOrderList.clear();\r\n                }else{\r\n                    Cache.myOrderList = new ArrayList<>();\r\n                }\r\n                URL url  = new URL(Cache.MY_URL +\"MyOrder?userId=\"+Cache.user.getUserId());\r\n                InputStream in  = url.openStream();\r\n                StringBuilder str= new StringBuilder();\r\n                byte[] bytes = new byte[256];\r\n                int len =0;\r\n                while ((len = in.read(bytes))!=-1){\r\n                    str.append(new String(bytes,0,len,\"utf-8\"));\r\n\r\n                }\r\n\r\n                in.close();\r\n                JSONArray jsonArray = new JSONArray(str.toString());\r\n                Log.e(\"\",jsonArray.toString());\r\n                Cache.myOrderList = new ArrayList();\r\n                for (int i = 0; i < jsonArray.length(); i++) {\r\n                    JSONObject rs = jsonArray.getJSONObject(i);\r\n                    Order order = new Gson().fromJson(rs.toString(),Order.class);\r\n//                    order.setOrderId(rs.getInt(\"orderId\"));\r\n//                    order.setOrderStart(rs.getString(\"orderStart\"));\r\n//                    order.setOrderEnd(rs.getString(\"orderEnd\"));\r\n                    int id = rs.getInt(\"petId\");\r\n                    for(int j=0;j<Cache.myPetList.size();j++){\r\n                        if(Cache.myPetList.get(j).getPetId() == id){\r\n                            order.setPet(Cache.myPetList.get(j));\r\n                            Log.e(\"MyDataService\",id+ \"gggg\");\r\n\r\n                        }\r\n                    }\r\n                    //设置\r\n//                    order.setAddresser(rs.getString(\"addresser\"));\r\n//                    order.setAddressee(rs.getString(\"addressee\"));\r\n//                    order.setPetShopContact(rs.getString(\"petShopContact\"));\r\n//                    order.setRemarks(rs.getString(\"remarks\"));\r\n//                    order.setOrderAmount(rs.getString(\"orderAmount\"));\r\n//                    order.setClientContact(rs.getString(\"clientContact\"));\r\n//                    order.setRunnerContact(rs.getString(\"runnerContact\"));\r\n//                    order.setRunnerName(rs.getString(\"runnerName\"));\r\n//                    order.setOrderTime(rs.getString(\"orderTime\"));\r\n//                    order.setKilometers(rs.getString(\"kilometers\"));\r\n//                    order.setOrderState(rs.getString(\"orderState\"));\r\n//                    order.setUserId(rs.getInt(\"userId\"));\r\n//                    order.setAddresseeContact(rs.getString(\"addresseeContact\"));\r\n                    Log.e(\"MyDataService\",order.toString());\r\n                    Cache.myOrderList.add(order);\r\n                }\r\n            } catch (IOException | JSONException e) {\r\n                e.printStackTrace();\r\n            }\r\n\r\n        try {\r\n            if(Cache.myPostList!=null){\r\n                Cache.myPostList.clear();\r\n            }else{\r\n                Cache.myPostList = new ArrayList<>();\r\n            }\r\n            URL url = new URL(Cache.MY_URL+\"MyTip?userId=\"+ Cache.user.getUserId());\r\n            InputStream in  = url.openStream();\r\n            StringBuilder str= new StringBuilder();\r\n            byte[] bytes = new byte[256];\r\n            int len =0;\r\n            while ((len = in.read(bytes))!=-1){\r\n                str.append(new String(bytes,0,len,\"utf-8\"));\r\n            }\r\n\r\n            in.close();\r\n            JSONArray jsonArray = new JSONArray(str.toString());\r\n            Log.e(\"Post\",jsonArray.toString());\r\n            for (int i = 0; i < jsonArray.length(); i++) {\r\n                JSONObject jsonObject = jsonArray.getJSONObject(i);\r\n                int post_id = jsonObject.getInt(\"post_id\");\r\n                String post_title = jsonObject.getString(\"post_title\");\r\n                String post_time = jsonObject.getString(\"post_time\");\r\n                String post_text = jsonObject.getString(\"post_text\");\r\n                String topic = jsonObject.getString(\"post_topic\");\r\n                String user_name = jsonObject.getString(\"user_name\");\r\n                int count_likes = jsonObject.getInt(\"likes\");\r\n                int count_comments = jsonObject.getInt(\"comments\");\r\n                int count_forwards = jsonObject.getInt(\"forwards\");\r\n                String img_path = jsonObject.getString(\"picture_path\");\r\n                String head_img_path = jsonObject.getString(\"user_picture_path\");\r\n                Tips tips = new Tips();\r\n                tips.setId(post_id);\r\n                tips.setTitle(post_title);\r\n                tips.setText(post_text);\r\n                tips.setTime(post_time);\r\n                tips.setUserName(user_name);\r\n                tips.setTopic(topic);\r\n                tips.setLikes(count_likes);\r\n                tips.setComments(count_comments);\r\n                tips.setForwards(count_forwards);\r\n                tips.setImagepath(img_path);\r\n                tips.setHeadImagepath(head_img_path);\r\n                URL url1 = new URL(Cache.MY_URL +\"img/\" +img_path);\r\n                InputStream in1 = url1.openStream();\r\n                Bitmap bitmap = BitmapFactory.decodeStream(in1);\r\n                tips.setThumbnail(bitmap);\r\n                URL url2 = new URL(Cache.MY_URL +\"img/\"+head_img_path);\r\n                InputStream in2 = url2.openStream();\r\n                Bitmap bitmap1 = BitmapFactory.decodeStream(in2);\r\n                tips.setUserHead(bitmap1);\r\n                in1.close();\r\n                in2.close();\r\n                Cache.myPostList.add(tips);\r\n            }\r\n        } catch (MalformedURLException e) {\r\n            e.printStackTrace();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        } catch (JSONException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/my/MyDataService.java	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ app/src/main/java/com/example/pet/my/MyDataService.java	(date 1607677106624)
+@@ -143,7 +143,7 @@
+                 e.printStackTrace();
+             }
+ 
+-        try {
++     /*   try {
+             if(Cache.myPostList!=null){
+                 Cache.myPostList.clear();
+             }else{
+@@ -204,7 +204,7 @@
+             e.printStackTrace();
+         } catch (JSONException e) {
+             e.printStackTrace();
+-        }
++        }*/
+ 
+     }
+ }
+Index: app/src/main/res/layout/activity_history.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:orientation=\"vertical\"\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n    <androidx.appcompat.widget.Toolbar\r\n        android:id=\"@+id/history_toolbar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        app:navigationIcon=\"@drawable/nav\">\r\n\r\n        <TextView\r\n            android:layout_width=\"250dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:gravity=\"center\"\r\n            android:text=\"浏览记录\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"18sp\"\r\n            android:textStyle=\"bold\" />\r\n\r\n    </androidx.appcompat.widget.Toolbar>\r\n    <ListView\r\n        android:id=\"@+id/lv_history_article\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"/>\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_history.xml	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ app/src/main/res/layout/activity_history.xml	(date 1607682583080)
+@@ -20,8 +20,9 @@
+             android:textStyle="bold" />
+ 
+     </androidx.appcompat.widget.Toolbar>
+-    <ListView
++
++    <androidx.recyclerview.widget.RecyclerView
+         android:id="@+id/lv_history_article"
+         android:layout_width="match_parent"
+-        android:layout_height="match_parent"/>
++        android:layout_height="wrap_content"/>
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/pet/my/MyUserService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.my;\r\n\r\nimport android.app.IntentService;\r\nimport android.content.Intent;\r\nimport android.graphics.Bitmap;\r\nimport android.graphics.BitmapFactory;\r\nimport android.util.Log;\r\n\r\n\r\nimport androidx.annotation.Nullable;\r\n\r\nimport com.example.pet.other.Cache;\r\nimport com.example.pet.other.entity.User;\r\nimport com.google.gson.Gson;\r\n\r\nimport org.json.JSONObject;\r\n\r\nimport java.io.IOException;\r\nimport java.io.InputStream;\r\nimport java.io.UnsupportedEncodingException;\r\nimport java.net.MalformedURLException;\r\nimport java.net.URL;\r\n\r\n\r\npublic class MyUserService extends IntentService {\r\n    /**\r\n     * Creates an IntentService.  Invoked by your subclass's constructor.\r\n     *\r\n     * @param name Used to name the worker thread, important only for debugging.\r\n     */\r\n    public MyUserService(String name) {\r\n        super(name);\r\n    }\r\n\r\n    public MyUserService() {\r\n        super(\"MyUserService\");\r\n    }\r\n\r\n    @Override\r\n    protected void onHandleIntent(@Nullable Intent intent) {\r\n        Log.e(\"MyUserService\", Cache.userPhone);\r\n\r\n        try {\r\n            URL url = new URL(Cache.MY_URL + \"MyUser?phone=\" + Cache.userPhone);\r\n            InputStream in = url.openStream();\r\n            StringBuilder str = new StringBuilder();\r\n            byte[] bytes = new byte[256];\r\n            int len = 0;\r\n            while ((len = in.read(bytes)) != -1) {\r\n                str.append(new String(bytes, 0, len, \"utf-8\"));\r\n            }\r\n            in.close();\r\n            Cache.user = new Gson().fromJson(str.toString(), User.class);\r\n\r\n            if (Cache.user.getPicturePath() != null && Cache.user.getPicturePath().length() != 0) {\r\n                URL url1 = new URL(Cache.MY_URL + \"img/\" + Cache.user.getPicturePath());\r\n                InputStream in1 = url1.openStream();\r\n                Bitmap bitmap = BitmapFactory.decodeStream(in1);\r\n                Cache.user.setPhoto(bitmap);\r\n            }\r\n\r\n\r\n\r\n            Cache.userHashSet.add(Cache.user);\r\n            Log.e(\"MyUserService\", Cache.userHashSet.size()+\"\");\r\n        } catch (MalformedURLException e) {\r\n            e.printStackTrace();\r\n        } catch (UnsupportedEncodingException e) {\r\n            e.printStackTrace();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/my/MyUserService.java	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ app/src/main/java/com/example/pet/my/MyUserService.java	(date 1607682845292)
+@@ -53,7 +53,7 @@
+             Cache.user = new Gson().fromJson(str.toString(), User.class);
+ 
+             if (Cache.user.getPicturePath() != null && Cache.user.getPicturePath().length() != 0) {
+-                URL url1 = new URL(Cache.MY_URL + "img/" + Cache.user.getPicturePath());
++                URL url1 = new URL(Cache.MY_URL + Cache.user.getPicturePath());
+                 InputStream in1 = url1.openStream();
+                 Bitmap bitmap = BitmapFactory.decodeStream(in1);
+                 Cache.user.setPhoto(bitmap);
+Index: app/src/main/java/com/example/pet/my/Post.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.my;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\n\r\nimport android.content.Intent;\r\nimport android.graphics.Bitmap;\r\nimport android.graphics.BitmapFactory;\r\nimport android.graphics.Color;\r\nimport android.os.Build;\r\nimport android.os.Bundle;\r\nimport android.os.Handler;\r\nimport android.os.Message;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.ListView;\r\n\r\nimport com.example.pet.R;\r\nimport com.example.pet.forum.MainForumTipsAdapter;\r\nimport com.example.pet.other.Cache;\r\nimport com.example.pet.other.entity.Article;\r\nimport com.example.pet.other.entity.Tips;\r\nimport com.scwang.smartrefresh.layout.SmartRefreshLayout;\r\nimport com.scwang.smartrefresh.layout.api.RefreshLayout;\r\nimport com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;\r\nimport com.scwang.smartrefresh.layout.listener.OnRefreshListener;\r\n\r\nimport org.json.JSONArray;\r\nimport org.json.JSONException;\r\nimport org.json.JSONObject;\r\n\r\nimport java.io.BufferedReader;\r\nimport java.io.IOException;\r\nimport java.io.InputStream;\r\nimport java.io.InputStreamReader;\r\nimport java.net.HttpURLConnection;\r\nimport java.net.MalformedURLException;\r\nimport java.net.ProtocolException;\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class Post extends AppCompatActivity {\r\n    private List<Article> list;\r\n    private ListView listView;\r\n    private Toolbar toolbar;\r\n    //private ArrayList<Tips> arrayList = new ArrayList<>();\r\n    private MainForumTipsAdapter mainForumTipsAdapter;\r\n    private SmartRefreshLayout smartRefreshLayout;\r\nprivate Handler handler = new Handler(){\r\n    @Override\r\n    public void handleMessage(@NonNull Message msg) {\r\n        switch (msg.what){\r\n            case 1:\r\n                mainForumTipsAdapter.notifyDataSetChanged();\r\n                smartRefreshLayout.finishRefresh();\r\n                break;\r\n            case 2:\r\n                mainForumTipsAdapter.notifyDataSetChanged();\r\n                smartRefreshLayout.finishLoadMore();\r\n                break;\r\n        }\r\n    }\r\n};\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_post);\r\n        if (Build.VERSION.SDK_INT >= 21) {   //只有5.0及以上系统才支持，因此这里先进行了一层if判断\r\n            View decorView = getWindow().getDecorView();\r\n            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN\r\n                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE    //设置为全屏显示，必须这两行代码一起才能生效\r\n                    | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色\r\n            decorView.setSystemUiVisibility(option);\r\n            getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明\r\n        }\r\n       // initData();\r\n        setView();\r\n\r\n    }\r\n\r\n  /*  private void initData() {\r\n        new Thread() {\r\n            @Override\r\n            public void run() {\r\n\r\n\r\n            }\r\n        }.start();\r\n    }*/\r\n\r\n\r\n\r\n\r\n    private void setView() {\r\n       // arrayList.add(new Tips());\r\n        listView = findViewById(R.id.lv_article);\r\n        smartRefreshLayout = findViewById(R.id.srl);\r\n        toolbar = findViewById(R.id.post_toolbar);\r\n        mainForumTipsAdapter = new MainForumTipsAdapter(this, Cache.myPostList, R.layout.forum_tips_item);\r\n        listView.setAdapter(mainForumTipsAdapter);\r\n        toolbar.setNavigationOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Post.this.finish();\r\n            }\r\n        });\r\n        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {\r\n            @Override\r\n            public void onRefresh(@NonNull RefreshLayout refreshLayout) {\r\n               // initData();\r\n                Intent intent = new Intent(Post.this,MyDataService.class);\r\n                startService(intent);\r\n               Message message = new Message();\r\n               message.what = 1;\r\n               handler.sendMessage(message);\r\n            }\r\n        });\r\n        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {\r\n            @Override\r\n            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {\r\n                //initData();\r\n                Intent intent = new Intent(Post.this,MyDataService.class);\r\n                startService(intent);\r\n                Message message = new Message();\r\n                message.what = 1;\r\n                handler.sendMessage(message);\r\n            }\r\n        });\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/my/Post.java	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ app/src/main/java/com/example/pet/my/Post.java	(date 1607676318889)
+@@ -3,6 +3,8 @@
+ import androidx.annotation.NonNull;
+ import androidx.appcompat.app.AppCompatActivity;
+ import androidx.appcompat.widget.Toolbar;
++import androidx.recyclerview.widget.LinearLayoutManager;
++import androidx.recyclerview.widget.RecyclerView;
+ 
+ import android.content.Intent;
+ import android.graphics.Bitmap;
+@@ -18,9 +20,12 @@
+ 
+ import com.example.pet.R;
+ import com.example.pet.forum.MainForumTipsAdapter;
++import com.example.pet.forum.New_post_detail;
++import com.example.pet.forum.RecyAdapter;
+ import com.example.pet.other.Cache;
+ import com.example.pet.other.entity.Article;
+ import com.example.pet.other.entity.Tips;
++import com.rohit.recycleritemclicksupport.RecyclerItemClickSupport;
+ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+ import com.scwang.smartrefresh.layout.api.RefreshLayout;
+ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+@@ -42,27 +47,34 @@
+ import java.util.List;
+ 
+ public class Post extends AppCompatActivity {
+-    private List<Article> list;
+-    private ListView listView;
+     private Toolbar toolbar;
+-    //private ArrayList<Tips> arrayList = new ArrayList<>();
+-    private MainForumTipsAdapter mainForumTipsAdapter;
++    private ArrayList<Tips> myPostList;
++    private RecyclerView recyclerView;
++    private RecyAdapter recyAdapter;
+     private SmartRefreshLayout smartRefreshLayout;
+-private Handler handler = new Handler(){
+-    @Override
+-    public void handleMessage(@NonNull Message msg) {
+-        switch (msg.what){
+-            case 1:
+-                mainForumTipsAdapter.notifyDataSetChanged();
+-                smartRefreshLayout.finishRefresh();
+-                break;
+-            case 2:
+-                mainForumTipsAdapter.notifyDataSetChanged();
+-                smartRefreshLayout.finishLoadMore();
+-                break;
+-        }
+-    }
+-};
++    private Handler handler = new Handler() {
++        @Override
++        public void handleMessage(@NonNull Message msg) {
++            switch (msg.what) {
++                case 1:
++                    recyAdapter.notifyDataSetChanged();
++                    smartRefreshLayout.finishRefresh();
++                    break;
++                case 2:
++                    recyAdapter.notifyDataSetChanged();
++                    smartRefreshLayout.finishLoadMore();
++                    break;
++                case 3:
++                    recyAdapter = new RecyAdapter(Post.this,myPostList);
++                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(Post.this);
++                    linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
++                    recyclerView.setLayoutManager(linearLayoutManager);
++                    recyclerView.setAdapter(recyAdapter);
++                    break;
++            }
++        }
++    };
++
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+@@ -75,31 +87,102 @@
+             decorView.setSystemUiVisibility(option);
+             getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明
+         }
+-       // initData();
++        initData();
+         setView();
+-
++        RecyclerItemClickSupport.addTo(recyclerView).setOnItemClickListener(new RecyclerItemClickSupport.OnItemClickListener() {
++            @Override
++            public void onItemClicked(RecyclerView recyclerView, int i, View view) {
++                Intent intent = new Intent(Post.this, New_post_detail.class);
++                intent.putExtra("id",myPostList.get(i).getId());
++                startActivity(intent);
++            }
++        });
+     }
+ 
+-  /*  private void initData() {
++    private void initData() {
+         new Thread() {
+             @Override
+             public void run() {
++                try {
++                    if (myPostList != null) {
++                        myPostList.clear();
++                    } else {
++                        myPostList = new ArrayList<>();
++                    }
++                    URL url = new URL(Cache.MY_URL + "MyTip?userId=" + Cache.user.getUserId());
++                    InputStream in = url.openStream();
++                    StringBuilder str = new StringBuilder();
++                    byte[] bytes = new byte[256];
++                    int len = 0;
++                    while ((len = in.read(bytes)) != -1) {
++                        str.append(new String(bytes, 0, len, "utf-8"));
++                    }
++
++                    in.close();
++                    JSONArray jsonArray = new JSONArray(str.toString());
+ 
++                    for (int i = 0; i < jsonArray.length(); i++) {
++                        JSONObject jsonObject = jsonArray.getJSONObject(i);
++                        int post_id = jsonObject.getInt("post_id");
++                        String post_title = jsonObject.getString("post_title");
++                        String post_time = jsonObject.getString("post_time");
++                        String post_text = jsonObject.getString("post_text");
++                        String topic = jsonObject.getString("post_topic");
++                        String user_name = jsonObject.getString("user_name");
++                        int count_likes = jsonObject.getInt("likes");
++                        int count_comments = jsonObject.getInt("comments");
++                        int count_forwards = jsonObject.getInt("forwards");
++                        String img_path = jsonObject.getString("picture_path");
++                        String head_img_path = jsonObject.getString("user_picture_path");
++                        Tips tips = new Tips();
++                        tips.setId(post_id);
++                        tips.setTitle(post_title);
++                        tips.setText(post_text);
++                        tips.setTime(post_time);
++                        tips.setUserName(user_name);
++                        tips.setTopic(topic);
++                        tips.setLikes(count_likes);
++                        tips.setComments(count_comments);
++                        tips.setForwards(count_forwards);
++                        tips.setImagepath(img_path);
++                        tips.setHeadImagepath(head_img_path);
++                        URL url1 = new URL(Cache.MY_URL + "img/" + img_path);
++                        InputStream in1 = url1.openStream();
++                        Bitmap bitmap = BitmapFactory.decodeStream(in1);
++                        tips.setThumbnail(bitmap);
++                        URL url2 = new URL(Cache.MY_URL + "img/" + head_img_path);
++                        InputStream in2 = url2.openStream();
++                        Bitmap bitmap1 = BitmapFactory.decodeStream(in2);
++                        tips.setUserHead(bitmap1);
++
++                        in1.close();
++                        in2.close();
++                        myPostList.add(tips);
++
++                    }
++                    Message message = new Message();
++                    message.what = 3;
++                    handler.sendMessage(message);
++                    Log.e("Post", "initData");
++                } catch (MalformedURLException e) {
++                    e.printStackTrace();
++                } catch (IOException e) {
++                    e.printStackTrace();
++                } catch (JSONException e) {
++                    e.printStackTrace();
++                }
+ 
+             }
+         }.start();
+-    }*/
+-
+-
+-
++    }
+ 
+     private void setView() {
+-       // arrayList.add(new Tips());
+-        listView = findViewById(R.id.lv_article);
++        Log.e("Post", "setView");
++        // arrayList.add(new Tips());
++        recyclerView = findViewById(R.id.lv_article);
+         smartRefreshLayout = findViewById(R.id.srl);
+         toolbar = findViewById(R.id.post_toolbar);
+-        mainForumTipsAdapter = new MainForumTipsAdapter(this, Cache.myPostList, R.layout.forum_tips_item);
+-        listView.setAdapter(mainForumTipsAdapter);
++
+         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+@@ -109,20 +192,15 @@
+         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+             @Override
+             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+-               // initData();
+-                Intent intent = new Intent(Post.this,MyDataService.class);
+-                startService(intent);
+-               Message message = new Message();
+-               message.what = 1;
+-               handler.sendMessage(message);
++                Message message = new Message();
++                message.what = 1;
++                handler.sendMessage(message);
+             }
+         });
+         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+             @Override
+             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+-                //initData();
+-                Intent intent = new Intent(Post.this,MyDataService.class);
+-                startService(intent);
++
+                 Message message = new Message();
+                 message.what = 1;
+                 handler.sendMessage(message);
+@@ -130,5 +208,9 @@
+         });
+     }
+ 
+-
++    @Override
++    protected void onStart() {
++        super.onStart();
++        initData();
++    }
+ }
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_09_[Default_Changelist]/shelved.patch
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_09_[Default_Changelist]/shelved.patch	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_09_[Default_Changelist]/shelved.patch	(revision 47915045f76275f7337415233570ada0cd6fe04c)
+@@ -1,149 +0,0 @@
+-Index: app/src/main/java/com/example/pet/other/Cache.java
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package com.example.pet.other;\r\n\r\nimport com.example.pet.other.entity.User;\r\n\r\npublic class Cache {\r\n    /**\r\n     * 存储一些全局信息\r\n     */\r\n\r\npublic static  User user  ;\r\npublic static final String MY_URL=\"http://10.7.90.249:8080/ChongBaoService\";\r\n\r\n}\r\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- app/src/main/java/com/example/pet/other/Cache.java	(revision 8b5496ff3b02de2cfef3f394fe3a69b2ec115f46)
+-+++ app/src/main/java/com/example/pet/other/Cache.java	(date 1606959273044)
+-@@ -9,5 +9,5 @@
+- 
+- public static  User user  ;
+- public static final String MY_URL="http://10.7.90.249:8080/ChongBaoService";
+--
+-+public static String url = "http://192.168.43.227:8080/ChongBao_war_exploded/";
+- }
+-Index: app/src/main/java/com/example/pet/forum/ForumFragment.java
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package com.example.pet.forum;\r\nimport android.content.Intent;\r\nimport android.graphics.Bitmap;\r\nimport android.media.Image;\r\nimport android.net.Uri;\r\nimport android.os.Bundle;\r\nimport android.text.TextPaint;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.ImageView;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.ListView;\r\nimport android.widget.PopupWindow;\r\nimport android.widget.RelativeLayout;\r\nimport android.widget.Switch;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.pet.R;\r\nimport com.example.pet.other.entity.BaseUrl;\r\nimport com.example.pet.other.entity.Tips;\r\nimport com.youth.banner.Banner;\r\nimport com.youth.banner.BannerConfig;\r\nimport com.youth.banner.listener.OnBannerListener;\r\n\r\nimport org.json.JSONArray;\r\nimport org.json.JSONException;\r\nimport org.json.JSONObject;\r\n\r\nimport java.io.BufferedReader;\r\nimport java.io.IOException;\r\nimport java.io.InputStream;\r\nimport java.io.InputStreamReader;\r\nimport java.net.HttpURLConnection;\r\nimport java.net.MalformedURLException;\r\nimport java.net.ProtocolException;\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class ForumFragment extends Fragment {\r\n\r\n    private EditText et_search;\r\n    private Button btn_search;\r\n    private Button btn_publish;\r\n    private RelativeLayout forum_food;\r\n    private RelativeLayout forum_articles;\r\n    private RelativeLayout forum_daily;\r\n    private RelativeLayout forum_cosmetology;\r\n    private RelativeLayout forum_train;\r\n    private RelativeLayout forum_deworming;\r\n    private RelativeLayout forum_disease;\r\n    private RelativeLayout forum_randomtalk;\r\n    private RelativeLayout forum_question;\r\n    private RelativeLayout forum_sharephotos;\r\n    private TextView tv_newest;\r\n    private TextView tv_hot;\r\n    private TextView tv_essence;\r\n    private ListView lv_tips;\r\n    private Banner banner;\r\n    private ArrayList<Tips> arrayList = new ArrayList<>();\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_forum,container,false);\r\n        init();\r\n        et_search = view.findViewById(R.id.et_main_search);\r\n        btn_search = view.findViewById(R.id.btn_main_search);\r\n        btn_search.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n\r\n            }\r\n        });\r\n        btn_publish = view.findViewById(R.id.btn_publish_articles);\r\n        btn_publish.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),PublishActivity.class);\r\n                startActivity(intent);\r\n                getActivity().finish();\r\n            }\r\n        });\r\n        forum_food = view.findViewById(R.id.forum_food);\r\n        forum_food.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_articles = view.findViewById(R.id.forum_articles);\r\n        forum_articles.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_daily = view.findViewById(R.id.forum_daily);\r\n        forum_daily.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_cosmetology = view.findViewById(R.id.forum_cosmetology);\r\n        forum_cosmetology.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_train = view.findViewById(R.id.forum_train);\r\n        forum_train.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_deworming = view.findViewById(R.id.forum_deworming);\r\n        forum_deworming.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_disease = view.findViewById(R.id.forum_disease);\r\n        forum_disease.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_randomtalk = view.findViewById(R.id.forum_randomtalk);\r\n        forum_randomtalk.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_question = view.findViewById(R.id.forum_question);\r\n        forum_question.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_sharephotos = view.findViewById(R.id.forum_sharephotos);\r\n        forum_sharephotos.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        tv_newest = view.findViewById(R.id.forum_newest);\r\n        TextPaint base = tv_newest.getPaint();\r\n        base.setFakeBoldText(true);\r\n        tv_hot = view.findViewById(R.id.forum_hot);\r\n        tv_essence = view.findViewById(R.id.forum_essence);\r\n        tv_newest.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                tv_newest.setBackgroundColor(getResources().getColor(R.color.Blue));\r\n                tv_hot.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_essence.setBackgroundColor(getResources().getColor(R.color.White));\r\n                TextPaint newest = tv_newest.getPaint();\r\n                newest.setFakeBoldText(true);\r\n                TextPaint hot = tv_hot.getPaint();\r\n                hot.setFakeBoldText(false);\r\n                TextPaint essence = tv_essence.getPaint();\r\n                essence.setFakeBoldText(false);\r\n            }\r\n        });\r\n        tv_hot.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                tv_newest.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_hot.setBackgroundColor(getResources().getColor(R.color.Orange));\r\n                tv_essence.setBackgroundColor(getResources().getColor(R.color.White));\r\n                TextPaint newest = tv_newest.getPaint();\r\n                newest.setFakeBoldText(false);\r\n                TextPaint hot = tv_hot.getPaint();\r\n                hot.setFakeBoldText(true);\r\n                TextPaint essence = tv_essence.getPaint();\r\n                essence.setFakeBoldText(false);\r\n            }\r\n        });\r\n        tv_essence.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                tv_newest.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_hot.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_essence.setBackgroundColor(getResources().getColor(R.color.Purple));\r\n                TextPaint newest = tv_newest.getPaint();\r\n                newest.setFakeBoldText(false);\r\n                TextPaint hot = tv_hot.getPaint();\r\n                hot.setFakeBoldText(false);\r\n                TextPaint essence = tv_essence.getPaint();\r\n                essence.setFakeBoldText(true);\r\n            }\r\n        });\r\n\r\n\r\n        ArrayList<Integer> images = new ArrayList<>();\r\n        ArrayList<String> title = new ArrayList<>();\r\n        title.add(\"新手推荐文章1\");\r\n        title.add(\"新手推荐文章2\");\r\n        title.add(\"新手推荐文章3\");\r\n        title.add(\"新手推荐文章4\");\r\n        title.add(\"新手推荐文章5\");\r\n        images.add(R.drawable.recommend1);\r\n        images.add(R.drawable.recommend2);\r\n        images.add(R.drawable.recommend3);\r\n        images.add(R.drawable.recommend4);\r\n        images.add(R.drawable.recommend5);\r\n\r\n        banner = view.findViewById(R.id.banner);\r\n        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);\r\n        banner.setBannerTitles(title);\r\n        banner.setImageLoader(new GlideImageLoader());\r\n        banner.setImages(images);\r\n        banner.start();\r\n\r\n        banner.setOnBannerListener(new OnBannerListener() {\r\n            @Override\r\n            public void OnBannerClick(int position) {\r\n                Intent intent;\r\n                switch (position){\r\n                    case 0:\r\n                        intent = new Intent(getContext(),TipsActivity.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                    case 1:\r\n                        intent = new Intent(getContext(),TipsActivity.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                    case 2:\r\n                        intent = new Intent(getContext(),TipsActivity.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                }\r\n                Log.e(\"点击了第几张轮播图:\",position+\"\");\r\n            }\r\n        });\r\n\r\n        lv_tips = view.findViewById(R.id.lv_tips);\r\n//        for (int i = 0; i < 5; i++) {\r\n//            Tips tips = new Tips();\r\n//            tips.setId(1);\r\n//            tips.setUserName(\"名字\" + i);\r\n//            tips.setTime(\"2020-11-28/16:36:0\" + i);\r\n//            tips.setTopic(\"标签\" + i);\r\n//            tips.setTitle(\"标题\" + i);\r\n//            tips.setText(\"正文\" + i);\r\n//            arrayList.add(tips);\r\n//        }\r\n        MainForumTipsAdapter mainForumTipsAdapter = new MainForumTipsAdapter(getContext(),arrayList,R.layout.forum_tips_item);\r\n        lv_tips.setAdapter(mainForumTipsAdapter);\r\n        return view;\r\n    }\r\n\r\n    public void init(){\r\n        new Thread(){\r\n            @Override\r\n            public void run() {\r\n                try {\r\n                    URL url = new URL(\"http:10.7.90.222:8080/ChongBao_war_exploded/GetAllPostServlet\");\r\n                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();\r\n                    connection.setRequestMethod(\"GET\");\r\n                    InputStream input = connection.getInputStream();\r\n                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));\r\n                    StringBuffer stringBuffer = new StringBuffer();\r\n                    String line;\r\n                    while ((line=bufferedReader.readLine())!=null){\r\n                        stringBuffer.append(line);\r\n                    }\r\n                    JSONArray jsonArray = new JSONArray(stringBuffer.toString());\r\n                    arrayList = new ArrayList<>();\r\n                    for (int i=0;i<jsonArray.length();i++){\r\n                        JSONObject jsonObject = jsonArray.getJSONObject(i);\r\n                        String post_title = jsonObject.getString(\"post_title\");\r\n                        String post_time = jsonObject.getString(\"post_time\");\r\n                        String post_text = jsonObject.getString(\"post_text\");\r\n                        String name = jsonObject.getString(\"name\");\r\n                        String user_name = jsonObject.getString(\"user_name\");\r\n                        Tips tips = new Tips();\r\n                        tips.setTitle(post_title);\r\n                        tips.setText(post_text);\r\n                        tips.setTime(post_time);\r\n                        tips.setUserName(user_name);\r\n                        arrayList.add(tips);\r\n                    }\r\n                } catch (MalformedURLException e) {\r\n                    e.printStackTrace();\r\n                } catch (ProtocolException e) {\r\n                    e.printStackTrace();\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                } catch (JSONException e) {\r\n                    e.printStackTrace();\r\n                }\r\n            }\r\n        }.start();\r\n    }\r\n\r\n    public void search(){\r\n        new Thread(){\r\n            @Override\r\n            public void run() {\r\n                String search = et_search.getText().toString();\r\n            }\r\n        };\r\n    }\r\n\r\n}\r\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- app/src/main/java/com/example/pet/forum/ForumFragment.java	(revision 8b5496ff3b02de2cfef3f394fe3a69b2ec115f46)
+-+++ app/src/main/java/com/example/pet/forum/ForumFragment.java	(date 1606959024617)
+-@@ -1,9 +1,8 @@
+- package com.example.pet.forum;
+- import android.content.Intent;
+--import android.graphics.Bitmap;
+--import android.media.Image;
+--import android.net.Uri;
+- import android.os.Bundle;
+-+import android.os.Handler;
+-+import android.os.Message;
+- import android.text.TextPaint;
+- import android.util.Log;
+- import android.view.LayoutInflater;
+-@@ -11,12 +10,8 @@
+- import android.view.ViewGroup;
+- import android.widget.Button;
+- import android.widget.EditText;
+--import android.widget.ImageView;
+--import android.widget.LinearLayout;
+- import android.widget.ListView;
+--import android.widget.PopupWindow;
+- import android.widget.RelativeLayout;
+--import android.widget.Switch;
+- import android.widget.TextView;
+- 
+- import androidx.annotation.NonNull;
+-@@ -24,7 +19,7 @@
+- import androidx.fragment.app.Fragment;
+- 
+- import com.example.pet.R;
+--import com.example.pet.other.entity.BaseUrl;
+-+import com.example.pet.other.Cache;
+- import com.example.pet.other.entity.Tips;
+- import com.youth.banner.Banner;
+- import com.youth.banner.BannerConfig;
+-@@ -43,7 +38,6 @@
+- import java.net.ProtocolException;
+- import java.net.URL;
+- import java.util.ArrayList;
+--import java.util.List;
+- 
+- public class ForumFragment extends Fragment {
+- 
+-@@ -67,11 +61,22 @@
+-     private Banner banner;
+-     private ArrayList<Tips> arrayList = new ArrayList<>();
+- 
+-+    private Handler handler = new Handler(){
+-+        @Override
+-+        public void handleMessage(@NonNull Message message) {
+-+            switch (message.what){
+-+                case 1:
+-+                    init((ArrayList) message.obj);
+-+                    break;
+-+            }
+-+        }
+-+    };
+-+
+-     @Nullable
+-     @Override
+-     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+-         View view = inflater.inflate(R.layout.fragment_forum,container,false);
+--        init();
+-+        getAllTips();
+-         et_search = view.findViewById(R.id.et_main_search);
+-         btn_search = view.findViewById(R.id.btn_main_search);
+-         btn_search.setOnClickListener(new View.OnClickListener() {
+-@@ -282,17 +287,21 @@
+- //            tips.setText("正文" + i);
+- //            arrayList.add(tips);
+- //        }
+-+
+-+        return view;
+-+    }
+-+
+-+    public void init(ArrayList arrayList){
+-         MainForumTipsAdapter mainForumTipsAdapter = new MainForumTipsAdapter(getContext(),arrayList,R.layout.forum_tips_item);
+-         lv_tips.setAdapter(mainForumTipsAdapter);
+--        return view;
+-     }
+- 
+--    public void init(){
+-+    public void getAllTips(){
+-         new Thread(){
+-             @Override
+-             public void run() {
+-                 try {
+--                    URL url = new URL("http:10.7.90.222:8080/ChongBao_war_exploded/GetAllPostServlet");
+-+                    URL url = new URL(Cache.url + "GetAllPostServlet");
+-                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+-                     connection.setRequestMethod("GET");
+-                     InputStream input = connection.getInputStream();
+-@@ -303,7 +312,7 @@
+-                         stringBuffer.append(line);
+-                     }
+-                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
+--                    arrayList = new ArrayList<>();
+-+                    ArrayList arrayList = new ArrayList<>();
+-                     for (int i=0;i<jsonArray.length();i++){
+-                         JSONObject jsonObject = jsonArray.getJSONObject(i);
+-                         String post_title = jsonObject.getString("post_title");
+-@@ -317,6 +326,13 @@
+-                         tips.setTime(post_time);
+-                         tips.setUserName(user_name);
+-                         arrayList.add(tips);
+-+
+-+                        Log.e("123",arrayList + "");
+-+
+-+                        Message message = handler.obtainMessage();
+-+                        message.what = 1;
+-+                        message.obj = arrayList;
+-+                        handler.sendMessage(message);
+-                     }
+-                 } catch (MalformedURLException e) {
+-                     e.printStackTrace();
+-Index: app/src/main/java/com/example/pet/other/entity/BaseUrl.java
+-===================================================================
+---- app/src/main/java/com/example/pet/other/entity/BaseUrl.java	(revision 8b5496ff3b02de2cfef3f394fe3a69b2ec115f46)
+-+++ app/src/main/java/com/example/pet/other/entity/BaseUrl.java	(revision 8b5496ff3b02de2cfef3f394fe3a69b2ec115f46)
+-@@ -1,5 +0,0 @@
+--package com.example.pet.other.entity;
+--
+--public class BaseUrl {
+--    public static String url = "http://192.168.43.227:8080//LovePet/";
+--}
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_09__Default_Changelist_.xml
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_09__Default_Changelist_.xml	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_09__Default_Changelist_.xml	(revision 47915045f76275f7337415233570ada0cd6fe04c)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_2020_12_3_10_09_[Default_Changelist]" date="1606961390784" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_09_[Default_Changelist]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 2020/12/3 10:09 [Default Changelist]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_9_09_[Default_Changelist]/shelved.patch
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_9_09_[Default_Changelist]/shelved.patch	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_9_09_[Default_Changelist]/shelved.patch	(revision 47915045f76275f7337415233570ada0cd6fe04c)
+@@ -1,175 +0,0 @@
+-Index: app/src/main/java/com/example/pet/other/entity/BaseUrl.java
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package com.example.pet.other.entity;\r\n\r\npublic class BaseUrl {\r\n    public static String url = \"http://192.168.43.227:8080//LovePet/\";\r\n}\r\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- app/src/main/java/com/example/pet/other/entity/BaseUrl.java	(revision 70772a57e4d51a2222224889684257011a2a1791)
+-+++ app/src/main/java/com/example/pet/other/entity/BaseUrl.java	(date 1606897521348)
+-@@ -1,5 +1,5 @@
+- package com.example.pet.other.entity;
+- 
+- public class BaseUrl {
+--    public static String url = "http://192.168.43.227:8080//LovePet/";
+-+    public static String url = "http://192.168.43.202:8080/ChongBao_war_exploded/";
+- }
+-Index: app/src/main/java/com/example/pet/forum/ForumFragment.java
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package com.example.pet.forum;\r\nimport android.content.Intent;\r\nimport android.graphics.Bitmap;\r\nimport android.os.Bundle;\r\nimport android.text.TextPaint;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.ListView;\r\nimport android.widget.PopupWindow;\r\nimport android.widget.RelativeLayout;\r\nimport android.widget.Switch;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.pet.R;\r\nimport com.example.pet.other.entity.BaseUrl;\r\nimport com.example.pet.other.entity.Tips;\r\nimport com.youth.banner.Banner;\r\nimport com.youth.banner.BannerConfig;\r\nimport com.youth.banner.listener.OnBannerListener;\r\n\r\nimport org.json.JSONArray;\r\nimport org.json.JSONException;\r\nimport org.json.JSONObject;\r\n\r\nimport java.io.BufferedReader;\r\nimport java.io.IOException;\r\nimport java.io.InputStream;\r\nimport java.io.InputStreamReader;\r\nimport java.net.HttpURLConnection;\r\nimport java.net.MalformedURLException;\r\nimport java.net.ProtocolException;\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class ForumFragment extends Fragment {\r\n\r\n    private EditText et_search;\r\n    private Button btn_search;\r\n    private Button btn_publish;\r\n    private RelativeLayout forum_food;\r\n    private RelativeLayout forum_articles;\r\n    private RelativeLayout forum_daily;\r\n    private RelativeLayout forum_cosmetology;\r\n    private RelativeLayout forum_train;\r\n    private RelativeLayout forum_deworming;\r\n    private RelativeLayout forum_disease;\r\n    private RelativeLayout forum_randomtalk;\r\n    private RelativeLayout forum_question;\r\n    private RelativeLayout forum_sharephotos;\r\n    private TextView tv_newest;\r\n    private TextView tv_hot;\r\n    private TextView tv_essence;\r\n    private ListView lv_tips;\r\n    private Banner banner;\r\n    private ArrayList<Tips> arrayList = new ArrayList<>();\r\n    private PopupWindow popupWindow;\r\n\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_forum,container,false);\r\n        init();\r\n        Log.e(\"1\",\"1\");\r\n        et_search = view.findViewById(R.id.et_main_search);\r\n        btn_search = view.findViewById(R.id.btn_main_search);\r\n        btn_search.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n\r\n            }\r\n        });\r\n        btn_publish = view.findViewById(R.id.btn_publish_articles);\r\n        btn_publish.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),PublishActivity.class);\r\n                startActivity(intent);\r\n                getActivity().finish();\r\n            }\r\n        });\r\n        forum_food = view.findViewById(R.id.forum_food);\r\n        forum_food.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_articles = view.findViewById(R.id.forum_articles);\r\n        forum_articles.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_daily = view.findViewById(R.id.forum_daily);\r\n        forum_daily.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_cosmetology = view.findViewById(R.id.forum_cosmetology);\r\n        forum_cosmetology.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_train = view.findViewById(R.id.forum_train);\r\n        forum_train.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_deworming = view.findViewById(R.id.forum_deworming);\r\n        forum_deworming.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_disease = view.findViewById(R.id.forum_disease);\r\n        forum_disease.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_randomtalk = view.findViewById(R.id.forum_randomtalk);\r\n        forum_randomtalk.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_question = view.findViewById(R.id.forum_question);\r\n        forum_question.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_sharephotos = view.findViewById(R.id.forum_sharephotos);\r\n        forum_sharephotos.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        tv_newest = view.findViewById(R.id.forum_newest);\r\n        TextPaint base = tv_newest.getPaint();\r\n        base.setFakeBoldText(true);\r\n        tv_hot = view.findViewById(R.id.forum_hot);\r\n        tv_essence = view.findViewById(R.id.forum_essence);\r\n        tv_newest.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                tv_newest.setBackgroundColor(getResources().getColor(R.color.Blue));\r\n                tv_hot.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_essence.setBackgroundColor(getResources().getColor(R.color.White));\r\n                TextPaint newest = tv_newest.getPaint();\r\n                newest.setFakeBoldText(true);\r\n                TextPaint hot = tv_hot.getPaint();\r\n                hot.setFakeBoldText(false);\r\n                TextPaint essence = tv_essence.getPaint();\r\n                essence.setFakeBoldText(false);\r\n            }\r\n        });\r\n        tv_hot.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                tv_newest.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_hot.setBackgroundColor(getResources().getColor(R.color.Orange));\r\n                tv_essence.setBackgroundColor(getResources().getColor(R.color.White));\r\n                TextPaint newest = tv_newest.getPaint();\r\n                newest.setFakeBoldText(false);\r\n                TextPaint hot = tv_hot.getPaint();\r\n                hot.setFakeBoldText(true);\r\n                TextPaint essence = tv_essence.getPaint();\r\n                essence.setFakeBoldText(false);\r\n            }\r\n        });\r\n        tv_essence.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                tv_newest.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_hot.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_essence.setBackgroundColor(getResources().getColor(R.color.Purple));\r\n                TextPaint newest = tv_newest.getPaint();\r\n                newest.setFakeBoldText(false);\r\n                TextPaint hot = tv_hot.getPaint();\r\n                hot.setFakeBoldText(false);\r\n                TextPaint essence = tv_essence.getPaint();\r\n                essence.setFakeBoldText(true);\r\n            }\r\n        });\r\n\r\n\r\n        ArrayList<Integer> images = new ArrayList<>();\r\n        ArrayList<String> title = new ArrayList<>();\r\n        title.add(\"新手推荐文章1\");\r\n        title.add(\"新手推荐文章2\");\r\n        title.add(\"新手推荐文章3\");\r\n        title.add(\"新手推荐文章4\");\r\n        title.add(\"新手推荐文章5\");\r\n        images.add(R.drawable.recommend1);\r\n        images.add(R.drawable.recommend2);\r\n        images.add(R.drawable.recommend3);\r\n        images.add(R.drawable.recommend4);\r\n        images.add(R.drawable.recommend5);\r\n\r\n        banner = view.findViewById(R.id.banner);\r\n        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);\r\n        banner.setBannerTitles(title);\r\n        banner.setImageLoader(new GlideImageLoader());\r\n        banner.setImages(images);\r\n        banner.start();\r\n\r\n        banner.setOnBannerListener(new OnBannerListener() {\r\n            @Override\r\n            public void OnBannerClick(int position) {\r\n                Intent intent;\r\n                switch (position){\r\n                    case 0:\r\n                        intent = new Intent(getContext(),TipsActivity.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                    case 1:\r\n                        intent = new Intent(getContext(),TipsActivity.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                    case 2:\r\n                        intent = new Intent(getContext(),TipsActivity.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                }\r\n                Log.e(\"点击了第几张轮播图:\",position+\"\");\r\n            }\r\n        });\r\n\r\n        lv_tips = view.findViewById(R.id.lv_tips);\r\n        for (int i = 0; i < 5; i++) {\r\n            Tips tips = new Tips();\r\n            tips.setId(1);\r\n            tips.setUserName(\"名字\" + i);\r\n            tips.setTime(\"2020-11-28/16:36:0\" + i);\r\n            tips.setTopic(\"标签\" + i);\r\n            tips.setTitle(\"标题\" + i);\r\n            tips.setText(\"正文\" + i);\r\n            arrayList.add(tips);\r\n        }\r\n        MainForumTipsAdapter mainForumTipsAdapter = new MainForumTipsAdapter(getContext(),arrayList,R.layout.forum_tips_item);\r\n        lv_tips.setAdapter(mainForumTipsAdapter);\r\n        return view;\r\n    }\r\n\r\n    public void init(){\r\n        Log.e(\"2\",\"2\");\r\n        new Thread(){\r\n            @Override\r\n            public void run() {\r\n                try {\r\n                    Log.e(\"3\",\"3\");\r\n                    URL url = new URL(\"http://192.168.43.227:8080//LovePet/SearchAllPostServlet\");\r\n                    Log.e(\"5\",\"5\");\r\n                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();\r\n                    Log.e(\"7\",\"7\");\r\n                    connection.setRequestMethod(\"GET\");\r\n                    InputStream input = connection.getInputStream();\r\n                    Log.e(\"6\",\"6\");\r\n                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));\r\n                    StringBuffer stringBuffer = new StringBuffer();\r\n                    String line;\r\n                    while ((line=bufferedReader.readLine())!=null){\r\n                        stringBuffer.append(line);\r\n                    }\r\n                    Log.e(\"4\",\"4\");\r\n                    Log.e(\"4\",\"4\");\r\n                    JSONArray jsonArray = new JSONArray(stringBuffer.toString());\r\n                    Log.e(\"9\",jsonArray+\"\");\r\n                    Log.e(\"10\",\"10\");\r\n                    List<Tips> tipsList = new ArrayList<>();\r\n                    for (int i=0;i<jsonArray.length();i++){\r\n                        JSONObject jsonObject = jsonArray.getJSONObject(i);\r\n                        int id = jsonObject.getInt(\"id\");\r\n                        int usedid = jsonObject.getInt(\"userId\");\r\n                        String userName = jsonObject.getString(\"userName\");\r\n                        String userhead = jsonObject.getString(\"userHead\");\r\n                        String time = jsonObject.getString(\"time\");\r\n                        String topic = jsonObject.getString(\"topic\");\r\n                        String title = jsonObject.getString(\"title\");\r\n                        String text = jsonObject.getString(\"text\");\r\n                        int likes = jsonObject.getInt(\"like\");\r\n                        int comments = jsonObject.getInt(\"comments\");\r\n                        int forwards = jsonObject.getInt(\"forwards\");\r\n                        Tips tips = new Tips();\r\n                        tips.setUserName(userName);\r\n                        tips.setId(id);\r\n                        tips.setUserId(usedid);\r\n                        tips.setTime(time);\r\n                        tips.setTopic(topic);\r\n                        tips.setTitle(title);\r\n                        tips.setText(text);\r\n                        tips.setLikes(likes);\r\n                        tips.setComments(comments);\r\n                        tips.setForwards(forwards);\r\n                        Log.e(\"userid+\",jsonObject+\"\");\r\n                    }\r\n                } catch (MalformedURLException e) {\r\n                    e.printStackTrace();\r\n                } catch (ProtocolException e) {\r\n                    e.printStackTrace();\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                } catch (JSONException e) {\r\n                    e.printStackTrace();\r\n                }\r\n            }\r\n        }.start();\r\n    }\r\n\r\n    public void search(){\r\n        new Thread(){\r\n            @Override\r\n            public void run() {\r\n                String search = et_search.getText().toString();\r\n            }\r\n        };\r\n    }\r\n\r\n}\r\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- app/src/main/java/com/example/pet/forum/ForumFragment.java	(revision 70772a57e4d51a2222224889684257011a2a1791)
+-+++ app/src/main/java/com/example/pet/forum/ForumFragment.java	(date 1606957099338)
+-@@ -40,7 +40,9 @@
+- import java.net.ProtocolException;
+- import java.net.URL;
+- import java.util.ArrayList;
+-+import java.util.HashMap;
+- import java.util.List;
+-+import java.util.Map;
+- 
+- public class ForumFragment extends Fragment {
+- 
+-@@ -63,7 +65,6 @@
+-     private ListView lv_tips;
+-     private Banner banner;
+-     private ArrayList<Tips> arrayList = new ArrayList<>();
+--    private PopupWindow popupWindow;
+- 
+- 
+-     @Nullable
+-@@ -71,7 +72,6 @@
+-     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+-         View view = inflater.inflate(R.layout.fragment_forum,container,false);
+-         init();
+--        Log.e("1","1");
+-         et_search = view.findViewById(R.id.et_main_search);
+-         btn_search = view.findViewById(R.id.btn_main_search);
+-         btn_search.setOnClickListener(new View.OnClickListener() {
+-@@ -288,44 +288,40 @@
+-     }
+- 
+-     public void init(){
+--        Log.e("2","2");
+-         new Thread(){
+-             @Override
+-             public void run() {
+-                 try {
+--                    Log.e("3","3");
+--                    URL url = new URL("http://192.168.43.227:8080//LovePet/SearchAllPostServlet");
+--                    Log.e("5","5");
+--                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+--                    Log.e("7","7");
+--                    connection.setRequestMethod("GET");
+--                    InputStream input = connection.getInputStream();
+-+                    URL url = new URL("http://192.168.43.202:8080/ChongBao_war_exploded/SearchAllPostServlet");
+-+                    //HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+-+                    //connection.setRequestMethod("GET");
+-+                    //InputStream input = connection.getInputStream();
+-+                    Log.e("6","6");
+-+                    InputStream inputStream = url.openStream();
+-                     Log.e("6","6");
+--                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
+--                    StringBuffer stringBuffer = new StringBuffer();
+-+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
+-+                    String getAllTips = "";
+-                     String line;
+--                    while ((line=bufferedReader.readLine())!=null){
+--                        stringBuffer.append(line);
+-+                    while((line = bufferedReader.readLine()) != null){
+-+                        getAllTips += line;
+-                     }
+--                    Log.e("4","4");
+--                    Log.e("4","4");
+--                    JSONArray jsonArray = new JSONArray(stringBuffer.toString());
+--                    Log.e("9",jsonArray+"");
+--                    Log.e("10","10");
+-+                    Log.e("123",getAllTips);
+-                     List<Tips> tipsList = new ArrayList<>();
+--                    for (int i=0;i<jsonArray.length();i++){
+--                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+--                        int id = jsonObject.getInt("id");
+--                        int usedid = jsonObject.getInt("userId");
+--                        String userName = jsonObject.getString("userName");
+--                        String userhead = jsonObject.getString("userHead");
+--                        String time = jsonObject.getString("time");
+--                        String topic = jsonObject.getString("topic");
+--                        String title = jsonObject.getString("title");
+--                        String text = jsonObject.getString("text");
+--                        int likes = jsonObject.getInt("like");
+--                        int comments = jsonObject.getInt("comments");
+--                        int forwards = jsonObject.getInt("forwards");
+-+                    Log.e("6","6");
+-+                    for (int i = 0; i < tipsList.size(); i++){
+-+                        Log.e("6","6");
+-+                        Map<String ,Object> map = new HashMap<>(i);
+-+                        int id = (int) map.get("id");
+-+                        int usedid = (int) map.get("userId");
+-+                        String userName = (String) map.get("userName");
+-+                        String userhead = (String) map.get("userHead");
+-+                        String time = (String) map.get("time");
+-+                        String topic = (String) map.get("topic");
+-+                        String title = (String) map.get("title");
+-+                        String text = (String) map.get("text");
+-+                        int likes = (int) map.get("like");
+-+                        int comments = (int) map.get("comments");
+-+                        int forwards = (int) map.get("forwards");
+-                         Tips tips = new Tips();
+-                         tips.setUserName(userName);
+-                         tips.setId(id);
+-@@ -337,16 +333,49 @@
+-                         tips.setLikes(likes);
+-                         tips.setComments(comments);
+-                         tips.setForwards(forwards);
+--                        Log.e("userid+",jsonObject+"");
+-+                        Log.e("userid+",map+"");
+-                     }
+-+                   // BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
+-+                   // StringBuffer stringBuffer = new StringBuffer();
+-+                   // String line;
+-+                  //  while ((line=bufferedReader.readLine())!=null){
+-+                       // stringBuffer.append(line);
+-+                   // }
+-+                    //JSONArray jsonArray = new JSONArray(stringBuffer.toString());
+-+                    //Log.e("9",jsonArray+"");
+-+//                    List<Tips> tipsList = new ArrayList<>();
+-+//                    for (int i=0;i<jsonArray.length();i++){
+-+//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+-+//                        int id = jsonObject.getInt("id");
+-+//                        int usedid = jsonObject.getInt("userId");
+-+//                        String userName = jsonObject.getString("userName");
+-+//                        String userhead = jsonObject.getString("userHead");
+-+//                        String time = jsonObject.getString("time");
+-+//                        String topic = jsonObject.getString("topic");
+-+//                        String title = jsonObject.getString("title");
+-+//                        String text = jsonObject.getString("text");
+-+//                        int likes = jsonObject.getInt("like");
+-+//                        int comments = jsonObject.getInt("comments");
+-+//                        int forwards = jsonObject.getInt("forwards");
+-+//                        Tips tips = new Tips();
+-+//                        tips.setUserName(userName);
+-+//                        tips.setId(id);
+-+//                        tips.setUserId(usedid);
+-+//                        tips.setTime(time);
+-+//                        tips.setTopic(topic);
+-+//                        tips.setTitle(title);
+-+//                        tips.setText(text);
+-+//                        tips.setLikes(likes);
+-+//                        tips.setComments(comments);
+-+//                        tips.setForwards(forwards);
+-+//                        Log.e("userid+",jsonObject+"");
+-+//                    }
+-                 } catch (MalformedURLException e) {
+-                     e.printStackTrace();
+-                 } catch (ProtocolException e) {
+-                     e.printStackTrace();
+-                 } catch (IOException e) {
+-                     e.printStackTrace();
+--                } catch (JSONException e) {
+--                    e.printStackTrace();
+-                 }
+-             }
+-         }.start();
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_15_[Default_Changelist]/shelved.patch
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_15_[Default_Changelist]/shelved.patch	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_15_[Default_Changelist]/shelved.patch	(revision 47915045f76275f7337415233570ada0cd6fe04c)
+@@ -1,62 +0,0 @@
+-Index: app/src/main/java/com/example/pet/other/Cache.java
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package com.example.pet.other;\r\n\r\nimport com.example.pet.other.entity.User;\r\n\r\npublic class Cache {\r\n    /**\r\n     * 存储一些全局信息\r\n     */\r\n\r\npublic static  User user  ;\r\npublic static final String MY_URL=\"http://10.7.90.249:8080/ChongBaoService\";\r\n\r\n}\r\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- app/src/main/java/com/example/pet/other/Cache.java	(revision e1d8325ab0a9b24a606299727e4f0c421c9a0cd9)
+-+++ app/src/main/java/com/example/pet/other/Cache.java	(date 1606961424741)
+-@@ -9,5 +9,5 @@
+- 
+- public static  User user  ;
+- public static final String MY_URL="http://10.7.90.249:8080/ChongBaoService";
+--
+-+public static String url = "http://172.20.10.2:8080/ChongBao_war_exploded/";
+- }
+-Index: app/src/main/java/com/example/pet/forum/ForumFragment.java
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>package com.example.pet.forum;\r\nimport android.content.Intent;\r\nimport android.graphics.Bitmap;\r\nimport android.media.Image;\r\nimport android.net.Uri;\r\nimport android.os.Bundle;\r\nimport android.text.TextPaint;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.ImageView;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.ListView;\r\nimport android.widget.PopupWindow;\r\nimport android.widget.RelativeLayout;\r\nimport android.widget.Switch;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.pet.R;\r\nimport com.example.pet.other.entity.BaseUrl;\r\nimport com.example.pet.other.entity.Tips;\r\nimport com.youth.banner.Banner;\r\nimport com.youth.banner.BannerConfig;\r\nimport com.youth.banner.listener.OnBannerListener;\r\n\r\nimport org.json.JSONArray;\r\nimport org.json.JSONException;\r\nimport org.json.JSONObject;\r\n\r\nimport java.io.BufferedReader;\r\nimport java.io.IOException;\r\nimport java.io.InputStream;\r\nimport java.io.InputStreamReader;\r\nimport java.net.HttpURLConnection;\r\nimport java.net.MalformedURLException;\r\nimport java.net.ProtocolException;\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class ForumFragment extends Fragment {\r\n\r\n    private EditText et_search;\r\n    private Button btn_search;\r\n    private Button btn_publish;\r\n    private RelativeLayout forum_food;\r\n    private RelativeLayout forum_articles;\r\n    private RelativeLayout forum_daily;\r\n    private RelativeLayout forum_cosmetology;\r\n    private RelativeLayout forum_train;\r\n    private RelativeLayout forum_deworming;\r\n    private RelativeLayout forum_disease;\r\n    private RelativeLayout forum_randomtalk;\r\n    private RelativeLayout forum_question;\r\n    private RelativeLayout forum_sharephotos;\r\n    private TextView tv_newest;\r\n    private TextView tv_hot;\r\n    private TextView tv_essence;\r\n    private ListView lv_tips;\r\n    private Banner banner;\r\n    private ArrayList<Tips> arrayList = new ArrayList<>();\r\n    private ArrayList<Tips> tipsArrayList;\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_forum,container,false);\r\n        init();\r\n        et_search = view.findViewById(R.id.et_main_search);\r\n        btn_search = view.findViewById(R.id.btn_main_search);\r\n        btn_search.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n\r\n            }\r\n        });\r\n        btn_publish = view.findViewById(R.id.btn_publish_articles);\r\n        btn_publish.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),PublishActivity.class);\r\n                startActivity(intent);\r\n                getActivity().finish();\r\n            }\r\n        });\r\n        forum_food = view.findViewById(R.id.forum_food);\r\n        forum_food.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_articles = view.findViewById(R.id.forum_articles);\r\n        forum_articles.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_daily = view.findViewById(R.id.forum_daily);\r\n        forum_daily.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_cosmetology = view.findViewById(R.id.forum_cosmetology);\r\n        forum_cosmetology.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_train = view.findViewById(R.id.forum_train);\r\n        forum_train.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_deworming = view.findViewById(R.id.forum_deworming);\r\n        forum_deworming.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_disease = view.findViewById(R.id.forum_disease);\r\n        forum_disease.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_randomtalk = view.findViewById(R.id.forum_randomtalk);\r\n        forum_randomtalk.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_question = view.findViewById(R.id.forum_question);\r\n        forum_question.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        forum_sharephotos = view.findViewById(R.id.forum_sharephotos);\r\n        forum_sharephotos.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent();\r\n                intent.setClass(getContext(),ClassifiedForumActivity.class);\r\n                getContext().startActivity(intent);\r\n            }\r\n        });\r\n        tv_newest = view.findViewById(R.id.forum_newest);\r\n        TextPaint base = tv_newest.getPaint();\r\n        base.setFakeBoldText(true);\r\n        tv_hot = view.findViewById(R.id.forum_hot);\r\n        tv_essence = view.findViewById(R.id.forum_essence);\r\n        tv_newest.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                tv_newest.setBackgroundColor(getResources().getColor(R.color.Blue));\r\n                tv_hot.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_essence.setBackgroundColor(getResources().getColor(R.color.White));\r\n                TextPaint newest = tv_newest.getPaint();\r\n                newest.setFakeBoldText(true);\r\n                TextPaint hot = tv_hot.getPaint();\r\n                hot.setFakeBoldText(false);\r\n                TextPaint essence = tv_essence.getPaint();\r\n                essence.setFakeBoldText(false);\r\n            }\r\n        });\r\n        tv_hot.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                tv_newest.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_hot.setBackgroundColor(getResources().getColor(R.color.Orange));\r\n                tv_essence.setBackgroundColor(getResources().getColor(R.color.White));\r\n                TextPaint newest = tv_newest.getPaint();\r\n                newest.setFakeBoldText(false);\r\n                TextPaint hot = tv_hot.getPaint();\r\n                hot.setFakeBoldText(true);\r\n                TextPaint essence = tv_essence.getPaint();\r\n                essence.setFakeBoldText(false);\r\n            }\r\n        });\r\n        tv_essence.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                tv_newest.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_hot.setBackgroundColor(getResources().getColor(R.color.White));\r\n                tv_essence.setBackgroundColor(getResources().getColor(R.color.Purple));\r\n                TextPaint newest = tv_newest.getPaint();\r\n                newest.setFakeBoldText(false);\r\n                TextPaint hot = tv_hot.getPaint();\r\n                hot.setFakeBoldText(false);\r\n                TextPaint essence = tv_essence.getPaint();\r\n                essence.setFakeBoldText(true);\r\n            }\r\n        });\r\n\r\n\r\n        ArrayList<Integer> images = new ArrayList<>();\r\n        ArrayList<String> title = new ArrayList<>();\r\n        title.add(\"新手推荐文章1\");\r\n        title.add(\"新手推荐文章2\");\r\n        title.add(\"新手推荐文章3\");\r\n        title.add(\"新手推荐文章4\");\r\n        title.add(\"新手推荐文章5\");\r\n        images.add(R.drawable.recommend1);\r\n        images.add(R.drawable.recommend2);\r\n        images.add(R.drawable.recommend3);\r\n        images.add(R.drawable.recommend4);\r\n        images.add(R.drawable.recommend5);\r\n\r\n        banner = view.findViewById(R.id.banner);\r\n        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);\r\n        banner.setBannerTitles(title);\r\n        banner.setImageLoader(new GlideImageLoader());\r\n        banner.setImages(images);\r\n        banner.start();\r\n\r\n        banner.setOnBannerListener(new OnBannerListener() {\r\n            @Override\r\n            public void OnBannerClick(int position) {\r\n                Intent intent;\r\n                switch (position){\r\n                    case 0:\r\n                        intent = new Intent(getContext(),TipsActivity.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                    case 1:\r\n                        intent = new Intent(getContext(),TipsActivity.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                    case 2:\r\n                        intent = new Intent(getContext(),TipsActivity.class);\r\n                        startActivity(intent);\r\n                        break;\r\n                }\r\n                Log.e(\"点击了第几张轮播图:\",position+\"\");\r\n            }\r\n        });\r\n\r\n        lv_tips = view.findViewById(R.id.lv_tips);\r\n//        for (int i = 0; i < 5; i++) {\r\n//            Tips tips = new Tips();\r\n//            tips.setId(1);\r\n//            tips.setUserName(\"名字\" + i);\r\n//            tips.setTime(\"2020-11-28/16:36:0\" + i);\r\n//            tips.setTopic(\"标签\" + i);\r\n//            tips.setTitle(\"标题\" + i);\r\n//            tips.setText(\"正文\" + i);\r\n//            arrayList.add(tips);\r\n//        }\r\n        MainForumTipsAdapter mainForumTipsAdapter = new MainForumTipsAdapter(getContext(),arrayList,R.layout.forum_tips_item);\r\n        lv_tips.setAdapter(mainForumTipsAdapter);\r\n        return view;\r\n    }\r\n\r\n    public void init(){\r\n        new Thread(){\r\n            @Override\r\n            public void run() {\r\n                try {\r\n                    URL url = new URL(\"http:10.7.90.222:8080/ChongBao_war_exploded/GetAllPostServlet\");\r\n                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();\r\n                    connection.setRequestMethod(\"GET\");\r\n                    InputStream input = connection.getInputStream();\r\n                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));\r\n                    StringBuffer stringBuffer = new StringBuffer();\r\n                    String line;\r\n                    while ((line=bufferedReader.readLine())!=null){\r\n                        stringBuffer.append(line);\r\n                    }\r\n                    JSONArray jsonArray = new JSONArray(stringBuffer.toString());\r\n                    tipsArrayList = new ArrayList<>();\r\n                    for (int i=0;i<jsonArray.length();i++){\r\n                        JSONObject jsonObject = jsonArray.getJSONObject(i);\r\n                        String post_title = jsonObject.getString(\"post_title\");\r\n                        String post_time = jsonObject.getString(\"post_time\");\r\n                        String post_text = jsonObject.getString(\"post_text\");\r\n                        String name = jsonObject.getString(\"name\");\r\n                        String user_name = jsonObject.getString(\"user_name\");\r\n                        Tips tips = new Tips();\r\n                        tips.setTitle(post_title);\r\n                        tips.setText(post_text);\r\n                        tips.setTime(post_time);\r\n                        tips.setUserName(user_name);\r\n                        arrayList.add(tips);\r\n                    }\r\n                } catch (MalformedURLException e) {\r\n                    e.printStackTrace();\r\n                } catch (ProtocolException e) {\r\n                    e.printStackTrace();\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                } catch (JSONException e) {\r\n                    e.printStackTrace();\r\n                }\r\n            }\r\n        }.start();\r\n    }\r\n\r\n    public void search(){\r\n        new Thread(){\r\n            @Override\r\n            public void run() {\r\n                String search = et_search.getText().toString();\r\n            }\r\n        };\r\n    }\r\n\r\n}\r\n
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- app/src/main/java/com/example/pet/forum/ForumFragment.java	(revision e1d8325ab0a9b24a606299727e4f0c421c9a0cd9)
+-+++ app/src/main/java/com/example/pet/forum/ForumFragment.java	(date 1606961735808)
+-@@ -24,7 +24,7 @@
+- import androidx.fragment.app.Fragment;
+- 
+- import com.example.pet.R;
+--import com.example.pet.other.entity.BaseUrl;
+-+import com.example.pet.other.Cache;
+- import com.example.pet.other.entity.Tips;
+- import com.youth.banner.Banner;
+- import com.youth.banner.BannerConfig;
+-@@ -293,7 +293,8 @@
+-             @Override
+-             public void run() {
+-                 try {
+--                    URL url = new URL("http:10.7.90.222:8080/ChongBao_war_exploded/GetAllPostServlet");
+-+                    URL url = new URL(Cache.url + "GetAllPostServlet");
+-+                    Log.e("123","123");
+-                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+-                     connection.setRequestMethod("GET");
+-                     InputStream input = connection.getInputStream();
+-@@ -303,6 +304,7 @@
+-                     while ((line=bufferedReader.readLine())!=null){
+-                         stringBuffer.append(line);
+-                     }
+-+                    Log.e("123","123");
+-                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
+-                     tipsArrayList = new ArrayList<>();
+-                     for (int i=0;i<jsonArray.length();i++){
+-Index: app/src/main/java/com/example/pet/other/entity/BaseUrl.java
+-===================================================================
+---- app/src/main/java/com/example/pet/other/entity/BaseUrl.java	(revision e1d8325ab0a9b24a606299727e4f0c421c9a0cd9)
+-+++ app/src/main/java/com/example/pet/other/entity/BaseUrl.java	(revision e1d8325ab0a9b24a606299727e4f0c421c9a0cd9)
+-@@ -1,5 +0,0 @@
+--package com.example.pet.other.entity;
+--
+--public class BaseUrl {
+--    public static String url = "http://192.168.43.227:8080//LovePet/";
+--}
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_9_09__Default_Changelist_.xml
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_9_09__Default_Changelist_.xml	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_9_09__Default_Changelist_.xml	(revision 47915045f76275f7337415233570ada0cd6fe04c)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_2020_12_3_9_09_[Default_Changelist]" date="1606957776291" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_9_09_[Default_Changelist]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 2020/12/3 9:09 [Default Changelist]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_15__Default_Changelist_.xml
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_15__Default_Changelist_.xml	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_15__Default_Changelist_.xml	(revision 47915045f76275f7337415233570ada0cd6fe04c)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_2020_12_3_10_15_[Default_Changelist]" date="1606961786899" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020_12_3_10_15_[Default_Changelist]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 2020/12/3 10:15 [Default Changelist]" />
+-</changelist>
+\ No newline at end of file
+Index: app/src/main/java/com/example/pet/forum/InnerFragment_other.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.forum;\r\n\r\nimport android.content.Intent;\r\nimport android.graphics.Bitmap;\r\nimport android.graphics.BitmapFactory;\r\nimport android.os.Bundle;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport android.os.Handler;\r\nimport android.os.Message;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Toast;\r\n\r\nimport com.example.pet.R;\r\nimport com.example.pet.my.My;\r\nimport com.example.pet.other.Cache;\r\nimport com.example.pet.other.entity.Tips;\r\nimport com.rohit.recycleritemclicksupport.RecyclerItemClickSupport;\r\n\r\nimport org.json.JSONArray;\r\nimport org.json.JSONException;\r\nimport org.json.JSONObject;\r\n\r\nimport java.io.BufferedReader;\r\nimport java.io.IOException;\r\nimport java.io.InputStream;\r\nimport java.io.InputStreamReader;\r\nimport java.net.HttpURLConnection;\r\nimport java.net.MalformedURLException;\r\nimport java.net.ProtocolException;\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.concurrent.CountDownLatch;\r\n\r\npublic class InnerFragment_other extends Fragment {\r\n\r\n    private ArrayList<Tips> tipsList = new ArrayList<>();\r\n    private RecyclerView recyclerView;\r\n    private RecyAdapter recyAdapter;\r\n    private String title;\r\n\r\n    public InnerFragment_other(String title) {\r\n        this.title = title;\r\n    }\r\n\r\n    public InnerFragment_other() {\r\n    }\r\n\r\n    private Handler handler = new Handler(){\r\n        @Override\r\n        public void handleMessage(@NonNull Message message) {\r\n            switch (message.what){\r\n                case 1:\r\n                    init((ArrayList) message.obj);\r\n                    break;\r\n            }\r\n        }\r\n    };\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_inner_other, container, false);\r\n        recyclerView = view.findViewById(R.id.recyclerView);\r\n        getAllPost(tipsList);\r\n        init(tipsList);\r\n\r\n        RecyclerItemClickSupport.addTo(recyclerView).setOnItemClickListener(new RecyclerItemClickSupport.OnItemClickListener() {\r\n            @Override\r\n            public void onItemClicked(RecyclerView recyclerView, int i, View view) {\r\n                Intent intent = new Intent(getActivity(),New_post_detail.class);\r\n                intent.putExtra(\"id\",tipsList.get(i).getId());\r\n                startActivity(intent);\r\n            }\r\n        });\r\n\r\n        return view;\r\n    }\r\n\r\n    public void init(ArrayList arrayList){\r\n        getImages(arrayList);\r\n    }\r\n\r\n    public void initAdapter(){\r\n        recyAdapter = new RecyAdapter(getContext(),tipsList);\r\n        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());\r\n        linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);\r\n        recyclerView.setLayoutManager(linearLayoutManager);\r\n        recyclerView.setAdapter(recyAdapter);\r\n//        Log.e(\"-------------->\", title);\r\n//        Tips tes = new Tips();\r\n//        tes.setTitle(title);\r\n//        tipsList.add(tes);\r\n    }\r\n\r\n    public void getAllPost(ArrayList arrayList){\r\n        new Thread(){\r\n            @Override\r\n            public void run() {\r\n                try {\r\n                    URL url = new URL(Cache.MY_URL + \"GetAllSortServlet?topic=\"+title);\r\n                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();\r\n                    connection.setRequestMethod(\"GET\");\r\n                    InputStream input = connection.getInputStream();\r\n                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));\r\n                    StringBuffer stringBuffer = new StringBuffer();\r\n                    String line;\r\n                    while ((line=bufferedReader.readLine())!=null){\r\n                        stringBuffer.append(line);\r\n                    }\r\n                    tipsList.clear();\r\n                    JSONArray jsonArray = new JSONArray(stringBuffer.toString());\r\n                    for (int i=0;i<jsonArray.length();i++){\r\n                        JSONObject jsonObject = jsonArray.getJSONObject(i);\r\n                        int post_id = jsonObject.getInt(\"post_id\");\r\n                        String post_title = jsonObject.getString(\"post_title\");\r\n                        String post_time = jsonObject.getString(\"post_time\");\r\n                        int count_likes = jsonObject.getInt(\"likes\");\r\n                        int count_comments = jsonObject.getInt(\"comments\");\r\n                        String img_path = jsonObject.getString(\"picture_path\");\r\n                        Tips tips = new Tips();\r\n                        tips.setId(post_id);\r\n                        tips.setTitle(post_title);\r\n                        tips.setTime(post_time);\r\n                        tips.setLikes(count_likes);\r\n                        tips.setComments(count_comments);\r\n                        tips.setImagepath(img_path);\r\n                        tipsList.add(tips);\r\n                    }\r\n                    Message message = handler.obtainMessage();\r\n                    message.what = 1;\r\n                    message.obj = tipsList;\r\n                    handler.sendMessage(message);\r\n                } catch (MalformedURLException e) {\r\n                    e.printStackTrace();\r\n                } catch (ProtocolException e) {\r\n                    e.printStackTrace();\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                } catch (JSONException e) {\r\n                    e.printStackTrace();\r\n                }\r\n            }\r\n        }.start();\r\n\r\n    }\r\n\r\n    public void getImages(final ArrayList<Tips> arrayList) {\r\n        final CountDownLatch latch = new CountDownLatch(arrayList.size());\r\n\r\n        for (int i = 0; i < arrayList.size(); i ++ ) {\r\n            final Tips tips = arrayList.get(i);\r\n            new Thread(){\r\n                @Override\r\n                public void run() {\r\n                    try {\r\n                        String path = tips.getImagepath();\r\n                        URL url = new URL(Cache.MY_URL + \"GetImageByPath?path=\" + path);\r\n                        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();\r\n                        InputStream in = urlConnection.getInputStream();\r\n                        Bitmap bitmap = BitmapFactory.decodeStream(in);\r\n                        tips.setThumbnail(bitmap);\r\n                        in.close();\r\n                        latch.countDown();\r\n                    } catch (MalformedURLException e) {\r\n                        e.printStackTrace();\r\n                    } catch (IOException e) {\r\n                        e.printStackTrace();\r\n                    }\r\n\r\n                }\r\n            }.start();\r\n        }\r\n        try {\r\n            latch.await();\r\n            initAdapter();\r\n        } catch (InterruptedException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/forum/InnerFragment_other.java	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ app/src/main/java/com/example/pet/forum/InnerFragment_other.java	(date 1607675183697)
+@@ -77,6 +77,7 @@
+             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
+                 Intent intent = new Intent(getActivity(),New_post_detail.class);
+                 intent.putExtra("id",tipsList.get(i).getId());
++                Cache.myPostSet.add(tipsList.get(i));
+                 startActivity(intent);
+             }
+         });
+Index: app/src/main/java/com/example/pet/my/History.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.my;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\n\r\nimport android.graphics.BitmapFactory;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.ListView;\r\n\r\nimport com.example.pet.R;\r\nimport com.example.pet.other.entity.Article;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class History extends AppCompatActivity {\r\n    private List<Article> list;\r\n    private ListView listView;\r\n    private Toolbar toolbar;\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_history);\r\n        initData();\r\n        setView();\r\n    }\r\n    private void setView() {\r\n        PostAdapter adapter = new PostAdapter(list,this,R.layout.article_item);\r\n        listView = findViewById(R.id.lv_history_article);\r\n        listView.setAdapter(adapter);\r\n        toolbar = findViewById(R.id.history_toolbar);\r\n        toolbar.setNavigationOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                History.this.finish();\r\n            }\r\n        });\r\n    }\r\n\r\n    private void initData() {\r\n        list = new ArrayList<>();\r\n        for(int i=0;i<5;i++){\r\n            Article article = new Article();\r\n            article.setBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.article));\r\n            article.setTitle(\"标题\");\r\n            article.setContent(\"我很喜欢我家的猫。天气冷时就会依偎在我身边，给我暖手\");\r\n            list.add(article);\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/my/History.java	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ app/src/main/java/com/example/pet/my/History.java	(date 1607682766975)
+@@ -1,34 +1,66 @@
+ package com.example.pet.my;
+ 
++import androidx.annotation.NonNull;
+ import androidx.appcompat.app.AppCompatActivity;
+ import androidx.appcompat.widget.Toolbar;
++import androidx.recyclerview.widget.LinearLayoutManager;
++import androidx.recyclerview.widget.RecyclerView;
+ 
++import android.content.Intent;
+ import android.graphics.BitmapFactory;
+ import android.os.Bundle;
++import android.os.Handler;
++import android.os.Message;
++import android.util.Log;
+ import android.view.View;
+ import android.widget.ListView;
+ 
+ import com.example.pet.R;
++import com.example.pet.forum.New_post_detail;
++import com.example.pet.forum.RecyAdapter;
++import com.example.pet.other.Cache;
+ import com.example.pet.other.entity.Article;
++import com.example.pet.other.entity.Tips;
++import com.example.pet.other.entity.User;
++import com.rohit.recycleritemclicksupport.RecyclerItemClickSupport;
+ 
+ import java.util.ArrayList;
+ import java.util.List;
+ 
+ public class History extends AppCompatActivity {
+-    private List<Article> list;
+-    private ListView listView;
++    private ArrayList<Tips> myPostList = new ArrayList<>();
++    private RecyclerView recyclerView;
++    private RecyAdapter recyAdapter;
+     private Toolbar toolbar;
++    private Handler handler= new Handler(){
++        @Override
++        public void handleMessage(@NonNull Message msg) {
++            recyAdapter = new RecyAdapter(History.this,myPostList);
++            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(History.this);
++            linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);
++            recyclerView.setLayoutManager(linearLayoutManager);
++            recyclerView.setAdapter(recyAdapter);
++        }
++    };
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_history);
+         initData();
+         setView();
++        RecyclerItemClickSupport.addTo(recyclerView).setOnItemClickListener(new RecyclerItemClickSupport.OnItemClickListener() {
++            @Override
++            public void onItemClicked(RecyclerView recyclerView, int i, View view) {
++                Intent intent = new Intent(History.this, New_post_detail.class);
++                intent.putExtra("id",myPostList.get(i).getId());
++                startActivity(intent);
++            }
++        });
+     }
+     private void setView() {
+-        PostAdapter adapter = new PostAdapter(list,this,R.layout.article_item);
+-        listView = findViewById(R.id.lv_history_article);
+-        listView.setAdapter(adapter);
++
++        recyclerView = findViewById(R.id.lv_history_article);
++
+         toolbar = findViewById(R.id.history_toolbar);
+         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+             @Override
+@@ -39,13 +71,12 @@
+     }
+ 
+     private void initData() {
+-        list = new ArrayList<>();
+-        for(int i=0;i<5;i++){
+-            Article article = new Article();
+-            article.setBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.article));
+-            article.setTitle("标题");
+-            article.setContent("我很喜欢我家的猫。天气冷时就会依偎在我身边，给我暖手");
+-            list.add(article);
++        myPostList.clear();
++        for (Tips u : Cache.myPostSet) {
++            myPostList.add(u);
+         }
++        Message message = new Message();
++        handler.sendMessage(message);
++        Log.e("History", myPostList.size() + "");
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.example.pet\">\r\n\r\n    <permission\r\n        android:name=\"${applicationId}.permission.JPUSH_MESSAGE\"\r\n        android:protectionLevel=\"signature\" />\r\n\r\n    <uses-permission android:name=\"com.android.launcher.permission.READ_SETTINGS\" />\r\n    <uses-permission android:name=\"${applicationId}.permission.JPUSH_MESSAGE\" />\r\n    <uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\" />\r\n    <uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />\r\n    <uses-permission\r\n        android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"\r\n        tools:ignore=\"ProtectedPermissions\" />\r\n    <uses-permission android:name=\"android.permission.CAMERA\" />\r\n    <uses-permission android:name=\"com.android.launcher.permission.READ_SETTINGS\" />\r\n    <uses-permission android:name=\"android.permission.WAKE_LOCK\" />\r\n    <uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />\r\n    <uses-permission android:name=\"android.permission.FOREGROUND_SERVICE\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\r\n\r\n    <application\r\n        android:name=\".other.DebugApp\"\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@drawable/lastlogo\"\r\n        android:label=\"@string/app_name\"\r\n        android:networkSecurityConfig=\"@xml/network_security_config\"\r\n        android:roundIcon=\"@drawable/lastlogo\"\r\n        android:supportsRtl=\"true\"\r\n        android:sharedUserId=\"android.uid.system\"\r\n        android:largeHeap=\"true\"\r\n        android:theme=\"@style/AppTheme\"\r\n        android:usesCleartextTraffic=\"true\">\r\n        <activity android:name=\".my.NewPet\">\r\n\r\n        </activity>\r\n\r\n        <activity android:name=\".my.AcountSecurity\" />\r\n        <activity android:name=\".my.ConnectUs\" />\r\n        <activity android:name=\".my.order.MyOrderActivity\" />\r\n        <activity android:name=\".my.OrderComplete\" />\r\n        <activity\r\n            android:name=\".my.editinfo.EditInfo\"\r\n            android:windowSoftInputMode=\"adjustPan|adjustUnspecified|stateHidden\" />\r\n        <activity android:name=\".my.SetPassword\" />\r\n        <activity android:name=\".my.FunIntroduction\" />\r\n        <activity android:name=\".my.AboutUsLaw\" />\r\n        <activity android:name=\".my.Agreement\" />\r\n        <activity android:name=\".my.Order2\" />\r\n        <activity android:name=\".my.Register\" />\r\n        <activity android:name=\".my.Update\" />\r\n        <activity android:name=\".my.Check\" />\r\n        <activity android:name=\".my.Login\" />\r\n        <activity android:name=\".my.PetActivity\" />\r\n        <activity android:name=\".my.History\" />\r\n        <activity android:name=\".my.AboutUs\" />\r\n        <activity android:name=\".my.Setting\" />\r\n        <activity android:name=\".my.Post\" />\r\n        <activity android:name=\".forum.LandlordActivity\" />\r\n        <activity android:name=\".forum.TipsActivity\" />\r\n        <activity android:name=\".forum.ClassifiedForumActivity\" />\r\n        <activity android:name=\".forum.TopicActivity\" />\r\n        <activity android:name=\".chat.ChatView\" />\r\n        <activity android:name=\".chat.Booking\" />\r\n        <activity android:name=\".forum.PublishActivity\" />\r\n        <activity android:name=\".nursing.CancelActivity\" />\r\n        <activity android:name=\".nursing.JiedanActivity\" />\r\n        <activity android:name=\".nursing.ChoiceActivity\" />\r\n        <activity android:name=\".nursing.XuzhiActivity\" />\r\n        <activity android:name=\".nursing.Choice2Activity\" />\r\n        <activity android:name=\".nursing.ChangehisActivity\" />\r\n        <activity android:name=\".nursing.EndActivity\" />\r\n        <activity android:name=\".nursing.StartActivity\" />\r\n        <activity android:name=\".nursing.NeworderActivity\" />\r\n        <activity android:name=\".nursing.CostActivity\" />\r\n        <activity android:name=\".forum.SearchResult\"/>\r\n        <activity android:name=\".MainActivity\">\r\n\r\n        </activity>\r\n<activity android:name=\".my.AcountManage\"/>\r\n        <meta-data\r\n            android:name=\"com.baidu.lbsapi.API_KEY\"\r\n            android:value=\"Gy6t4iVa5bjCYSlblHYFLNKNCFmABmH3\" />\r\n\r\n        <service\r\n            android:name=\"com.baidu.location.f\"\r\n            android:enabled=\"true\"\r\n            android:process=\":remote\">\r\n            <intent-filter>\r\n                <action android:name=\"com.baidu.location.service_v5.0.0\" />\r\n            </intent-filter>\r\n        </service> <!-- <provider -->\r\n        <!-- android:name=\"androidx.core.content.FileProvider\" -->\r\n        <!-- android:authorities=\"${applicationId}.provider\" -->\r\n        <!-- android:exported=\"false\" -->\r\n        <!-- android:grantUriPermissions=\"true\"> -->\r\n        <!-- <meta-data -->\r\n        <!-- android:name=\"android.support.FILE_PROVIDER_PATHS\" -->\r\n        <!-- android:resource=\"\" /> -->\r\n        <!-- </provider> -->\r\n        <activity\r\n            android:name=\".Start1Activity\"\r\n            android:windowSoftInputMode=\"adjustPan\">\r\n            <intent-filter>\r\n            <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n            <category android:name=\"android.intent.category.LAUNCHER\" />\r\n        </intent-filter>\r\n        </activity>\r\n        <activity\r\n            android:name=\"cn.jpush.android.ui.PushActivity\"\r\n            android:configChanges=\"orientation|keyboardHidden\"\r\n            android:exported=\"false\"\r\n            android:theme=\"@android:style/Theme.NoTitleBar\">\r\n            <intent-filter>\r\n                <action android:name=\"cn.jpush.android.ui.PushActivity\" />\r\n\r\n                <category android:name=\"android.intent.category.DEFAULT\" />\r\n                <category android:name=\"${applicationId}\" />\r\n            </intent-filter>\r\n        </activity> <!-- Required SDK 核心功能 -->\r\n        <!-- 可配置android:process参数将PushService放在其他进程中 -->\r\n        <service\r\n            android:name=\"cn.jpush.android.service.PushService\"\r\n            android:process=\":pushcore\">\r\n            <intent-filter>\r\n                <action android:name=\"cn.jpush.android.intent.REGISTER\" />\r\n                <action android:name=\"cn.jpush.android.intent.REPORT\" />\r\n                <action android:name=\"cn.jpush.android.intent.PushService\" />\r\n                <action android:name=\"cn.jpush.android.intent.PUSH_TIME\" />\r\n            </intent-filter>\r\n        </service> <!-- since 3.0.9 Required SDK 核心功能 -->\r\n        <provider\r\n            android:name=\"cn.jpush.android.service.DataProvider\"\r\n            android:authorities=\"${applicationId}.DataProvider\"\r\n            android:exported=\"false\"\r\n            android:process=\":pushcore\" /> <!-- Required SDK核心功能 -->\r\n        <service android:name=\".my.MyUserService\" />\r\n\r\n        <receiver\r\n            android:name=\"cn.jpush.android.service.PushReceiver\"\r\n            android:enabled=\"true\">\r\n            <intent-filter android:priority=\"1000\">\r\n                <action android:name=\"cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY\" /> <!-- Required  显示通知栏 -->\r\n                <category android:name=\"${applicationId}\" />\r\n            </intent-filter>\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.USER_PRESENT\" />\r\n                <action android:name=\"android.net.conn.CONNECTIVITY_CHANGE\" />\r\n            </intent-filter>\r\n            <!-- Optional -->\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.PACKAGE_ADDED\" />\r\n                <action android:name=\"android.intent.action.PACKAGE_REMOVED\" />\r\n\r\n                <data android:scheme=\"package\" />\r\n            </intent-filter>\r\n        </receiver> <!-- Required SDK核心功能 -->\r\n        <receiver\r\n            android:name=\"cn.jpush.android.service.AlarmReceiver\"\r\n            android:exported=\"false\" /> <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调 -->\r\n        <!-- since 3.3.0 接收JPush相关事件 -->\r\n        <receiver\r\n            android:name=\".other.JpushReceiver\"\r\n            android:enabled=\"true\"\r\n            android:exported=\"false\">\r\n            <intent-filter>\r\n\r\n                <!--\r\n                <action android:name=\"cn.jpush.android.intent.REGISTRATION\" />\r\n                <action android:name=\"cn.jpush.android.intent.MESSAGE RECEIVED\"/>\r\n                <action android:name=\"cn.jpush.android.intent.NOTIFICATION_RECEIVED\"/>\r\n                <action android:name=\"cn.jpush.android.intent.NOTIFICATION_OPENED\" />\r\n                <action android:name=\"cn.jpush.android.intent.CONNECTION\"/>\r\n                -->\r\n\r\n                <action android:name=\"cn.jpush.android.intent.RECEIVE_MESSAGE\" />\r\n\r\n                <category android:name=\"${applicationId}\" />\r\n            </intent-filter>\r\n        </receiver> <!-- since 3.3.0 Required SDK核心功能 -->\r\n        <activity\r\n            android:name=\"cn.jpush.android.service.JNotifyActivity\"\r\n            android:exported=\"false\"\r\n            android:taskAffinity=\"jpush.custom\"\r\n            android:theme=\"@android:style/Theme.Translucent.NoTitleBar\">\r\n            <intent-filter>\r\n                <action android:name=\"cn.jpush.android.intent.JNotifyActivity\" />\r\n\r\n                <category android:name=\"${applicationId}\" />\r\n            </intent-filter>\r\n        </activity> <!-- since 3.3.0 Required SDK 核心功能 -->\r\n        <!-- 可配置android:process参数将PushService放在其他进程中 -->\r\n        <!-- User defined.  For test only 继承自cn.jpush.android.service.JCommonService -->\r\n        <service\r\n            android:name=\".other.JpushService\"\r\n            android:process=\":pushcore\">\r\n            <intent-filter>\r\n                <action android:name=\"cn.jiguang.user.service.action\" />\r\n            </intent-filter>\r\n        </service>\r\n        <service android:name=\".my.MyDataService\" />\r\n\r\n        <meta-data\r\n            android:name=\"JPUSH_CHANNEL\"\r\n            android:value=\"jpush_channel\" />\r\n        <meta-data\r\n            android:name=\"JPUSH_APPKEY\"\r\n            android:value=\"7153b7916be94ab289793e76\" />\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ app/src/main/AndroidManifest.xml	(date 1607682091300)
+@@ -85,6 +85,7 @@
+         <activity android:name=".MainActivity">
+ 
+         </activity>
++        <activity android:name=".forum.New_post_detail"/>
+ <activity android:name=".my.AcountManage"/>
+         <meta-data
+             android:name="com.baidu.lbsapi.API_KEY"
+Index: app/src/main/java/com/example/pet/forum/InnerFragment_first.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.forum;\r\n\r\nimport android.content.Intent;\r\nimport android.graphics.Bitmap;\r\nimport android.graphics.BitmapFactory;\r\nimport android.os.Bundle;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport android.os.Handler;\r\nimport android.os.Message;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport com.example.pet.R;\r\nimport com.example.pet.other.Cache;\r\nimport com.example.pet.other.entity.Tips;\r\nimport com.rohit.recycleritemclicksupport.RecyclerItemClickSupport;\r\nimport com.youth.banner.Banner;\r\nimport com.youth.banner.BannerConfig;\r\n\r\nimport org.json.JSONArray;\r\nimport org.json.JSONException;\r\nimport org.json.JSONObject;\r\n\r\nimport java.io.BufferedReader;\r\nimport java.io.IOException;\r\nimport java.io.InputStream;\r\nimport java.io.InputStreamReader;\r\nimport java.net.HttpURLConnection;\r\nimport java.net.MalformedURLException;\r\nimport java.net.ProtocolException;\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.concurrent.CountDownLatch;\r\n\r\npublic class InnerFragment_first extends Fragment {\r\n\r\n    private ArrayList<Tips> tipsArrayList = new ArrayList<>();\r\n    private RecyclerView recyclerView;\r\n    private RecyAdapter recyAdapter;\r\n    private Banner banner;\r\n    private String title;\r\n\r\n    public InnerFragment_first(String title) {\r\n        this.title = title;\r\n    }\r\n\r\n    private Handler handler = new Handler(){\r\n        @Override\r\n        public void handleMessage(@NonNull Message message) {\r\n            switch (message.what){\r\n                case 1:\r\n                    init((ArrayList) message.obj);\r\n                    break;\r\n            }\r\n        }\r\n    };\r\n\r\n    public InnerFragment_first() {\r\n    }\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_inner_first, container, false);\r\n        recyclerView = view.findViewById(R.id.recyclerView);\r\n        recyclerView.setHasFixedSize(true);\r\n        recyclerView.setNestedScrollingEnabled(false);\r\n        recyclerView.setFocusable(false);\r\n        banner = view.findViewById(R.id.banner);\r\n        getAllPost(tipsArrayList);\r\n        initBanner();\r\n\r\n        RecyclerItemClickSupport.addTo(recyclerView).setOnItemClickListener(new RecyclerItemClickSupport.OnItemClickListener() {\r\n            @Override\r\n            public void onItemClicked(RecyclerView recyclerView, int i, View view) {\r\n                Intent intent = new Intent(getActivity(),New_post_detail.class);\r\n                intent.putExtra(\"id\",tipsArrayList.get(i).getId());\r\n                startActivity(intent);\r\n            }\r\n        });\r\n\r\n        return view;\r\n    }\r\n\r\n    public void getAllPost(ArrayList arrayList){\r\n        new Thread(){\r\n            @Override\r\n            public void run() {\r\n                try {\r\n                    URL url = new URL(Cache.MY_URL + \"GetPostByTime\");\r\n                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();\r\n                    connection.setRequestMethod(\"GET\");\r\n                    InputStream input = connection.getInputStream();\r\n                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));\r\n                    StringBuffer stringBuffer = new StringBuffer();\r\n                    String line;\r\n                    while ((line=bufferedReader.readLine())!=null){\r\n                        stringBuffer.append(line);\r\n                    }\r\n                    tipsArrayList.clear();\r\n                    JSONArray jsonArray = new JSONArray(stringBuffer.toString());\r\n                    for (int i=0;i<jsonArray.length();i++){\r\n                        JSONObject jsonObject = jsonArray.getJSONObject(i);\r\n                        int post_id = jsonObject.getInt(\"post_id\");\r\n                        String post_title = jsonObject.getString(\"post_title\");\r\n                        String post_time = jsonObject.getString(\"post_time\");\r\n                        int count_likes = jsonObject.getInt(\"likes\");\r\n                        int count_comments = jsonObject.getInt(\"comments\");\r\n                        String img_path = jsonObject.getString(\"picture_path\");\r\n                        Tips tips = new Tips();\r\n                        tips.setId(post_id);\r\n                        tips.setTitle(post_title);\r\n                        tips.setTime(post_time);\r\n                        tips.setLikes(count_likes);\r\n                        tips.setComments(count_comments);\r\n                        tips.setImagepath(img_path);\r\n                        tipsArrayList.add(tips);\r\n                    }\r\n                    Message message = handler.obtainMessage();\r\n                    message.what = 1;\r\n                    message.obj = tipsArrayList;\r\n                    handler.sendMessage(message);\r\n                } catch (MalformedURLException e) {\r\n                    e.printStackTrace();\r\n                } catch (ProtocolException e) {\r\n                    e.printStackTrace();\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                } catch (JSONException e) {\r\n                    e.printStackTrace();\r\n                }\r\n            }\r\n        }.start();\r\n\r\n    }\r\n\r\n    public void init(ArrayList arrayList){\r\n        getImages(arrayList);\r\n    }\r\n\r\n    public void getImages(final ArrayList<Tips> arrayList) {\r\n        final CountDownLatch latch = new CountDownLatch(arrayList.size());\r\n\r\n        for (int i = 0; i < arrayList.size(); i ++ ) {\r\n            final Tips tips = arrayList.get(i);\r\n            new Thread(){\r\n                @Override\r\n                public void run() {\r\n                    try {\r\n                        String path = tips.getImagepath();\r\n                        URL url = new URL(Cache.MY_URL + \"GetImageByPath?path=\" + path);\r\n                        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();\r\n                        InputStream in = urlConnection.getInputStream();\r\n                        Bitmap bitmap = BitmapFactory.decodeStream(in);\r\n                        tips.setThumbnail(bitmap);\r\n                        in.close();\r\n                        latch.countDown();\r\n                    } catch (MalformedURLException e) {\r\n                        e.printStackTrace();\r\n                    } catch (IOException e) {\r\n                        e.printStackTrace();\r\n                    }\r\n\r\n                }\r\n            }.start();\r\n        }\r\n        try {\r\n            latch.await();\r\n            initAdapter();\r\n        } catch (InterruptedException e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n    }\r\n\r\n    public void initAdapter(){\r\n        recyAdapter = new RecyAdapter(getContext(),tipsArrayList);\r\n        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());\r\n        linearLayoutManager.setOrientation(linearLayoutManager.VERTICAL);\r\n        recyclerView.setLayoutManager(linearLayoutManager);\r\n        recyclerView.setAdapter(recyAdapter);\r\n    }\r\n\r\n    public void initBanner(){\r\n        ArrayList<Integer> images = new ArrayList<>();\r\n        ArrayList<String> title = new ArrayList<>();\r\n        title.add(\"猫咪的洗澡和驱虫\");\r\n        title.add(\"猫咪的日常用品\");\r\n        title.add(\"猫咪的食物\");\r\n        title.add(\"猫咪的日常护理\");\r\n        title.add(\"猫咪的常见病症\");\r\n        images.add(R.drawable.recommend1);\r\n        images.add(R.drawable.recommend2);\r\n        images.add(R.drawable.recommend3);\r\n        images.add(R.drawable.recommend4);\r\n        images.add(R.drawable.recommend5);\r\n\r\n        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);\r\n        banner.setBannerTitles(title);\r\n        banner.setImageLoader(new GlideImageLoader());\r\n        banner.setImages(images);\r\n        banner.start();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/forum/InnerFragment_first.java	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ app/src/main/java/com/example/pet/forum/InnerFragment_first.java	(date 1607675183579)
+@@ -82,13 +82,13 @@
+             public void onItemClicked(RecyclerView recyclerView, int i, View view) {
+                 Intent intent = new Intent(getActivity(),New_post_detail.class);
+                 intent.putExtra("id",tipsArrayList.get(i).getId());
++                Cache.myPostSet.add(tipsArrayList.get(i));
+                 startActivity(intent);
+             }
+         });
+ 
+         return view;
+     }
+-
+     public void getAllPost(ArrayList arrayList){
+         new Thread(){
+             @Override
+Index: app/src/main/java/com/example/pet/other/Cache.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.other;\r\n\r\nimport com.example.pet.other.entity.Order;\r\nimport com.example.pet.other.entity.Pet;\r\nimport com.example.pet.other.entity.Tips;\r\nimport com.example.pet.other.entity.User;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.HashSet;\r\nimport java.util.List;\r\n\r\npublic class Cache {\r\n    /**\r\n     * 存储一些全局信息\r\n     */\r\n    public static User user;\r\n    public static String userPhone;\r\n    public static final String MY_URL = \"http://10.7.90.249:8080/ChongBaoService/\";//我的URL\r\n    public static String url = \"http://10.7.89.96:8080/ChongBao_war_exploded/\";\r\n    public static int user_id = 1;\r\n    public static List<Order> myOrderList;//我的订单数据\r\n    public static List<Pet> myPetList;//我的宠物数据\r\n    public static ArrayList<Tips> myPostList;//我的帖子数据\r\n    public static HashSet<User> userHashSet = new HashSet<>();//用户列表\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/other/Cache.java	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ app/src/main/java/com/example/pet/other/Cache.java	(date 1607675183573)
+@@ -19,7 +19,8 @@
+     public static String url = "http://10.7.89.96:8080/ChongBao_war_exploded/";
+     public static int user_id = 1;
+     public static List<Order> myOrderList;//我的订单数据
++
+     public static List<Pet> myPetList;//我的宠物数据
+-    public static ArrayList<Tips> myPostList;//我的帖子数据
++    public static HashSet<Tips> myPostSet =new HashSet<>();//我的帖子数据
+     public static HashSet<User> userHashSet = new HashSet<>();//用户列表
+ }
+Index: app/src/main/res/layout/activity_post.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    android:orientation=\"vertical\"\r\n    android:layout_height=\"match_parent\">\r\n    <androidx.appcompat.widget.Toolbar\r\n        android:id=\"@+id/post_toolbar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        app:navigationIcon=\"@drawable/nav\">\r\n\r\n        <TextView\r\n            android:layout_width=\"240dp\"\r\n            android:layout_height=\"match_parent\"\r\n            android:gravity=\"center\"\r\n            android:text=\"帖子\"\r\n            android:textColor=\"@color/black\"\r\n            android:textSize=\"18sp\"\r\n            android:textStyle=\"bold\" />\r\n\r\n\r\n    </androidx.appcompat.widget.Toolbar>\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:orientation=\"horizontal\">\r\n\r\n        <ImageButton\r\n            android:layout_marginTop=\"10dp\"\r\n            android:layout_marginLeft=\"8dp\"\r\n            android:layout_marginRight=\"8dp\"\r\n            android:background=\"@drawable/search\"\r\n            android:layout_width=\"30dp\"\r\n            android:layout_height=\"30dp\" />\r\n        <EditText\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"45dp\"\r\n            android:hint=\"输入关键字\" />\r\n    </LinearLayout>\r\n\r\n    <com.scwang.smartrefresh.layout.SmartRefreshLayout\r\n        xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n        android:id=\"@+id/srl\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n\r\n\r\n        <com.scwang.smartrefresh.layout.header.BezierRadarHeader\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\" />\r\n        <ListView\r\n            android:id=\"@+id/lv_article\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"/>\r\n         <com.scwang.smartrefresh.layout.footer.BallPulseFooter\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\" />\r\n    </com.scwang.smartrefresh.layout.SmartRefreshLayout>\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_post.xml	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ app/src/main/res/layout/activity_post.xml	(date 1607673835566)
+@@ -49,10 +49,10 @@
+         <com.scwang.smartrefresh.layout.header.BezierRadarHeader
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+-        <ListView
++        <androidx.recyclerview.widget.RecyclerView
+             android:id="@+id/lv_article"
+             android:layout_width="match_parent"
+-            android:layout_height="match_parent"/>
++            android:layout_height="wrap_content"/>
+          <com.scwang.smartrefresh.layout.footer.BallPulseFooter
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+Index: app/src/main/java/com/example/pet/other/entity/Tips.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.other.entity;\r\n\r\nimport android.graphics.Bitmap;\r\n\r\npublic class Tips {\r\n    private int id;\r\n    private int userId;\r\n    private String userName;\r\n    private Bitmap userHead;\r\n    private String time;\r\n    private String topic;\r\n    private String title;\r\n    private String text;\r\n    private Bitmap thumbnail;\r\n    private int likes;\r\n    private int comments;\r\n    private int forwards;\r\n    private String imagepath;\r\n    private String headImagepath;\r\n\r\n    public String getHeadImagepath() {\r\n        return headImagepath;\r\n    }\r\n\r\n    public void setHeadImagepath(String headImagepath) {\r\n        this.headImagepath = headImagepath;\r\n    }\r\n\r\n    public String getImagepath() {\r\n        return imagepath;\r\n    }\r\n\r\n    public void setImagepath(String imagepath) {\r\n        this.imagepath = imagepath;\r\n    }\r\n//    public Tips(int id, int userId, String userName, Bitmap userHead, String time, String topic, String title, String text, Bitmap thumbnail, int likes, int comments, int forwards) {\r\n//        this.id = id;\r\n//        this.userId = userId;\r\n//        this.userName = userName;\r\n//        this.userHead = userHead;\r\n//        this.time = time;\r\n//        this.topic = topic;\r\n//        this.title = title;\r\n//        this.text = text;\r\n//        this.thumbnail = thumbnail;\r\n//        this.likes = likes;\r\n//        this.comments = comments;\r\n//        this.forwards = forwards;\r\n//    }\r\n\r\n    public int getId() {\r\n        return id;\r\n    }\r\n\r\n    public void setId(int id) {\r\n        this.id = id;\r\n    }\r\n\r\n    public int getUserId() {\r\n        return userId;\r\n    }\r\n\r\n    public void setUserId(int userId) {\r\n        this.userId = userId;\r\n    }\r\n\r\n    public String getUserName() {\r\n        return userName;\r\n    }\r\n\r\n    public void setUserName(String userName) {\r\n        this.userName = userName;\r\n    }\r\n\r\n    public Bitmap getUserHead() {\r\n        return userHead;\r\n    }\r\n\r\n    public void setUserHead(Bitmap userHead) {\r\n        this.userHead = userHead;\r\n    }\r\n\r\n    public String getTime() {\r\n        return time;\r\n    }\r\n\r\n    public void setTime(String time) {\r\n        this.time = time;\r\n    }\r\n\r\n    public String getTopic() {\r\n        return topic;\r\n    }\r\n\r\n    public void setTopic(String topic) {\r\n        this.topic = topic;\r\n    }\r\n\r\n    public String getTitle() {\r\n        return title;\r\n    }\r\n\r\n    public void setTitle(String title) {\r\n        this.title = title;\r\n    }\r\n\r\n    public String getText() {\r\n        return text;\r\n    }\r\n\r\n    public void setText(String text) {\r\n        this.text = text;\r\n    }\r\n\r\n    public Bitmap getThumbnail() {\r\n        return thumbnail;\r\n    }\r\n\r\n    public void setThumbnail(Bitmap thumbnail) {\r\n        this.thumbnail = thumbnail;\r\n    }\r\n\r\n    public int getLikes() {\r\n        return likes;\r\n    }\r\n\r\n    public void setLikes(int likes) {\r\n        this.likes = likes;\r\n    }\r\n\r\n    public int getComments() {\r\n        return comments;\r\n    }\r\n\r\n    public void setComments(int comments) {\r\n        this.comments = comments;\r\n    }\r\n\r\n    public int getForwards() {\r\n        return forwards;\r\n    }\r\n\r\n    public void setForwards(int forwards) {\r\n        this.forwards = forwards;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Tips{\" +\r\n                \"id=\" + id +\r\n                \", userId=\" + userId +\r\n                \", userName='\" + userName + '\\'' +\r\n                \", userHead=\" + userHead +\r\n                \", time='\" + time + '\\'' +\r\n                \", topic='\" + topic + '\\'' +\r\n                \", title='\" + title + '\\'' +\r\n                \", text='\" + text + '\\'' +\r\n                \", thumbnail=\" + thumbnail +\r\n                \", likes=\" + likes +\r\n                \", comments=\" + comments +\r\n                \", forwards=\" + forwards +\r\n                \", imagepath='\" + imagepath + '\\'' +\r\n                '}';\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/other/entity/Tips.java	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ app/src/main/java/com/example/pet/other/entity/Tips.java	(date 1607675087097)
+@@ -2,6 +2,8 @@
+ 
+ import android.graphics.Bitmap;
+ 
++import java.util.Objects;
++
+ public class Tips {
+     private int id;
+     private int userId;
+@@ -150,16 +152,40 @@
+                 "id=" + id +
+                 ", userId=" + userId +
+                 ", userName='" + userName + '\'' +
+-                ", userHead=" + userHead +
++
+                 ", time='" + time + '\'' +
+                 ", topic='" + topic + '\'' +
+                 ", title='" + title + '\'' +
+                 ", text='" + text + '\'' +
+-                ", thumbnail=" + thumbnail +
++
+                 ", likes=" + likes +
+                 ", comments=" + comments +
+                 ", forwards=" + forwards +
+                 ", imagepath='" + imagepath + '\'' +
+                 '}';
+     }
++
++    @Override
++    public boolean equals(Object o) {
++        if (this == o) return true;
++        if (o == null || getClass() != o.getClass()) return false;
++        Tips tips = (Tips) o;
++        return id == tips.id &&
++                userId == tips.userId &&
++                likes == tips.likes &&
++                comments == tips.comments &&
++                forwards == tips.forwards &&
++                Objects.equals(userName, tips.userName) &&
++                Objects.equals(time, tips.time) &&
++                Objects.equals(topic, tips.topic) &&
++                Objects.equals(title, tips.title) &&
++                Objects.equals(text, tips.text) &&
++                Objects.equals(imagepath, tips.imagepath) &&
++                Objects.equals(headImagepath, tips.headImagepath);
++    }
++
++    @Override
++    public int hashCode() {
++        return Objects.hash(id, userId, userName, userHead, time, topic, title, text, thumbnail, likes, comments, forwards, imagepath, headImagepath);
++    }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/pet/other/entity/Address.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/other/entity/Address.java	(date 1607572509685)
++++ app/src/main/java/com/example/pet/other/entity/Address.java	(date 1607572509685)
+@@ -0,0 +1,58 @@
++package com.example.pet.other.entity;
++
++public class Address {
++    private int id;
++    private String address;
++    private String people;
++    private String tel;
++    private int ispost;
++    private int userid;
++
++    public int getId() {
++        return id;
++    }
++
++    public void setId(int id) {
++        this.id = id;
++    }
++
++    public String getAddress() {
++        return address;
++    }
++
++    public void setAddress(String address) {
++        this.address = address;
++    }
++
++    public String getPeople() {
++        return people;
++    }
++
++    public void setPeople(String people) {
++        this.people = people;
++    }
++
++    public String getTel() {
++        return tel;
++    }
++
++    public void setTel(String tel) {
++        this.tel = tel;
++    }
++
++    public int getIspost() {
++        return ispost;
++    }
++
++    public void setIspost(int ispost) {
++        this.ispost = ispost;
++    }
++
++    public int getUserid() {
++        return userid;
++    }
++
++    public void setUserid(int userid) {
++        this.userid = userid;
++    }
++}
+Index: app/src/main/java/com/example/pet/nursing/StartActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pet.nursing;\r\n\r\nimport android.content.Intent;\r\nimport android.graphics.Color;\r\nimport android.os.Build;\r\nimport android.os.Bundle;\r\nimport android.os.Handler;\r\nimport android.os.Message;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.AdapterView;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.ListView;\r\nimport android.widget.RadioGroup;\r\nimport android.widget.RelativeLayout;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.RequiresApi;\r\nimport androidx.appcompat.app.AlertDialog;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.localbroadcastmanager.content.LocalBroadcastManager;\r\n\r\nimport com.example.pet.R;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class StartActivity extends AppCompatActivity {\r\n    private ListView addlv;\r\n    private RelativeLayout choice;\r\n    private HisaddAdapter hadapter;\r\n    private RadioGroup yesno;\r\n    private List<HisAddress> addlist = new ArrayList<>();\r\n    private TextView histv;\r\n    private TextView add;\r\n    private EditText men;\r\n    private EditText peo;\r\n    private EditText tel;\r\n    private Button btnsure;\r\n    private Handler handler = new Handler() {\r\n        public void handleMessage(Message msg) {\r\n            histv.setText(\"历史地址\");\r\n            findViews();\r\n        }\r\n    };\r\n    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_start);\r\n        if (Build.VERSION.SDK_INT >= 21) {   //只有5.0及以上系统才支持，因此这里先进行了一层if判断\r\n            View decorView = getWindow().getDecorView();\r\n            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN\r\n                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE    //设置为全屏显示，必须这两行代码一起才能生效\r\n                    |View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;  //因为背景为浅色，设置通知栏字体颜色为深色\r\n            decorView.setSystemUiVisibility(option);\r\n            getWindow().setStatusBarColor(Color.TRANSPARENT);//设置为透明\r\n        }\r\n        getViews();\r\n        histv.setText(null);\r\n        initData(\"\");\r\n        btnsure.setEnabled(false);\r\n        Clicklistener l = new Clicklistener();\r\n        choice.setOnClickListener(l);\r\n        yesno.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {\r\n            @Override\r\n            public void onCheckedChanged(RadioGroup group, int checkedId) {\r\n                switch (checkedId){\r\n                    case R.id.yes:\r\n                        btnsure.setEnabled(true);\r\n                        //上传数据库位置信息\r\n\r\n                        break;\r\n                    case R.id.no:\r\n                        btnsure.setEnabled(true);\r\n                        break;\r\n                }\r\n            }\r\n        });\r\n    }\r\n    class Clicklistener implements View.OnClickListener {\r\n        public void onClick(View v) {\r\n            switch (v.getId()) {\r\n                case R.id.choice:\r\n                    Choice();\r\n                    break;\r\n            }\r\n        }\r\n    }\r\n    private void Choice() {\r\n        Intent i = new Intent(this,ChoiceActivity.class);\r\n        startActivity(i);\r\n    }\r\n    private void getViews() {\r\n        choice = findViewById(R.id.choice);\r\n        btnsure = findViewById(R.id.btnsure);\r\n        yesno = findViewById(R.id.yesno);\r\n        addlv = findViewById(R.id.lvhis);\r\n        add = findViewById(R.id.newstart);\r\n        add.setText(AddressInfo.START);\r\n        men = findViewById(R.id.startmen);\r\n        peo = findViewById(R.id.startpeo);\r\n        tel = findViewById(R.id.starttel);\r\n        histv = findViewById(R.id.tvhis);\r\n    }\r\n\r\n    public void sureadd(View view) {\r\n        if(add.getText().toString().equals(\"\") || men.getText().toString().equals(\"\") || peo.getText().toString().equals(\"\") || tel.getText().toString().equals(\"\")) {\r\n            AlertDialog.Builder builder = new AlertDialog.Builder(this);\r\n            builder.setTitle(\"提示\");//标题\r\n            builder.setMessage(\"信息填写不全\");//显示的提示内容\r\n            builder.setPositiveButton(\"确定\", null);\r\n            AlertDialog alertDialog = builder.create();\r\n            alertDialog.show();\r\n        }\r\n        else{\r\n            AddressInfo.START = add.getText().toString() + men.getText().toString();\r\n            AddressInfo.STARTPE = peo.getText().toString();\r\n            AddressInfo.STARTTEL = tel.getText().toString();\r\n            Intent intent = new Intent(\"android.intent.action.CART_BROADCAST\");\r\n            intent.putExtra(\"data\",\"refresh\");\r\n            LocalBroadcastManager.getInstance(StartActivity.this).sendBroadcast(intent);\r\n            sendBroadcast(intent);\r\n            finish();\r\n        }\r\n    }\r\n    @Override\r\n    protected void onRestart() {\r\n        super.onRestart();\r\n        Intent intent = getIntent();\r\n        overridePendingTransition(0, 0);\r\n        finish();\r\n        overridePendingTransition(0, 0);\r\n        startActivity(intent);\r\n    }\r\n    public void initData(final String s) {\r\n        new Thread() {\r\n            public void run() {\r\n                //try {\r\n                    /*URL url = new URL( s);\r\n                    url.openStream();\r\n                    URLConnection con = url.openConnection();\r\n                    InputStream in = con.getInputStream();\r\n                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, \"utf-8\"));*/\r\n                    String str = AddressInfo.START + \"!\"+ AddressInfo.STARTPE + \"!\" + AddressInfo.STARTTEL +\"!4#\";\r\n                    /*reader.close();\r\n                    in.close();*/\r\n                    if (str != null) {\r\n                        String[] infos = str.split(\"#\"); //分割字符串获取数据\r\n                        for (int i = 0; i < infos.length; i++) {\r\n                            String[] finfos = infos[i].split(\"!\"); //分割字符串获取数据\r\n                            String add = finfos[0];\r\n                            String name = finfos[1];\r\n                            String tel = finfos[2];\r\n                            int id = Integer.parseInt(finfos[3]);\r\n                            HisAddress ha = new HisAddress(add,name,tel,id);\r\n                            addlist.add(ha);\r\n                        }\r\n                        Message msg = new Message();\r\n                        handler.sendMessage(msg);\r\n                    }\r\n                } /*catch (MalformedURLException e) {\r\n                    e.printStackTrace();\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }*/\r\n            //}\r\n        }.start();\r\n    }\r\n\r\n    public void findViews() {\r\n        addlv = findViewById(R.id.lvhis);\r\n        hadapter = new HisaddAdapter(this, R.layout.adapter_historyadd, addlist);\r\n        addlv.setAdapter(hadapter);\r\n        addlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {\r\n            @Override\r\n            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {\r\n                AddressInfo.START = addlist.get(position).getAdd();\r\n                AddressInfo.STARTPE = addlist.get(position).getName();\r\n                AddressInfo.STARTTEL = addlist.get(position).getTel();\r\n                finish();\r\n            }\r\n        });\r\n    }\r\n\r\n    public void back(View view) {\r\n        Intent intent = new Intent(\"android.intent.action.CART_BROADCAST\");\r\n        intent.putExtra(\"data\",\"refresh\");\r\n        LocalBroadcastManager.getInstance(StartActivity.this).sendBroadcast(intent);\r\n        sendBroadcast(intent);\r\n        finish();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/pet/nursing/StartActivity.java	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ app/src/main/java/com/example/pet/nursing/StartActivity.java	(date 1607573779246)
+@@ -22,7 +22,19 @@
+ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+ 
+ import com.example.pet.R;
++import com.example.pet.other.Cache;
++import com.example.pet.other.entity.Address;
++import com.google.gson.Gson;
++import com.google.gson.JsonArray;
+ 
++import org.json.JSONArray;
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import java.io.IOException;
++import java.io.InputStream;
++import java.net.MalformedURLException;
++import java.net.URL;
+ import java.util.ArrayList;
+ import java.util.List;
+ 
+@@ -143,24 +155,53 @@
+                     URLConnection con = url.openConnection();
+                     InputStream in = con.getInputStream();
+                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));*/
+-                    String str = AddressInfo.START + "!"+ AddressInfo.STARTPE + "!" + AddressInfo.STARTTEL +"!4#";
++                   // String str = AddressInfo.START + "!"+ AddressInfo.STARTPE + "!" + AddressInfo.STARTTEL +"!4#";
+                     /*reader.close();
+                     in.close();*/
+-                    if (str != null) {
+-                        String[] infos = str.split("#"); //分割字符串获取数据
+-                        for (int i = 0; i < infos.length; i++) {
+-                            String[] finfos = infos[i].split("!"); //分割字符串获取数据
+-                            String add = finfos[0];
+-                            String name = finfos[1];
+-                            String tel = finfos[2];
+-                            int id = Integer.parseInt(finfos[3]);
+-                            HisAddress ha = new HisAddress(add,name,tel,id);
+-                            addlist.add(ha);
+-                        }
+-                        Message msg = new Message();
++//                    if (str != null) {
++//                        String[] infos = str.split("#"); //分割字符串获取数据
++//                        for (int i = 0; i < infos.length; i++) {
++//                            String[] finfos = infos[i].split("!"); //分割字符串获取数据
++//                            String add = finfos[0];
++//                            String name = finfos[1];
++//                            String tel = finfos[2];
++//                            int id = Integer.parseInt(finfos[3]);
++//                            HisAddress ha = new HisAddress(add,name,tel,id);
++//                            addlist.add(ha);
++//                        }
++//                        Message msg = new Message();
++//                        handler.sendMessage(msg);
++//                    }
++                try {
++                    URL url = new URL(Cache.MY_URL+"MyAddress?ispost=1&userId="+Cache.user.getUserId());
++                    InputStream in = url.openStream();
++                    byte[] bytes = new byte[256];
++                    StringBuilder builder = new StringBuilder();
++                    int len =0;
++                    while ((len=in.read(bytes))!=-1){
++                        builder.append(new String(bytes,0,len,"utf-8"));
++                    }
++                    Log.e("StartActivity",builder.toString());
++                    JSONArray array = new JSONArray(builder.toString());
++                    for(int i=0;i<array.length();i++){
++                        JSONObject object = array.getJSONObject(i);
++                        String  add = object.getString("address");
++                        String name = object.getString("people");
++                        String tel = object.getString("tel");
++                        HisAddress address =new HisAddress(add,name,tel,4);
++                        addlist.add(address);
++                    }
++                    Message msg = new Message();
+                         handler.sendMessage(msg);
+-                    }
+-                } /*catch (MalformedURLException e) {
++                } catch (MalformedURLException e) {
++                    e.printStackTrace();
++                } catch (IOException e) {
++                    e.printStackTrace();
++                } catch (JSONException e) {
++                    e.printStackTrace();
++                }
++
++            } /*catch (MalformedURLException e) {
+                     e.printStackTrace();
+                 } catch (IOException e) {
+                     e.printStackTrace();
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\r\napply plugin: 'com.mob.sdk'\r\nMobSDK {\r\n    appKey \"31a0f08bbf072\"\r\n    appSecret \"a79d0868be86ae529a738c482cad4829\"\r\n    SMSSDK {}\r\n    fp true //严格模式\r\n}\r\nandroid {\r\n    sourceSets {\r\n        main {\r\n            jniLibs.srcDirs = ['libs']\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility 1.8\r\n        targetCompatibility 1.8\r\n    }\r\n    compileSdkVersion 30\r\n    buildToolsVersion \"30.0.2\"\r\n    defaultConfig {\r\n        applicationId \"com.example.pet\"\r\n        minSdkVersion 19\r\n        targetSdkVersion 30\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n        multiDexEnabled true\r\n    }\r\n}\r\n\r\ndependencies {\r\n    //TabHost相关\r\n    implementation 'com.google.android.material:material:1.2.1'\r\n    implementation 'androidx.appcompat:appcompat:1.2.0'\r\n\r\n    implementation 'com.rohit.recycleritemclicksupport:recycleritemclicksupport:1.0.1'\r\n\r\n    //noinspection GradleCompatible\r\n    implementation 'com.android.support:design:26.1.0'\r\n    implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'\r\n    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'\r\n    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-12'\r\n    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'\r\n\r\n    implementation 'org.greenrobot:eventbus:3.1.1'\r\n    //时间选择器\r\n    implementation 'com.contrarywind:Android-PickerView:4.1.9'\r\n    implementation 'com.android.support:multidex:1.0.3'\r\n    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.0'\r\n//    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.0'\r\n    implementation 'com.google.code.gson:gson:2.8.5'\r\n    implementation 'com.squareup.okhttp3:okhttp:3.10.0'\r\n    implementation 'com.github.zcweng:switch-button:0.0.3@aar'\r\n    implementation 'com.zhy:percent-support-extends:1.1.1'\r\n    implementation 'com.youth.banner:banner:1.4.10'\r\n    implementation 'com.github.bumptech.glide:glide:4.11.0'\r\n    implementation 'androidx.recyclerview:recyclerview:1.1.0'\r\n    implementation 'androidx.cardview:cardview:1.0.0'\r\n    implementation 'androidx.viewpager:viewpager:1.0.0'\r\n    implementation 'com.google.android.material:material:1.1.0'\r\n    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'\r\n    implementation 'de.hdodenhof:circleimageview:3.1.0'\r\n    implementation 'com.youth.banner:banner:1.4.10'\r\n    implementation fileTree(dir: 'libs', include: ['*.jar'])\r\n    implementation 'androidx.appcompat:appcompat:1.0.2'\r\n    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'\r\n    implementation 'androidx.legacy:legacy-support-v4:1.0.0'\r\n    testImplementation 'junit:junit:4.12'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.0'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'\r\n    implementation files('libs\\\\BaiduLBS_Android.jar')\r\n    implementation files('libs\\\\jcore-android-2.4.0.jar')\r\n    implementation files('libs\\\\jpush-android-3.6.8.jar')\r\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\r\n    implementation 'androidx.appcompat:appcompat:1.2.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'\r\n    testImplementation 'junit:junit:4.12'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.2'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 47915045f76275f7337415233570ada0cd6fe04c)
++++ app/build.gradle	(date 1607674711948)
+@@ -35,7 +35,6 @@
+     implementation 'androidx.appcompat:appcompat:1.2.0'
+ 
+     implementation 'com.rohit.recycleritemclicksupport:recycleritemclicksupport:1.0.1'
+-
+     //noinspection GradleCompatible
+     implementation 'com.android.support:design:26.1.0'
+     implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'

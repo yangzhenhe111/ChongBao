@@ -6,31 +6,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,8 +35,6 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.example.pet.R;
-import com.example.pet.my.PetActivity;
-import com.example.pet.my.SetPassword;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.User;
 import com.google.gson.Gson;
@@ -53,19 +43,14 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import cn.jiguang.net.HttpUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -75,8 +60,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static com.luck.picture.lib.config.PictureConfig.REQUEST_CAMERA;
 
 public class EditInfo extends AppCompatActivity {
     private User user = new User();
@@ -117,6 +100,8 @@ public class EditInfo extends AppCompatActivity {
                 Cache.user.setUserSex(upSex.getText().toString());
                 Cache.user.setUserName(upName.getText().toString());
                 Cache.user.setUserAutograph(etInput.getText().toString());
+                Bitmap bitmap = BitmapFactory.decodeFile(image_path);
+                Cache.user.setPhoto(bitmap);
                 Toast.makeText(EditInfo.this,"上传成功",Toast.LENGTH_SHORT);
                 EditInfo.this.finish();
             }else {
@@ -219,7 +204,7 @@ public class EditInfo extends AppCompatActivity {
         pvCustomOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
-               //返回的分别是三个级别的选中位置
+                //返回的分别是三个级别的选中位置
                 String tx = cardItem.get(options1);
                 upSex.setText(tx);
 //                Cache.user.setUserSex(tx);
@@ -433,10 +418,10 @@ public class EditInfo extends AppCompatActivity {
                 .isCamera(true)// 是否显示拍照按钮 true or false
                 .imageFormat(PictureMimeType.JPEG)// 拍照保存图片格式后缀,默认jpeg
                 .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
-                .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填
+//                .setOutputCameraPath(Const.getImgPath())// 自定义拍照保存路径,可不填
                 .isEnableCrop(true)// 是否裁剪 true or false
                 .isCompress(true)// 是否压缩 true or false
-                .compressSavePath(Const.getImgPath())//压缩图片保存地址
+//                .compressSavePath(Const.getImgPath())//压缩图片保存地址
                 .freeStyleCropEnabled(true)// 裁剪框是否可拖拽 true or false
                 .showCropGrid(true)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false    true or false
                 .synOrAsy(false)
@@ -451,7 +436,12 @@ public class EditInfo extends AppCompatActivity {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                    image_path = selectList.get(0).getCompressPath();
+                    LocalMedia localMedia = selectList.get(0);
+                    if (localMedia.isCompressed()){
+                        image_path = localMedia.getCompressPath();
+                    }else {
+                        image_path = localMedia.getPath();
+                    }
                     upPhoto.setImageURI(Uri.parse(image_path));
                     //上传图片
 //                    Cache.user.setPicturePath(image_path);

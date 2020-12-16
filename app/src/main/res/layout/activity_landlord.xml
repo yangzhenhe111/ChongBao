@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/page4"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
         <RelativeLayout
@@ -20,31 +21,52 @@
                         android:id="@+id/btn_landlord_back"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/back"/>
+                        android:src="@drawable/back1"/>
                     <Button
+                        android:id="@+id/btn_follow"
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:background="#C6E2FF"
-                        android:text="＋关注"
+                        android:background="@color/White"
                         android:textStyle="bold"
                         android:textSize="20dp"/>
                 </RelativeLayout>
-                <com.example.pet.forum.RoundImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/kobe"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="177dp"
+                        android:scaleType="fitXY"
+                        android:background="@drawable/lz"/>
+                    <com.example.pet.forum.RoundImageView
+                        android:id="@+id/iv_head"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:src="@mipmap/icon_user"/>
+                    <Button
+                        android:id="@+id/btn_private_letter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="私信"
+                        android:background="#FFC0CB"
+                        android:textSize="20dp"
+                        android:layout_marginTop="20dp"/>
+                </RelativeLayout>
                 <TextView
+                    android:id="@+id/landlordname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="罗润泽"
                     android:textSize="24sp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="他/她发布的贴子"
+                    android:text="TA发布的贴子"
+                    android:textColor="#000000"
                     android:textSize="28dp"
                     android:layout_marginTop="30dp"
                     android:layout_gravity="center"/>
@@ -58,11 +80,9 @@
                 android:layout_marginRight="15dp">
 
                 <com.example.pet.forum.MyListView
-                    android:id="@+id/lv_landlord_tips"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:id="@+id/lv_landlord"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"/>
             </LinearLayout>
         </RelativeLayout>
 </ScrollView>

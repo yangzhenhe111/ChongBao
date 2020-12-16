@@ -8,19 +8,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.pet.R;
+import com.example.pet.chat.SharedPrefHelper;
+import com.example.pet.my.editinfo.EditAddress;
 import com.example.pet.my.editinfo.EditInfo;
 import com.example.pet.my.order.MyOrderActivity;
+import com.example.pet.nursing.AddressInfo;
+import com.example.pet.nursing.StartActivity;
 import com.example.pet.other.Cache;
 
 import java.io.File;
@@ -28,6 +35,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.im.android.api.JMessageClient;
 import cn.smssdk.ui.companent.CircleImageView;
 
 public class MyFragment extends Fragment {
@@ -38,17 +46,25 @@ public class MyFragment extends Fragment {
     private List<My> myList1 = new ArrayList<>();
     private List<My> myList2 = new ArrayList<>();
     private List<My> myList3 = new ArrayList<>();
-
+    private SharedPrefHelper helper;
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my, container, false);
+        helper = SharedPrefHelper.getInstance();
         login = view.findViewById(R.id.fragment_login);
         count = view.findViewById(R.id.fragment_count);
         photo = view.findViewById(R.id.user_photo);
+        if (Cache.user != null) {
+            login.setText(Cache.user.getUserName());
+            count.setText(Cache.user.getUserPhone());
+            if(Cache.user.getPhoto()!=null){
+                photo.setImageBitmap(Cache.user.getPhoto());
+            }
+        }
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Login.class);
+                Intent intent = new Intent(getContext(),Login.class);
                 startActivity(intent);
             }
         });
@@ -56,13 +72,16 @@ public class MyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(Cache.user !=null){
-                Intent intent = new Intent(getContext(),EditInfo.class);
-                startActivity(intent);}
+                    Intent intent = new Intent(getContext(), EditInfo.class);
+                    startActivity(intent);}
                 else {
                     showLoginToast();
                 }
             }
         });
+
+        ScrollView sv = (ScrollView) view.findViewById(R.id.act_solution_4_sv);
+        sv.smoothScrollTo(0, 0);
         //适配第一个listView
         MyAdapter myAdapter1 = new MyAdapter(view.getContext(), R.layout.my_listview, myList1);
         ListView listView1 = (ListView) view.findViewById(R.id.my_listview1);
@@ -136,17 +155,8 @@ public class MyFragment extends Fragment {
                             startActivity(intent1);
                             break;
                     }
-                }
-                else {
-                    switch (position) {
-                        case 0:
-                            showLoginToast();
-                            break;
-                        case 1:
-                            Intent intent1 = new Intent(getContext(), AboutUs.class);
-                            startActivity(intent1);
-                            break;
-                    }
+                }else{
+                    showLoginToast();
                 }
             }
         });
@@ -176,19 +186,6 @@ public class MyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-    }
-
-    //通过生命周期方法 获得当前用户数据
-    @Override
-    public void onStart() {
-        if (Cache.user != null) {
-            login.setText(Cache.user.getUserName());
-            count.setText(Cache.user.getUserPhone());
-            if(Cache.user.getPhoto()!=null){
-            photo.setImageBitmap(Cache.user.getPhoto());
-            }
-        }
-        super.onStart();
     }
 
     public void showLoginToast() {

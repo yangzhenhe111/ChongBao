@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="black_transparent">#80000000</color>
+    <color name="gray">#cccccc</color>
+    <color name="bigred">#C91623</color>
+    <color name="hintcolor">#b6b6b6</color>
+    <color name="loginline">#45bd73</color>
+    <color name="blue">#00a0e9</color>
+    <color name="oriange">#ff9a00</color>
+    <color name="dark">#424242</color>
+    <color name="grey">#8C8C8C</color>
+    <color name="light_red">#fa4b4b</color>
+    <color name="theme_lanse">#3F51B5</color>
+    <color name="colorText">#66000000</color>
+    <color name="color_shape_start">#5D8DF6</color>
+    <color name="color_shape_end">#60B7F8</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="color_shape_right">#5CBAF7</color>
+    <color name="button_delect">#E96B5C</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
     <color name="page4">#EDEDED</color>
     <color name="booking_backgound">#F0EFF4</color>
     <color name="green_dot">#07C160</color>
@@ -36,4 +58,6 @@
     <color name="gray61">#9C9C9C</color>
     <color name="gray81">#CFCFCF</color>
     <color name="orange">#FFA500</color>
+    <color name="followBlue">#C6E2FF</color>
+    <color name="followGray">#DCDCDC</color>
 </resources>
