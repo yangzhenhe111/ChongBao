@@ -232,6 +232,10 @@ public class StartActivity extends AppCompatActivity {
                 AddressInfo.START = addlist.get(position).getAdd();
                 AddressInfo.STARTPE = addlist.get(position).getName();
                 AddressInfo.STARTTEL = addlist.get(position).getTel();
+                Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                intent.putExtra("data", "refresh");
+                LocalBroadcastManager.getInstance(StartActivity.this).sendBroadcast(intent);
+                sendBroadcast(intent);
                 finish();
             }
         });

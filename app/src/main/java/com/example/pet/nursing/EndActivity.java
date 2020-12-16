@@ -202,6 +202,10 @@ public class EndActivity extends AppCompatActivity {
                 AddressInfo.END = addlist.get(position).getAdd();
                 AddressInfo.ENDPE = addlist.get(position).getName();
                 AddressInfo.ENDTEL = addlist.get(position).getTel();
+                Intent intent = new Intent("android.intent.action.CART_BROADCAST");
+                intent.putExtra("data", "refresh");
+                LocalBroadcastManager.getInstance(EndActivity.this).sendBroadcast(intent);
+                sendBroadcast(intent);
                 finish();
             }
         });
