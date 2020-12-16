@@ -146,9 +146,8 @@ public class Login extends BaseActivity {
                                     mInputLayout.setVisibility(View.INVISIBLE);
                                     Cache.userPhone = userName;
                                     Log.e("Cache.phone:::::", Cache.userPhone);
-
-                                    /*Intent intent2 = new Intent(Login.this, MyUserService.class);
-                                    startService(intent2);*/
+                                    Intent intent2 = new Intent(Login.this, MyUserService.class);
+                                    startService(intent2);
                                 }
                             }
                         });
@@ -197,12 +196,6 @@ public class Login extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-//                Intent intent1 = new Intent(Login.this, MyDataService.class);
-//                startService(intent1);
-                /*Intent intent1 = new Intent(Login.this, MyDataService.class);
-                startService(intent1);*/
-                /*Intent intent1 = new Intent(Login.this, MyDataService.class);
-                startService(intent1);*/
                 Intent intent = new Intent(Login.this, MainActivity.class);
                 intent.putExtra("LOGINTYPE", type);
                 startActivity(intent);

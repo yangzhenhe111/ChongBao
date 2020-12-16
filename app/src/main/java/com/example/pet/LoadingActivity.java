@@ -13,7 +13,9 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.example.pet.chat.SharedPrefHelper;
 import com.example.pet.my.Login;
+import com.example.pet.my.MyUserService;
 import com.example.pet.nursing.StartActivity;
+import com.example.pet.other.Cache;
 import com.example.pet.other.MainActivity;
 
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
@@ -54,9 +56,7 @@ public class LoadingActivity extends AppCompatActivity {
                             }
                         }
                     });
-
                 }
-
             }
         }, 100);
     }
@@ -89,6 +89,9 @@ public class LoadingActivity extends AppCompatActivity {
             @Override
             public void gotResult(int i, String s, UserInfo userInfo) {
                 if (i==0) {
+                    Cache.userPhone = userInfo.getUserName();
+                    Intent intent2 = new Intent(LoadingActivity.this, MyUserService.class);
+                    startService(intent2);
                     helper.setNakeName(userInfo.getNickname());
                     helper.setUserId(userInfo.getUserName());
                 }
