@@ -2,14 +2,12 @@ package com.example.pet.forum;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
@@ -33,7 +30,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class PublishActivity extends AppCompatActivity {
@@ -47,7 +43,6 @@ public class PublishActivity extends AppCompatActivity {
     private TextView tv_add_topic;
     private Button btn_topic;
     private ImageView upload;
-    private Button oneeee;
 
     private Handler handler = new Handler(){
         @Override
@@ -68,13 +63,6 @@ public class PublishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
         btn_back = findViewById(R.id.btn_publish_back);
-        oneeee = findViewById(R.id.one);
-        oneeee.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -204,7 +204,7 @@ public class EditInfo extends AppCompatActivity {
         pvCustomOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
-               //返回的分别是三个级别的选中位置
+                //返回的分别是三个级别的选中位置
                 String tx = cardItem.get(options1);
                 upSex.setText(tx);
 //                Cache.user.setUserSex(tx);

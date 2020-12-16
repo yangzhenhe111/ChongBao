@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.icu.util.EthiopicCalendar;
-import android.opengl.ETC1Util;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;

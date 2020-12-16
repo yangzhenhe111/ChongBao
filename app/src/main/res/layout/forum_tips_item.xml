@@ -10,7 +10,7 @@
         android:layout_height="60dp"
         android:orientation="horizontal">
 
-        <ImageView
+        <cn.smssdk.ui.companent.CircleImageView
             android:id="@+id/iv_tips_landlordhead"
             android:layout_width="50dp"
             android:layout_height="50dp"

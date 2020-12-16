@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -112,7 +113,7 @@ public class Login extends BaseActivity {
         }
     }
 
-    private void initLogin(String userName, String passWord, final int type){
+    private void initLogin(String userName, String passWord, final int type) {
         JMessageClient.login(userName, passWord, new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
@@ -131,17 +132,19 @@ public class Login extends BaseActivity {
                         sharedPrefHelper.setUserId(userName);
                         sharedPrefHelper.setUserPW(passWord);
                         LoginEvent event = new LoginEvent("userName", true);
-                        JAnalyticsInterface.onEvent(getContext(),event);
+                        JAnalyticsInterface.onEvent(getContext(), event);
                         JMessageClient.getUserInfo(userName, new GetUserInfoCallback() {
                             @Override
                             public void gotResult(int i, String s, UserInfo userInfo) {
-                                if (i==0) {
+                                if (i == 0) {
                                     mPsw.setVisibility(View.INVISIBLE);
-                                    inputAnimator(mInputLayout, mWidth, mHeight,type);
+                                    inputAnimator(mInputLayout, mWidth, mHeight, type);
                                     progress.setVisibility(View.VISIBLE);
                                     progressAnimator(progress);
                                     mInputLayout.setVisibility(View.INVISIBLE);
                                     Cache.userPhone = userName;
+                                    Log.e("Cache.phone:::::", Cache.userPhone);
+
                                     Intent intent2 = new Intent(Login.this, MyUserService.class);
                                     startService(intent2);
                                 }
@@ -152,15 +155,17 @@ public class Login extends BaseActivity {
             }
         });
     }
+
     private void loginService() {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                initLogin(etName.getText().toString(),etPassword.getText().toString(),0);
+                initLogin(etName.getText().toString(), etPassword.getText().toString(), 0);
             }
         }, 1800);
     }
-    private void inputAnimator(final View view, float w, float h,int type) {
+
+    private void inputAnimator(final View view, float w, float h, int type) {
         AnimatorSet set = new AnimatorSet();
         ValueAnimator animator = ValueAnimator.ofFloat(0, w);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -174,7 +179,7 @@ public class Login extends BaseActivity {
             }
         });
         ObjectAnimator animator2 = ObjectAnimator.ofFloat(mInputLayout, "scaleX", 1f, 0.5f);
-        set.setDuration(0);
+        set.setDuration(1500);
         set.setInterpolator(new AccelerateDecelerateInterpolator());
         set.playTogether(animator, animator2);
         set.start();
@@ -190,6 +195,8 @@ public class Login extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
+//                Intent intent1 = new Intent(Login.this, MyDataService.class);
+//                startService(intent1);
                 /*Intent intent1 = new Intent(Login.this, MyDataService.class);
                 startService(intent1);*/
                 Intent intent = new Intent(Login.this, MainActivity.class);

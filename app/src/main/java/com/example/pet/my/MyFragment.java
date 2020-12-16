@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,9 +21,9 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.example.pet.MainActivity;
 import com.example.pet.R;
 import com.example.pet.chat.SharedPrefHelper;
+import com.example.pet.my.editinfo.EditAddress;
 import com.example.pet.my.editinfo.EditInfo;
 import com.example.pet.my.order.MyOrderActivity;
 import com.example.pet.nursing.AddressInfo;
@@ -60,12 +61,19 @@ public class MyFragment extends Fragment {
                 photo.setImageBitmap(Cache.user.getPhoto());
             }
         }
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),Login.class);
+                startActivity(intent);
+            }
+        });
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Cache.user !=null){
-                Intent intent = new Intent(getContext(),EditInfo.class);
-                startActivity(intent);}
+                    Intent intent = new Intent(getContext(), EditInfo.class);
+                    startActivity(intent);}
                 else {
                     showLoginToast();
                 }
@@ -74,7 +82,6 @@ public class MyFragment extends Fragment {
 
         ScrollView sv = (ScrollView) view.findViewById(R.id.act_solution_4_sv);
         sv.smoothScrollTo(0, 0);
-
         //适配第一个listView
         MyAdapter myAdapter1 = new MyAdapter(view.getContext(), R.layout.my_listview, myList1);
         ListView listView1 = (ListView) view.findViewById(R.id.my_listview1);
@@ -148,17 +155,8 @@ public class MyFragment extends Fragment {
                             startActivity(intent1);
                             break;
                     }
-                }
-                else {
-                    switch (position) {
-                        case 0:
-                            showLoginToast();
-                            break;
-                        case 1:
-                            Intent intent1 = new Intent(getActivity(),AcountManage.class);
-                            startActivity(intent1);
-                            break;
-                    }
+                }else{
+                    showLoginToast();
                 }
             }
         });

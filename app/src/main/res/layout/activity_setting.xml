@@ -27,6 +27,18 @@
         android:background="@color/list_background"
         android:dividerHeight="0.5dp"
         android:divider="@drawable/discover_divier"
+        android:id="@+id/my_listview4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+    <ImageView
+        android:background="@color/contact_background"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <ListView
+        android:background="@color/list_background"
+        android:dividerHeight="0.5dp"
+        android:divider="@drawable/discover_divier"
         android:id="@+id/setting_listview1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

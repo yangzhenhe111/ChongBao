@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.pet.R;
-import com.example.pet.my.editinfo.EditInfo;
 
 import java.util.ArrayList;
 import java.util.List;

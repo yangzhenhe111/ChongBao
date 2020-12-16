@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <Button
             android:id="@+id/pet_update"
             android:layout_width="match_parent"
@@ -21,9 +22,10 @@
             android:textColor="@color/red" />
 
         <ScrollView
+            android:id="@+id/sv_pet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/pet_add">
+            android:layout_above="@id/pet_update">
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -34,14 +36,28 @@
                     android:orientation="vertical"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/delete_pet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/delete"/>
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/pet_photo"
-                        android:onClick="onClicked"
-                        android:layout_width="250dp"
-                        android:layout_height="250dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/bg_circle"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/pet_photo"
+                            android:onClick="onClicked"
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/bg_circle"/>
+
+                    </RelativeLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"

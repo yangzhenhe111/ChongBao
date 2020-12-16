@@ -44,7 +44,6 @@
     <application
         android:name=".chat.BaseApplication"
         android:allowBackup="true"
-        android:icon="@drawable/lastlogo"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -53,17 +52,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".chat.Friends"></activity>
+
+        <activity
+            android:name=".my.editinfo.EditInfo"
+            tools:ignore="MissingClass" />
+        <activity android:name=".chat.Friends" />
         <activity android:name=".chat.MyFollowActivity" />
         <activity android:name=".my.NewPet" />
         <activity android:name=".Start1Activity" />
+        <activity android:name=".LoadingActivity" />
+        <activity android:name=".my.editinfo.AddAddress" />
+        <activity android:name=".my.editinfo.EditAddress" />
+        <activity android:name=".my.AddressManage" />
         <activity android:name=".my.AcountSecurity" />
         <activity android:name=".my.ConnectUs" />
         <activity android:name=".my.order.MyOrderActivity" />
         <activity android:name=".my.OrderComplete" />
-        <activity
-            android:name=".my.editinfo.EditInfo"
-            android:windowSoftInputMode="adjustPan|adjustUnspecified|stateHidden" />
         <activity android:name=".my.FunIntroduction" />
         <activity android:name=".my.AboutUsLaw" />
         <activity android:name=".my.Agreement" />
@@ -101,8 +105,9 @@
         <activity android:name=".nursing.CostActivity" />
         <activity android:name=".forum.SearchResult" />
         <activity android:name=".forum.New_post_detail" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".forum.ShowPhoto"/>
         <activity android:name=".my.AcountManage" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".chat.PullMsgListActivity"/>
         <activity android:name=".chat.AddFriendsActivity"/>
         <activity android:name=".chat.PullMsgListMoreActivity"/>

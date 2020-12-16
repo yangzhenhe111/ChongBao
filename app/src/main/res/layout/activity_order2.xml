@@ -748,7 +748,6 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/order_finish_pet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="鲜花/2kg"

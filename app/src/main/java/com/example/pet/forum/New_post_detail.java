@@ -2,6 +2,7 @@ package com.example.pet.forum;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -14,20 +15,20 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pet.MainActivity;
 import com.example.pet.R;
-import com.example.pet.my.Post;
 import com.example.pet.other.Cache;
 import com.example.pet.other.entity.Comment;
-import com.example.pet.other.entity.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,6 +68,9 @@ public class New_post_detail extends Activity {
     private LinearLayout btn_back;
     private Map<String,Object> maps = new HashMap<>();
     private ArrayList<Comment> arrayList = new ArrayList<>();
+    private int id;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ScrollView scrollView;
 
 
     private Handler handler = new Handler(){
@@ -77,7 +81,7 @@ public class New_post_detail extends Activity {
                     init();
                     break;
                 case 2:
-                    generateUI();
+                    getHeadImages((String) maps.get("head_img_path"));
                     break;
                 case 3:
                     initimg((ArrayList)message.obj);
@@ -86,6 +90,9 @@ public class New_post_detail extends Activity {
                     break;
                 case 5:
                     Toast.makeText(New_post_detail.this,"上传失败",Toast.LENGTH_LONG);
+                    break;
+                case 6:
+                    generateUI();
                     break;
             }
         }
@@ -97,10 +104,33 @@ public class New_post_detail extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post_detail);
 
-        int id = getIntent().getIntExtra("id",0);
+        id = getIntent().getIntExtra("id",0);
+        mSwipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        scrollView = findViewById(R.id.scroll);
 
-        getAllComments(id);
+        mSwipeRefreshLayout.setRefreshing(true);
+        //被刷新时的操作
         getPost(id);
+        getAllComments(id);
+
+        //更新UI
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //更新成功后设置UI，停止更新
+                generateUI();
+                initAdapter();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        },1000);
+        handleDownPullUpdate();
+
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                mSwipeRefreshLayout.setEnabled(scrollView.getScrollY()==0);
+            }
+        });
 
         btn_back = findViewById(R.id.tips_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -125,25 +155,9 @@ public class New_post_detail extends Activity {
         iv_head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Cache.user.getUserId() == Integer.parseInt(String.valueOf(maps.get("user_id")))){
-                    Intent intent = new Intent();
-                    intent.setClass(New_post_detail.this, Post.class);
-                    startActivity(intent);
-                }
-//                else if(Cache.user.getUserId() == 0){
-//                    Intent intent = new Intent();
-//                    intent.setClass(getActivity(), Login.class);
-//                    startActivity(intent);
-//                }
-                else{
-                    Intent intent = new Intent();
-                    intent.setClass(New_post_detail.this,LandlordActivity.class);
-                    intent.putExtra("name", String.valueOf(maps.get("username")));
-                    intent.putExtra("user_id", String.valueOf(maps.get("user_id")));
-                    intent.putExtra("head_path",maps.get("head_img_path").toString());
-                    intent.putExtra("phone", String.valueOf(maps.get("phone")));
-                    startActivity(intent);
-                }
+                Intent intent = new Intent();
+                intent.setClass(New_post_detail.this,LandlordActivity.class);
+                startActivity(intent);
             }
         });
         enter_comment = findViewById(R.id.enter_comment);
@@ -158,10 +172,33 @@ public class New_post_detail extends Activity {
         });
     }
 
+    public void handleDownPullUpdate() {
+        mSwipeRefreshLayout.setEnabled(true);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,R.color.colorPrimary);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSwipeRefreshLayout.setRefreshing(true);
+                //被刷新时的操作
+                getPost(id);
+                getAllComments(id);
+                //更新UI
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //更新成功后设置UI，停止更新
+                        generateUI();
+                        initAdapter();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                },1000);
+            }
+        });
+    }
 
     public void init(){
-        getImages(maps.get("img_path").toString());
-        getHeadImages(maps.get("head_img_path").toString());
+        // object类型不能toString，需要强转
+        getImages((String) maps.get("img_path"));
     }
 
     public void initimg(ArrayList arrayList){
@@ -174,14 +211,15 @@ public class New_post_detail extends Activity {
     }
 
     public void generateUI() {
-        tv_landlordname.setText(maps.get("username").toString());
-        tv_time.setText(maps.get("post_time").toString());
-        btn_topic.setText(maps.get("topic").toString());
-        tv_title.setText(maps.get("post_title").toString());
-        tv_text.setText(maps.get("post_text").toString());
-        tv_likes.setText(maps.get("count_likes").toString());
-        tv_comments.setText(maps.get("count_comments").toString());
-        tv_forwards.setText(maps.get("count_forwards").toString());
+        tv_landlordname.setText((String)maps.get("username"));
+        tv_time.setText((String)maps.get("post_time"));
+        btn_topic.setText((String)maps.get("topic"));
+        tv_title.setText((String)maps.get("post_title"));
+        tv_text.setText((String)maps.get("post_text"));
+        String countLikes = (String) maps.get("count_likes");
+        tv_likes.setText(countLikes);
+        tv_comments.setText((String)maps.get("count_comments"));
+        tv_forwards.setText((String)maps.get("count_forwards"));
         iv_pic.setImageBitmap((Bitmap) maps.get("image"));
         iv_head.setImageBitmap((Bitmap) maps.get("head_image"));
     }
@@ -196,8 +234,7 @@ public class New_post_detail extends Activity {
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     InputStream in = urlConnection.getInputStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(in);
-                    Log.e("bitmap", String.valueOf(bitmap));
-                    maps.put("image",bitmap);
+                    maps.put("image", bitmap);
                     in.close();
                     handler.sendEmptyMessage(2);
                 } catch (MalformedURLException e) {
@@ -219,10 +256,9 @@ public class New_post_detail extends Activity {
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                     InputStream in = urlConnection.getInputStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(in);
-                    Log.e("bitmap", String.valueOf(bitmap));
                     maps.put("head_image",bitmap);
                     in.close();
-                    handler.sendEmptyMessage(2);
+                    handler.sendEmptyMessage(6);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -249,33 +285,28 @@ public class New_post_detail extends Activity {
                         stringBuffer.append(line);
                     }
                     JSONArray jsonArray = new JSONArray(stringBuffer.toString());
-                    Log.e("123", stringBuffer.toString());
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
                     String post_title = jsonObject.getString("post_title");
                     String post_time = jsonObject.getString("post_time");
                     String post_text = jsonObject.getString("post_text");
                     String topic = jsonObject.getString("post_topic");
                     String user_name = jsonObject.getString("user_name");
-                    int user_id = jsonObject.getInt("user_id");
                     int count_likes = jsonObject.getInt("likes");
                     int count_comments = jsonObject.getInt("comments");
                     int count_forwards = jsonObject.getInt("forwards");
                     String img_path = jsonObject.getString("img_path");
                     String head_img_path = jsonObject.getString("user_picture_path");
-                    String phone = jsonObject.getString("phone");
 
-                    maps.put("phone",phone);
                     maps.put("post_title",post_title);
                     maps.put("post_time",post_time);
                     maps.put("post_text",post_text);
                     maps.put("topic",topic);
                     maps.put("username",user_name);
-                    maps.put("count_likes",count_likes);
-                    maps.put("count_comments",count_comments);
-                    maps.put("count_forwards",count_forwards);
+                    maps.put("count_likes",count_likes+"");
+                    maps.put("count_comments",count_comments+"");
+                    maps.put("count_forwards",count_forwards+"");
                     maps.put("img_path",img_path);
                     maps.put("head_img_path",head_img_path);
-                    maps.put("user_id",user_id);
 
                     Message message = handler.obtainMessage();
                     message.what = 1;
@@ -323,7 +354,6 @@ public class New_post_detail extends Activity {
                         comment.setContent(comment_text);
                         comment.setPath(img_path);
                         arrayList.add(comment);
-                        Log.e("allcomments", arrayList.toString());
                         Message message = handler.obtainMessage();
                         message.what = 3;
                         message.obj = arrayList;
@@ -370,7 +400,7 @@ public class New_post_detail extends Activity {
         }
         try {
             latch.await();
-            initAdapter();
+//            initAdapter();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -391,7 +421,6 @@ public class New_post_detail extends Activity {
                     InputStream inputStream = url.openStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
                     String isPublish = bufferedReader.readLine();
-                    Log.e("返回的东西", isPublish);
                     if (isPublish.equals("true")){
                         Message message = handler.obtainMessage();
                         message.what = 4;

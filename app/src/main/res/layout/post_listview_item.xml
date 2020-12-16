@@ -21,12 +21,10 @@
         android:paddingTop="10dp"
         android:orientation="vertical"
         android:paddingLeft="15dp"
-        android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="110dp">
         <RelativeLayout
             android:paddingBottom="10dp"
-            android:id="@+id/re_one"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
