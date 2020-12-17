@@ -10,7 +10,7 @@
             android:id="@+id/search_back"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:background="@drawable/back"/>
+            android:background="@drawable/backold"/>
         <EditText
             android:id="@+id/et_search"
             android:layout_width="match_parent"

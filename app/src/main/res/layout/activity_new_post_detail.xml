@@ -11,7 +11,7 @@
             android:id="@+id/re"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#0B97FF">
+            android:background="@color/white">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
