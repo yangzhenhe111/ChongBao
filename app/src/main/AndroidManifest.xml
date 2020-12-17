@@ -48,6 +48,7 @@
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:icon="@drawable/lastlogo"
+        tools:replace="android:icon"
         android:sharedUserId="android.uid.system"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -113,7 +114,7 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="3lpfy3xqK0TlhmGUupPl4GAiq67dbGdA" />
+            android:value="Gy6t4iVa5bjCYSlblHYFLNKNCFmABmH3" />
 
         <service
             android:name="com.baidu.location.f"

@@ -117,9 +117,11 @@ public class NeworderActivity extends AppCompatActivity {
             lu.setText(distance + "米");
             if (Integer.parseInt(lu.getText().toString().substring(0, lu.getText().toString().length() - 1)) <= 2500) {
                 money.setText("15元");
+                AddressInfo.MONEY = 15 + "";
             } else {
                 int l = Integer.parseInt(lu.getText().toString().substring(0, lu.getText().toString().length() - 1));
                 money.setText(15 + (l / 1000) * 2 + "元");
+                AddressInfo.MONEY = 15 + (l/1000)*2 + "";
             }
         }
     }
