@@ -1,5 +1,6 @@
 package com.example.pet.my.editinfo;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -69,7 +70,10 @@ public class EditAddress extends AppCompatActivity {
     public void onClicked(View view) {
         switch (view.getId()) {
             case R.id.address_delete:
-                DeleteAddress();
+
+                                DeleteAddress();
+
+
                 break;
             case R.id.address_save:
                 if (etName.getText().toString() != null

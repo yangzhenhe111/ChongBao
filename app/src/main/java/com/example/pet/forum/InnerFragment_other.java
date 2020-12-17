@@ -100,6 +100,7 @@ public class InnerFragment_other extends Fragment {
                 @Override
                 public void onItemClicked(RecyclerView recyclerView, int i, View view) {
                     Intent intent = new Intent(getActivity(),New_post_detail.class);
+                    Cache.myPostSet.add(tipsList.get(i));
                     intent.putExtra("id",tipsList.get(i).getId());
                     startActivity(intent);
                 }

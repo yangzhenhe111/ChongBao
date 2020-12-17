@@ -32,7 +32,7 @@ public class Setting extends AppCompatActivity {
     private Toolbar toolbar;
     private List<My> myList1 = new ArrayList<>();
     private List<My> myList2 = new ArrayList<>();
-    private List<My> myList3 = new ArrayList<>();
+   // private List<My> myList3 = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class Setting extends AppCompatActivity {
         My my2 = new My(R.drawable.address, "地址管理", R.drawable.next);
         myList2.add(my2);
         My my3 = new My(R.drawable.pay, "支付设置", R.drawable.next);
-        myList3.add(my3);
+       // myList3.add(my3);
     }
 
     private void setView() {
@@ -70,19 +70,26 @@ public class Setting extends AppCompatActivity {
         ListView listView2 = (ListView) findViewById(R.id.setting_listview2);
         listView2.setAdapter(myAdapter2);
         //适配第三个listView
-        MyAdapter myAdapter3 = new MyAdapter(this, R.layout.my_listview, myList3);
-        ListView listView3 = (ListView) findViewById(R.id.setting_listview3);
-        listView3.setAdapter(myAdapter3);
-        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
-                    case 0:
-                        Intent intent = new Intent(Setting.this,AcountManage.class);
-                        startActivity(intent);
-                        break;
-                }
-            }
-        });
+
+//        MyAdapter myAdapter3 = new MyAdapter(this, R.layout.my_listview, myList3);
+//        ListView listView3 = (ListView) findViewById(R.id.setting_listview3);
+//        listView3.setAdapter(myAdapter3);
+//        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                switch (position){
+//                    case 0:
+//                        Intent intent = new Intent(Setting.this,AcountManage.class);
+//                        startActivity(intent);
+//                        break;
+//                    case 1:
+//                        Intent intent1 = new Intent(Setting.this,Update.class);
+//                        intent1.putExtra("title","修改密码");
+//                        startActivity(intent1);
+//                        break;
+//                }
+//            }
+//        });
+
     }
 }
