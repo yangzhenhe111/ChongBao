@@ -9,4 +9,7 @@ public class AddressInfo {
     public static String ENDTEL = "";  //存放用户上一次下单终点联系人方式
     public static String BEIZHU = "";
     public static String ITEMINFO = "";
+    public static String TIME = "";
+    public static String DISTANCE = "";
+    public static String MONEY = "";
 }

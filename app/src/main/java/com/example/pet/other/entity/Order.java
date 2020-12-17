@@ -22,6 +22,15 @@ public class Order implements Serializable {
     private String orderState;
     private int userId;
     private String addresseeContact;
+    private String iteminfo;
+
+    public String getIteminfo() {
+        return iteminfo;
+    }
+
+    public void setIteminfo(String iteminfo) {
+        this.iteminfo = iteminfo;
+    }
 
     public int getPetId() {
         return petId;
