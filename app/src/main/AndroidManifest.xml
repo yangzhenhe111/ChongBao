@@ -77,11 +77,7 @@
         <activity android:name=".my.Update" />
         <activity android:name=".my.Check" />
         <activity android:name=".my.Login" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".my.PetActivity" />
         <activity android:name=".my.History" />
@@ -149,7 +145,11 @@
         <activity
             android:name=".LoadingActivity"
             android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
